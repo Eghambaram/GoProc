@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfmf:features xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adfmf="http://xmlns.oracle.com/adf/mf">
+  <adfmf:feature id="feature1" name="feature1">
+    <adfmf:content id="feature1.1">
+      <adfmf:constraints/>
+      <adfmf:amx file="feature1/ViewController-task-flow.xml#ViewController-task-flow">
+        <adfmf:includes>
+          <adfmf:include type="JavaScript" file="resources/js/PopupUtils.js" id="i1"/>
+          <adfmf:include type="JavaScript" file="resources/js/notificationBadge.js" id="i5"/>
+          <adfmf:include type="StyleSheet" file="resources/css/notification.css" id="i6"/>
+        </adfmf:includes>
+      </adfmf:amx>
+    </adfmf:content>
+  </adfmf:feature>
+  <adfmf:feature id="mp.springboard" name="mp.springboard">
+    <adfmf:content id="mp.springboard.1">
+      <adfmf:amx file="mp.springboard/springboard.amx"/>
+    </adfmf:content>
+  </adfmf:feature>
+  <adfmf:feature id="mp.Requisition" name="mp.Requisition">
+    <adfmf:content id="mp.Requisition.1">
+      <adfmf:amx file="mp.Requisition/Requisition-task-flow.xml#Requisition-task-flow"/>
+    </adfmf:content>
+  </adfmf:feature>
+  <adfmf:feature id="mp.Userprofile" name="mp.Userprofile">
+    <adfmf:content id="mp.Userprofile.1">
+      <adfmf:amx file="mp.Userprofile/userprofile.amx"/>
+    </adfmf:content>
+  </adfmf:feature>
+  <adfmf:feature id="mp.Notification" name="mp.Notification">
+    <adfmf:content id="mp.Notification.1">
+      <adfmf:amx file="mp.Notification/Notifiaction-task-flow.xml#Notifiaction-task-flow"/>
+    </adfmf:content>
+  </adfmf:feature>
+  <adfmf:feature id="mp.Quotation" name="mp.Quotation">
+    <adfmf:content id="mp.Quotation.1">
+      <adfmf:amx file="mp.Quotation/Quotation.amx">
+        <adfmf:includes>
+          <adfmf:include type="JavaScript" file="resources/js/PopupUtils.js" id="i2"/>
+        </adfmf:includes>
+      </adfmf:amx>
+    </adfmf:content>
+  </adfmf:feature>
+  <adfmf:feature id="mp.login" name="mp.login">
+    <adfmf:content id="mp.login.1">
+      <adfmf:amx file="mp.login/login-task-flow.xml#login-task-flow"/>
+    </adfmf:content>
+  </adfmf:feature>
+  <adfmf:feature id="mp.Buyerhelp" name="mp.Buyerhelp">
+    <adfmf:content id="mp.Buyerhelp.1">
+      <adfmf:amx file="mp.Buyerhelp/Buyerhelp-task-flow.xml#Buyerhelp-task-flow"/>
+    </adfmf:content>
+  </adfmf:feature>
+</adfmf:features>

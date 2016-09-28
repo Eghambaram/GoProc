@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfmf-skins xmlns="http://xmlns.oracle.com/adf/mf/skin">
+<skin id="id8">
+        <id>customFamily1-v1.Android</id>
+        <family>customFamily1</family>
+        <extends>mobileAlta-v1.4</extends>
+        <style-sheet-name>resources/css/MetaProcure_Custom.css</style-sheet-name>
+        <version>
+            <name>v1</name>
+        </version>
+    </skin>
+    <skin id="id1">
+        <id>customFamily1-v1.iOS</id>
+        <family>customFamily1</family>
+        <extends>mobileAlta-v1.4</extends>
+        <style-sheet-name>resources/css/MetaProcure_Custom_IOS.css</style-sheet-name>
+        <version>
+            <name>v1</name>
+        </version>
+    </skin>
+</adfmf-skins>

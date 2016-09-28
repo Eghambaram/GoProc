@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.2.1" id="QuotationPageDef"
+                Package="mp.Quotation">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="RFQList" id="RFQListIterator"/>
+    <accessorIterator MasterBinding="RFQListIterator" Binds="RFQ" RangeSize="25" DataControl="RFQList"
+                      BeanClass="mobile.RFQ" id="RFQIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="QuotationList" id="QuotationListIterator"/>
+    <accessorIterator MasterBinding="QuotationListIterator" Binds="quotations" RangeSize="25"
+                      DataControl="QuotationList" BeanClass="mobile.Quotation" id="quotationsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="DeliverToLocationList" id="DeliverToLocationListIterator"/>
+    <accessorIterator MasterBinding="DeliverToLocationListIterator" Binds="deliverToLocations" RangeSize="25"
+                      DataControl="DeliverToLocationList" BeanClass="mobile.DeliverToLocation"
+                      id="deliverToLocationsIterator"/>
+  </executables>
+  <bindings>
+    <methodAction id="toggleSpringboard" RequiresUpdateModel="true" Action="invokeMethod" MethodName="toggleSpringboard"
+                  IsViewObjectMethod="false" DataControl="ApplicationFeatures"
+                  InstanceName="data.ApplicationFeatures.dataProvider"/>
+    <list IterBinding="RFQIterator" ListOperMode="navigation" ListIter="RFQIterator" id="RFQ" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="itemDescription"/>
+      </AttrNames>
+    </list>
+    <tree IterBinding="quotationsIterator" id="quotations">
+      <nodeDefinition DefName="mobile.Quotation" Name="quotations0">
+        <AttrNames>
+          <Item Value="rfqId"/>
+          <Item Value="itemDescription"/>
+          <Item Value="quotationId"/>
+          <Item Value="quotationNo"/>
+          <Item Value="quotationLineId"/>
+          <Item Value="quotationLineNo"/>
+          <Item Value="vendorId"/>
+          <Item Value="vendorName"/>
+          <Item Value="quantity"/>
+          <Item Value="uom"/>
+          <Item Value="promiseDate"/>
+          <Item Value="price"/>
+          <Item Value="currencyCode"/>
+          <Item Value="supplierQuotationNo"/>
+          <Item Value="selected"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="deliverToLocationsIterator" ListOperMode="navigation" ListIter="deliverToLocationsIterator"
+          id="deliverToLocations" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="code"/>
+      </AttrNames>
+    </list>
+    <methodAction id="refresh" RequiresUpdateModel="true" Action="invokeMethod" MethodName="refresh"
+                  IsViewObjectMethod="false" DataControl="QuotationList"
+                  InstanceName="data.QuotationList.dataProvider"/>
+    <methodAction id="setQuotations" RequiresUpdateModel="true" Action="invokeMethod" MethodName="setQuotations"
+                  IsViewObjectMethod="false" DataControl="QuotationList" InstanceName="data.QuotationList.dataProvider">
+      <NamedData NDName="quotations" NDType="java.util.List"/>
+    </methodAction>
+    <methodAction id="pickQuotations" RequiresUpdateModel="true" Action="invokeMethod" MethodName="pickQuotations"
+                  IsViewObjectMethod="false" DataControl="QuotationList"
+                  InstanceName="data.QuotationList.dataProvider"/>
+    <methodAction id="proceedPlaceOrder" RequiresUpdateModel="true" Action="invokeMethod" MethodName="proceedPlaceOrder"
+                  IsViewObjectMethod="false" DataControl="QuotationList"
+                  InstanceName="data.QuotationList.dataProvider"/>
+  </bindings>
+</pageDefinition>

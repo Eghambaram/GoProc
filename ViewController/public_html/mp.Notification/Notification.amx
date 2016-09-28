@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+<amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
+     <amx:verbatim id="v3">
+        <![CDATA[
+
+         <script type="text/javascript">
+         $(document).ready(function() {
+            
+             adf.mf.api.invokeMethod("mobile.RequesitionRest", "showNotifications", "", 
+            function() {}, function() {});          
+            });
+            
+           function clearFYI(){
+                  navigator.notification.confirm(
+                 'Do you want to clear all FYI Notifications? ', // message
+                  onClear,            // callback to invoke with index of button pressed
+                  '',           // title
+                  ['Yes','No']     // buttonLabels
+             );
+         }
+          function onClear(buttonIndex) {
+       
+          if(buttonIndex==1){
+          adf.mf.api.invokeMethod("mobile.RequesitionRest", "clearAllFyiNotification", "", 
+            function() {}, function() {});
+            
+          }
+       }
+
+    
+         </script>
+
+         ]]>
+
+  </amx:verbatim>
+        <amx:facet name="header">
+            <amx:outputText value="Check Notifications" id="ot1"
+                            inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;"
+                            styleClass="adfmf-commandButton-highlight"/>
+        </amx:facet>
+        <amx:facet name="primary">
+            <amx:commandLink actionListener="#{bindings.toggleSpringboard.execute}" id="cl1">
+                <amx:image source="/images/logo.png" id="i3"/>
+            </amx:commandLink>
+        </amx:facet>
+         <amx:facet name="secondary">
+            <amx:commandButton text="Clear all"
+                               inlineStyle="margin-right:4px; background-color:#C89C31;background-image:none;"
+                               styleClass="adfmf-commandButton-border-cart"
+                               actionListener="#{RequesitionRest.closeFYInotification}"
+                               id="cb1"/>
+        </amx:facet>
+         <amx:refreshContainer id="rc2" pullText="Pull To Refresh">
+        <amx:panelGroupLayout id="pgl1">
+            <amx:listView var="row" value="#{bindings.alerts.collectionModel}" fetchSize="#{bindings.alerts.rangeSize}"
+                          selectedRowKeys="#{bindings.alerts.collectionModel.selectedRow}"
+                          initialScrollRowKeys="#{bindings.alerts.collectionModel.selectedRow}"
+                          selectionListener="#{bindings.alerts.collectionModel.makeCurrent}"
+                          styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll" bufferStrategy="viewport"
+                          id="lv2">
+                          <amx:listItem id="li1" actionListener="#{RequesitionRest.showNotificationDetailScreen}">
+                           <amx:tableLayout width="100%" id="tl1">
+                        <amx:rowLayout id="rl1">
+                            <amx:cellFormat width="100%" height="43px" id="cf2">
+                                <amx:outputText value="#{row.title}"
+                                                inlineStyle="font-size: 14px; clear: both;color: #000000;font-family: Arial, sans-serif;  position: relative;word-break: break-word;  white-space: pre-wrap;"
+                                                id="ot2"/>
+                            </amx:cellFormat>
+                            <amx:cellFormat width="40px" halign="end" id="cf1">
+                                <amx:commandLink  id="cz2">
+                                    <!--<amx:image source="../images/submit.png" id="i1"/>-->
+                                </amx:commandLink>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                    </amx:tableLayout>
+                      <amx:setPropertyListener from="#{row.id}"
+                                                             to="#{pageFlowScope.notificationId}" type="action"
+                                                             id="spl12"/>
+                       <amx:setPropertyListener from="#{row.title}"
+                                                             to="#{pageFlowScope.notificationTitle}" type="action"
+                                                             id="spl13"/>
+                       <amx:setPropertyListener from="#{row.reason}"
+                                                             to="#{pageFlowScope.notificationReason}" type="action"
+                                                             id="spl14"/>
+                       <amx:setPropertyListener from="#{row.type}"
+                                                             to="#{pageFlowScope.notificationMessageType}" type="action"
+                                                             id="spl15"/>      
+                         <amx:setPropertyListener from="#{row.name}"
+                                                             to="#{pageFlowScope.notificationMessageName}" type="action"
+                                                             id="spl16"/>                                     
+                   
+                </amx:listItem>
+            </amx:listView>
+           
+        </amx:panelGroupLayout>
+        </amx:refreshContainer>
+    </amx:panelPage>
+</amx:view>

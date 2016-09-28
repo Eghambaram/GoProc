@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+    <amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
+        <amx:verbatim id="v3">
+        <![CDATA[
+
+         <script type="text/javascript">
+          function alertDismissed(buttonIndex) {
+          
+          }
+          
+          function displayAlert(){
+              navigator.notification.alert(
+                     'Order Placed Successfully',  
+                      alertDismissed,         
+                      '',            
+                      'Ok'                  
+                 );
+       }
+       
+        function onConfirm(buttonIndex) {
+       
+          if(buttonIndex==1){
+            adf.mf.api.invokeMethod("mobile.RequesitionRest", "proceedPlaceOrder", "", 
+            function() {}, function() {});           
+          }
+       }
+       
+         
+         function confirm_quote(){
+              navigator.notification.confirm(
+                 'You are selecting a quote prior to the RFQ close date. Doing so will end the RFQ for suppliers that have yet to respond and you will not receive any additional quotes for this RFQ. Do you wish to close the RFQ and select the chosen quote?', // message
+                  onConfirm,            // callback to invoke with index of button pressed
+                  '',           // title
+                  ['Yes','Cancel']     // buttonLabels
+             );
+         }
+     function chooseMultiOrg(){
+              navigator.notification.confirm(
+                 'Please choose your default Business Unit in User Profile Page before proceeding', // message
+                  navigateManageProfile,            // callback to invoke with index of button pressed
+                  '',           // title
+                  ['Yes']     // buttonLabels
+             );
+         }
+        function navigateManageProfile(buttonIndex) {
+       
+          if(buttonIndex==1){
+            adf.mf.api.invokeMethod("mobile.RequesitionRest", "gotoManageProfile", "", 
+            function() {}, function() {});           
+          }
+          else
+          {
+          adf.mf.api.invokeMethod("mobile.RequesitionRest", "showPopup", "", 
+            function() {}, function() {}); 
+          }
+          
+       }
+
+         
+      $(document).ready(function() {
+           
+             adf.mf.api.invokeMethod("mobile.RequesitionRest", "getQuotations", "", 
+            function() {}, function() {});
+             adf.mf.api.invokeMethod("mobile.RequesitionRest", "showPopup", "", 
+            function() {}, function() {});
+            });
+         
+        
+         </script>
+
+         ]]>
+
+  </amx:verbatim>
+        <amx:facet name="header">
+            <amx:outputText value="View / Accept Supplier Bids" id="ot1"
+                            inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;"
+                            styleClass="adfmf-commandButton-highlight"/>
+        </amx:facet>
+        <amx:facet name="primary">
+            <amx:commandLink actionListener="#{bindings.toggleSpringboard.execute}" id="cl1">
+                <amx:image source="/images/logo.png" id="i3"/>
+            </amx:commandLink>
+        </amx:facet>
+        <amx:facet name="secondary">
+            <amx:commandLink id="cl2" styleClass="springboard-icon" actionListener="#{RequesitionRest.placeOrder}">
+                <amx:image source="/images/Placeorder.png" id="i4"/>
+            </amx:commandLink>
+        </amx:facet>
+        <amx:refreshContainer id="rc2" pullText="Pull To Refresh" actionListener="#{RequesitionRest.getRFQ}"/>
+          <amx:panelGroupLayout id="pgl1">
+            <amx:tableLayout width="100%" id="qarl1">
+                    <amx:rowLayout id="rrlw8">
+                        <amx:cellFormat width="1px" id="yacfwr3"/>
+                        <amx:cellFormat width="100%" halign="start" id="yacfw4" valign="top" columnSpan="3">
+                        <amx:selectOneChoice label="Item Desc - RFQ" value="#{bindings.RFQ.inputValue}"
+                                                 valueChangeListener="#{RequesitionRest.onRFQChange}" id="soc1">
+                                <amx:selectItems value="#{bindings.RFQ.items}" id="si1"/>
+                            </amx:selectOneChoice>
+
+                            <!--<amx:selectOneChoice value="#{bindings.deliverToLocations.inputValue}"
+                                                 label="#{bindings.deliverToLocations.label}" simple="true" id="soc2">
+                                <amx:selectItems value="#{bindings.deliverToLocations.items}" id="si2"/>
+                            </amx:selectOneChoice>-->
+                        </amx:cellFormat>
+                    </amx:rowLayout>
+                    </amx:tableLayout>
+                                <amx:tableLayout width="100%" id="qqrl1">
+                                        <amx:rowLayout id="rwlw8">
+                        <amx:cellFormat width="1px" id="ywacfwr3"/>
+                        <amx:cellFormat width="35%" halign="start" id="yqacfw4" valign="top">
+                            <amx:outputText value="Item Desc:" id="ot4" styleClass="adfmf-listItem-output"/>
+                            </amx:cellFormat>
+                    <amx:cellFormat width="2px" id="qywacfwr3"/>
+                        <amx:cellFormat width="65%" halign="start" id="qyqacfw4" valign="top">
+                            <amx:outputText value="#{pageFlowScope.itemDescription}" id="qot4" inlineStyle="word-break: break-word;white-space: pre-wrap;"/>
+                            </amx:cellFormat>
+                    </amx:rowLayout>
+                    </amx:tableLayout>
+                    <amx:tableLayout width="100%" id="z1arl1" inlineStyle="margin-top:10px">
+                       <amx:rowLayout id="rwqlw8">
+                        <amx:cellFormat width="1px" id="ywacqfwr3"/>
+                        <amx:cellFormat width="35%" halign="start" id="yqacqfw4">
+                            <amx:outputText value="RFQ No: #{pageFlowScope.rfqQuotNo}" id="ot4q" styleClass="adfmf-listItem-output"/>
+                            </amx:cellFormat>
+                    <amx:cellFormat width="2px" id="aqywacfwr3"/>
+                        <amx:cellFormat width="65%" halign="start" id="aqqyqacfw4" valign="top">
+                            <amx:outputText value="RFQ Close Date: #{pageFlowScope.quotationRFQCloseDate}" id="aqqot4"/>
+                            </amx:cellFormat>
+                            
+                    </amx:rowLayout>
+                <!--<amx:tableLayout width="100%" id="wtl1">
+                    <amx:rowLayout id="rlw1">
+                        <amx:cellFormat width="5px" id="cfw3"/>
+                        <amx:cellFormat width="100%" halign="start" id="cfw4" valign="top">
+                        <amx:selectOneChoice label="Need By Date" id="soc1" inlineStyle="font-size: 14px; clear: both;font-family: Arial, sans-serif;" >
+            <amx:selectItem id="si1" label="15-Nov-2015"/>
+        </amx:selectOneChoice>
+                            -->
+                <!--<amx:outputText value="Need By Date: 15-Nov-2015"
+                                            inlineStyle="font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                            id="otw3"/>-->
+                <!--
+                        </amx:cellFormat>
+                        </amx:rowLayout>
+                    <amx:rowLayout id="rlq1">                        
+                        <amx:cellFormat width="5px" id="cfw1"/>
+                        <amx:cellFormat width="100%" halign="start" id="cfw2" valign="top">
+                            <amx:selectOneChoice label="Deliver To Location:" id="soc2" inlineStyle="font-size: 14px;  clear: both;font-family: Arial, sans-serif;">
+                                <amx:selectItem id="si2" label="New York"/>
+                            </amx:selectOneChoice>
+                            -->
+                <!--<amx:outputText value="Deliver To Location: New York"
+                                            inlineStyle="font-size: 14px;  clear: both;font-family: Arial, sans-serif;"
+                                            id="otw2"/>-->
+                <!--
+                        </amx:cellFormat>
+                    </amx:rowLayout>
+</amx:tableLayout>-->
+                      <!--<amx:rowLayout id="Zrrlw8">
+                        <amx:cellFormat width="1px" id="Zacfwr8"/>
+                        <amx:cellFormat width="100%" halign="start" id="cfw8" valign="top">
+                        
+                            <amx:inputDate label="RFQ Close Date" readOnly="true" id="ida5" value="#{pageFlowScope.quotationRFQCloseDate}"
+                                          inlineStyle=" margin-left:-10px; font-size: 16px;color:#000000; clear: both;font-family: Arial, sans-serif;"/>
+                        </amx:cellFormat>
+                    </amx:rowLayout>-->
+                    <amx:rowLayout id="yrrlw8">
+                        <amx:cellFormat width="1px" id="yacfwr8"/>
+                        <amx:cellFormat width="100%" halign="start" id="Zacfw8" valign="top" columnSpan="3">
+                            <amx:inputDate label="Need By Date" readOnly="true" id="id5" value="#{pageFlowScope.quotationNeedByDate}"
+                                           valueChangeListener="#{RequesitionRest.needByDateChanged}"
+                                           />
+                        </amx:cellFormat>
+                    </amx:rowLayout>
+                    <amx:rowLayout id="yrrlw1">
+                        <amx:cellFormat width="1px" id="yacfqr3"/>
+                        <amx:cellFormat width="100%" halign="start" id="yacqfw4" valign="top" columnSpan="3">
+                         <amx:inputText label="Deliver To Location" readOnly="true" id="id51" value="#{pageFlowScope.quotationDeliverToLocation}" />
+                            <!--<amx:selectOneChoice label="Deliver To Location" readOnly="true" value="#{bindings.deliverToLocations.inputValue}" id="soc2">
+                                <amx:selectItems value="#{bindings.deliverToLocations.items}" id="si2"/>
+                            </amx:selectOneChoice>-->
+                            
+                            
+                            <!--<amx:selectOneChoice value="#{bindings.deliverToLocations.inputValue}"
+                                                 label="#{bindings.deliverToLocations.label}" simple="true" id="soc2">
+                                <amx:selectItems value="#{bindings.deliverToLocations.items}" id="si2"/>
+                            </amx:selectOneChoice>-->
+                        </amx:cellFormat>
+                    </amx:rowLayout>
+                    
+                     <amx:rowLayout id="Zrrlw81" rendered="false"> 
+                        <amx:cellFormat width="1px" id="Zacfwr81"/>
+                        <amx:cellFormat width="100%" halign="start" id="cfw81" valign="top">
+                           <amx:commandButton text="Pop-Up2" id="showPopUp">
+                              <amx:showPopupBehavior popupId="qpopup2" type="action" align="after" alignId="pp1"/>
+                             </amx:commandButton>
+                        </amx:cellFormat>
+                    </amx:rowLayout>
+                    
+                </amx:tableLayout>
+    </amx:panelGroupLayout>
+    <amx:panelGroupLayout id="pgl2">
+                <amx:listView var="row" value="#{bindings.quotations.collectionModel}"
+                              fetchSize="#{bindings.quotations.rangeSize}"
+                              selectedRowKeys="#{bindings.quotations.collectionModel.selectedRow}"
+                              initialScrollRowKeys="#{bindings.quotations.collectionModel.selectedRow}"
+                              selectionListener="#{bindings.quotations.collectionModel.makeCurrent}"
+                              styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll"
+                              bufferStrategy="viewport" id="lv2">
+                    <amx:listItem id="li1" actionListener="#{RequesitionRest.selectQuote}">
+                        <amx:tableLayout width="100%" id="tl1">
+                            <amx:rowLayout id="rl1">
+                                <amx:cellFormat width="20px" id="cf3" valign="top" rowSpan="4">
+                                    <amx:image source="#{row.selected}" id="iw3"/>
+                                </amx:cellFormat>
+                                <amx:cellFormat width="50%" halign="start" id="cf4" valign="top">
+                                    <amx:outputText value="Quotation No: #{row.quotationNo}"
+                                                    inlineStyle="font-size: 14px;margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                    id="ot3"/>
+                                </amx:cellFormat>
+                                <amx:cellFormat width="5px" id="cf1"/>
+                                <amx:cellFormat width="50%" halign="start" id="cf2" valign="top">
+                                    <amx:outputText value="Supplier : #{row.vendorName}"
+                                                    inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                    id="ot2"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            <!--<amx:rowLayout id="rl2">
+                                <amx:cellFormat width="100%" halign="start" id="cf8" columnSpan="3" valign="top">
+                                    <amx:outputText value="Item: #{row.itemDescription}"
+                                                    inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="ot5"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>-->
+                            <amx:rowLayout id="rl3">
+                                <amx:cellFormat width="50%" halign="start" id="cfa4" valign="top">
+                                    <amx:outputText value="Quantity: #{row.quantity} #{row.uom}"
+                                                    inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                    id="ota2"/>
+                                </amx:cellFormat>
+                                <amx:cellFormat width="5px" id="cfa1"/>
+                                <amx:cellFormat width="50%" halign="start" id="cfa2" valign="top">
+                                    <amx:outputText value="Price: $#{row.price}"
+                                                    inlineStyle="font-size: 14px;margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                    id="ot3a"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            <amx:rowLayout id="rl4">
+                                <amx:cellFormat width="100%" halign="start" id="qcfa4" valign="top" columnSpan="3">
+                                    <amx:outputText value="Earliest Supply Date: #{row.promiseDate}"
+                                                    inlineStyle="font-size: 14px;margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                    id="qt3a"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                        </amx:tableLayout>
+                        <amx:setPropertyListener from="#{row.quotationNo}" to="#{pageFlowScope.selectedQuotationNo}"
+                                                 type="action"/>
+                        <amx:setPropertyListener from="#{row.quotationLineId}"
+                                                 to="#{pageFlowScope.selectedQuotationLineId}" type="action"/>
+                    </amx:listItem>
+                </amx:listView>
+                </amx:panelGroupLayout>
+    </amx:panelPage>
+    
+    <amx:popup id="qpopup2"
+               inlineStyle="position:relative;margin-top:#{(deviceScope.hardware.screen.availableHeight-200)/2}px;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"
+               animation="slideUp">
+        <amx:panelGroupLayout id="qpgl2">
+        <amx:outputText value="The Potential Suppliers entered do not match with category entered.  Can we proceed forward for further sourcing process based on category entered or do you want to modify the category" id="qoqt4"/>
+            <amx:tableLayout halign="center" id="qqtl1" inlineStyle="width:100%" borderWidth="0" cellSpacing="0">
+                <amx:rowLayout id="rl2">
+                    <amx:cellFormat id="qqcf1" valign="middle" halign="start" inlineStyle="width:40%">
+                        <amx:commandButton text="Yes" id="qqcb1" inlineStyle="width:85%;background-color:#C89C31; background-image:none;"
+                                           styleClass="adfmf-commandButton-border"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="qqcf2" halign="center" inlineStyle="width:40%">
+                        <amx:commandButton text="No" id="qqcb2" inlineStyle="width:85%;background-color:#C89C31; background-image:none;" styleClass="adfmf-commandButton-border">
+                         <amx:closePopupBehavior popupId="popup2" type="action"/>
+                        </amx:commandButton>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout>
+</amx:panelGroupLayout>
+    </amx:popup>
+</amx:view>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+  <amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
+              <amx:verbatim id="v3">
+        <![CDATA[
+
+         <script type="text/javascript">
+         $(document).ready(function() {
+            
+             adf.mf.api.invokeMethod("mobile.RequesitionRest", "Buyerhelpcontent", "", 
+            function() {}, function() {});          
+            });
+         </script>
+
+         ]]>
+
+  </amx:verbatim>
+        <amx:facet name="header">
+            <amx:outputText value="Contact" id="ot1"
+                            inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;"
+                            styleClass="adfmf-commandButton-highlight"/>
+        </amx:facet>
+        <amx:facet name="primary">
+            <amx:commandLink actionListener="#{bindings.toggleSpringboard.execute}" id="cl1">
+                <amx:image source="/images/logo.png" id="i3"/>
+            </amx:commandLink>
+        </amx:facet>
+        <amx:panelStretchLayout id="psl1">
+            <amx:facet name="top">
+                <amx:outputHtml id="oh1" value="#{pageFlowScope.helpertext}"/>
+       </amx:facet>
+       </amx:panelStretchLayout>
+</amx:panelPage>
+</amx:view>

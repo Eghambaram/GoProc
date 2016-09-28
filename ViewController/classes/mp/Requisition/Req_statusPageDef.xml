@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.2.1" id="Req_statusPageDef"
+                Package="mp.Requisition">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="RequisitionsList" id="RequisitionsListIterator"/>
+    <accessorIterator MasterBinding="RequisitionsListIterator" Binds="requisitions" RangeSize="25"
+                      DataControl="RequisitionsList" BeanClass="mobile.Requisition" id="requisitionsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="OrderList" id="OrderListIterator"/>
+    <accessorIterator MasterBinding="OrderListIterator" Binds="orders" RangeSize="25" DataControl="OrderList"
+                      BeanClass="mobile.Order" id="ordersIterator"/>
+  </executables>
+  <bindings>
+    <methodAction id="toggleSpringboard" RequiresUpdateModel="true" Action="invokeMethod" MethodName="toggleSpringboard"
+                  IsViewObjectMethod="false" DataControl="ApplicationFeatures"
+                  InstanceName="data.ApplicationFeatures.dataProvider"/>
+    <tree IterBinding="requisitionsIterator" id="requisitions">
+      <nodeDefinition DefName="mobile.Requisition" Name="requisitions0">
+        <AttrNames>
+          <Item Value="requisitionHeaderId"/>
+          <Item Value="requisitionNo"/>
+          <Item Value="createdDate"/>
+          <Item Value="status"/>
+          <Item Value="totalAmount"/>
+          <Item Value="rfqNo"/>
+          <Item Value="rfqStatus"/>
+          <Item Value="rfqSubmissionDate"/>
+          <Item Value="rfqDescription"/>
+          <Item Value="rfqHeaderId"/>
+          <Item Value="showRfqSection"/>
+          <Item Value="showRequesitionSection"/>
+          <Item Value="showRow"/>
+         </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="ordersIterator" id="orders">
+      <nodeDefinition DefName="mobile.Order" Name="orders0">
+        <AttrNames>
+          <Item Value="searchGroupId"/>
+          <Item Value="reqDate"/>
+          <Item Value="reqType"/>
+          <Item Value="amount"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <methodAction id="searchRequisition" RequiresUpdateModel="true" Action="invokeMethod" MethodName="searchRequisition"
+                  IsViewObjectMethod="false" DataControl="OrderList" InstanceName="data.OrderList.dataProvider"/>
+    <methodAction id="clearRequisitionSearch" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="clearRequisitionSearch" IsViewObjectMethod="false" DataControl="OrderList"
+                  InstanceName="data.OrderList.dataProvider"/>
+  </bindings>
+</pageDefinition>

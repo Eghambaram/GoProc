@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+<amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
+            <amx:verbatim id="v3">
+        <![CDATA[
+
+         <script type="text/javascript">
+         $(document).ready(function() {
+            adf.mf.api.invokeMethod("mobile.RequesitionRest", "showPopup", "", 
+            function() {}, function() {});
+             adf.mf.api.invokeMethod("mobile.RequesitionRest", "getOrders", "", 
+            function() {}, function() {});          
+            });
+   
+            
+              $('#inputText2__inputElement').keypress(function (e) {  
+                if (e.keyCode == 13) {
+                if(e.target.id=="inputText2__inputElement"){
+                   adf.mf.api.invokeMethod("mobile.RequesitionRest", "searchReq", document.getElementById("inputText2__inputElement").value, 
+                          function() {}, function() {});   
+                          }
+            }
+                
+
+            });
+                      function chooseMultiOrg(){
+              navigator.notification.confirm(
+                 'Please choose your default Business Unit in User Profile Page before proceeding', // message
+                  navigateManageProfile,            // callback to invoke with index of button pressed
+                  '',           // title
+                  ['Yes']     // buttonLabels
+             );
+         }
+        function navigateManageProfile(buttonIndex) {
+       
+          if(buttonIndex==1){
+            adf.mf.api.invokeMethod("mobile.RequesitionRest", "gotoManageProfile", "", 
+            function() {}, function() {});           
+          }
+          else
+          {
+          adf.mf.api.invokeMethod("mobile.RequesitionRest", "showPopup", "", 
+            function() {}, function() {}); 
+          }
+          
+       }
+
+
+            
+         </script>
+         
+
+         ]]>
+
+  </amx:verbatim>
+            <amx:facet name="header">
+                <amx:outputText value="Check Order Status" id="ot1"
+                                inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;"
+                                styleClass="adfmf-commandButton-highlight"/>
+            </amx:facet>
+            <amx:facet name="primary">
+                <amx:commandLink actionListener="#{bindings.toggleSpringboard.execute}" id="cl1">
+                    <amx:image source="/images/logo.png" id="i3"/>
+                </amx:commandLink>
+            </amx:facet>
+            <amx:refreshContainer id="rc2" pullText="Pull To Refresh">
+        <amx:panelStretchLayout id="psl1">
+            <amx:facet name="top">
+             <amx:tableLayout id="tl21" width="100%">
+            <amx:rowLayout id="rl11">
+            
+                <amx:cellFormat id="cf122" width="70%">
+                    <amx:inputText simple="true" value="#{pageFlowScope.searchRequisitionValue}" hintText="search by item or order no"  keyboardDismiss="search" id="inputText2"
+                                   ></amx:inputText>
+                </amx:cellFormat>
+                <amx:cellFormat id="cf124" width="10%">
+                    <amx:commandLink id="commandLink1" actionListener="#{RequesitionRest.searchRequisition}">
+                        <amx:image id="image2" source="/images/Search-24.png"/>
+                    </amx:commandLink>
+                </amx:cellFormat>
+                <amx:cellFormat id="cf1241" width="20%" halign="end">
+                   <amx:commandLink id="commandLink112"   actionListener="#{RequesitionRest.clearRequisitionSearch}">
+                                    <amx:outputText value="Clear" id="ot10"/>
+                   </amx:commandLink>
+                </amx:cellFormat>
+            </amx:rowLayout>
+        </amx:tableLayout>
+
+            <!--<amx:listView var="row" value="#{bindings.requisitions.collectionModel}"
+                          fetchSize="#{bindings.requisitions.rangeSize}"
+                          selectedRowKeys="#{bindings.requisitions.collectionModel.selectedRow}"
+                          initialScrollRowKeys="#{bindings.requisitions.collectionModel.selectedRow}"
+                          selectionListener="#{bindings.requisitions.collectionModel.makeCurrent}"
+                          styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll" bufferStrategy="viewport"
+                          id="lv2">
+                <amx:listItem id="li1" rendered="#{row.showRow}">
+                        
+                    <amx:tableLayout width="100%" id="tl1" rendered="#{row.showRequesitionSection}">
+                        <amx:rowLayout id="rl1">
+                            <amx:cellFormat width="2px" id="cf3"/>
+                            <amx:cellFormat width="45%" halign="start" id="cf4">
+                                <amx:commandLink id="cl2" actionListener="#{RequesitionRest.getRequesitionDetail}">
+                                    <amx:outputText value="Requisition#: #{row.requisitionNo}"
+                                                    inlineStyle="font-size: 14px;margin-top:5px; clear: both;color: #2F6BAC;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                    id="ot3"/>
+                                    <amx:setPropertyListener from="#{row.requisitionHeaderId}"
+                                                             to="#{pageFlowScope.requisitionHeaderId}" type="action"
+                                                             id="spl12"/>
+                                    <amx:setPropertyListener from="#{row.status}"
+                                                             to="#{pageFlowScope.requisitionStatus}" type="action"
+                                                             id="spl13"/>
+                                    <amx:setPropertyListener from="#{row.requisitionNo}"
+                                                             to="#{pageFlowScope.requisitionNo}" type="action"
+                                                             id="spl14"/>
+                                    <amx:setPropertyListener from="#{row.createdDate}"
+                                                             to="#{pageFlowScope.requisitionCreatedDate}" type="action"
+                                                             id="spl142"/>
+                                </amx:commandLink>
+                            </amx:cellFormat>
+                            <amx:cellFormat width="2px" id="cf1"/>
+                            <amx:cellFormat width="55%" halign="start" id="cf2">
+                                <amx:outputText value="Status: #{row.status}"
+                                                inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                id="ot2"/>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                        <amx:rowLayout id="rl2">
+                            <amx:cellFormat width="2px" id="cf7"/>
+                            <amx:cellFormat width="45%" halign="start" id="cf8">
+                                <amx:outputText value="Total Amount: $#{row.totalAmount}"
+                                                inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                id="ot5"/>
+                            </amx:cellFormat>
+                            <amx:cellFormat width="2px" id="cf9"/>
+                            <amx:cellFormat width="55%" halign="start" id="cf10">
+                                <amx:outputText value="Created Date: #{row.createdDate}"
+                                                inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                id="ot6"/>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                        </amx:tableLayout>
+                        
+                          <amx:tableLayout width="100%" rendered="#{row.showRfqSection}" id="tl2">
+                         <amx:rowLayout id="rl3">
+                            <amx:cellFormat width="2px" id="cf5"/>
+                            <amx:cellFormat width="45%" halign="start" id="cf6">
+                                <amx:commandLink id="cl3" action="#{RequesitionRest.showRFQDetails}">
+                                    <amx:outputText value="RFQ#: #{row.rfqNo}"
+                                                    inlineStyle="font-size: 14px;margin-top:5px; clear: both;color: #2F6BAC;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                    id="ot4"/>
+                                    <amx:setPropertyListener from="#{row.rfqHeaderId}"
+                                                             to="#{pageFlowScope.requisitionRfqHeaderId}" type="action"
+                                                             id="spl1"/>
+                                
+                                </amx:commandLink>
+                            </amx:cellFormat>
+                            <amx:cellFormat width="2px" id="cf11"/>
+                            <amx:cellFormat width="55%" halign="start" id="cf12">
+                                <amx:outputText value="RFQ Status: #{row.rfqStatus}"
+                                                inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                id="ot7"/>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                        <amx:rowLayout id="rl4">
+                            <amx:cellFormat width="2px" id="cf13"/>
+                            <amx:cellFormat width="45%" halign="start" id="cf14">
+                                <amx:outputText value="RFQ Submission Date: #{row.rfqSubmissionDate}"
+                                                inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                id="ot8"/>
+                            </amx:cellFormat>
+                            <amx:cellFormat width="2px" id="cf15"/>
+                            <amx:cellFormat width="55%" halign="start" id="cf16">
+                                <amx:outputText value="RFQ Description: #{row.rfqDescription}"
+                                                inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                id="ot9"/>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </amx:tableLayout>
+                </amx:listItem>
+            </amx:listView>-->
+            <!--<amx:listView styleClass="adfmf-listView-insetList" var="row" showMoreStrategy="autoScroll"
+                      bufferStrategy="viewport" id="lv1">
+           
+        </amx:listView>-->
+                    <amx:listView var="row" value="#{bindings.orders.collectionModel}"
+                                  fetchSize="#{bindings.orders.rangeSize}"
+                                  selectedRowKeys="#{bindings.orders.collectionModel.selectedRow}"
+                                  initialScrollRowKeys="#{bindings.orders.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.orders.collectionModel.makeCurrent}"
+                                  styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll"
+                                  bufferStrategy="viewport" id="lv1">
+                          <amx:listItem id="li1" actionListener="#{RequesitionRest.getRequesitionDetail}">
+                        
+                    <amx:tableLayout width="100%" id="tl1">
+                        <amx:rowLayout id="rl1">
+                            <amx:cellFormat width="2px" id="cf3"/>
+                            <amx:cellFormat width="45%" halign="start" id="cf4">
+                                <amx:commandLink id="cl2" actionListener="#{RequesitionRest.getRequesitionDetail}">
+                                    <amx:outputText value="Order No: #{row.searchGroupId}"
+                                                    inlineStyle="font-size: 14px;margin-top:5px; clear: both;color: #2F6BAC;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                    id="ot3"/>
+                                    <amx:setPropertyListener from="#{row.searchGroupId}"
+                                                             to="#{pageFlowScope.reqSearchGroupId}" type="action"
+                                                             id="spl12"/>
+                                    <amx:setPropertyListener from="#{row.reqDate}"
+                                                             to="#{pageFlowScope.requisitionSearchDate}" type="action"
+                                                             id="spl13"/>
+                                <amx:setPropertyListener from="#{row.reqType}"
+                                                             to="#{pageFlowScope.requisitionOrderType}" type="action"
+                                                             id="spl131"/>                              
+                                                             
+                                </amx:commandLink>
+                            </amx:cellFormat>
+                            <amx:cellFormat width="2px" id="cf1"/>
+                            <amx:cellFormat width="55%" halign="start" id="cf2">
+                                <amx:outputText value="Order Date: #{row.reqDate}"
+                                                inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                id="ot2"/>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                        <amx:rowLayout id="rl2">
+                            <amx:cellFormat width="2px" id="cf7"/>
+                            <amx:cellFormat width="45%" halign="start" id="cf8">
+                                <amx:outputText value="Order Type: #{row.reqType}"
+                                                inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                id="ot5"/>
+                            </amx:cellFormat>
+                            <amx:cellFormat width="2px" id="cf9"/>
+                            <amx:cellFormat width="55%" halign="start" id="cf10">
+                                <amx:outputText value="Amount: #{row.amount}"
+                                                inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                id="ot6"/>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                        </amx:tableLayout>
+                              <amx:setPropertyListener from="#{row.searchGroupId}"
+                                                             to="#{pageFlowScope.reqSearchGroupId}" type="action"
+                                                             id="splw12"/>
+                                    <amx:setPropertyListener from="#{row.reqDate}"
+                                                             to="#{pageFlowScope.requisitionSearchDate}" type="action"
+                                                             id="splw13"/>
+                                <amx:setPropertyListener from="#{row.reqType}"
+                                                             to="#{pageFlowScope.requisitionOrderType}" type="action"
+                                                             id="splw131"/>                              
+                              
+                </amx:listItem>
+                    </amx:listView>
+                </amx:facet>
+        </amx:panelStretchLayout>
+        </amx:refreshContainer>
+</amx:panelPage>
+</amx:view>

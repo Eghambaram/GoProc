@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+ <amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
+     <amx:verbatim id="v3">
+    <![CDATA[
+
+         <script type="text/javascript">
+         var value;
+          function alertDismissed(buttonIndex) {
+          
+          }
+          
+        
+      function InvalidUser(){
+         navigator.notification.alert(
+            'Invalid UserName or Password',  
+             alertDismissed,         
+             '',            
+              'Ok'                  
+           );
+       }
+       function ForgotPassword(){
+         navigator.notification.alert(
+            'Invalid UserName or Password',  
+             alertDismissed,         
+             '',            
+              'Ok'                  
+           );
+       }
+      
+        $('#inputText2__inputElement').keypress(function (e) {  
+                if (e.keyCode == 13) {
+                if(e.target.id=="inputText2__inputElement"){
+                   adf.mf.api.invokeMethod("mobile.Login", "keyboardLogin", document.getElementById("inputText2__inputElement").value, 
+                          function() {}, function() {});   
+                          }
+          }
+                
+
+            });
+        
+        
+         </script>
+
+         ]]>
+
+    </amx:verbatim>
+
+
+
+        
+    <amx:facet name="header">
+      <amx:outputText value="GoProcure" id="ot1" inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
+    </amx:facet>
+   <amx:facet name="primary">
+                   <amx:commandLink id="cl2" styleClass="springboard-icon">
+                <amx:image id="i1" source="/images/logo.png" shortDesc="Springboard Image"/>
+                </amx:commandLink>
+        </amx:facet>
+    
+<amx:panelFormLayout inlineStyle="margin: 25% 5% 0% 5%;width:100;"   fieldHalign="center" id="pfl1" labelPosition="start" styleClass="admf-panelform">
+    <amx:inputText label="User Name" id="it3" value="#{applicationScope.user_name}"/>
+    <amx:inputText label="Password" secret="true"  value="#{applicationScope.password}" keyboardDismiss="go" id="inputText2"/>
+    
+    
+    </amx:panelFormLayout>
+   <amx:tableLayout id="tl1" inlineStyle="margin: 5% 25% 5% 25%;"  width="100%" borderWidth="0" cellSpacing="0">
+   <amx:rowLayout id="rl2">
+<amx:cellFormat id="cf3" halign="center" inlineStyle="padding: 10px 4px 4px 4px;">
+<!--actionListener="#{Rest.validateLogin}"-->
+<amx:commandButton text="Login" id="cb2" actionListener="#{Login.validateLogin}"  inlineStyle="width:100%;background-color:#C89C31; background-image:none;" styleClass="adfmf-commandButton-border"/>
+</amx:cellFormat>
+</amx:rowLayout>
+<!--<amx:tableLayout halign="center" inlineStyle="margin-top:-2px;">
+<amx:rowLayout id="rl5">
+<amx:cellFormat id="cf35">
+<amx:selectBooleanCheckbox text="Remember User Name" id="sbc1"/>
+</amx:cellFormat>
+</amx:rowLayout>
+</amx:tableLayout>-->
+   <amx:rowLayout id="rl3">
+<amx:cellFormat id="cf31" halign="center" inlineStyle="padding: 0px 4px 10px 4px;">
+<amx:commandLink text="Forgot password / username?" action="forgotpass_user"/>
+</amx:cellFormat>
+</amx:rowLayout>
+    </amx:tableLayout>
+  </amx:panelPage>
+</amx:view>

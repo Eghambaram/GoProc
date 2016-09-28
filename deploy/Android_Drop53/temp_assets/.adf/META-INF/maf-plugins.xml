@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<maf-plugins xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.oracle.com/adf/mf">
+  <cordova-plugins>
+    <core-cordova-plugin id="c1" pluginId="cordova-plugin-network-information"/>
+    <core-cordova-plugin id="c4" pluginId="cordova-plugin-camera"/>
+    <core-cordova-plugin id="c5" pluginId="cordova-plugin-geolocation"/>
+    <core-cordova-plugin id="c7" pluginId="maf-cordova-plugin-push"/>
+    <cordova-plugin id="c3" pluginId="cordova-plugin-dialogs" path="../../../../../src/cordova-plugin-dialogs-master/">
+      <platform id="p1" name="android" enabled="true"/>
+      <platform id="p2" name="ios" enabled="true"/>
+    </cordova-plugin>
+    <cordova-plugin id="c6" pluginId="cordova-plugin-imagepicker"
+                    path="../../../../../src/cordova-plugin-imagepicker-master/">
+      <platform id="p3" name="android" enabled="true"/>
+      <platform id="p4" name="ios" enabled="true"/>
+    </cordova-plugin>
+  </cordova-plugins>
+</maf-plugins>

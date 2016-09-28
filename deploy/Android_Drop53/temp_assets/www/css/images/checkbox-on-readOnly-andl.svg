@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="readonlyCheckboxSelected" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px" y="0px" width="48px" height="48px" viewBox="-9.5 10.5 48 48" enable-background="new -9.5 10.5 48 48"
+	 xml:space="preserve">
+<path id="check_box" d="M23.51,42.53c0,0.55-0.45,1-1,1h-16c-0.55,0-1-0.45-1-1v-16c0-0.55,0.45-1,1-1h16c0.55,0,1,0.45,1,1V42.53z"
+	/>
+<polygon id="check_mark" fill="#FFFFFF" points="12.53,39.06 8.54,35.08 10.04,33.58 12.54,36.09 19.03,29.6 20.51,31.08 "/>
+</svg>

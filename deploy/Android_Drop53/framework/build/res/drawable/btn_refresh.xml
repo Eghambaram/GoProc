@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2011, 2014, Oracle and/or its affiliates. All rights reserved. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/reload_btn_andl_generic" android:state_pressed="true"/>
+    <item android:drawable="@drawable/reload_btn_andl_generic" android:state_focused="true"/>
+    <!--Button for Disabled State is declared by setting state_enabled to 'false'-->
+    <item android:drawable="@drawable/reload_btn_andl_disabled" android:state_enabled="false" />
+    <item android:drawable="@drawable/reload_btn_andl_generic"/>
+
+</selector>

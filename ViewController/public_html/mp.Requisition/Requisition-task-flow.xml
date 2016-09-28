@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-mobile-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.0">
+  <task-flow-definition id="Requisition-task-flow">
+    <default-activity>Req_status</default-activity>
+    <view id="Req_status">
+      <page>/mp.Requisition/Req_status.amx</page>
+    </view>
+    <view id="Req_detail">
+      <page>/mp.Requisition/Req_details.amx</page>
+    </view>
+    <view id="checkout">
+      <page>/mp.Requisition/edit_requesition.amx</page>
+    </view>
+    <view id="RFQ_Details">
+      <page>/RFQ_Details.amx</page>
+    </view>
+    <control-flow-rule id="__1">
+      <from-activity-id>Req_status</from-activity-id>
+      <control-flow-case id="__2">
+        <from-outcome>Requ_details</from-outcome>
+        <to-activity-id>Req_detail</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__3">
+        <from-outcome>refresh</from-outcome>
+        <to-activity-id>Req_status</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__4">
+      <from-activity-id>Req_detail</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome>checkout</from-outcome>
+        <to-activity-id>checkout</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__6">
+        <from-outcome>RFQ_details</from-outcome>
+        <to-activity-id>RFQ_Details</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <page-flow-scope-behavior>
+      <push-new/>
+    </page-flow-scope-behavior>
+  </task-flow-definition>
+</adfc-mobile-config>

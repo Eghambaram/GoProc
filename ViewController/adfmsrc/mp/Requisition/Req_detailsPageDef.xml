@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.2.1" id="Req_detailsPageDef"
+                Package="mp.Requisition">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="RequisitionLineItemsList" id="RequisitionLineItemsListIterator"/>
+    <accessorIterator MasterBinding="RequisitionLineItemsListIterator" Binds="requesitionLineItems" RangeSize="25"
+                      DataControl="RequisitionLineItemsList" BeanClass="mobile.RequisitionLineItem"
+                      id="requesitionLineItemsIterator"/>
+  </executables>
+  <bindings>
+    <methodAction id="toggleSpringboard" RequiresUpdateModel="true" Action="invokeMethod" MethodName="toggleSpringboard"
+                  IsViewObjectMethod="false" DataControl="ApplicationFeatures"
+                  InstanceName="data.ApplicationFeatures.dataProvider"/>
+    <tree IterBinding="requesitionLineItemsIterator" id="requesitionLineItems">
+      <nodeDefinition DefName="mobile.RequisitionLineItem" Name="requesitionLineItems0">
+        <AttrNames>
+          <Item Value="requisitionLineNo"/>
+          <Item Value="productTitle"/>
+          <Item Value="quantity"/>
+          <Item Value="deliverToLocation"/>
+          <Item Value="unitPrice"/>
+          <Item Value="currencyCode"/>
+          <Item Value="uom"/>
+          <Item Value="needByDate"/>
+          <Item Value="lineTotal"/>
+          <Item Value="category"/>
+          <Item Value="poNo"/>
+          <Item Value="vendorName"/>
+          <Item Value="vendorSite"/>
+          <Item Value="costCenter"/>
+          <Item Value="costCenterDescription"/>
+          <Item Value="lineType"/>
+          <Item Value="reqNum"/>
+          <Item Value="reqStatus"/>
+          <Item Value="rfqNum"/>
+          <Item Value="rfqStatus"/>
+          <Item Value="rfqHeaderId"/>
+          <Item Value="showReqSection"/>
+          <Item Value="showRfqSection"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="requesitionLineItemsIterator" id="requesitionLineItems1">
+      <nodeDefinition DefName="mobile.RequisitionLineItem" Name="requesitionLineItems10">
+        <AttrNames>
+          <Item Value="requisitionLineNo"/>
+          <Item Value="productTitle"/>
+          <Item Value="quantity"/>
+          <Item Value="deliverToLocation"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,396 @@
+
+@charset "windows-1252";
+/* Android Title bar styling begin */
+/*.amx-panelPage-header {
+  display: -webkit-box;  must be after flex for Chrome 
+  -webkit-box-orient: horizontal;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 56px;
+ background-color:  #0E4876;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.30);
+  z-index: 1;
+}*/
+.amx-panelPage-header-appIcon {
+  display: none;
+}
+.amx-panelPage-facet-primary {
+  -webkit-box-ordinal-group: 1;
+}
+.amx-panelPage-facet-header {
+  -webkit-box-ordinal-group: 2;
+  -webkit-box-flex: 1;
+  flex: 1;
+}
+.amx-panelPage-facet-secondary {
+  -webkit-box-ordinal-group: 4;
+}
+/* Android Title bar styling end */
+/* Header font style */
+.amx-panelPage-facet-header > .amx-outputText{
+    font-weight: bold;
+    font-size: large;
+}
+
+
+/* Header background color */
+.amx-panelPage-facet-header{
+ background-color:  #0E4876;
+}
+.amx-panelPage-facet-footer{
+ background-color:  #0E4876;
+}
+/*.amx-commandButton
+{
+  min-width: 27px;
+  width: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-height: 39px;
+  border-radius: 10px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.13);
+}*/
+
+.admf-username {
+  position: relative;
+  width: 80%;
+  margin: 33% 10% 5% 10%;
+  border: 1px solid #00322D;
+  border-radius:10px;
+  background-color:#ffffff;
+
+}
+
+
+.admf-password{
+  position: relative;
+  width: 80%;
+  margin: 0% 10% 10% 10%;
+  border-radius:10px;
+  border: 1px solid #00322D;
+  background-color:#ffffff;
+
+}
+
+.amx-panelFormLayout.admf-panelform {
+  margin: 12px 10px;
+  border: 1px solid #115B8A;
+  border-radius:6px;
+  border-right-width: 1px;
+  border-left-width: 1px;
+}
+
+
+.amx-commandButton.adfmf-commandButton-border
+{
+  /*border-radius:10px;*/
+  background-color:  #C89C31;
+}
+
+.amx-commandButton.adfmf-commandButton-border .amx-commandButton-label
+{
+  font: bold 12px Arial;
+  color: #FFFFFF;
+  padding: 4px;
+  }
+
+/* Button color start*/
+.amx-commandButton.adfmf-commandButton-large1 {
+  min-width: 27px;
+  width: auto;
+  background-color:  #0E4876;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-height: 39px;
+}
+
+.amx-commandButton.adfmf-commandButton-large1 .amx-commandButton-label {
+  font: bold 20px Arial;
+  color: #FFFFFF;
+  padding: 15px 12px 16px 12px;
+}
+
+.amx-commandButton.adfmf-commandButton-large1 .amx-commandButton-label:active {
+  font: bold 20px Arial;
+  color: yellow;
+  padding: 15px 12px 16px 12px;
+}
+/* Button color end*/
+
+
+
+.amx-listItem .amx-tableLayout .amx-outputText.adfmf-listItem-captionText-checkout {
+  font-size: 8px;
+  opacity: .76;
+  margin-top: -10px;
+  margin-bottom: -2px;
+  color: #595960;
+}
+
+/*.amx-panelPage-facet-secondary{
+ background-color:  #0E4876;
+}*/
+
+/*.amx-panelPage-facet-primary{
+ background-color:  #0E4876;
+}*/
+
+
+.amx-panelPage.adfmf-panelPage-springboard {
+  background-color: #31709C;
+  
+}
+/*.amx-listItem > .amx-outputText .spring-menu{
+    font-size: medium;
+     font-weight: bold;
+     color: #C89C31;*/
+     /*background-color: transparent;*/
+/*}*/
+
+.amx-image.login-avatar {
+    border: 2px solid #FFF;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    margin: 4px;
+    width: 144px;
+    height: 144px;
+}
+
+.amx-image.list-avatar {
+    border: 2px solid #FFF;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    margin: 4px;
+    width: 144px;
+    height: 144px;
+}
+
+.amx-image-error {
+  min-width: 20px;
+  min-height: 20px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url(Errorimg.png);
+}
+
+.amx-commandButton.adfmf-commandButton-border-cart
+{
+  background-color:  #C89C31;
+}
+
+.amx-commandButton.adfmf-commandButton-border-cart .amx-commandButton-label
+{
+  font: bold 12px Arial;
+  color: #FFFFFF;
+  padding: 1.5px;
+  }
+  
+   .amx-loading.showing {
+  animation-name: fade-in;
+  -webkit-animation-name: fade-in;
+  animation-duration: 2000ms;
+  -webkit-animation-duration: 2000ms;
+}
+
+
+
+  .amx-loading {
+  background-image: url(alta_loading_indicator_animated_andl.gif), url(alta_loading_indicator_background_andl.svg);
+  background-size: 40px 40px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+}
+
+.amx-refreshContainer-icon:after {
+  display: none;
+  content: url(android5_still_B_xxxhdpi_00.png) url(android5_still_B_xxxhdpi_01.png) url(android5_still_B_xxxhdpi_02.png) url(android5_still_B_xxxhdpi_03.png) url(android5_still_B_xxxhdpi_04.png) url(android5_still_B_xxxhdpi_05.png) url(android5_still_B_xxxhdpi_06.png) url(android5_still_B_xxxhdpi_07.png) url(android5_still_B_xxxhdpi_08.png) url(android5_still_B_xxxhdpi_09.png) url(Pull_To_Refresh_Android_5x_Animation_XXXHDPI.gif);
+}
+.amx-refreshContainer-pocket.amx-0 > .amx-refreshContainer-icon {
+  background-image: url(android5_still_B_xxxhdpi_00.png);
+  opacity: 0.1;
+}
+.amx-refreshContainer-pocket.amx-1 > .amx-refreshContainer-icon {
+  background-image: url(android5_still_B_xxxhdpi_01.png);
+  opacity: 0.5;
+}
+.amx-refreshContainer-pocket.amx-2 > .amx-refreshContainer-icon {
+  background-image: url(android5_still_B_xxxhdpi_02.png);
+}
+.amx-refreshContainer-pocket.amx-3 > .amx-refreshContainer-icon {
+  background-image: url(android5_still_B_xxxhdpi_03.png);
+}
+.amx-refreshContainer-pocket.amx-4 > .amx-refreshContainer-icon {
+  background-image: url(android5_still_B_xxxhdpi_04.png);
+}
+.amx-refreshContainer-pocket.amx-5 > .amx-refreshContainer-icon {
+  background-image: url(android5_still_B_xxxhdpi_05.png);
+}
+.amx-refreshContainer-pocket.amx-6 > .amx-refreshContainer-icon {
+  background-image: url(android5_still_B_xxxhdpi_06.png);
+}
+.amx-refreshContainer-pocket.amx-7 > .amx-refreshContainer-icon {
+  background-image: url(android5_still_B_xxxhdpi_07.png);
+}
+.amx-refreshContainer-pocket.amx-8 > .amx-refreshContainer-icon {
+  background-image: url(android5_still_B_xxxhdpi_08.png);
+}
+.amx-refreshContainer-pocket.amx-9 > .amx-refreshContainer-icon {
+  background-image: url(android5_still_B_xxxhdpi_09.png);
+}
+.amx-refreshContainer-pocket.amx-10 > .amx-refreshContainer-icon {
+  background-image: url(Pull_To_Refresh_Android_5x_Animation_XXXHDPI.gif);
+}
+
+.amx-listView-placeholder,
+HTML[dir=ltr] .amx-listItem-moreRows.amx-listItem-scrollStrategy,
+HTML[dir=rtl] .amx-listItem-moreRows.amx-listItem-scrollStrategy {
+  background-position: center center;
+  background-image: url(alta_loading_indicator_animated_andl.gif);
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  min-height: 43px;
+}
+.amx-listView-placeholder,
+HTML[dir=ltr] .amx-listItem-moreRows.amx-listItem-scrollStrategy.amx-listItem-scrollStrategyLoading,
+HTML[dir=rtl] .amx-listItem-moreRows.amx-listItem-scrollStrategy.amx-listItem-scrollStrategyLoading {
+  background-image: url(alta_loading_indicator_animated_andl.gif);
+} 
+ 
+
+
+/* listView*/
+ html[dir=ltr] .amx-listView-disclosedIcon { 
+  background-image: none;
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: 299px 180px;
+  height: 16px;
+  width: 16px;
+  top: 6px;
+}
+html[dir=rtl] .amx-listView-undisclosedIcon,
+html[dir=rtl] .amx-listView-disclosedIcon { 
+  background-image: none;
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: 299px 180px;
+  height: 16px;
+  width: 16px;
+  top: 6px;
+}
+HTML[dir="ltr"] .amx-listItem-caret {
+  background-image: none;
+  background-position: 7px 0; /* LTR and RTL slices are not perfectly centered hence the unique positions */
+  right: 5px;
+}
+HTML[dir="rtl"] .amx-listItem-caret {
+  background-image: none;
+  background-position: 2px 0; /* LTR and RTL slices are not perfectly centered hence the unique positions */
+  left: 5px;
+}
+HTML[dir="ltr"] .amx-listItem-handle {
+  background-image: none;
+  background-position: -165px -90px;
+  right: 8px;
+}
+HTML[dir="rtl"] .amx-listItem-handle {
+   background-image: none;
+  background-position: 7px -27px; /* LTR and RTL slices are not perfectly centered hence the unique positions */
+  left: 0;
+}
+
+
+
+/* Input Style*/
+
+.amx-inputText .field-label {
+  vertical-align: top;
+   font-size: 14px;
+  color: #000000;
+  font-family: Arial, sans-serif;
+}
+
+.amx-selectOneChoice .field-label {
+  vertical-align: top;
+   font-size: 14px;
+   color: #000000;
+  font-family: Arial, sans-serif;
+}
+
+
+.amx-inputDate .field-label {
+  vertical-align: top;
+   font-size: 14px;
+   color: #000000;
+  font-family: Arial, sans-serif;
+}
+
+.amx-selectOneRadio .field-label {
+  vertical-align: top;
+   font-size: 14px;
+   color: #000000;
+  font-family: Arial, sans-serif;
+}
+
+/*.amx-selectOneRadio .selectItemsContainer .amx-selectItem {
+  box-sizing: border-box;
+  border-top: 1px solid #D5DFE5;
+  font-weight: bold;
+   font-size: 14px;
+  color: #000000;
+  vertical-align: middle;
+
+}*/
+
+.amx-outputText {
+  vertical-align: top;
+ font-size: 14px;
+  color: #000000;
+  font-family: Arial, sans-serif;
+}
+
+.amx-tableLayout .amx-outputText.adfmf-listItem-output {
+  font-size: 14px;
+   padding-left: 10px;
+  color: #000000;
+}
+
+.amx-tableLayout .amx-outputText.adfmf-listItem-output {
+  font-size: 14px;
+   padding-left: 10px;
+  color: #000000;
+}
+
+.amx-image.admf-cart-design {
+margin-left:-8px;
+margin-top:-15px;
+background-color:  #0E4876;
+}
+
+.amx-commandButton.adfmf-commandButton-border-Addcart
+{
+  background-color:  #C89C31;
+}
+
+.amx-commandButton.adfmf-commandButton-border-Addcart .amx-commandButton-label
+{
+  font: bold 14px Arial;
+  color: #FFFFFF;
+  padding: 1.5px;
+  }
+  
+  .amx-inputText.adfmf-inputText-Description .field-value input,
+.amx-inputText.adfmf-inputText-Description .field-value textarea {
+word-break: break-word;
+  overflow: hidden;
+  width: 100%;
+  text-align: left;
+  font-weight: normal;
+}

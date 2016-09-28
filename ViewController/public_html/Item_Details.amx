@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt" xmlns:notification="http://xmlns.ateam.com/notification">
+    <amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
+     <amx:verbatim id="v3">
+
+        <![CDATA[
+
+         <script type="text/javascript">
+         var value;
+          function alertDismissed(buttonIndex) {
+          
+          }
+          
+          function onConfirmAdd(buttonIndex) {
+       
+          if(buttonIndex==1){
+            adf.mf.api.invokeMethod("mobile.Rest", "doSelectItemDetails", "", 
+            function() {}, function() {});           
+          }
+       }
+       
+         
+         function contracted_alert(){
+              navigator.notification.confirm(
+                 'Are you aware that your organization has a contract for this item? Press Yes if you would still like to add the non-contracted item to your cart', // message
+                  onConfirmAdd,            // callback to invoke with index of button pressed
+                  '',           // title
+                  ['Yes','Cancel']     // buttonLabels
+             );
+         }
+          
+          
+          
+          
+        function displayAlert(){
+         navigator.notification.alert(
+            'Items added to your cart successfully',  
+             alertDismissed,         
+             '',            
+              'Ok'                  
+           );
+       }
+         </script>
+
+         ]]>
+
+        </amx:verbatim>
+        <amx:facet name="header">
+            <amx:outputText value="Item Details" id="ot1"
+                            inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;"
+                            styleClass="adfmf-commandButton-highlight"/>
+        </amx:facet>
+        <amx:facet name="primary">
+            <amx:commandButton action="__back" id="cb1"/>
+        </amx:facet>
+        <amx:facet name="secondary">
+            <!--<amx:commandButton id="loginIcon" icon="images/Cart-24.png"  action="checkout"
+                               inlineStyle="background-color:transparent;"/>-->
+            <amx:commandLink id="cl1" actionListener="#{Rest.showCartDetailsScreen}">
+                <notification:badge id="badge" class="notification-icon" unread="#{applicationScope.unreadCount}"/>
+                <amx:image id="i2" source="/images/Cart-24.png" shortDesc="Springboard Image"
+                           styleClass="admf-cart-design"/>
+            </amx:commandLink>
+        </amx:facet>
+        <amx:panelGroupLayout id="pgl2">
+            <amx:tableLayout width="100%" id="qarl2" inlineStyle="margin-top:10px">
+                <amx:rowLayout id="rl2">
+                    <amx:cellFormat width="100%" id="cf4" halign="center">
+                        <amx:commandButton text="Add to Cart" id="zcb2"
+                                           inlineStyle="width:80%; background-color:#C89C31;background-image:none;font-size: 15px;"
+                                           styleClass="adfmf-commandButton-border-Addcart"
+                                           actionListener="#{Rest.addItemFromDetailToCart}"></amx:commandButton>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout>
+        </amx:panelGroupLayout>
+        <amx:panelGroupLayout id="pgl3">
+            <amx:tableLayout width="100%" id="tlc4" halign="start" inlineStyle="margin: 5% 3% 3% 3%;">
+                <amx:rowLayout id="rl1">
+                    <amx:cellFormat width="80%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cf6"
+                                    valign="top">
+                        <amx:outputText value="Supplier: #{pageFlowScope.vendorName}"
+                                        inlineStyle="word-break: break-word;white-space: pre-wrap; font-size: 16px;"
+                                        id="ot7"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat width="80px" halign="center" id="cf3" valign="middle">
+                        <amx:image source="#{pageFlowScope.itemImageDeliverSource}" id="i1"
+                                   rendered="#{pageFlowScope.showDiverse}"/>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+                <amx:rowLayout id="rl3">
+                    <amx:cellFormat width="100%" height="#{deviceScope.device.os=='Android'?'22':'19'}px" id="cf8"
+                                    valign="top" columnSpan="2">
+                        <amx:outputText value="#{pageFlowScope.productTitle}" id="ot5"
+                                        inlineStyle="word-break: break-word;white-space: pre-wrap; font-size: 18px;font-weight: bold;"/>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout>
+        </amx:panelGroupLayout>
+        <!--<amx:tableLayout width="100%" id="tl11" inlineStyle="margin-top:5px;">
+            <amx:rowLayout  id="rl2">
+                <amx:cellFormat width="100%" id="cf4" halign="center">
+                    -->
+        <!--<amx:outputText value="#{row.productTitle}" id="ot4"/>-->
+        <!--
+                                 <amx:commandButton inlineStyle="margin-right:5px; background-color:#C89C31;background-image:none;"
+                                       actionListener="#{Rest.addItemFromDetailToCart}" styleClass="adfmf-commandButton-border-cart"
+                                       text="Add to Cart" id="cb21"/>
+                </amx:cellFormat>
+                </amx:rowLayout>
+                </amx:tableLayout>-->
+        <!--<amx:panelLabelAndMessage id="plam1">
+            <amx:outputText value="#{pageFlowScope.productTitle}" id="ot2"/>
+        </amx:panelLabelAndMessage>-->
+        <!--<amx:panelFormLayout id="pfl1" labelPosition="end" fieldHalign="start">
+   
+    <amx:inputText label="Unit Price  :" readOnly="true" id="it3" value="#{pageFlowScope.unitPrice} USD"/>
+    <amx:inputText label="Quantity :" id="it2" value="#{pageFlowScope.quantity}"/>
+    <amx:inputText label="Unit Of Measurement  :" readOnly="true" id="it5" value="Each"/>
+    <amx:inputText label="Product Category  :" readOnly="true" id="it4" value="#{pageFlowScope.productCategory}"/>
+    <amx:inputText label="Vendor Name :" readOnly="true" id="it6" value="#{pageFlowScope.vendorName}"/>
+    <amx:inputText label="Vendor Site Code :" readOnly="true" id="it7" value="#{pageFlowScope.vendorSiteCode}"/>
+    <amx:inputText label="PO Number:" readOnly="true" id="it8" value="#{pageFlowScope.poNo}"/>
+   
+    </amx:panelFormLayout>-->
+        <amx:panelGroupLayout id="pgl1" valign="middle">
+            <amx:tableLayout width="100%" id="tlq4" halign="start" inlineStyle="margin: 5% 10% 10% 10%;">
+                <amx:rowLayout id="rl3q1">
+                    <amx:cellFormat halign="center" id="cf6q1" columnSpan="2">
+                        <amx:image source="#{pageFlowScope.itemImageUrl}" id="i3" styleClass="list-avatar"/>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout>
+            <amx:tableLayout width="100%" id="tl1" halign="start" inlineStyle="margin: 0% 3% 3% 3%;">
+                <!--<amx:rowLayout id="rl31">
+                    <amx:cellFormat halign="start" id="cf61" width="40%">
+                        <amx:outputText value="Supplier:" id="ot3"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat halign="start" id="cf1" width="60%">
+                        <amx:outputText id="it6" value="#{pageFlowScope.vendorName} #{pageFlowScope.source}"/>
+                    </amx:cellFormat>
+                </amx:rowLayout>-->
+                <amx:rowLayout id="rlq31">
+                    <amx:cellFormat halign="start" id="cfq61" width="40%" valign="top">
+                        <amx:outputText value="Price:" id="otq3" inlineStyle="font-size: 16px;"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat halign="start" id="cfq1" width="60%" valign="top">
+                        <amx:outputText id="itq6" value="$ #{pageFlowScope.unitPrice} #{pageFlowScope.uom}"  inlineStyle="font-size: 16px;"/>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+                <amx:rowLayout id="crl31">
+                    <amx:cellFormat halign="start" id="cfc61" width="30%" valign="top">
+                        <amx:outputText value="Category:" id="otc3"  inlineStyle="font-size: 16px;"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat halign="start" id="cfd1" width="70%" valign="top">
+                        <amx:outputText id="itd6" value="#{pageFlowScope.productCategory}" inlineStyle="font-size: 16px;"/>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+                <amx:rowLayout id="rla31">
+                    <amx:cellFormat halign="start" id="cfa61" width="40%" valign="top">
+                        <amx:outputText value="Supplier Site:" id="ota3" inlineStyle="font-size: 16px;"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat halign="start" id="cfb1" width="60%" valign="top">
+                        <amx:outputText id="itb6" value="#{pageFlowScope.vendorSiteCode}" inlineStyle="font-size: 16px;"/>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+           <amx:rowLayout id="rlaw31"  rendered="#{pageFlowScope.sellerDetailShow}">
+                    <amx:cellFormat halign="start" id="cwfa61" width="40%" valign="top">
+                        <amx:outputText value="Seller:" id="owta3" inlineStyle="font-size: 16px;"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat halign="start" id="cwfb1" width="60%" valign="top">
+                        <amx:outputText id="iwtb6" value="#{pageFlowScope.sellerName}" inlineStyle="font-size: 16px;"/>
+                    </amx:cellFormat>
+                </amx:rowLayout>     
+                <!--<amx:rowLayout id="rl32">
+                    <amx:cellFormat halign="center" id="cf62">
+                        <amx:inputText label="Price:" readOnly="true" id="it3" value="#{pageFlowScope.unitPrice} USD"/>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+                <amx:rowLayout id="rl33">
+                    <amx:cellFormat halign="center" id="cf63">
+                        <amx:inputText label="Supplier Site:" readOnly="true" id="it7"
+                                       value="#{pageFlowScope.vendorSiteCode}"/>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+                <amx:rowLayout id="rl34">
+                    <amx:cellFormat halign="center" id="cf64">
+                        <amx:inputText label="Category:" readOnly="true" id="it4"
+                                       value="#{pageFlowScope.productCategory}"/>
+                    </amx:cellFormat>
+                </amx:rowLayout>-->
+            </amx:tableLayout>
+                                    
+        </amx:panelGroupLayout>
+    </amx:panelPage>
+</amx:view>

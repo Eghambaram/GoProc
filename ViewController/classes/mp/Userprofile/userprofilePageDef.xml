@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.2.1" id="userprofilePageDef"
+                Package="mp.Userprofile">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="DeliverToLocationList" id="DeliverToLocationListIterator"/>
+    <accessorIterator MasterBinding="DeliverToLocationListIterator" Binds="deliverToLocations" RangeSize="25"
+                      DataControl="DeliverToLocationList" BeanClass="mobile.DeliverToLocation"
+                      id="deliverToLocationsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="CostCenterList" id="CostCenterListIterator"/>
+    <accessorIterator MasterBinding="CostCenterListIterator" Binds="costCenters" RangeSize="25"
+                      DataControl="CostCenterList" BeanClass="mobile.CostCenter" id="costCentersIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="MultiOrgList" id="MultiOrgListIterator"/>
+    <accessorIterator MasterBinding="MultiOrgListIterator" Binds="multiOrgs" RangeSize="25" DataControl="MultiOrgList"
+                      BeanClass="mobile.MultiOrg" id="multiOrgsIterator"/>
+  </executables>
+  <bindings>
+    <methodAction id="gotoFeature" RequiresUpdateModel="true" Action="invokeMethod" MethodName="gotoFeature"
+                  IsViewObjectMethod="false" DataControl="ApplicationFeatures"
+                  InstanceName="data.ApplicationFeatures.dataProvider">
+      <NamedData NDName="featureId" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="toggleSpringboard" RequiresUpdateModel="true" Action="invokeMethod" MethodName="toggleSpringboard"
+                  IsViewObjectMethod="false" DataControl="ApplicationFeatures"
+                  InstanceName="data.ApplicationFeatures.dataProvider"/>
+    <list IterBinding="deliverToLocationsIterator" ListOperMode="navigation" ListIter="deliverToLocationsIterator"
+          id="deliverToLocations" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="code"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="costCentersIterator" ListOperMode="navigation" ListIter="costCentersIterator" id="costCenters"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="name"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="multiOrgsIterator" ListOperMode="navigation" ListIter="multiOrgsIterator" id="multiOrgs"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="orgName"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

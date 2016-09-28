@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.2.1" id="NotificationPageDef"
+                Package="mp.Notification">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="AlertsList" id="AlertsListIterator"/>
+    <accessorIterator MasterBinding="AlertsListIterator" Binds="alerts" RangeSize="25" DataControl="AlertsList"
+                      BeanClass="mobile.Alert" id="alertsIterator"/>
+  </executables>
+  <bindings>
+    <methodAction id="toggleSpringboard" RequiresUpdateModel="true" Action="invokeMethod" MethodName="toggleSpringboard"
+                  IsViewObjectMethod="false" DataControl="ApplicationFeatures"
+                  InstanceName="data.ApplicationFeatures.dataProvider"/>
+    <tree IterBinding="alertsIterator" id="alerts">
+      <nodeDefinition DefName="mobile.Alert" Name="alerts0">
+        <AttrNames>
+          <Item Value="title"/>
+          <Item Value="id"/>
+          <Item Value="reason"/>
+          <Item Value="type"/>
+          <Item Value="name"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

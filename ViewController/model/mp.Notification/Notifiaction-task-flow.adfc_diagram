@@ -1,0 +1,72 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">Notification</property>
+      <property
+         name="page">/mp.Notification/Notification.amx</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>Notification&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">154.94824</property>
+      <property
+         name="x">147.0</property>
+   </View>
+   <View
+      id="View5">
+      <property
+         name="activityId">Notification_details</property>
+      <property
+         name="page">/mp.Notification/NotificationDetails.amx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>Notification_details&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">149.24707</property>
+      <property
+         name="x">401.0</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase7"
+      from="View2"
+      to="View5">
+      <property
+         name="fromOutcome">Details_notification</property>
+      <property
+         name="sdm:polyPoints">R54,189.90317,158.09766,360.0,148.89648,L50</property>
+   </ControlFlowCase>
+   <View
+      id="View6">
+      <property
+         name="activityId">Noti_detail</property>
+      <property
+         name="page">/Noti_detail.amx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>Noti_detail&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">58.29883</property>
+      <property
+         name="x">295.0</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase8"
+      from="View2"
+      to="View6">
+      <property
+         name="fromOutcome">detail</property>
+      <property
+         name="sdm:polyPoints">R46,188.0,151.09766,254.0,57.948242,L50</property>
+   </ControlFlowCase>
+</SDM>

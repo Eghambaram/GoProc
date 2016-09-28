@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-mobile-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.0">
+  <task-flow-definition id="ViewController-task-flow">
+    <default-activity>search</default-activity>
+    <managed-bean id="__3">
+      <managed-bean-name>Rest</managed-bean-name>
+      <managed-bean-class>mobile.Rest</managed-bean-class>
+      <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+    <view id="search">
+      <page>/search.amx</page>
+    </view>
+    <view id="Item_Details">
+      <page>/Item_Details.amx</page>
+    </view>
+    <view id="refined_search">
+      <page>/refined_search.amx</page>
+    </view>
+    <view id="checkout">
+      <page>/checkout.amx</page>
+    </view>
+    <view id="refined_search_services">
+      <page>/refined_search_services.amx</page>
+    </view>
+    <control-flow-rule id="__4">
+      <from-activity-id>search</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome>refresh</from-outcome>
+        <to-activity-id>search</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__6">
+        <from-outcome>item_detail</from-outcome>
+        <to-activity-id>Item_Details</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__10">
+        <from-outcome>refined_search</from-outcome>
+        <to-activity-id>refined_search</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__9">
+        <from-outcome>checkout</from-outcome>
+        <to-activity-id>checkout</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__2">
+        <from-outcome>refined_search_services</from-outcome>
+        <to-activity-id>refined_search_services</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id>Item_Details</from-activity-id>
+      <control-flow-case id="__8">
+        <from-outcome>req_submit</from-outcome>
+        <to-activity-id>search</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__1">
+        <from-outcome>checkout</from-outcome>
+        <to-activity-id>checkout</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__15">
+      <from-activity-id>refined_search</from-activity-id>
+      <control-flow-case id="__16">
+        <from-outcome>ref_search</from-outcome>
+        <to-activity-id>search</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__13">
+        <from-outcome>checkout</from-outcome>
+        <to-activity-id>checkout</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__11">
+      <from-activity-id>refined_search_services</from-activity-id>
+      <control-flow-case id="__12">
+        <from-outcome>ref_search</from-outcome>
+        <to-activity-id>search</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__14">
+        <from-outcome>checkout</from-outcome>
+        <to-activity-id>checkout</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+  </task-flow-definition>
+</adfc-mobile-config>

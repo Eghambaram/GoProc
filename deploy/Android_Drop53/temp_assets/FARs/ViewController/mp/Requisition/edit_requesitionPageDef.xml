@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.2.1" id="edit_requesitionPageDef"
+                Package="mp.Requisition">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="SelectedItemsList" id="SelectedItemsListIterator"/>
+    <accessorIterator MasterBinding="SelectedItemsListIterator" Binds="assets" RangeSize="25"
+                      DataControl="SelectedItemsList" BeanClass="mobile.SelectedItem" id="assetsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="DeliverToLocationList" id="DeliverToLocationListIterator"/>
+    <accessorIterator MasterBinding="DeliverToLocationListIterator" Binds="deliverToLocations" RangeSize="25"
+                      DataControl="DeliverToLocationList" BeanClass="mobile.DeliverToLocation"
+                      id="deliverToLocationsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="CostCenterList" id="CostCenterListIterator"/>
+    <accessorIterator MasterBinding="CostCenterListIterator" Binds="costCenters" RangeSize="25"
+                      DataControl="CostCenterList" BeanClass="mobile.CostCenter" id="costCentersIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="assetsIterator" id="assets">
+      <nodeDefinition DefName="mobile.SelectedItem" Name="assets0">
+        <AttrNames>
+          <Item Value="quantity"/>
+          <Item Value="need_by_date"/>
+          <Item Value="deliver_to_location"/>
+          <Item Value="checked"/>
+          <Item Value="source"/>
+          <Item Value="uom"/>
+          <Item Value="imageUrl"/>
+          <Item Value="poNo"/>
+          <Item Value="vendorName"/>
+          <Item Value="vendorSiteCode"/>
+          <Item Value="productCategory"/>
+          <Item Value="productTitle"/>
+          <Item Value="unitPrice"/>
+          <Item Value="amount"/>
+          <Item Value="rowid"/>
+          <Item Value="costCenter"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="deliverToLocationsIterator" ListOperMode="navigation" ListIter="deliverToLocationsIterator"
+          id="deliverToLocations" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="code"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="costCentersIterator" ListOperMode="navigation" ListIter="costCentersIterator" id="costCenters"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="description"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-mobile-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.0">
+  <task-flow-definition id="login-task-flow">
+    <default-activity>login</default-activity>
+    <managed-bean id="__5">
+      <managed-bean-name>Login</managed-bean-name>
+      <managed-bean-class>mobile.Login</managed-bean-class>
+      <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+    <view id="login">
+      <page>/mp.login/login.amx</page>
+    </view>
+    <view id="forgot_up">
+      <page>/mp.login/forgotpassword.amx</page>
+    </view>
+    <control-flow-rule id="__1">
+      <from-activity-id>login</from-activity-id>
+      <control-flow-case id="__2">
+        <from-outcome>forgotpass_user</from-outcome>
+        <to-activity-id>forgot_up</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__3">
+      <from-activity-id>forgot_up</from-activity-id>
+      <control-flow-case id="__4">
+        <from-outcome>successforgot</from-outcome>
+        <to-activity-id>login</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <page-flow-scope-behavior>
+      <push-new/>
+    </page-flow-scope-behavior>
+  </task-flow-definition>
+</adfc-mobile-config>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!-- Copyright (c) 2011, 2014, Oracle and/or its affiliates. All rights reserved. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="$$app.package$$">
+  <uses-sdk/>
+
+  <application android:icon="$$app.icon$$" android:label="$$app.name$$" android:name="oracle.adfmf.Application" android:supportsRtl="true">
+    <activity android:configChanges="$$app.configChanges$$" android:hardwareAccelerated="true" android:label="$$app.label$$" android:launchMode="singleTask" android:name="oracle.adfmf.Container" android:theme="@style/Theme.MAF" android:windowSoftInputMode="adjustResize">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+      $$app.scheme$$
+    </activity>
+    <activity android:name="oracle.adfmf.SettingsActivity" android:theme="@android:style/Theme.NoTitleBar" android:windowSoftInputMode="adjustResize"/>
+    <activity android:name="oracle.adfmf.framework.localnotification.MafNativeLocalNotificationActivity"/>
+    <receiver android:name="oracle.adfmf.framework.localnotification.NativeLocalNotificationBroadcastReceiver"/>   
+    <meta-data android:name="secureWindowContents" android:value="false"/>
+	<receiver
+		android:name="oracle.adfmf.framework.localnotification.NativeLocalNotificationRestoreReceiver"
+		android:exported="false">
+		<intent-filter>
+			<action android:name="android.intent.action.BOOT_COMPLETED" />
+		</intent-filter>
+	</receiver>
+  </application>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+  
+  <!-- This is needed by maf local notification plugin -->
+  <uses-permission android:name="android.permission.VIBRATE" />
+  
+</manifest>

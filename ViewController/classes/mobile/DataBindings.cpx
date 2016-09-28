@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.1.3.9.1" id="DataBindings"
+             SeparateXMLFiles="false" Package="mobile" ClientType="Generic">
+  <pageMap>
+    <page path="/search.amx" usageId="mobile_searchPageDef"/>
+    <page path="/checkout.amx" usageId="mobile_checkoutPageDef"/>
+    <page path="/refined_search.amx" usageId="mobile_refined_searchPageDef"/>
+    <page path="/mp.springboard/springboard.amx" usageId="mobile_springboardPageDef"/>
+    <page path="/mp.Requisition/Req_details.amx" usageId="mobile_Req_detailsPageDef"/>
+    <page path="/mp.Userprofile/userprofile.amx" usageId="mobile_userprofilePageDef"/>
+    <page path="/mp.Notification/Notification.amx" usageId="mobile_NotificationPageDef"/>
+    <page path="/mp.Requisition/Req_status.amx" usageId="mobile_Req_statusPageDef"/>
+    <page path="/mp.Quotation/Quotation.amx" usageId="mobile_QuotationPageDef"/>
+    <page path="/mp.Notification/NotificationDetails.amx" usageId="mobile_NotificationDetailsPageDef"/>
+    <page path="/mp.Requisition/edit_requesition.amx" usageId="mobile_edit_requesitionPageDef"/>
+    <page path="/mp.Buyerhelp/help.amx" usageId="mobile_helpPageDef"/>
+    <page path="/Item_Details.amx" usageId="mobile_Item_DetailsPageDef"/>
+    <page path="/refined_search_services.amx" usageId="mobile_refined_search_servicesPageDef"/>
+    <page path="/checkout_new.amx" usageId="mobile_checkout_newPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="mobile_searchPageDef" path="mobile.pageDefs.searchPageDef"/>
+    <page id="mobile_checkoutPageDef" path="mobile.pageDefs.checkoutPageDef"/>
+    <page id="mobile_refined_searchPageDef" path="mobile.pageDefs.refined_searchPageDef"/>
+    <page id="mobile_springboardPageDef" path="mp.springboard.springboardPageDef"/>
+    <page id="mobile_Req_detailsPageDef" path="mp.Requisition.Req_detailsPageDef"/>
+    <page id="mobile_userprofilePageDef" path="mp.Userprofile.userprofilePageDef"/>
+    <page id="mobile_NotificationPageDef" path="mp.Notification.NotificationPageDef"/>
+    <page id="mobile_Req_statusPageDef" path="mp.Requisition.Req_statusPageDef"/>
+    <page id="mobile_QuotationPageDef" path="mp.Quotation.QuotationPageDef"/>
+    <page id="mobile_NotificationDetailsPageDef" path="mp.Notification.NotificationDetailsPageDef"/>
+    <page id="mobile_edit_requesitionPageDef" path="mp.Requisition.edit_requesitionPageDef"/>
+    <page id="mobile_helpPageDef" path="mp.Buyerhelp.helpPageDef"/>
+    <page id="mobile_Item_DetailsPageDef" path="mobile.pageDefs.Item_DetailsPageDef"/>
+    <page id="mobile_refined_search_servicesPageDef" path="mobile.pageDefs.refined_search_servicesPageDef"/>
+    <page id="mobile_checkout_newPageDef" path="mobile.pageDefs.checkout_newPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <dc id="NaturalAcccountList" path="mobile.NaturalAcccountList"/>
+    <dc id="MultiOrgList" path="mobile.MultiOrgList"/>
+    <dc id="AliasList" path="mobile.AliasList"/>
+    <dc id="OrderList" path="mobile.OrderList"/>
+    <dc id="ImageList" path="mobile.ImageList"/>
+    <dc id="DeviceFeatures" path="application.DeviceFeatures"/>
+    <dc id="ServiceLocationsList" path="mobile.ServiceLocationsList"/>
+    <dc id="FrequencyPeriodList" path="mobile.FrequencyPeriodList"/>
+    <dc id="ServiceFrequencyTypeList" path="mobile.ServiceFrequencyTypeList"/>
+    <dc id="ContractLookupList" path="mobile.ContractLookupList"/>
+    <dc id="UOMList" path="mobile.UOMList"/>
+    <dc id="AlertsList" path="mobile.AlertsList"/>
+    <dc id="DeliverToLocationList" path="mobile.DeliverToLocationList"/>
+    <dc id="CostCenterList" path="mobile.CostCenterList"/>
+    <dc id="SupplierList" path="mobile.SupplierList"/>
+    <dc id="QuotationList" path="mobile.QuotationList"/>
+    <dc id="RFQList" path="mobile.RFQList"/>
+    <dc id="RequisitionLineItemsList" path="mobile.RequisitionLineItemsList"/>
+    <dc id="RequisitionsList" path="mobile.RequisitionsList"/>
+    <dc id="BrandList" path="mobile.BrandList"/>
+    <dc id="ApplicationFeatures1" path="application.ApplicationFeatures"/>
+    <dc id="ApplicationFeatures" path="wb.application.ApplicationFeatures"/>
+    <dc id="SelectedItemsList1" path="mobile.SelectedItemsList1"/>
+    <dc id="ItemsList1" path="mobile.ItemsList1"/>
+    <dc id="CategoryList4" path="mobile.CategoryList4"/>
+    <dc id="CategoryList3" path="mobile.CategoryList3"/>
+    <dc id="CategoryList2" path="mobile.CategoryList2"/>
+    <dc id="CategoryList1" path="mobile.CategoryList1"/>
+    <dc id="CategoryList" path="mobile.CategoryList"/>
+    <dc id="SelectedItemsList" path="mobile.SelectedItemsList"/>
+    <dc id="ItemsList" path="mobile.ItemsList"/>
+  </dataControlUsages>
+</Application>

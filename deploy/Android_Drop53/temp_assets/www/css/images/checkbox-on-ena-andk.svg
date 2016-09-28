@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="32px" height="32px" viewBox="1.88 2.12 32 32" enable-background="new 1.88 2.12 32 32" xml:space="preserve">
+<path fill="#3D3D3D" d="M24.06,10.77V25H10.22V10.77H24.06 M25.04,9.76H9.23v16.26h15.81V9.76L25.04,9.76z"/>
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="14.6177" y1="19.4248" x2="16.6893" y2="17.3532">
+	<stop  offset="0.25" style="stop-color:#28679B"/>
+	<stop  offset="0.75" style="stop-color:#75B0E3"/>
+</linearGradient>
+<polygon fill="url(#SVGID_1_)" points="17.42,18.16 14.17,14.83 12.19,16.87 17.14,21.94 "/>
+<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="22.4102" y1="16.668" x2="20.2667" y2="14.5246">
+	<stop  offset="0.25" style="stop-color:#28679B"/>
+	<stop  offset="0.75" style="stop-color:#75B0E3"/>
+</linearGradient>
+<polygon fill="url(#SVGID_2_)" points="25.54,9.25 17.14,17.88 17.14,21.94 27.51,11.28 "/>
+<path fill="#3D3D3D" d="M25.54,9.82l1.42,1.46l-9.83,10.1l-4.39-4.51l1.42-1.46l2.68,2.76l0.28,0.29l0.29-0.29L25.54,9.82
+	 M25.54,9.25l-8.41,8.64l-2.96-3.05l-1.98,2.03l4.94,5.08l10.38-10.66L25.54,9.25L25.54,9.25z"/>
+</svg>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Search_Icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" width="16px" height="17px" viewBox="0 0 16 17" enable-background="new 0 0 16 17" xml:space="preserve">
+<rect x="2.19" y="9.7" transform="matrix(0.7064 0.7078 -0.7078 0.7064 10.3246 1.5799)" fill="#878C90" width="2.14" height="7.07"/>
+<path fill="#878C90" d="M16.02,5.51c0,3.04-2.47,5.51-5.51,5.51C7.47,11.02,5,8.55,5,5.51C5,2.47,7.47,0,10.51,0
+	C13.55,0,16.02,2.47,16.02,5.51z M10.49,1.5c-2.2,0-3.99,1.79-3.99,3.99c0,2.2,1.79,3.99,3.99,3.99c2.2,0,3.99-1.79,3.99-3.99
+	C14.48,3.29,12.7,1.5,10.49,1.5z"/>
+</svg>

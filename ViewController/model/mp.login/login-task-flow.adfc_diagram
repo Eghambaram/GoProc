@@ -1,0 +1,57 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">login</property>
+      <property
+         name="page">/mp.login/login.amx</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>login&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">149.94824</property>
+      <property
+         name="x">148.0</property>
+   </View>
+   <View
+      id="View3">
+      <property
+         name="activityId">forgot_up</property>
+      <property
+         name="page">/mp.login/forgotpassword.amx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>forgot_up&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">147.89648</property>
+      <property
+         name="x">386.0</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="View2"
+      to="View3">
+      <property
+         name="fromOutcome">forgotpass_user</property>
+      <property
+         name="sdm:polyPoints">R46,189.0,146.09766,344.95395,144.0459,L46</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase5"
+      from="View3"
+      to="View2">
+      <property
+         name="fromOutcome">successforgot</property>
+      <property
+         name="sdm:polyPoints">L54,345.0,151.0459,189.04604,153.09766,R54</property>
+   </ControlFlowCase>
+</SDM>

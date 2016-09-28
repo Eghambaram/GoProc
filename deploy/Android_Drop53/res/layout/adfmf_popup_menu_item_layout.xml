@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2011, 2014, Oracle and/or its affiliates. All rights reserved. -->
+<oracle.adfmf.compat.MenuItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/adfmf_popup_menu_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeightSmall"
+    android:minWidth="196dip"
+    android:paddingEnd="16dip">
+    
+    <!-- The title and summary have some gap between them, and this 'group' should be centered vertically. -->
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dip"
+        android:duplicateParentState="true">
+        
+        <TextView 
+            android:id="@+id/adfmf_menu_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:textAppearance="?android:attr/textAppearanceLargePopupMenu"
+            android:singleLine="true"
+            android:duplicateParentState="true"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:textAlignment="viewStart" />
+    </RelativeLayout>
+</oracle.adfmf.compat.MenuItemView>

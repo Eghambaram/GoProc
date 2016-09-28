@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+<amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
+        <amx:facet name="header">
+            <amx:outputText value="Notification Details" id="ot1"
+                            inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;"
+                            styleClass="adfmf-commandButton-highlight"/>
+        </amx:facet>
+        <amx:facet name="primary">
+            <amx:commandLink id="cl1" action="__back">
+                <amx:image source="/images/logo.png" id="i3"/>
+            </amx:commandLink>
+        </amx:facet>
+        
+         <amx:facet name="secondary">
+            <amx:commandButton text="Change" rendered="false"  inlineStyle="margin-right:5px; background-color:#0E4876;background-image:none;" styleClass="adfmf-commandButton-border-cart" id="cb1"/>
+        </amx:facet>
+        
+          <amx:outputHtml id="oh1" value="#{pageFlowScope.notificationReason}"/>
+        
+ 
+        <!--<amx:tableLayout width="100%" id="qarl1">
+                                                <amx:rowLayout id="rrlw8">
+                        <amx:cellFormat width="10px" id="acfwr8"/>
+                        <amx:cellFormat width="30%" halign="start" id="acfw8" valign="top">
+                            <amx:outputText value="Title:" id="ot4" inlineStyle="font-size: 14px; margin-left:10px; clear: both;font-family: Arial, sans-serif;"/>
+                        </amx:cellFormat>
+                          <amx:cellFormat width="2px" id="acqfwr8"/>
+                        <amx:cellFormat width="70%" halign="start" id="aqcfw8" valign="top">
+                            <amx:outputText value="#{pageFlowScope.notificationTitle}" id="oqt4" inlineStyle="font-size: 14px; clear: both;font-family: Arial, sans-serif;"/>
+                        </amx:cellFormat>
+                        </amx:rowLayout>
+                    <amx:rowLayout id="rrlw1">
+                        <amx:cellFormat width="5px" id="acfwr3"/>
+                        <amx:cellFormat width="30%" halign="start" id="acfw4" valign="top">
+                            <amx:outputText value="Reason:" id="ozt4" inlineStyle="font-size: 14px; margin-left:10px; clear: both;font-family: Arial, sans-serif;"/>
+                        </amx:cellFormat>
+                          <amx:cellFormat width="2px" id="cqfwr8"/>
+                        <amx:cellFormat width="70%" halign="start" id="qcfw8" valign="top">
+                            
+                    <amx:outputHtml id="oh1" value="#{pageFlowScope.notificationReason}"/>
+                </amx:cellFormat>
+                        </amx:rowLayout>
+                        <amx:rowLayout id="trFYI"  >
+                    <amx:cellFormat id="zcf2" halign="center" inlineStyle="width:40%">
+                        <amx:commandButton text="Ok" rendered="#{pageFlowScope.displayFYI}" id="zcb2"
+                                           inlineStyle="width:85%; background-color:#C89C31;background-image:none;"
+                                           styleClass="adfmf-commandButton-border-cart">
+                                           
+                       </amx:commandButton>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+                --><!--#{pageFlowScope.displayApprove}--><!--
+                --><!--#{pageFlowScope.displayApprove}--><!--
+
+  <amx:rowLayout id="trPO" >
+    <amx:cellFormat id="cqf11" halign="start" inlineStyle="padding: 4px;">
+      <amx:commandButton id="commandButton6" text="Reject"    inlineStyle="width:80%;" styleClass="adfmf-commandButton-border">
+               
+            </amx:commandButton>
+    </amx:cellFormat>
+    <amx:cellFormat id="cf112" halign="start" inlineStyle="padding: 4px;">
+            <amx:commandButton id="commandButton7"  text="Approve"  inlineStyle="width:80%;" styleClass="adfmf-commandButton-border">
+                                 
+             </amx:commandButton>
+    </amx:cellFormat>
+    
+    </amx:rowLayout>
+                        
+                        <amx:rowLayout id="rrlw2">
+                        <amx:cellFormat width="100%"  id="acfw41" valign="top">
+                           
+                        </amx:cellFormat>
+                        </amx:rowLayout>
+                        
+                        
+</amx:tableLayout>-->        
+
+
+    
+
+
+
+            <!--<amx:inputText label="Title:" id="it1" value="Your Requisition 14515 has been Rejected" readOnly="true"/>
+            <amx:inputText label="Reason:" id="it2"
+                           value="Insufficient values are Entered so that why your requisition has been rejected"
+                           readOnly="true"/>-->
+           
+                             
+                <!--<amx:panelFormLayout id="pfl1">
+                    <amx:inputText value="#{bindings.id.inputValue}" label="#{bindings.id.hints.label}" id="it1"/>
+                    <amx:inputText value="#{bindings.name.inputValue}" label="#{bindings.name.hints.label}" id="it2"/>
+                </amx:panelFormLayout>-->
+        
+</amx:panelPage>
+</amx:view>

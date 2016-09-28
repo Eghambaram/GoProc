@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+    <amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
+        <amx:verbatim id="v3">
+
+        <![CDATA[
+
+         <script type="text/javascript">
+         function alertDismissed(buttonIndex) {
+          
+          }
+          
+        function displayAlert(){
+         navigator.notification.alert(
+            'Your Requisition has been Submitted Successfully',  
+             alertDismissed,         
+             '',            
+              'Ok'                  
+           );
+       }
+        
+         </script>
+
+         ]]>
+
+        </amx:verbatim>
+        <amx:facet name="primary">
+            <amx:commandButton action="__back" id="cbb1"/>
+        </amx:facet>
+        <amx:facet name="header">
+            <amx:outputText value="Create Requisition" id="ot1"
+                            inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;"
+                            styleClass="adfmf-commandButton-highlight"/>
+        </amx:facet>
+    
+        <amx:refreshContainer id="rc1" pullText="Pull to Refresh">
+        <amx:tableLayout width="100%" id="tlr3">
+            <amx:rowLayout id="rlr5">
+                <amx:cellFormat width="50%" halign="end" id="cfr8"/>
+                <amx:cellFormat width="25%" halign="center" id="cfzr8">
+                    <amx:commandButton text="Checkout" inlineStyle="background-color:#C89C31;background-image:none;" styleClass="adfmf-commandButton-border-cart"
+                                       actionListener="#{RequesitionRest.makeRequesition}" id="cbr2"/>
+                </amx:cellFormat>
+                <amx:cellFormat width="2px" id="cfer2"/>
+                <amx:cellFormat width="25%" halign="center" id="czfr8">
+                    <amx:commandButton text="Save" rendered="false" inlineStyle="background-color:#C89C31;background-image:none;" styleClass="adfmf-commandButton-border-cart"  id="cbr3"/>
+                </amx:cellFormat>
+                <amx:cellFormat width="2px" id="cfezr2"/>
+            </amx:rowLayout>
+            <amx:rowLayout id="rlr1">
+                <amx:cellFormat width="100%" halign="start" columnSpan="4" id="cfr2">
+                    <amx:outputText value="Checkout Total Amount: $#{pageFlowScope.cartTotal}" id="itr5"/>
+                </amx:cellFormat>
+            </amx:rowLayout>
+        </amx:tableLayout>
+        <amx:tableLayout width="100%" id="tl2" inlineStyle="margin-right:0;" shortDesc="table">
+            <amx:rowLayout id="rl2">
+                <amx:cellFormat id="cf3" width="25%" halign="start">
+                    <amx:outputText value="Select" id="ot5"/>
+                </amx:cellFormat>
+                <amx:cellFormat id="cf4" width="75%" halign="start">
+                    <amx:outputText value="Line" id="ot6"/>
+                </amx:cellFormat>
+            </amx:rowLayout>
+        </amx:tableLayout>
+         
+        <amx:listView var="row" value="#{bindings.assets.collectionModel}" fetchSize="#{bindings.assets.rangeSize}"
+                      selectedRowKeys="#{bindings.assets.collectionModel.selectedRow}"
+                      initialScrollRowKeys="#{bindings.assets.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.assets.collectionModel.makeCurrent}"
+                      styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll" bufferStrategy="viewport"
+                      id="lv1">
+            <amx:listItem id="li1">
+            <amx:panelGroupLayout id="pgl1">
+            <amx:tableLayout width="100%" id="tl3">
+                        <amx:rowLayout id="rl1">
+                            <amx:cellFormat width="20%" halign="start" id="cf2">
+                                <amx:selectBooleanCheckbox text=""
+                                                           valueChangeListener="#{RequesitionRest.selectCartItem}"
+                                                           value="#{row.checked}" label="" id="sbc1" inlineStyle="margin-left:-10px;"/>
+                            </amx:cellFormat>
+                            <amx:cellFormat width="70%" halign="start" height="43px" id="cf1">
+                                <amx:outputText value="#{row.productTitle}"
+                                                inlineStyle="word-break: break-word;white-space: pre-wrap;" id="ot7"/>
+                            </amx:cellFormat>
+                            <amx:cellFormat width="10%" halign="end" id="cf8">
+                                <amx:commandLink id="cmddel" actionListener="#{RequesitionRest.deleteFromCart}">
+                                    <amx:image source="/images/Trash.png" id="i3"/>
+                                    <amx:setPropertyListener id="spl11" from="#{row.rowid}"
+                                                             to="#{pageFlowScope.cartRowId}" type="action"/>
+                                </amx:commandLink>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                    </amx:tableLayout>
+                 </amx:panelGroupLayout>
+                <amx:panelGroupLayout id="zpgl1">
+                  
+
+                    <amx:tableLayout width="100%" id="tl1" inlineStyle="margin-top:1px">
+                        <amx:rowLayout id="rzefl2">
+                            <amx:cellFormat width="2px" id="czeff2"/>
+                            <amx:cellFormat width="50%" height="15" id="czfffe2" shortDesc="Cell" valign="top" halign="start">
+                                <amx:inputText label="Qty:" value="#{row.quantity}" inputType="number"
+                                               valueChangeListener="#{RequesitionRest.quantityChanged}"
+                                               inlineStyle=" margin-top: 10px;  font-size: 14px;  margin-bottom: -2px; clear: both;color: #000000;font-family: Arial, sans-serif;"
+                                               id="oZtre2"/>
+                            </amx:cellFormat>
+                            <amx:cellFormat width="2px" id="czferf2"/>
+                            <amx:cellFormat width="50%" height="15" id="czferf1" shortDesc="Cell" valign="top" halign="start">
+                                <amx:outputText value="Suplier: #{row.vendorName}"
+                                                inlineStyle="font-size: 14px;  margin-bottom: -2px; width:100%;clear: both;color: #000000;font-family: Arial, sans-serif; overflow:hidden;white-space: pre-wrap;"
+                                                id="ozterf2"/>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                        <amx:rowLayout id="rl3">
+                            <amx:cellFormat width="2px" id="cf5"/>
+                            <amx:cellFormat width="50%" height="15" id="cf6" shortDesc="Cell" valign="top" halign="start">
+                                <amx:outputText value="Price: $#{row.unitPrice} #{row.uom}"
+                                                inlineStyle="font-size: 14px; padding-left:22px; margin-bottom: -2px;clear: both;color: #000000;font-family: Arial, sans-serif;"
+                                                id="ot3"/>
+                            </amx:cellFormat>
+                            <amx:cellFormat width="2px" id="cf7"/>
+                            <amx:cellFormat width="50%" height="15" id="cf9" shortDesc="Cell" valign="top" halign="start">
+                                <amx:outputText value="Suplier Site: #{row.vendorSiteCode}"
+                                                inlineStyle="font-size: 14px;   margin-bottom: -2px;clear: both;color: #000000;font-family: Arial, sans-serif;"
+                                                id="ort2"/>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                        <amx:rowLayout id="rel1">
+                            <amx:cellFormat width="2px" id="cef3"/>
+                            <amx:cellFormat width="50%" height="15" id="cfe4" shortDesc="Cell" valign="top" halign="start" columnSpan="3">
+                                <amx:outputText value="Amount: $#{row.amount}"
+                                                inlineStyle="margin-top: 10px;padding-left:22px; font-size: 14px;clear: both;color: #000000;font-family: Arial, sans-serif;"
+                                                id="ote3"/>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                          <amx:rowLayout id="yrrlwq1">
+                            <amx:cellFormat width="2px" id="yacfwrq3"/>
+                            <amx:cellFormat width="100%" halign="start" id="zyaqcfqw8" valign="top" columnSpan="3">
+                                    <amx:selectOneChoice value="#{row.costCenter}"
+                                                         
+                                                         label="Cost Center" id="soc1" inlineStyle="font-size: 14px;margin-bottom: -2px;clear: both;color: #0E4876;font-family: Arial, sans-serif;">
+                                        <amx:selectItems value="#{bindings.costCenters.items}" id="si1"/>
+                                    </amx:selectOneChoice>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                        <amx:rowLayout id="ral1">
+                            <amx:cellFormat width="2px" id="yacfwr8"/>
+                            <amx:cellFormat width="100%" halign="start" id="yacfw8" valign="top" columnSpan="3">
+                                <amx:inputDate id="id1" label="Need By Date" value="#{row.need_by_date}" valueChangeListener="#{RequesitionRest.needByDateChangedCheckout}"
+                                               inlineStyle="font-size: 14px; margin-top:-10px; clear: both;font-family: Arial, sans-serif;"/>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                        <amx:rowLayout id="yrrlw1">
+                            <amx:cellFormat width="2px" id="yacqfwr8"/>
+                            <amx:cellFormat width="100%" halign="start" id="yaqcfw8" valign="top" columnSpan="3">
+                                    <amx:selectOneChoice value="#{row.deliver_to_location}"
+                                                         label="Deliver To Location" id="soc2"
+                                                          inlineStyle="font-size: 14px; margin-top:-10px; clear: both;font-family: Arial, sans-serif;">
+                                        <amx:selectItems value="#{bindings.deliverToLocations.items}" id="si2"/>
+                                    </amx:selectOneChoice>
+                            </amx:cellFormat>
+                        </amx:rowLayout>
+                    </amx:tableLayout>
+                      
+                    </amx:panelGroupLayout>
+            </amx:listItem>
+        </amx:listView>
+        </amx:refreshContainer>
+    </amx:panelPage>
+
+</amx:view>

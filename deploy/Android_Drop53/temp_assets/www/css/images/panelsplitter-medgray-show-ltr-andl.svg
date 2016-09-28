@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="PanelSplitterShowDefault" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px" y="0px" width="36px" height="70px" viewBox="0 0 72 140" enable-background="new 0 0 72 140" xml:space="preserve">
+<g>
+	<defs>
+		<rect id="SVGID_1_" width="72" height="140"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_2_)">
+		
+			<image overflow="visible" opacity="0.3" width="445" height="574" xlink:href="A2B46D10AF94C8A3.png"  transform="matrix(0.24 0 0 0.24 -49.5029 4.2612)">
+		</image>
+		<g>
+			<path fill="#E2E2E5" d="M50.19,72.06c0,34.97-23.06,62.81-50.35,62.84c-24.49,0.02-44.35-28.35-44.35-63.32
+				c0-34.97,19.85-62.31,44.35-62.32C28.38,9.25,50.19,37.09,50.19,72.06z"/>
+		</g>
+	</g>
+</g>
+<path fill="#828282" d="M18,105.92c-1.17,0.08-6.08-1-6.08-1c-1.1,0-2-0.9-2-2.01v-1.99l9-26v-3.08l-9-25.92v-1.99
+	c0-1.11,0.9-2.01,2-2.01c0,0,5-0.92,6-1s1.36,1.01,1.36,1.01l10.64,29.99v3l-10.54,29.93C19.38,104.85,19.17,105.83,18,105.92z"/>
+</svg>

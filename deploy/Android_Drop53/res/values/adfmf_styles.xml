@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved. -->
+<resources>
+	<style name="adfmf_splash_dialog" parent="android:Theme.Dialog">
+		<item name="android:windowBackground">@null</item>
+	</style>
+	<style name="adfmf_splash_dialog_full" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+	</style>
+  <style name="Theme.MAF" parent="@android:style/Theme.Holo">
+    <item name="android:windowActionBar">false</item>
+    <item name="android:windowNoTitle">true</item>
+  </style>
+</resources>

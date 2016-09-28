@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.2.1" id="Item_DetailsPageDef"
+                Package="mobile.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+  </executables>
+  <bindings>
+    <methodAction id="showCartDetail" RequiresUpdateModel="true" Action="invokeMethod" MethodName="showCartDetail"
+                  IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>
+    <methodAction id="addItemFromDetailToCart" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="addItemFromDetailToCart" IsViewObjectMethod="false" DataControl="ItemsList"
+                  InstanceName="data.ItemsList.dataProvider"/>
+    <methodAction id="doSelectItemDetails" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="doSelectItemDetails" IsViewObjectMethod="false" DataControl="ItemsList"
+                  InstanceName="data.ItemsList.dataProvider"/>
+  </bindings>
+</pageDefinition>

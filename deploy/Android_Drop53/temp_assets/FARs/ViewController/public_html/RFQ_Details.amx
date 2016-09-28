@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+<amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
+
+    <amx:verbatim id="v3">
+        
+
+  </amx:verbatim>
+        <amx:facet name="header">
+            <amx:outputText value="RFQ Details" id="ot1"
+                            inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;"
+                            styleClass="adfmf-commandButton-highlight"/>
+        </amx:facet>
+        <amx:facet name="primary">
+            <amx:commandLink id="cl1" action="__back">
+                <amx:image source="/images/logo.png" id="i3"/>
+            </amx:commandLink>
+        </amx:facet>
+        <amx:facet name="secondary">
+        
+        </amx:facet>
+        <amx:refreshContainer id="rc1" actionListener="#{RequesitionRest.getRequesitionDetail}" pullText="Pull To Refresh"/>
+        <amx:panelStretchLayout id="psl1">
+            <amx:facet name="top">
+                <amx:tableLayout width="100%" id="tl1">
+                    <amx:rowLayout id="rl1">
+                        <amx:cellFormat width="2px" id="cf3"/>
+                        <amx:cellFormat width="45%" halign="start" id="cf4">
+                            <amx:outputText value="RFQ: #{pageFlowScope.requisitionRFQNo}"
+                                            inlineStyle="font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                            id="ot3"/>
+                        </amx:cellFormat>
+                        <amx:cellFormat width="2px" id="cf1"/>
+                        <amx:cellFormat width="55%" halign="start" id="cf2">
+                            <amx:outputText value="Created By: #{pageFlowScope.rfqCreatedBy}"
+                                            inlineStyle="font-size: 14px;  clear: both;font-family: Arial, sans-serif;"
+                                            id="ot2"/>
+                        </amx:cellFormat>
+                    </amx:rowLayout>
+                    <amx:rowLayout id="rl2">
+                        <amx:cellFormat width="2px" id="cf7"/>
+                        <amx:cellFormat width="45%" halign="start" id="cf8">
+                            <amx:outputText value="Status: #{pageFlowScope.requisitionRFQtatus}"
+                                            inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
+                                            id="ot5"/>
+                        </amx:cellFormat>
+                        <amx:cellFormat width="2px" id="cf9"/>
+                        <amx:cellFormat width="55%" halign="start" id="cf10">
+                            <amx:outputText value="Created Date: #{pageFlowScope.requisitionRFQCreatedDate}"
+                                            inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
+                                            id="ot6"/>
+                        </amx:cellFormat>
+                    </amx:rowLayout>
+                </amx:tableLayout>
+            </amx:facet>
+            <amx:facet name="center">
+               
+                        <amx:tableLayout width="100%" id="ltl1">
+                            <amx:rowLayout id="lqrl1">
+                                <amx:cellFormat width="2px" id="lqcf3"/>
+                                <amx:cellFormat width="100%" halign="start" id="lqcf4" columnSpan="3">
+                                    <amx:outputText value="Description: #{pageFlowScope.requisitionRFQItemDescription}"
+                                                    inlineStyle="font-size: 16px;  font-weight: bold; clear: both;font-family: Arial, sans-serif;"
+                                                    id="lqot3"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            </amx:tableLayout>
+<amx:tableLayout width="100%" id="lqtl1">
+                            <amx:rowLayout id="lrl1">
+                                <amx:cellFormat width="2px" id="lcf3"/>
+                                <amx:cellFormat width="45%" halign="start" id="lcf4">
+                                    <amx:outputText value="Qty: #{pageFlowScope.requisitionRFQQty}"
+                                                    inlineStyle="font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="lot3"/>
+                                </amx:cellFormat>
+                                <amx:cellFormat width="2px" id="lcf1"/>
+                                <amx:cellFormat width="55%" halign="start" id="lcf2">
+                                    <amx:outputText value="# of RFQs Sent: #{pageFlowScope.requisitionRFQSent}"
+                                                    inlineStyle="font-size: 14px;  clear: both;font-family: Arial, sans-serif;"
+                                                    id="lot2"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            <amx:rowLayout id="lrl2">
+                                <amx:cellFormat width="2px" id="lcf7"/>
+                                <amx:cellFormat width="45%" halign="start" id="lcf8">
+                                    <amx:outputText value="Close Date: #{pageFlowScope.requisitionRFQCloseDate}"
+                                                    inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="lot5"/>
+                                </amx:cellFormat>
+                                <amx:cellFormat width="2px" id="lcf9"/>
+                                <amx:cellFormat width="55%" halign="start" id="lcf10">
+                                    <amx:outputText value="# of Bids Recieved: #{pageFlowScope.requisitionRFQBidsRecieved}"
+                                                    inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="lot6"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                                                   
+
+                        </amx:tableLayout>
+                  
+               
+                </amx:facet>
+        </amx:panelStretchLayout>
+    </amx:panelPage>
+</amx:view>

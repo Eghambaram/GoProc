@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.2.1" id="refined_searchPageDef"
+                Package="mobile.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="CategoryList" id="CategoryListIterator"/>
+    <accessorIterator MasterBinding="CategoryListIterator" Binds="categories" RangeSize="25" DataControl="CategoryList"
+                      BeanClass="mobile.Category" id="categoriesIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="CategoryList1" id="CategoryList1Iterator"/>
+    <accessorIterator MasterBinding="CategoryList1Iterator" Binds="categories" RangeSize="25"
+                      DataControl="CategoryList1" BeanClass="mobile.Category" id="categoriesIterator1"/>
+    <iterator Binds="root" RangeSize="25" DataControl="CategoryList2" id="CategoryList2Iterator"/>
+    <accessorIterator MasterBinding="CategoryList2Iterator" Binds="categories" RangeSize="25"
+                      DataControl="CategoryList2" BeanClass="mobile.Category" id="categoriesIterator2"/>
+    <iterator Binds="root" RangeSize="25" DataControl="CategoryList3" id="CategoryList3Iterator"/>
+    <accessorIterator MasterBinding="CategoryList3Iterator" Binds="categories" RangeSize="25"
+                      DataControl="CategoryList3" BeanClass="mobile.Category" id="categoriesIterator3"/>
+    <iterator Binds="root" RangeSize="25" DataControl="CategoryList4" id="CategoryList4Iterator"/>
+    <accessorIterator MasterBinding="CategoryList4Iterator" Binds="categories" RangeSize="25"
+                      DataControl="CategoryList4" BeanClass="mobile.Category" id="categoriesIterator4"/>
+    <iterator Binds="root" RangeSize="25" DataControl="BrandList" id="BrandListIterator"/>
+    <accessorIterator MasterBinding="BrandListIterator" Binds="brands" RangeSize="25" DataControl="BrandList"
+                      BeanClass="mobile.Brand" id="brandsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="SupplierList" id="SupplierListIterator"/>
+    <accessorIterator MasterBinding="SupplierListIterator" Binds="supplier" RangeSize="25" DataControl="SupplierList"
+                      BeanClass="mobile.Supplier" id="supplierIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="UOMList" id="UOMListIterator"/>
+    <accessorIterator MasterBinding="UOMListIterator" Binds="UOM" RangeSize="25" DataControl="UOMList"
+                      BeanClass="mobile.UOM" id="UOMIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="ImageList" id="ImageListIterator"/>
+    <accessorIterator MasterBinding="ImageListIterator" Binds="images" RangeSize="25" DataControl="ImageList"
+                      BeanClass="mobile.Image" id="imagesIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="AliasList" id="AliasListIterator"/>
+    <accessorIterator id="aliassIterator" MasterBinding="AliasListIterator" Binds="aliass" RangeSize="25"
+                      DataControl="AliasList" BeanClass="mobile.Alias"/>
+  </executables>
+  <bindings>
+    <list IterBinding="categoriesIterator" ListOperMode="navigation" ListIter="categoriesIterator" id="categories"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="parent_id"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="categoriesIterator1" ListOperMode="navigation" ListIter="categoriesIterator1" id="categories1"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="parent_id"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="categoriesIterator2" ListOperMode="navigation" ListIter="categoriesIterator2" id="categories2"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="parent_id"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="categoriesIterator3" ListOperMode="navigation" ListIter="categoriesIterator3" id="categories3"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="parent_id"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="categoriesIterator4" ListOperMode="navigation" ListIter="categoriesIterator4" id="categories4"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+       <Item Value="parent_id"/>
+      </AttrNames>
+    </list>
+    <tree IterBinding="brandsIterator" id="brands">
+      <nodeDefinition DefName="mobile.Brand" Name="brands0">
+        <AttrNames>
+          <Item Value="name"/>
+          <Item Value="id"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="supplierIterator" id="supplier">
+      <nodeDefinition DefName="mobile.Supplier" Name="supplier0">
+        <AttrNames>
+          <Item Value="name"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="supplierIterator" ListOperMode="multiSelect" ListIter="supplierIterator" id="supplier1"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="name"/>
+      </AttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="name"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="UOMIterator" ListOperMode="navigation" ListIter="UOMIterator" id="UOM" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="name"/>
+      </AttrNames>
+    </list>
+    <methodAction id="getSupplierList" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getSupplierList"
+                  IsViewObjectMethod="false" DataControl="SupplierList" InstanceName="data.SupplierList.dataProvider"/>
+    <methodAction id="onSupplierChange" RequiresUpdateModel="true" Action="iteratorExecute" MethodName="onSupplierChange"
+                  IsViewObjectMethod="false" DataControl="SupplierList" InstanceName="data.SupplierList.dataProvider">
+      <NamedData NDName="newVal" NDType="java.lang.Object[]"/>
+    </methodAction>
+    <methodAction id="performSupplierSearch" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="performSupplierSearch" IsViewObjectMethod="false" DataControl="SupplierList"
+                  InstanceName="data.SupplierList.dataProvider"/>
+    <!-- -->              
+    <methodAction id="showCart" RequiresUpdateModel="true" Action="invokeMethod" MethodName="showCart"
+                  IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>
+    <!-- -->              
+    <methodAction id="selectSuppliers" RequiresUpdateModel="true" Action="invokeMethod" MethodName="selectSuppliers"
+                  IsViewObjectMethod="false" DataControl="SupplierList" InstanceName="data.SupplierList.dataProvider"/>
+    <methodAction id="showBrandsPopup" RequiresUpdateModel="true" Action="invokeMethod" MethodName="showBrandsPopup"
+                  IsViewObjectMethod="false" DataControl="BrandList" InstanceName="data.BrandList.dataProvider"/>
+    <methodAction id="clearSuppliers" RequiresUpdateModel="true" Action="invokeMethod" MethodName="clearSuppliers"
+                  IsViewObjectMethod="false" DataControl="SupplierList" InstanceName="data.SupplierList.dataProvider"/>
+    <methodAction id="onSupplierAdd" RequiresUpdateModel="true" Action="invokeMethod" MethodName="onSupplierAdd"
+                  IsViewObjectMethod="false" DataControl="SupplierList" InstanceName="data.SupplierList.dataProvider"/>
+    <methodAction id="getCategories2" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getCategories2"
+                  IsViewObjectMethod="false" DataControl="CategoryList2"
+                  InstanceName="data.CategoryList2.dataProvider"/>
+    <methodAction id="getCategories3" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getCategories3"
+                  IsViewObjectMethod="false" DataControl="CategoryList3"
+                  InstanceName="data.CategoryList3.dataProvider"/>
+    <methodAction id="getCategories1" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getCategories1"
+                  IsViewObjectMethod="false" DataControl="CategoryList1"
+                  InstanceName="data.CategoryList1.dataProvider"/>
+    <methodAction id="showCategories" RequiresUpdateModel="true" Action="invokeMethod" MethodName="showCategories"
+                  IsViewObjectMethod="false" DataControl="CategoryList" InstanceName="data.CategoryList.dataProvider"/>
+    <methodAction id="getCategoryList" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getCategoryList"
+                  IsViewObjectMethod="false" DataControl="CategoryList" InstanceName="data.CategoryList.dataProvider"/>
+    <methodAction id="getCategories4" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getCategories4"
+                  IsViewObjectMethod="false" DataControl="CategoryList3"
+                  InstanceName="data.CategoryList3.dataProvider"/>
+    <methodAction id="populateUOM" RequiresUpdateModel="true" Action="invokeMethod" MethodName="populateUOM"
+                  IsViewObjectMethod="false" DataControl="UOMList" InstanceName="data.UOMList.dataProvider"/>
+    <methodAction id="addToSelectedImage" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="addToSelectedImage" IsViewObjectMethod="false" DataControl="UOMList"
+                  InstanceName="data.UOMList.dataProvider"/>
+    <methodAction id="clearSelectedImage" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="clearSelectedImage" IsViewObjectMethod="false" DataControl="UOMList"
+                  InstanceName="data.UOMList.dataProvider"/>
+     <!-- new -->
+     <methodAction id="clearImage" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="clearImage" IsViewObjectMethod="false" DataControl="ImageList"
+                  InstanceName="data.ImageList.dataProvider"/>
+    <methodAction id="proceedRefinedSearch" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="proceedRefinedSearch" IsViewObjectMethod="false"  DataControl="UOMList"
+                  InstanceName="data.UOMList.dataProvider"/>
+     <methodAction id="doRefinedSearch" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="doRefinedSearch" IsViewObjectMethod="false"  DataControl="UOMList"
+                  InstanceName="data.UOMList.dataProvider"/>
+    <tree IterBinding="imagesIterator" id="images">
+      <nodeDefinition DefName="mobile.Image" Name="images0">
+        <AttrNames>
+          <Item Value="imageURL"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="aliassIterator" ListOperMode="navigation" ListIter="aliassIterator" id="aliass"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="name"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>
