@@ -644,6 +644,16 @@ public class Login {
                     ValueExpression vemul = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
                     String multi_Org_id=(String)vemul.getValue(AdfmfJavaUtilities.getAdfELContext());
                 }
+                
+                 if(status.equalsIgnoreCase("Y")) {
+                 AdfmfContainerUtilities.resetFeature("feature1",false);   
+                 AdfmfContainerUtilities.resetFeature("mp.Requisition",false);
+                 AdfmfContainerUtilities.resetFeature("mp.Userprofile",false);
+                 AdfmfContainerUtilities.resetFeature("mp.Notification",false);
+                 AdfmfContainerUtilities.resetFeature("mp.Quotation",false);
+                 AdfmfContainerUtilities.resetFeature("mp.springboard");
+                 }
+                 
                  ValueExpression fve13 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_firstName}", String.class);
                  fve13.setValue(AdfmfJavaUtilities.getAdfELContext(),user_firstName);
                  

@@ -2424,14 +2424,17 @@ public class RequesitionRest {
         
         ValueExpression ve22 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.unreadCount}", String.class);
         ve22.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-
+        
+        ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+        ve23.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         
         AdfmfJavaUtilities.flushDataChangeEvent();
-//        AdfmfContainerUtilities.resetFeature("feature1");
-//        AdfmfContainerUtilities.resetFeature("mp.Requisition");
-//        AdfmfContainerUtilities.resetFeature("mp.Userprofile");
-//        AdfmfContainerUtilities.resetFeature("mp.Notification");
-//        AdfmfContainerUtilities.resetFeature("mp.Quotation");
+        AdfmfContainerUtilities.resetFeature("feature1",false);   
+        AdfmfContainerUtilities.resetFeature("mp.Requisition",false);
+        AdfmfContainerUtilities.resetFeature("mp.Userprofile",false);
+        AdfmfContainerUtilities.resetFeature("mp.Notification",false);
+        AdfmfContainerUtilities.resetFeature("mp.Quotation",false);
+        AdfmfContainerUtilities.resetFeature("mp.springboard");
         
 //        ItemsList.cpy_list.clear();
 //        ItemsList.filt_list.clear();
