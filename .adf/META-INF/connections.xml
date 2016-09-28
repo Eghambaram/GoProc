@@ -1,0 +1,40 @@
+<References xmlns="http://xmlns.oracle.com/adf/jndi">
+  <Reference name="SyncService_base_connection" className="oracle.adf.model.connection.url.HttpURLConnection"
+             adfCredentialStoreKey="" xmlns="">
+    <Factory className="oracle.adf.model.connection.url.URLConnectionFactory"/>
+    <RefAddresses>
+      <XmlRefAddr addrType="SyncService_base_connection">
+        <Contents>
+          <urlconnection name="SyncService_base_connection" url="http://127.0.0.1"/>
+        </Contents>
+      </XmlRefAddr>
+    </RefAddresses>
+  </Reference>
+  <Reference name="indix" className="oracle.adf.model.connection.rest.RestConnection" xmlns="">
+    <Factory className="oracle.adf.model.connection.rest.RestConnectionFactory"/>
+    <RefAddresses>
+      <XmlRefAddr addrType="indix">
+        <Contents>
+          <restconnection name="indix" url="https://api.indix.com"/>
+        </Contents>
+      </XmlRefAddr>
+    </RefAddresses>
+  </Reference>
+  <Reference name="enrich" className="oracle.adf.model.connection.rest.RestConnection" credentialStoreKey="enrich"
+             xmlns="">
+    <Factory className="oracle.adf.model.connection.rest.RestConnectionFactory"/>
+    <RefAddresses>
+      <XmlRefAddr addrType="enrich">
+        <Contents>
+          <restconnection name="enrich" url="http://mpdev.enrich.com:8000">
+            <authentication style="challenge">
+              <type>basic</type>
+            </authentication>
+          </restconnection>
+        </Contents>
+      </XmlRefAddr>
+      <SecureRefAddr addrType="username"/>
+      <SecureRefAddr addrType="password"/>
+    </RefAddresses>
+  </Reference>
+</References>

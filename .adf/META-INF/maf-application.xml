@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfmf:application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adfmf="http://xmlns.oracle.com/adf/mf"
+                   version="1.0" name="GoProcure" id="com.enrich.goprocure"
+                   appControllerFolder="ApplicationController" listener-class="application.LifeCycleListenerImpl">
+  <adfmf:featureReference refId="mp.login" id="fr7" showOnNavigationBar="false" showOnSpringboard="false"/>
+  <adfmf:featureReference id="fr1" refId="feature1" showOnNavigationBar="false" showOnSpringboard="false"/>
+  <adfmf:featureReference refId="mp.springboard" id="fr2" showOnNavigationBar="false" showOnSpringboard="false"/>
+  <adfmf:featureReference refId="mp.Requisition" id="fr3" showOnNavigationBar="false" showOnSpringboard="false"/>
+  <adfmf:featureReference refId="mp.Userprofile" id="fr4" showOnNavigationBar="false" showOnSpringboard="false"/>
+  <adfmf:featureReference refId="mp.Notification" id="fr5" showOnNavigationBar="false" showOnSpringboard="false"/>
+  <adfmf:featureReference refId="mp.Quotation" id="fr6" showOnNavigationBar="false" showOnSpringboard="false"/>
+  <adfmf:featureReference refId="mp.Buyerhelp" id="fr8" showOnNavigationBar="false" showOnSpringboard="false"/>
+  <adfmf:navigation>
+    <adfmf:springboard enabled="true" showSpringboardAtStartup="false" displayGotoSpringboardControl="false"
+                       width="280">
+      <adfmf:springboardFeatureReference refId="mp.springboard" id="sfr1"/>
+    </adfmf:springboard>
+  </adfmf:navigation>
+  <adfmf:remoteURLWhiteList>
+    <adfmf:domain id="d1">http://*</adfmf:domain>
+    <adfmf:domain id="d2">https://*</adfmf:domain>
+  </adfmf:remoteURLWhiteList>
+</adfmf:application>
