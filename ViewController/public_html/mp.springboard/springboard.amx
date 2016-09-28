@@ -138,7 +138,7 @@
         <amx:facet name="footer">
             <amx:outputText value="GoProcure v 1.01" id="fdr" inlineStyle="text-align: center; font-style: italic; font-size:small; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
             <amx:spacer id="s1"/>
-            <amx:outputText value="Drop:53" id="fdr1" inlineStyle="text-align: center; font-style: italic; font-size:small; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
+            <amx:outputText value="Drop:53New" id="fdr1" inlineStyle="text-align: center; font-style: italic; font-size:small; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
         </amx:facet>
     </amx:panelPage>
 </amx:view>
