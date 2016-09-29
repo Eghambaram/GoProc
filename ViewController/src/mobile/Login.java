@@ -204,6 +204,18 @@ public class Login {
                  ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_natural_account}", String.class);
                  ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                  
+           
+                 String multi_orgID="";
+                     if(!org_id.contains(("{\"@xsi:nil\":\"true\"}"))) 
+                 {
+                     multi_orgID=org_id;
+                     
+                 }
+                     else {
+                         multi_orgID="";
+                     }
+                     if (!multi_orgID.equals(""))
+                     {
                  //get deliver to list
                  restServiceAdapter = Model.createRestServiceAdapter();
                  // Clear any previously set request properties, if any
@@ -229,13 +241,51 @@ public class Login {
                  "\n" + 
                  "   \"InputParameters\": {\n" + 
                  "\n" + 
-                 "        \"P_USER_ID\":"+user_id+"\n" + 
+                  "        \"P_USER_ID\":\""+user_id+"\",\n" + 
+                  "         \"P_ORG_ID\":\""+multi_orgID+"\"\n" + 
                  "\n" + 
                  "     }\n" + 
                  "\n" + 
                  "  }\n" + 
                  "\n" + 
                  "}  ";
+                     }
+                     else {
+                         //get deliver to list
+                         restServiceAdapter = Model.createRestServiceAdapter();
+                         // Clear any previously set request properties, if any
+                         restServiceAdapter.clearRequestProperties();
+                         // Set the connection name
+                         restServiceAdapter.setConnectionName("enrich");
+                         
+                         restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                         restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                         restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                         restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                         restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_deliver_to/");
+                         postData= "{\n" + 
+                         "\n" + 
+                         "  \"GET_DELIVER_TO_Input\" : {\n" + 
+                         "\n" + 
+                         "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_deliver_to/\",\n" + 
+                         "\n" + 
+                         "   \"RESTHeader\": {\n" + 
+                         "\n" + 
+                         "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+                         "    },\n" + 
+                         "\n" + 
+                         "   \"InputParameters\": {\n" + 
+                         "\n" + 
+                         "        \"P_USER_ID\":"+user_id+"\n" + 
+                         "\n" + 
+                         "     }\n" + 
+                         "\n" + 
+                         "  }\n" + 
+                         "\n" + 
+                         "}  ";
+                             }
+                     
+                    
                                              restServiceAdapter.setRetryLimit(0);
                     System.out.println("postData===============================" + postData);
                      
@@ -356,15 +406,7 @@ public class Login {
                         e.printStackTrace();
                     }
                   
-                 String multi_orgID="";
-                     if(!org_id.contains(("{\"@xsi:nil\":\"true\"}"))) 
-                 {
-                     multi_orgID=org_id;
-                     
-                 }
-                     else {
-                         multi_orgID="";
-                     }
+                
                  
                  System.out.println("---New Multi ORGid---"+multi_orgID);
                  // Natural Accounts
@@ -937,12 +979,24 @@ public class Login {
                  ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_natural_account}", String.class);
                  ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                  
+                 String multi_orgID="";
+                     if(!org_id.contains(("{\"@xsi:nil\":\"true\"}"))) 
+                 {
+                     multi_orgID=org_id;
+                     
+                 }
+                     else {
+                         multi_orgID="";
+                     }
+                 
                  //get deliver to list
                  restServiceAdapter = Model.createRestServiceAdapter();
                  // Clear any previously set request properties, if any
                  restServiceAdapter.clearRequestProperties();
                  // Set the connection name
                  restServiceAdapter.setConnectionName("enrich");
+                 
+                 
                  
                  restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
                  restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
@@ -962,7 +1016,7 @@ public class Login {
                  "\n" + 
                  "   \"InputParameters\": {\n" + 
                  "\n" + 
-                 "        \"P_USER_ID\":"+user_id+"\n" + 
+                 "        \"P_USER_ID\":"+user_id+"\n" +  
                  "\n" + 
                  "     }\n" + 
                  "\n" + 
@@ -1089,15 +1143,7 @@ public class Login {
                         e.printStackTrace();
                     }
                   
-                 String multi_orgID="";
-                     if(!org_id.contains(("{\"@xsi:nil\":\"true\"}"))) 
-                 {
-                     multi_orgID=org_id;
-                     
-                 }
-                     else {
-                         multi_orgID="";
-                     }
+                
                  
                  System.out.println("---New Multi ORGid---"+multi_orgID);
                  // Natural Accounts

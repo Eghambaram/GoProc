@@ -401,7 +401,8 @@ public class ItemsList {
              "\n" + 
              "   \"InputParameters\": {\n" + 
              "\n" + 
-             "        \"P_USER_ID\":"+userId+"\n" + 
+                "        \"P_USER_ID\":\""+userId+"\",\n" + 
+                               "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
              "\n" + 
              "     }\n" + 
              "\n" + 
@@ -712,12 +713,12 @@ public class ItemsList {
         public void refresh(){
                    ////////////////////
                         
-                   ValueExpression default_orid = AdfmfJavaUtilities.getValueExpression("#{applicationScope.SpringboardmultiOrgId}", String.class);
+                  /* ValueExpression default_orid = AdfmfJavaUtilities.getValueExpression("#{applicationScope.SpringboardmultiOrgId}", String.class);
                    String default_multi_orid = (String)default_orid.getValue(AdfmfJavaUtilities.getAdfELContext());
                    System.out.println("default"+default_multi_orid);
                    ValueExpression default_orid_page = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedMultiOrg}", String.class);
                    String default_P_multi_orid = (String)default_orid_page.getValue(AdfmfJavaUtilities.getAdfELContext());
-                   System.out.println("default pageflow"+default_P_multi_orid);
+                   System.out.println("default pageflow"+default_P_multi_orid);*/
             
                    ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
                    itemType=(String)ve91.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -2806,6 +2807,9 @@ public class ItemsList {
             ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
             String itemType=(String)ve41.getValue(AdfmfJavaUtilities.getAdfELContext());
             
+            ValueExpression orid = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+            String multiorgId = (String)orid.getValue(AdfmfJavaUtilities.getAdfELContext());
+            
           // SelectedItemsList.s_jobs=SelectedItemsList.items_selected;
             int count=SelectedItemsList.s_jobs.size();
             
@@ -2870,7 +2874,8 @@ public class ItemsList {
              "\n" + 
              "   \"InputParameters\": {\n" + 
              "\n" + 
-             "        \"P_USER_ID\":"+userId+"\n" + 
+                "        \"P_USER_ID\":\""+userId+"\",\n" + 
+                "         \"P_ORG_ID\":\""+multiorgId+"\"\n" +  
              "\n" + 
              "     }\n" + 
              "\n" + 
