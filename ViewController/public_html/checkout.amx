@@ -313,6 +313,7 @@
                                 <amx:cellFormat width="2px" id="yacfwrq3"/>
                                 <amx:cellFormat width="100%" halign="start" id="zyaqcfqw8" valign="top">
                                     <amx:selectOneChoice value="#{row.costCenter}"
+                                                         valueChangeListener="#{Rest.onCostCenterChange}"
                                                           label="Cost Center" id="soc1"
                                                          inlineStyle="font-size: 14px;margin-bottom: -2px;clear: both;color: #0E4876;font-family: Arial, sans-serif;">
                                         <amx:selectItems value="#{bindings.costCenters.items}" id="si1"/>

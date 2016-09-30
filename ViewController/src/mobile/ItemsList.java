@@ -187,8 +187,24 @@ public class ItemsList {
             ValueExpression ve150 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_natural_account}", String.class);
             String default_natural_account = (String)ve150.getValue(AdfmfJavaUtilities.getAdfELContext()); 
             
+            String natural=default_natural_account;
+            System.out.println("Natural-->"+default_natural_account);
             
-            System.out.println("Cost center is "+default_cost_center+" Deliver to is "+default_deliver_to_location+"NAtural Accout"+default_natural_account);
+          /*  NaturalAccounts nAcc;
+            if(natural.equalsIgnoreCase("")){
+                nAcc=(NaturalAccounts)naturalAccountList.get(0);
+            }
+            else{
+                nAcc=(NaturalAccounts)naturalAccountList.get(Integer.parseInt(natural));
+            }
+            
+            
+            
+            
+            
+            System.out.println("Cost center is "+default_cost_center+" Deliver to is "+default_deliver_to_location+"NAtural Accout"+nAcc.getDescription());
+           */
+            
             System.out.println("Attribute Values"+item.getAttrib());
             System.out.println("Specification Values "+item.getSpec());         
             
@@ -494,7 +510,9 @@ public class ItemsList {
             "\n" + 
             "   \"InputParameters\": {\n" + 
             "\n" + 
-            "          \"P_USER_ID\" : "+userId+"\n" + 
+            "        \"P_USER_ID\":\""+userId+"\",\n" + 
+            "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
+                      
             "\n" + 
             "     }\n" + 
             "\n" + 
@@ -2817,6 +2835,10 @@ public class ItemsList {
             String default_cost_center_name="";
             String default_deliver_to_location_id="";
             String default_deliver_to_location_name="";
+            
+            String default_natural_account_seg="";
+            String default_natural_account_description="";
+            
             Double cartValue=0.0;
             ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.cartTotal}", String.class);
             for(int i=0;i<SelectedItemsList.s_jobs.size();i++)
@@ -2934,7 +2956,94 @@ public class ItemsList {
                 
                 
                 
-                
+                // Natural Accounts
+                            
+                            restServiceAdapter = Model.createRestServiceAdapter();
+                            // Clear any previously set request properties, if any
+                            restServiceAdapter.clearRequestProperties();
+                            // Set the connection name
+                            restServiceAdapter.setConnectionName("enrich");
+                            
+                            restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                            restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                            restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                            restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                            restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_natural_acct/");
+                                postData= "{\n" + 
+                                "\n" + 
+                                "  \"GET_NATURAL_ACCT_Input\" : {\n" + 
+                                "\n" + 
+                                "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_natural_acct/\",\n" + 
+                                "\n" + 
+                                "   \"RESTHeader\": {\n" + 
+                                "\n" + 
+                                "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+                                "    },\n" + 
+                                "\n" + 
+                                "   \"InputParameters\": {\n" + 
+                                "\n" + 
+                                "          \"P_USER_ID\" : \""+userId+"\",\n" +
+                                "          \"P_ORG_ID\" : \""+multiorgId+"\"\n" + 
+                                "\n" + 
+                                "     }\n" + 
+                                "\n" + 
+                                "  }\n" + 
+                                "\n" + 
+                                "}  ";
+                                
+                                    restServiceAdapter.setRetryLimit(0);
+                               System.out.println("postData===============================" + postData);
+                                
+                                response = restServiceAdapter.send(postData);
+                                
+                                System.out.println("response===============================" + response); 
+                                 resp=new JSONObject(response);
+                                 output=resp.getJSONObject("OutputParameters");
+                            try{
+                                 data=output.getJSONObject("X_NATURAL_ACC_TL");
+                                NaturalAcccountList.acc_List.clear();
+                                naturalAccountList.clear();
+                                
+                                if(data.get("X_NATURAL_ACC_TL_ITEM") instanceof  JSONArray){
+                                  JSONArray segments=data.getJSONArray("X_NATURAL_ACC_TL_ITEM");
+                                  for(int i=0;i<segments.length();i++) {
+                                      //String name=(String)segments.get(i);
+                                      JSONObject na=(JSONObject)segments.get(i);
+                                      String name=na.getString("SEGMENT_VALUE");
+                                      String description=na.getString("DESCRIPTION");
+                                      if(name.equalsIgnoreCase(default_natural_account_seg)) {
+                                          default_natural_account_description=String.valueOf(i);
+                                      }
+                                      NaturalAccounts c=new NaturalAccounts(name,description);
+                                      NaturalAcccountList.acc_List.add(c);
+                                      naturalAccountList.add(c);
+                                      
+                                  }
+                                
+                                }
+                                
+                                else if(data.get("X_NATURAL_ACC_TL_ITEM") instanceof  JSONObject){
+                                   
+                                   JSONObject na=data.getJSONObject("X_NATURAL_ACC_TL_ITEM");
+                                    String name=na.getString("SEGMENT_VALUE");
+                                    String description=na.getString("DESCRIPTION");
+                                    if(name.equalsIgnoreCase(default_natural_account_seg)) {
+                                        default_natural_account_description=String.valueOf(0);
+                                    }
+                                    NaturalAccounts c=new NaturalAccounts(name,description);
+                                    NaturalAcccountList.acc_List.add(c);
+                                    naturalAccountList.add(c);
+                                   
+                                }
+                                  /*  AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                                                      .evaluateELExpression("#{bindings.naturalAccounts}");
+                                    AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
+                                    accountListIterator.refresh();*/
+                                
+                                }
+                                catch(Exception e) {
+                                    e.printStackTrace();
+                                }  
                 
                 
                 
@@ -2966,7 +3075,8 @@ public class ItemsList {
             "\n" + 
             "   \"InputParameters\": {\n" + 
             "\n" + 
-            "          \"P_USER_ID\" : "+userId+"\n" + 
+                "          \"P_USER_ID\" : \""+userId+"\",\n" +
+                "          \"P_ORG_ID\" : \""+multiorgId+"\"\n" + 
             "\n" + 
             "     }\n" + 
             "\n" + 
@@ -3573,6 +3683,7 @@ public class ItemsList {
             ValueExpression ve122 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.unreadCount}", String.class);
             String CartCount=(String)ve122.getValue(AdfmfJavaUtilities.getAdfELContext());
             System.out.println("----Cart---"+CartCount);
+     
             try{
             
             boolean isSelected=false;
@@ -3590,7 +3701,7 @@ public class ItemsList {
             {
                 vex.setCurrentIndex(i);
                 SelectedItem item=(SelectedItem)vex.getDataProvider();
-                System.out.println("***"+item.getProductTitle()+" "+item.getChecked());
+                System.out.println("***"+item.getProductTitle()+" "+item.getChecked()+"cost center"+item.getCostCenter());
                 
                 if(item.getChecked().equalsIgnoreCase("true")) {
                     isSelected=true;
@@ -3677,6 +3788,7 @@ public class ItemsList {
                                    vex.setCurrentIndex(i);
                                    SelectedItem item=(SelectedItem)vex.getDataProvider();
                                    GenericType row= (GenericType)vex.getCurrentRow();
+          //                         System.out.println("***"+i+" "+row.getAttribute(i)+"location "+row.getAttribute("deliver_to_location")+"  cost "+row.getAttribute("costCenter")+"Natural Account"+row.getAttribute("naturalAccount"));
         //                                   for(int k=0;k<row.getAttributeCount();k++){
         //                                       System.out.println("***"+k+" "+row.getAttribute(k)+"location "+row.getAttribute("deliver_to_location")+"  cost "+row.getAttribute("costCenter"));
         //
@@ -3724,6 +3836,7 @@ public class ItemsList {
                                        loc=(DeliverToLocation)deliverToLocationList.get(Integer.parseInt(row.getAttribute("deliver_to_location").toString()));
                                        }
                                        
+                                       System.out.println("MakeCheckOUT--> ItemValues"+item.getNaturalAccount()+"Deliver To location"+item.getDeliver_to_location());
                                        
                                        sb.append("    \"DELIVER_TO_LOCATION\":\""+loc.getCode()+"\",\n");
                                        String arr[]=item.getNeed_by_date().split("T");

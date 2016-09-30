@@ -92,7 +92,7 @@ public class Login {
         String userName = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
         userName=userName.trim();
         
-        /*ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.password}", String.class);
+    /*    ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.password}", String.class);
         String password = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());*/
         
         RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
@@ -204,7 +204,6 @@ public class Login {
                  ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_natural_account}", String.class);
                  ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                  
-           
                  String multi_orgID="";
                      if(!org_id.contains(("{\"@xsi:nil\":\"true\"}"))) 
                  {
@@ -214,14 +213,15 @@ public class Login {
                      else {
                          multi_orgID="";
                      }
-                     if (!multi_orgID.equals(""))
-                     {
+                 
                  //get deliver to list
                  restServiceAdapter = Model.createRestServiceAdapter();
                  // Clear any previously set request properties, if any
                  restServiceAdapter.clearRequestProperties();
                  // Set the connection name
                  restServiceAdapter.setConnectionName("enrich");
+                 
+                 
                  
                  restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
                  restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
@@ -241,51 +241,13 @@ public class Login {
                  "\n" + 
                  "   \"InputParameters\": {\n" + 
                  "\n" + 
-                  "        \"P_USER_ID\":\""+user_id+"\",\n" + 
-                  "         \"P_ORG_ID\":\""+multi_orgID+"\"\n" + 
+                 "        \"P_USER_ID\":"+user_id+"\n" +  
                  "\n" + 
                  "     }\n" + 
                  "\n" + 
                  "  }\n" + 
                  "\n" + 
                  "}  ";
-                     }
-                     else {
-                         //get deliver to list
-                         restServiceAdapter = Model.createRestServiceAdapter();
-                         // Clear any previously set request properties, if any
-                         restServiceAdapter.clearRequestProperties();
-                         // Set the connection name
-                         restServiceAdapter.setConnectionName("enrich");
-                         
-                         restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
-                         restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
-                         restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
-                         restServiceAdapter.addRequestProperty("Content-Type", "application/json");
-                         restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_deliver_to/");
-                         postData= "{\n" + 
-                         "\n" + 
-                         "  \"GET_DELIVER_TO_Input\" : {\n" + 
-                         "\n" + 
-                         "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_deliver_to/\",\n" + 
-                         "\n" + 
-                         "   \"RESTHeader\": {\n" + 
-                         "\n" + 
-                         "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
-                         "    },\n" + 
-                         "\n" + 
-                         "   \"InputParameters\": {\n" + 
-                         "\n" + 
-                         "        \"P_USER_ID\":"+user_id+"\n" + 
-                         "\n" + 
-                         "     }\n" + 
-                         "\n" + 
-                         "  }\n" + 
-                         "\n" + 
-                         "}  ";
-                             }
-                     
-                    
                                              restServiceAdapter.setRetryLimit(0);
                     System.out.println("postData===============================" + postData);
                      
