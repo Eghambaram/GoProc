@@ -70,7 +70,7 @@
              <amx:tableLayout id="tl21" width="100%">
             <amx:rowLayout id="rl11">
             
-                <amx:cellFormat id="cf122" width="70%">
+                <amx:cellFormat id="cf122" width="90%">
                     <amx:inputText simple="true" value="#{pageFlowScope.searchRequisitionValue}" hintText="search by item or order no"  keyboardDismiss="search" id="inputText2"
                                    ></amx:inputText>
                 </amx:cellFormat>
@@ -79,11 +79,11 @@
                         <amx:image id="image2" source="/images/Search-24.png"/>
                     </amx:commandLink>
                 </amx:cellFormat>
-                <amx:cellFormat id="cf1241" width="20%" halign="end">
+              <!--  <amx:cellFormat id="cf1241" width="20%" halign="end">
                    <amx:commandLink id="commandLink112"   actionListener="#{RequesitionRest.clearRequisitionSearch}">
                                     <amx:outputText value="Clear" id="ot10"/>
                    </amx:commandLink>
-                </amx:cellFormat>
+                </amx:cellFormat> -->
             </amx:rowLayout>
         </amx:tableLayout>
 
@@ -203,7 +203,7 @@
                         
                     <amx:tableLayout width="100%" id="tl1">
                         <amx:rowLayout id="rl1">
-                            <amx:cellFormat width="2px" id="cf3"/>
+                         <!--   <amx:cellFormat width="2px" id="cf3"/>
                             <amx:cellFormat width="45%" halign="start" id="cf4">
                                 <amx:commandLink id="cl2" actionListener="#{RequesitionRest.getRequesitionDetail}">
                                     <amx:outputText value="Order No: #{row.searchGroupId}"
@@ -220,6 +220,13 @@
                                                              id="spl131"/>                              
                                                              
                                 </amx:commandLink>
+                            </amx:cellFormat> -->
+                            
+                            <amx:cellFormat width="2px" id="cf3"/>
+                            <amx:cellFormat width="45%" halign="start" id="cf4">
+                                    <amx:outputText value="Order No: #{row.searchGroupId}"
+                                                    inlineStyle="font-size: 14px;margin-top:5px; clear: both;color: #2F6BAC;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                    id="ot3"/>
                             </amx:cellFormat>
                             <amx:cellFormat width="2px" id="cf1"/>
                             <amx:cellFormat width="55%" halign="start" id="cf2">

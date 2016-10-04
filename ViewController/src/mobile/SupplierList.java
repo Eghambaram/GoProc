@@ -63,6 +63,10 @@ public class SupplierList {
 
         System.out.println("Suplier List Iterator"+suplierToList+"AmxList Iterator"+amxListIterator1);
 */
+        
+      
+  
+        System.out.println("Hello World"+selectedSuppliers.size());
         selectedSuppliers.clear();
         SupplierList.s_jobs.clear();
         refresh();

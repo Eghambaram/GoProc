@@ -875,6 +875,10 @@ public class ItemsList {
                            String source=item.getString("CONTRACTED");
                           //diverseSupplier
                            String diverseSupplier=item.getString("DIVERSE_SUPPLIER");
+                          //for test
+                          if(diverseSupplier.equalsIgnoreCase("0")) {
+                              diverseSupplier="-1";
+                          }
                           
                            String imageURL=item.getString("IMAGE_URL");
                           
@@ -897,7 +901,6 @@ public class ItemsList {
                           
                            Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageURL,"/images/uncheck.png","Contracted",uom,String.valueOf(randomInt),diverseSupplier,showDiverSeImage,diverseImageURL,pageNo,"","","","","","","");
                           // ItemsList.s_jobs.add(j); 
-                          System.out.println("diverseSupplier----"+diverseSupplier);
                            ItemsList.items_list.add(j); 
                           
                        }
@@ -914,6 +917,10 @@ public class ItemsList {
                           String uom=item.getString("UOM");
                           String source=item.getString("CONTRACTED");
                           String diverseSupplier=item.getString("DIVERSE_SUPPLIER");
+                          //for test
+                          if(diverseSupplier.equalsIgnoreCase("0")) {
+                              diverseSupplier="-1";
+                          }
                           String imageURL=item.getString("IMAGE_URL");
                           Random randomGenerator = new Random();
                           int randomInt = randomGenerator.nextInt(1000000000);
@@ -965,9 +972,9 @@ public class ItemsList {
                                url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+aliasCategoriesId+"&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                       //         url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+aliasCategoriesId+"&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                            }
-                  /*else {
+                  else {
                                url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+"&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
-                           }*/
+                           }
                                   
                                                   
                                                   URL obj = new URL(url);
@@ -1191,7 +1198,7 @@ public class ItemsList {
 ////                                                               }
 
 
-                                                                                                                                  int randomInt = randomGenerator.nextInt(1000000000);
+                                                                     int randomInt = randomGenerator.nextInt(1000000000);
                                                                    //since for the indix suppliers they will not be diversed so update as -1
                                                                    System.out.println("UP spec before insert ===> "+spec);
                                                                      Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageUrl,"/images/uncheck.png","","Each",String.valueOf(randomInt),"-1",showDiverSeImage,diverseImageURL,pageNo,indixCategoryId,seller,showSeller,resultVal,showAttrib,spec,showSpec);
@@ -2510,30 +2517,29 @@ public class ItemsList {
                                       String meaning=ci.getString("MEANING");
                                       String tag=ci.getString("TAG");
                                       
+                                     
                                       if(type_code.equalsIgnoreCase("DIV_SUPPLIER")) {
+                                          
                                           System.out.println("div supplier===============================");
-                                          /*String div=ci.getString("DIV_SUPPLIER");
-                                          System.out.println("DIV_SUPPLIER Values>>>"+div);*/
-                                          Comparator<Item> comparatorDiversedSupplier = new Comparator<Item>() {  
-                                                       @Override  
-                                                       public int compare(Item o1, Item o2) {
-                                                           
-                                                              return Double.compare(Double.parseDouble(o2.getDiverseSupplier()), Double.parseDouble(o1.getDiverseSupplier()));
-                                                           
-                                                       }
-                                          
+                                          Comparator<Item> comparatorDiversedSupplier = new Comparator<Item>() {
+                                              
+                                                       @Override
+                                                       
+                                                       
+                                                       public int compare(Item o1, Item o2) {  
+                                                            return Double.compare(Double.parseDouble(o2.getDiverseSupplier()), Double.parseDouble(o1.getDiverseSupplier()));  
+                                                       }  
                                                   };  
-                                          chain.addComparator(comparatorDiversedSupplier);
-                                          
-                                          System.out.println(">>>DIVER>>"+chain.size());
-                                          
+                                          chain.addComparator(comparatorDiversedSupplier); 
                                       }
+                                      
                                       if(type_code.equalsIgnoreCase("PRICE_LOW_TO_HIGH")) {
                                           System.out.println("low to high===============================");
                                           Comparator<Item> comparatorPriceLowToHigh = new Comparator<Item>() {  
                                                        @Override  
                                                        public int compare(Item o1, Item o2) {
                                                            
+                                                           System.out.println("----Item1 Price----"+o1.getUnitPrice()+"---Item2 Price---"+o2.getUnitPrice());
                                                            return Double.compare(Double.parseDouble(o1.getUnitPrice()), Double.parseDouble(o2.getUnitPrice()));  
                                                        }  
                                                   };  
@@ -2543,6 +2549,7 @@ public class ItemsList {
                                       
                                   }
                                     
+                                    System.out.println("chain Values--->"+chain.toString());
                                     Collections.sort(ItemsList.s_jobs,chain);
                                     BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");   
                                     vex.refresh();

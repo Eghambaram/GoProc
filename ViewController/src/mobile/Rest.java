@@ -3300,8 +3300,8 @@ public class Rest {
 //                                         null,
 //                                         null }); 
 //        }
-        
-        
+         
+
         MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.performSupplierSearch.execute}", Object.class, new Class[] {});
         me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
     }
@@ -3330,6 +3330,10 @@ public class Rest {
 //        System.out.println("Selected suppliers are "+supplierNames);
 //        ve.setValue(AdfmfJavaUtilities.getAdfELContext(), supplierNames);
 //        AdfmfJavaUtilities.flushDataChangeEvent();
+        
+        
+      ValueExpression vedef = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierDefault}", String.class);
+      vedef.setValue(AdfmfJavaUtilities.getAdfELContext(),null);
         
         MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.selectSuppliers.execute}", Object.class, new Class[] {});
         me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
@@ -4003,18 +4007,34 @@ public class Rest {
         String userId = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
         ValueExpression vemul = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
         String multiOrgId=(String)vemul.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.cartRowId}", String.class);
+        String rowId=(String)ve4.getValue(AdfmfJavaUtilities.getAdfELContext());
+        System.out.println("Cart Row ID: "+rowId);
         
         BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets2.iterator}");  
-        SelectedItem item=(SelectedItem)vex.getDataProvider();
-        
+        for(int i=0;i<vex.getTotalRowCount();i++)
+                {
+                    vex.setCurrentIndex(i);
+                    SelectedItem item=(SelectedItem)vex.getDataProvider();
+                    //        System.out.print("rowId is  new =========>"+item.getRowid()+"CostCenter Value"+item.getCostCenter());
+                        GenericType row= (GenericType)vex.getCurrentRow();
+                        String newrowId=item.getRowid();
+                        String newrowId1=row.getAttribute("rowid").toString();
+            System.out.println("newRowid---------"+newrowId1);
+                        if(!row.getAttribute("rowid").toString().equalsIgnoreCase("")){
+                            System.out.println("----");
+                            
+                        }
+                    
+            
         //         String locationId=item.getDeliver_to_location();
         //         DeliverToLocation loc=(DeliverToLocation)DeliverToLocationList.s_jobs.get(Integer.parseInt(locationId));
         //         item.setDeliver_to_location(loc.getCode());
         
+        
+                    }  
         CostCenter c=(CostCenter)CostCenterList.s_jobs.get(Integer.parseInt(valueChangeEvent.getNewValue().toString()));
          System.out.println("deliver to change "+c.getDescription()+"----"+c.getName());
-         
-        
         String cost="003";
         // Natural Accounts
         try{
@@ -4094,10 +4114,11 @@ public class Rest {
                             naturalAccountList.add(n);
                            
                         }
-                            AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                          
+                /*            AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
                                               .evaluateELExpression("#{bindings.naturalAccounts}");
                             AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
-                            accountListIterator.refresh();
+                            accountListIterator.refresh();*/
                         
                         }
                         catch(Exception e) {
@@ -6194,6 +6215,8 @@ public class Rest {
        else {
            ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
            ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+           ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
+           ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
            AdfmfJavaUtilities.flushDataChangeEvent();
        }
 

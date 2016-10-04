@@ -306,8 +306,10 @@
                             </amx:rowLayout>
                         </amx:tableLayout>
                         <amx:tableLayout width="100%" id="tl4">
-                            <amx:rowLayout id="rel1">
-                                <amx:cellFormat width="2px" id="cef3"/>
+                            <amx:rowLayout id="rel1" rendered="false">
+                                <amx:cellFormat width="2px" id="cef3">
+                                    <amx:outputText value="#{row.rowid}" id="ot5"/>
+                                </amx:cellFormat>
                             </amx:rowLayout>
                             <amx:rowLayout id="yrrlwq1">
                                 <amx:cellFormat width="2px" id="yacfwrq3"/>

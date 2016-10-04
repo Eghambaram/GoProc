@@ -463,7 +463,7 @@
                     </amx:cellFormat>
                 </amx:rowLayout>
             </amx:tableLayout>
-            <amx:selectManyCheckbox  value="#{bindings.supplier1.inputValue}" simple="true" label=""
+            <amx:selectManyCheckbox  value="#{pageFlowScope.supplierDefault}" simple="true" label=""
                                     id="smc2" valueChangeListener="#{Rest.onSupplierChange}">
                 <amx:selectItems value="#{bindings.supplier1.items}" id="si9"/>
             </amx:selectManyCheckbox>

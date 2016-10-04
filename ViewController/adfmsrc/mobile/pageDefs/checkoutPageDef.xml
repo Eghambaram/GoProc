@@ -72,7 +72,7 @@
     <methodAction id="makeCheckout" RequiresUpdateModel="true" Action="invokeMethod" MethodName="makeCheckout"
                   IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>
     <list IterBinding="naturalAccountsIterator" ListOperMode="navigation" ListIter="naturalAccountsIterator"
-          id="naturalAccounts" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+          id="naturalAccounts" DTSupportsMRU="true" SelectItemValueMode="ListObject" StaticList="false">
       <AttrNames>
         <Item Value="description"/>
       </AttrNames>
