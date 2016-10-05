@@ -26,6 +26,10 @@
         <from-outcome>agree</from-outcome>
         <to-activity-id>terms_condition</to-activity-id>
       </control-flow-case>
+      <control-flow-case id="__9">
+        <from-outcome>login_refresh</from-outcome>
+        <to-activity-id>login</to-activity-id>
+      </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__3">
       <from-activity-id>forgot_up</from-activity-id>

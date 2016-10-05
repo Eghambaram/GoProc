@@ -20,7 +20,8 @@
    <amx:rowLayout id="rl2">
 <amx:cellFormat id="cf3" halign="center" inlineStyle="padding: 10px 4px 4px 4px;">
 <!--actionListener="#{Rest.validateLogin}"-->
-<amx:commandButton text="Accept Terms" id="cb2" inlineStyle="width:100%;background-color:#C89C31; background-image:none;" styleClass="adfmf-commandButton-border"/>
+<amx:commandButton text="Accept Terms" id="cb2" inlineStyle="width:100%;background-color:#C89C31; background-image:none;" styleClass="adfmf-commandButton-border"
+                   actionListener="#{Login.acceptTerms}"/>
 </amx:cellFormat>
 </amx:rowLayout>
 <amx:rowLayout id="rl3">

@@ -89,4 +89,14 @@
       <property
          name="sdm:polyPoints">L54,412.0,85.643555,189.932,146.09766,R46</property>
    </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase9"
+      from="View2"
+      to="View2">
+      <property
+         name="fromOutcome">login_refresh</property>
+      <property
+         name="sdm:polyPoints">T44,144.5,95.881836,151.5,95.881836,T56</property>
+   </ControlFlowCase>
 </SDM>

@@ -4115,10 +4115,10 @@ public class Rest {
                            
                         }
                           
-                /*            AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                            AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
                                               .evaluateELExpression("#{bindings.naturalAccounts}");
                             AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
-                            accountListIterator.refresh();*/
+                            accountListIterator.refresh();
                         
                         }
                         catch(Exception e) {

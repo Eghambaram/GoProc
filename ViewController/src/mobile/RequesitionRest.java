@@ -52,6 +52,7 @@ public class RequesitionRest {
     public static Quotation selected_item=new Quotation();
     public static List deliverToLocationList=new ArrayList();
     public static ArrayList<MultiOrg> multiOrgList = new ArrayList<MultiOrg>();
+    public static List rejectionReasonList = new ArrayList();
     public RequesitionRest() {
     }
 
@@ -2473,6 +2474,7 @@ public class RequesitionRest {
         ve14.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         
       AdfmfContainerUtilities.gotoFeature("mp.login");
+      AdfmfContainerUtilities.resetFeature("mp.login");
     }
 
     public void showRequesitionScreen(ActionEvent actionEvent) {
@@ -2645,6 +2647,96 @@ public class RequesitionRest {
         catch(Exception e){
             e.printStackTrace();
         }
+        
+     
+     //Get Rejection Code Reasons
+        try{
+            
+            
+        
+         ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+         String userId = (String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+        // Clear any previously set request properties, if any
+        restServiceAdapter.clearRequestProperties();
+        // Set the connection name
+        restServiceAdapter.setConnectionName("enrich");
+            
+        
+        restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+        restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+        restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+        restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+        restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_req_reject_reason_codes/");
+        String postData= "{\n" + 
+        "  \"GET_REQ_REJECT_REASON_CODES_Input\" : {\n" + 
+        "   \"RESTHeader\": {\n" + 
+        "    },\n" + 
+        "   \"InputParameters\": {\n" + 
+        "       }	   \n" + 
+        "   }\n" + 
+        "}";
+            
+           
+            RejectionReasonList.rej_List.clear();
+            restServiceAdapter.setRetryLimit(0);
+            System.out.println("postData===============================" + postData);
+            
+            String response = restServiceAdapter.send(postData);
+            
+            System.out.println("response===============================" + response);
+            
+            JSONObject resp=new JSONObject(response);
+            JSONObject output=resp.getJSONObject("OutputParameters");
+            JSONObject data=output.getJSONObject("X_REQ_REJECT_CODES_TL");
+            RejectionReasonList.rej_List.clear();
+            rejectionReasonList.clear();
+            if(data.get("X_REQ_REJECT_CODES_TL_ITEM") instanceof  JSONArray){
+              JSONArray segments=data.getJSONArray("X_REQ_REJECT_CODES_TL_ITEM");
+              for(int i=0;i<segments.length();i++) {
+                JSONObject notification=segments.getJSONObject(i);
+                String lookupType=notification.getString("LOOKUP_TYPE");
+                String lookupCode=notification.getString("LOOKUP_CODE");
+               
+                String meaning=notification.getString("MEANING");
+                Rejection rejc=new Rejection(lookupType, lookupCode, meaning);
+                RejectionReasonList.rej_List.add(rejc);
+                rejectionReasonList.add(rejc);
+                  
+              }
+            
+            }
+            
+            else if(data.get("X_REQ_REJECT_CODES_TL_ITEM") instanceof  JSONObject){
+               
+                JSONObject notification=data.getJSONObject("X_REQ_REJECT_CODES_TL_ITEM");
+                String lookupType=notification.getString("LOOKUP_TYPE");
+                String lookupCode=notification.getString("LOOKUP_CODE");
+                
+                String meaning=notification.getString("MEANING");
+                
+                
+                Rejection rejc=new Rejection(lookupType, lookupCode, meaning);
+                RejectionReasonList.rej_List.add(rejc);
+                rejectionReasonList.add(rejc);  
+               
+            }
+            
+            
+            
+          /*      AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                                                      .evaluateELExpression("#{bindings.naturalAccounts}");
+                                    AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
+                                    accountListIterator.refresh();
+            
+            BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.alerts.iterator}");   
+            vex.refresh();*/
+            
+            }
+            catch(Exception e){
+            e.printStackTrace();
+            }
                 
         
         
