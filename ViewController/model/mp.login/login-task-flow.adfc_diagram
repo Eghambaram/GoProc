@@ -30,9 +30,9 @@
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">147.89648</property>
+         name="y">294.1953</property>
       <property
-         name="x">386.0</property>
+         name="x">402.0</property>
    </View>
    <ControlFlowCase
       islink="true"
@@ -42,7 +42,7 @@
       <property
          name="fromOutcome">forgotpass_user</property>
       <property
-         name="sdm:polyPoints">R46,189.0,146.09766,344.95395,144.0459,L46</property>
+         name="sdm:polyPoints">R54,191.45055,153.09766,361.0,290.34473,L46</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -52,6 +52,41 @@
       <property
          name="fromOutcome">successforgot</property>
       <property
-         name="sdm:polyPoints">L54,345.0,151.0459,189.04604,153.09766,R54</property>
+         name="sdm:polyPoints">L54,358.4868,297.34473,189.0,156.59766,R58</property>
+   </ControlFlowCase>
+   <View
+      id="View6">
+      <property
+         name="activityId">terms_condition</property>
+      <property
+         name="page">/mp.login/terms_condition.amx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>terms_condition&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">82.49414</property>
+      <property
+         name="x">453.0</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase7"
+      from="View2"
+      to="View6">
+      <property
+         name="fromOutcome">agree</property>
+      <property
+         name="sdm:polyPoints">R38,189.0,139.09766,411.0661,78.643555,L46</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase8"
+      from="View6"
+      to="View2">
+      <property
+         name="fromOutcome">not_agree</property>
+      <property
+         name="sdm:polyPoints">L54,412.0,85.643555,189.932,146.09766,R46</property>
    </ControlFlowCase>
 </SDM>

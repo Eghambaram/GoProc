@@ -13,17 +13,31 @@
     <view id="forgot_up">
       <page>/mp.login/forgotpassword.amx</page>
     </view>
+    <view id="terms_condition">
+      <page>/mp.login/terms_condition.amx</page>
+    </view>
     <control-flow-rule id="__1">
       <from-activity-id>login</from-activity-id>
       <control-flow-case id="__2">
         <from-outcome>forgotpass_user</from-outcome>
         <to-activity-id>forgot_up</to-activity-id>
       </control-flow-case>
+      <control-flow-case id="__6">
+        <from-outcome>agree</from-outcome>
+        <to-activity-id>terms_condition</to-activity-id>
+      </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__3">
       <from-activity-id>forgot_up</from-activity-id>
       <control-flow-case id="__4">
         <from-outcome>successforgot</from-outcome>
+        <to-activity-id>login</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id>terms_condition</from-activity-id>
+      <control-flow-case id="__8">
+        <from-outcome>not_agree</from-outcome>
         <to-activity-id>login</to-activity-id>
       </control-flow-case>
     </control-flow-rule>

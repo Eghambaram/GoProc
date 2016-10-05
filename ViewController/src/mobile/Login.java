@@ -863,8 +863,10 @@ public class Login {
             JSONObject resp=new JSONObject(response);
             JSONObject output=resp.getJSONObject("OutputParameters");
              String status=output.getString("X_RESULT");
-        
-             if(status.equalsIgnoreCase("Y")) {
+            String terms=output.getString("X_TNC_ACCEPTED");
+  
+             System.out.println("Terms and Condition"+terms);      
+             if(status.equalsIgnoreCase("Y") && terms.equalsIgnoreCase("Y")) {
                  
                  
                  
@@ -1526,6 +1528,56 @@ public class Login {
                  
                  
                  
+             }
+             
+             else if(status.equalsIgnoreCase("Y") && terms.equalsIgnoreCase("N")) {
+                         //get Terms and Condition
+                         try{
+                         
+                         restServiceAdapter = Model.createRestServiceAdapter();
+                         // Clear any previously set request properties, if any
+                         restServiceAdapter.clearRequestProperties();
+                         // Set the connection name
+                         restServiceAdapter.setConnectionName("enrich");
+                         
+                         
+                         
+                         restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                         restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                         restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                         restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                         restServiceAdapter.setRequestURI("/webservices/rest/XXEUserService/get_tnc/");
+                         postData= "{\n" + 
+                         "  \"GET_TNC_Input\" : {\n" + 
+                         "   \"RESTHeader\": {\n" + 
+                         "    },\n" + 
+                         "   \"InputParameters\": {\n" + 
+                         "       }	   \n" + 
+                         "   }\n" + 
+                         "}";
+                           restServiceAdapter.setRetryLimit(0);
+                           System.out.println("postData===============================" + postData);
+                             
+                            response = restServiceAdapter.send(postData);
+                             
+                             System.out.println("response===============================" + response); 
+                              resp=new JSONObject(response);
+                              output=resp.getJSONObject("OutputParameters");
+                             String terms_condtion=output.getString("X_TNC");
+                         
+                         System.out.println("helptext===============================" + terms_condtion);
+                         ValueExpression tnc = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.TermsCondition}", String.class);
+                         tnc.setValue(AdfmfJavaUtilities.getAdfELContext(),terms_condtion);
+                         AdfmfJavaUtilities.flushDataChangeEvent();
+                             
+                         AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
+                            "adf.mf.api.amx.doNavigation", new Object[] { "agree" });
+                         
+                     }
+             
+            catch(Exception e){
+                            e.printStackTrace();    
+             }
              }
              else{
                  AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
