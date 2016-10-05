@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+  <amx:panelPage id="pp1">
+<amx:facet name="header">
+      <amx:outputText value="Terms and Conditions" id="ot1" inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
+    </amx:facet>
+   <amx:facet name="primary">
+                   <amx:commandLink id="cl2" styleClass="springboard-icon">
+                <amx:image id="i1" source="/images/logo.png" shortDesc="Springboard Image"/>
+                </amx:commandLink>
+        </amx:facet>
+    <amx:panelStretchLayout id="psl1" scrollPolicy="scroll">
+            <amx:facet name="top">
+                <amx:outputHtml id="oh1" value="#{pageFlowScope.TermsCondition}"/>
+       </amx:facet>
+      
+       <amx:facet name="bottom">
+          <amx:tableLayout id="tl1" inlineStyle="margin: 25% 25% 5% 25%;"  width="100%" borderWidth="0" cellSpacing="0">
+   <amx:rowLayout id="rl2">
+<amx:cellFormat id="cf3" halign="center" inlineStyle="padding: 10px 4px 4px 4px;">
+<!--actionListener="#{Rest.validateLogin}"-->
+<amx:commandButton text="Accept Terms" id="cb2" inlineStyle="width:100%;background-color:#C89C31; background-image:none;" styleClass="adfmf-commandButton-border"/>
+</amx:cellFormat>
+</amx:rowLayout>
+<amx:rowLayout id="rl3">
+<amx:cellFormat id="cf31" halign="center" inlineStyle="padding: 0px 4px 10px 4px;">
+<amx:commandLink text="I Decline" action="not_agree"/>
+</amx:cellFormat>
+</amx:rowLayout>
+ </amx:tableLayout>
+</amx:facet>
+ </amx:panelStretchLayout>
+  </amx:panelPage>
+</amx:view>
