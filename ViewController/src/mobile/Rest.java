@@ -133,6 +133,7 @@ public class Rest {
     public static ArrayList<Lookup> frequencyPeriodList = new ArrayList<Lookup>(); 
     public static ArrayList<Lookup> serviceFrequencyTypeList = new ArrayList<Lookup>();
     public static ArrayList<Alias> aliasList = new ArrayList<Alias>();
+    public static ArrayList<Rejection> rejectionReasonList = new ArrayList<Rejection>();
     
     public static List costCenterList=new ArrayList();
     
@@ -6419,6 +6420,100 @@ public class Rest {
         AdfmfContainerUtilities.gotoFeature("mp.Userprofile");
         AdfmfContainerUtilities.resetFeature("mp.Userprofile",true);
     }
+    
+    public void getRejectionReasons(String rr) {
+            ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
+            ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+            //Get Rejection Code Reasons
+               try{
+                   
+                   
+               
+                ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+                String userId = (String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
+               
+               RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+               // Clear any previously set request properties, if any
+               restServiceAdapter.clearRequestProperties();
+               // Set the connection name
+               restServiceAdapter.setConnectionName("enrich");
+                   
+               
+               restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+               restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+               restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+               restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+               restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_req_reject_reason_codes/");
+               String postData= "{\n" + 
+               "  \"GET_REQ_REJECT_REASON_CODES_Input\" : {\n" + 
+               "   \"RESTHeader\": {\n" + 
+               "    },\n" + 
+               "   \"InputParameters\": {\n" + 
+               "       }          \n" + 
+               "   }\n" + 
+               "}";
+                   
+                  
+                   RejectionReasonList.rej_List.clear();
+                   restServiceAdapter.setRetryLimit(0);
+                   System.out.println("postData===============================" + postData);
+                   
+                   String response = restServiceAdapter.send(postData);
+                   
+                   System.out.println("response===============================" + response);
+                   
+                   JSONObject resp=new JSONObject(response);
+                   JSONObject output=resp.getJSONObject("OutputParameters");
+                   JSONObject data=output.getJSONObject("X_REQ_REJECT_CODES_TL");
+                   RejectionReasonList.rej_List.clear();
+                   rejectionReasonList.clear();
+                       Rejection r1=new Rejection("Please Select","Please Select","Please Select"); 
+                       RejectionReasonList.rej_List.add(r1);
+                       rejectionReasonList.add(r1);
+                   if(data.get("X_REQ_REJECT_CODES_TL_ITEM") instanceof  JSONArray){
+                     JSONArray segments=data.getJSONArray("X_REQ_REJECT_CODES_TL_ITEM");
+                     for(int i=0;i<segments.length();i++) {
+                       JSONObject notification=segments.getJSONObject(i);
+                       String lookupType=notification.getString("LOOKUP_TYPE");
+                       String lookupCode=notification.getString("LOOKUP_CODE");
+                      
+                       String meaning=notification.getString("MEANING");
+                       Rejection rejc=new Rejection(lookupType, lookupCode, meaning);
+                       RejectionReasonList.rej_List.add(rejc);
+                       rejectionReasonList.add(rejc);
+                       System.out.println("Rejection List Size"+rejectionReasonList.size());  
+                         
+                     }
+                   
+                   }
+                   
+                   else if(data.get("X_REQ_REJECT_CODES_TL_ITEM") instanceof  JSONObject){
+                      
+                       JSONObject notification=data.getJSONObject("X_REQ_REJECT_CODES_TL_ITEM");
+                       String lookupType=notification.getString("LOOKUP_TYPE");
+                       String lookupCode=notification.getString("LOOKUP_CODE");
+                       
+                       String meaning=notification.getString("MEANING");
+                       
+                       
+                       Rejection rejc=new Rejection(lookupType, lookupCode, meaning);
+                       RejectionReasonList.rej_List.add(rejc);
+                       rejectionReasonList.add(rejc);  
+                      
+                   }
+                       System.out.println("Rejection List Size"+RejectionReasonList.rej_List.size());
+                    
+                     AmxAttributeBinding rejectionList = (AmxAttributeBinding) AdfmfJavaUtilities
+                                                             .evaluateELExpression("#{bindings.rejection}");
+                                           AmxIteratorBinding rejectionListIterator =  rejectionList.getIteratorBinding();
+                                           rejectionListIterator.refresh();
+                   
+                   
+                   }
+                   catch(Exception e){
+                   e.printStackTrace();
+                   }
+               
 }
 
-
+}

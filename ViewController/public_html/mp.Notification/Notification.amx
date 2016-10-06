@@ -52,6 +52,7 @@
                                actionListener="#{RequesitionRest.closeFYInotification}"
                                id="cb1"/>
         </amx:facet>
+        
          <amx:refreshContainer id="rc2" pullText="Pull To Refresh">
         <amx:panelGroupLayout id="pgl1">
             <amx:listView var="row" value="#{bindings.alerts.collectionModel}" fetchSize="#{bindings.alerts.rangeSize}"
@@ -96,5 +97,8 @@
            
         </amx:panelGroupLayout>
         </amx:refreshContainer>
+       <!--<amx:selectOneChoice value="#{bindings.rejection.inputValue}" label="#{bindings.rejection.label}" id="soc1">
+            <amx:selectItems value="#{bindings.rejection.items}" id="si1"/>
+        </amx:selectOneChoice>-->
     </amx:panelPage>
 </amx:view>

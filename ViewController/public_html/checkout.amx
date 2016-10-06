@@ -172,7 +172,7 @@
                                                                value="#{row.checked}" label="" id="sbc1"
                                                                inlineStyle="margin-left:-10px;"/>
                                 </amx:cellFormat>
-                                <amx:cellFormat width="70%" halign="start" height="43px" id="cf1">
+                                <amx:cellFormat width="70   %" halign="start" height="43px" id="cf1">
                                     <amx:outputText value="#{row.productTitle}"
                                                     inlineStyle="word-break: break-word;white-space: pre-wrap;"
                                                     id="ot7"/>

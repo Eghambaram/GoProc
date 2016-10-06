@@ -52,6 +52,7 @@ public class RequesitionRest {
     public static Quotation selected_item=new Quotation();
     public static List deliverToLocationList=new ArrayList();
     public static ArrayList<MultiOrg> multiOrgList = new ArrayList<MultiOrg>();
+    
     public static List rejectionReasonList = new ArrayList();
     public RequesitionRest() {
     }
@@ -2692,6 +2693,9 @@ public class RequesitionRest {
             JSONObject data=output.getJSONObject("X_REQ_REJECT_CODES_TL");
             RejectionReasonList.rej_List.clear();
             rejectionReasonList.clear();
+                Rejection r1=new Rejection("Please Select","Please Select","Please Select"); 
+                RejectionReasonList.rej_List.add(r1);
+                rejectionReasonList.add(r1);
             if(data.get("X_REQ_REJECT_CODES_TL_ITEM") instanceof  JSONArray){
               JSONArray segments=data.getJSONArray("X_REQ_REJECT_CODES_TL_ITEM");
               for(int i=0;i<segments.length();i++) {
@@ -2703,6 +2707,7 @@ public class RequesitionRest {
                 Rejection rejc=new Rejection(lookupType, lookupCode, meaning);
                 RejectionReasonList.rej_List.add(rejc);
                 rejectionReasonList.add(rejc);
+                System.out.println("Rejection List Size"+rejectionReasonList.size());  
                   
               }
             
@@ -2722,16 +2727,13 @@ public class RequesitionRest {
                 rejectionReasonList.add(rejc);  
                
             }
+                System.out.println("Rejection List Size"+RejectionReasonList.rej_List.size());
+             
+              AmxAttributeBinding rejectionList = (AmxAttributeBinding) AdfmfJavaUtilities
+                                                      .evaluateELExpression("#{bindings.rejection}");
+                                    AmxIteratorBinding rejectionListIterator =  rejectionList.getIteratorBinding();
+                                    rejectionListIterator.refresh();
             
-            
-            
-          /*      AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
-                                                      .evaluateELExpression("#{bindings.naturalAccounts}");
-                                    AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
-                                    accountListIterator.refresh();
-            
-            BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.alerts.iterator}");   
-            vex.refresh();*/
             
             }
             catch(Exception e){
@@ -3621,11 +3623,21 @@ public class RequesitionRest {
         ValueExpression ve21 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationMessageType}", String.class);
         String type=(String)ve21.getValue(AdfmfJavaUtilities.getAdfELContext());
         
+        
+        
         ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_name}", String.class);
         String userName = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
         
+        ValueExpression ve22 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RejectReason}", String.class);
+        String rejectReason=(String)ve22.getValue(AdfmfJavaUtilities.getAdfELContext());
         
-        try{
+        ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RejectionComments}", String.class);
+        String rejectCommand=(String)ve23.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        System.out.println("Rejection Command"+rejectCommand+"Reject Reason"+rejectReason);
+        
+        
+      /*  try{
             
         
         
@@ -3678,7 +3690,7 @@ public class RequesitionRest {
         }
         catch(Exception e) {
             e.printStackTrace();
-        }
+        }*/
         
     }
 

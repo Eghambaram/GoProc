@@ -17,6 +17,7 @@
     <page path="/Item_Details.amx" usageId="mobile_Item_DetailsPageDef"/>
     <page path="/refined_search_services.amx" usageId="mobile_refined_search_servicesPageDef"/>
     <page path="/checkout_new.amx" usageId="mobile_checkout_newPageDef"/>
+    <page path="/Noti_detail.amx" usageId="mobile_Noti_detailPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="mobile_searchPageDef" path="mobile.pageDefs.searchPageDef"/>
@@ -34,8 +35,10 @@
     <page id="mobile_Item_DetailsPageDef" path="mobile.pageDefs.Item_DetailsPageDef"/>
     <page id="mobile_refined_search_servicesPageDef" path="mobile.pageDefs.refined_search_servicesPageDef"/>
     <page id="mobile_checkout_newPageDef" path="mobile.pageDefs.checkout_newPageDef"/>
+    <page id="mobile_Noti_detailPageDef" path="mobile.pageDefs.Noti_detailPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
+    <dc id="RejectionReasonList" path="mobile.RejectionReasonList"/>
     <dc id="NaturalAcccountList" path="mobile.NaturalAcccountList"/>
     <dc id="MultiOrgList" path="mobile.MultiOrgList"/>
     <dc id="AliasList" path="mobile.AliasList"/>

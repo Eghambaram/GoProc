@@ -7,8 +7,11 @@
         <![CDATA[
         <script type="text/javascript">
         
-          
-         
+         $(document).ready(function() {
+    
+            adf.mf.api.invokeMethod("mobile.Rest", "getRejectionReasons", "", 
+            function() {}, function() {});          
+            });
         </script>
 
          ]]>
@@ -26,6 +29,7 @@
         <!--<amx:facet name="secondary">
             <amx:commandButton text="Change" inlineStyle="margin-right:5px; background-color:#0E4876;background-image:none;" styleClass="adfmf-commandButton-border-cart" id="cb1"/>
         </amx:facet>-->
+       
         <amx:tableLayout width="100%" id="qarl1">
             <amx:rowLayout id="rrlw8">
                 <amx:cellFormat width="10px" id="acfwr8"/>
@@ -74,10 +78,10 @@
                inlineStyle="position:relative;margin-top:#{(deviceScope.hardware.screen.availableHeight-200)/2}px;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"
                animation="slideUp" backgroundDimming="on">
         <amx:panelGroupLayout id="pgl3">
-            <amx:tableLayout width="100%" id="zel1">
+            <amx:tableLayout width="100%" id="zel1" inlineStyle="border-bottom: 2px solid #0E4876">
                 <amx:rowLayout id="zwel1">
-                <amx:cellFormat id="zfe113" halign="center" width="100%">
-                        <amx:outputText value="Rejection Comment" id="ot2" styleClass=""/>
+                <amx:cellFormat id="zfe113" halign="start" width="100%">
+                        <amx:outputText value="Rejection Details" id="ot2" inlineStyle="font-weight:bold;font-size:large;"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="zfe11" halign="end" width="100%">
                         <amx:commandButton icon="images/close.png" id="zbs8b">
@@ -86,7 +90,23 @@
                     </amx:cellFormat>
                 </amx:rowLayout>
             </amx:tableLayout>
-            
+            <amx:tableLayout halign="center" id="ztle1" inlineStyle="width:100%" borderWidth="0" cellSpacing="0">
+                <amx:rowLayout id="rl1">
+                    <amx:cellFormat id="cf1">
+                        <amx:selectOneChoice value="#{pageFlowScope.RejectReason}"
+                                             label="Rejection Reason" id="soc1" required="true">
+                            <amx:selectItems value="#{bindings.rejection.items}" id="si1"/>
+                        </amx:selectOneChoice>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+                <amx:rowLayout id="rqtl22">
+                <amx:cellFormat id="cqtf1212" halign="start">
+               
+                    <amx:inputText label="Comments" rows="4" id="id2"  autoCorrect="on" styleClass="adfmf-inputText-Description1" value="#{pageFlowScope.RejectionComments}"
+                                   maximumLength="3952" />
+                </amx:cellFormat>
+            </amx:rowLayout>
+            </amx:tableLayout>
           
             <amx:tableLayout halign="center" id="ztl1" inlineStyle="width:100%" borderWidth="0" cellSpacing="0">
                 <amx:rowLayout id="zrl1">
