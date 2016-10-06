@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.2.1" id="Noti_detailPageDef"
+                Package="mobile.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="RejectionReasonList" id="RejectionReasonListIterator"/>
+    <accessorIterator MasterBinding="RejectionReasonListIterator" Binds="rejection" RangeSize="25"
+                      DataControl="RejectionReasonList" BeanClass="mobile.Rejection" id="rejectionIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="AliasList" id="AliasListIterator"/>
+    <accessorIterator MasterBinding="AliasListIterator" Binds="aliass" RangeSize="25" DataControl="AliasList"
+                      BeanClass="mobile.Alias" id="aliassIterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="rejectionIterator" ListOperMode="navigation" ListIter="rejectionIterator" id="rejection"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="meaning"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="aliassIterator" ListOperMode="navigation" ListIter="aliassIterator" id="aliass"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="name"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>
