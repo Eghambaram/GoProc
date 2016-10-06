@@ -6424,7 +6424,7 @@ public class Rest {
     public void getRejectionReasons(String rr) {
             ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
             ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-            //Get Rejection Code Reasons
+            //Get Rejection Code Reasons for dropdown
                try{
                    
                    
