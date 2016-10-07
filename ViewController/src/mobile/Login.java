@@ -603,7 +603,9 @@ public class Login {
                          "\n" + 
                          "        \"P_DEVICE_MODEL\" : \""+device_model+"\",\n" + 
                          "\n" + 
-                         "        \"P_TOKEN\" : \""+device_token+"\"\n" + 
+                         "        \"P_TOKEN\" : \""+device_token+"\",\n" +
+                        "\n" +
+                        "        \"P_TNC_ACCEPTED\" : \"Y\"\n" + 
                          "\n" + 
                          "     }\n" + 
                          "\n" + 
@@ -1390,7 +1392,9 @@ public class Login {
                          "\n" + 
                          "        \"P_DEVICE_MODEL\" : \""+device_model+"\",\n" + 
                          "\n" + 
-                         "        \"P_TOKEN\" : \""+device_token+"\"\n" + 
+                         "        \"P_TOKEN\" : \""+device_token+"\",\n" +
+                         "\n" +
+                         "        \"P_TNC_ACCEPTED\" : \"Y\"\n" + 
                          "\n" + 
                          "     }\n" + 
                          "\n" + 

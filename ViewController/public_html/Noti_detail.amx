@@ -12,6 +12,22 @@
             adf.mf.api.invokeMethod("mobile.Rest", "getRejectionReasons", "", 
             function() {}, function() {});          
             });
+            
+             function checkRejectionValue(){
+             navigator.notification.alert(
+            'Please Choose Your Rejection Reason',  
+             alertDismissed,         
+             '',            
+              'Ok'                  
+           );
+       }
+
+        function alertDismissed(buttonIndex) {
+          
+          }
+
+
+
         </script>
 
          ]]>

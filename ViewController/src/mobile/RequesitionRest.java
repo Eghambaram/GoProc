@@ -3635,12 +3635,15 @@ public class RequesitionRest {
         String rejectCommand=(String)ve23.getValue(AdfmfJavaUtilities.getAdfELContext());
         
         System.out.println("Rejection Command"+rejectCommand+"Reject Reason"+rejectReason);
+        Rejection c=(Rejection)RejectionReasonList.rej_List.get(Integer.parseInt(rejectReason.toString()));
+        System.out.println("-----"+c.getLookupCode());
+        String LookupCode=c.getLookupCode();
         
-        
-      /*  try{
+        try{
             
-        
-        
+            if(!LookupCode.equalsIgnoreCase("Please Select"))
+            {
+                System.out.println("---LookupCode--"+LookupCode);
         RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
         // Clear any previously set request properties, if any
         restServiceAdapter.clearRequestProperties();
@@ -3686,11 +3689,22 @@ public class RequesitionRest {
             
             AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
                                                                            "adf.mf.api.amx.doNavigation", new Object[] { "__back" });  
+         
+            }
+            
+        else {
+                System.out.println("Inside Else loop");
+                AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
+                                                                           "checkRejectionValue",
+                                                                           new Object[] { });
+            }
             
         }
         catch(Exception e) {
             e.printStackTrace();
-        }*/
+        }
+
+        
         
     }
 

@@ -899,7 +899,7 @@ public class ItemsList {
                            isContractedItemPresent = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.isContractedItemPresent}", String.class);
                            isContractedItemPresent.setValue(AdfmfJavaUtilities.getAdfELContext(), "true");
                           
-                           Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageURL,"/images/uncheck.png","Contracted",uom,String.valueOf(randomInt),diverseSupplier,showDiverSeImage,diverseImageURL,pageNo,"","","","","","","");
+                           Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageURL,"/images/uncheck.png","Contracted",uom,String.valueOf(randomInt),"1",showDiverSeImage,diverseImageURL,pageNo,"","","","","","","");
                           // ItemsList.s_jobs.add(j); 
                            ItemsList.items_list.add(j); 
                           

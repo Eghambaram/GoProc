@@ -28,7 +28,18 @@
             
           }
        }
+        function checkRejectionValue(){
+             navigator.notification.alert(
+            'Please Choose Your Rejection Reason',  
+             alertDismissed,         
+             '',            
+              'Ok'                  
+           );
+       }
 
+        function alertDismissed(buttonIndex) {
+          
+          }
     
          </script>
 
