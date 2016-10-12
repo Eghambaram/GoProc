@@ -54,6 +54,7 @@ public class RequesitionRest {
     public static ArrayList<MultiOrg> multiOrgList = new ArrayList<MultiOrg>();
     
     public static List rejectionReasonList = new ArrayList();
+    public static ArrayList<QuotationSort> quotationSortList = new ArrayList<QuotationSort>();
     public RequesitionRest() {
     }
 
@@ -447,6 +448,8 @@ public class RequesitionRest {
         ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.password}", String.class);
         String password = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
             
+            
+            
             ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
             String userId = (String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
             ValueExpression ve15 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
@@ -545,6 +548,107 @@ public class RequesitionRest {
           
 //        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.RFQ.items}");   
 //        vex.refresh();
+                        // Get Quotation Sort Values
+            try{
+                
+            // Clear any previously set request properties, if any
+            restServiceAdapter.clearRequestProperties();
+            // Set the connection name
+            restServiceAdapter.setConnectionName("enrich");
+                
+                    
+            restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+            restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+            restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+            restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+            restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_sort_options/");
+           postData= "{\n" + 
+           "  \"GET_SORT_OPTIONS_Input\" : {\n" + 
+           "   \"RESTHeader\": {\n" + 
+           "    },\n" + 
+           "   \"InputParameters\": {\n" + 
+           "        \"P_TYPE\": \"QUOTE\"\n" + 
+           "     }\n" + 
+           "  }\n" + 
+           "}";
+                
+               
+                
+                restServiceAdapter.setRetryLimit(0);
+                System.out.println("postData===============================" + postData);
+                
+                response = restServiceAdapter.send(postData);
+                
+                System.out.println("response===============================" + response);
+                
+                resp=new JSONObject(response);
+                output=resp.getJSONObject("OutputParameters");
+                JSONObject data=output.getJSONObject("X_SORT_OPTIONS_TL");
+                QuotationSortList.sort_List.clear();
+                quotationSortList.clear();
+                if(data.get("X_SORT_OPTIONS_TL_ITEM") instanceof  JSONArray){
+                  JSONArray segments=data.getJSONArray("X_SORT_OPTIONS_TL_ITEM");
+                  for(int i=0;i<segments.length();i++) {
+                    JSONObject notification=segments.getJSONObject(i);
+                    String lookupType=notification.getString("LOOKUP_TYPE");
+                    String lookupCode=notification.getString("LOOKUP_CODE");
+                   
+                    String meaning=notification.getString("MEANING");
+                    QuotationSort sort=new QuotationSort(lookupType, lookupCode, meaning);
+                    QuotationSortList.sort_List.add(sort);
+                    quotationSortList.add(sort);
+                    //System.out.println("Quotation List Size"+quotationSortList.size());  
+                      
+                  }
+                
+                }
+                
+                else if(data.get("X_SORT_OPTIONS_TL_ITEM") instanceof  JSONObject){
+                   
+                    JSONObject notification=data.getJSONObject("X_SORT_OPTIONS_TL_ITEM");
+                    String lookupType=notification.getString("LOOKUP_TYPE");
+                    String lookupCode=notification.getString("LOOKUP_CODE");
+                    
+                    String meaning=notification.getString("MEANING");
+                    
+                    
+                    QuotationSort sort=new QuotationSort(lookupType, lookupCode, meaning);
+                    QuotationSortList.sort_List.add(sort);
+                    quotationSortList.add(sort);  
+                   
+                }
+                    System.out.println("Quotation List Size"+QuotationSortList.sort_List.size());
+                 
+                    
+                    
+                
+                
+                }
+                catch(Exception e){
+                e.printStackTrace();
+                }
+            
+            try{
+                for(int k=0;k<QuotationSortList.sort_List.size();k++) {
+                 QuotationSort qsrt=(QuotationSort)QuotationSortList.sort_List.get(k);
+                    
+                    if(qsrt.getMeaning().equalsIgnoreCase("Relevance")){
+                        System.out.println("*****Defult_SpringBoardMultiOrg_getId"+qsrt.getMeaning()+"value of "+String.valueOf(k));
+                         ValueExpression ve14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.QuotationSortBy}", String.class);
+                         ve14.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k)); 
+                         String updateQuotSort=qsrt.getLookupCode();
+                         
+                            ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.QuotationSortValue}", String.class);
+                            ve4.setValue(AdfmfJavaUtilities.getAdfELContext(), updateQuotSort);
+
+                        }
+                   
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+            
             
                     try{
             
@@ -631,6 +735,9 @@ public class RequesitionRest {
                 e.printStackTrace();
             }
             
+           
+            
+            
             
              AmxAttributeBinding customerList = (AmxAttributeBinding) AdfmfJavaUtilities
                                .evaluateELExpression("#{bindings.RFQ}");
@@ -642,10 +749,15 @@ public class RequesitionRest {
                               .evaluateELExpression("#{bindings.deliverToLocations}");
             AmxIteratorBinding amxListIterator1 =  deliverToList.getIteratorBinding();
             amxListIterator1.refresh();
+            AmxAttributeBinding quotationSortList = (AmxAttributeBinding) AdfmfJavaUtilities
+                                                      .evaluateELExpression("#{bindings.quotationSort}");
+            AmxIteratorBinding quotationSortListIterator =  quotationSortList.getIteratorBinding();
+            quotationSortListIterator.refresh();
             
             
             
             AdfmfJavaUtilities.flushDataChangeEvent();
+            System.out.println("Quotation List Size"+QuotationSortList.sort_List.size());
             
 //            QuotationList.s_jobs.clear();
 //            BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.quotations.iterator}");   
@@ -663,6 +775,7 @@ public class RequesitionRest {
 //                                         null,
 //                                         null }); 
         }
+        
         
     }
 
@@ -991,6 +1104,7 @@ public class RequesitionRest {
             
            
         try{
+            
             BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.quotations.iterator}");   
             vex.setDataProvider(QuotationList.s_jobs);
             
@@ -2763,7 +2877,7 @@ public class RequesitionRest {
             ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
             ve41.setValue(AdfmfJavaUtilities.getAdfELContext(),itemType);
             
-            SelectedItem sl=new SelectedItem(rl.getPoNo(), rl.getVendorName(), rl.getVendorSite(), rl.getCategory(), rl.getProductTitle(), rl.getUnitPrice(), "", "true", "O", rl.getUom(), rl.getQuantity(), rl.getDeliverToLocation(), rl.getNeedByDate(), rl.getLineTotal(), String.valueOf(randomInt), "","0","","","");
+            SelectedItem sl=new SelectedItem(rl.getPoNo(), rl.getVendorName(), rl.getVendorSite(), rl.getCategory(), rl.getProductTitle(), rl.getUnitPrice(), "", "true", "O", rl.getUom(), rl.getQuantity(), rl.getDeliverToLocation(), rl.getNeedByDate(), rl.getLineTotal(), String.valueOf(randomInt), "","0","","","","");
             SelectedItemsList.items_selected.add(sl);
         }
         
@@ -3638,6 +3752,7 @@ public class RequesitionRest {
         Rejection c=(Rejection)RejectionReasonList.rej_List.get(Integer.parseInt(rejectReason.toString()));
         System.out.println("-----"+c.getLookupCode());
         String LookupCode=c.getLookupCode();
+        
         
         try{
             
@@ -5017,5 +5132,282 @@ public class RequesitionRest {
     public void gotoManageProfile(String rr) {
         AdfmfContainerUtilities.gotoFeature("mp.Userprofile");
         AdfmfContainerUtilities.resetFeature("mp.Userprofile",true);
+    }
+
+    public void sortItemQuotation(ValueChangeEvent valueChangeEvent) {
+        // Add event code here...
+        
+        System.out.println("New Selected value is "+valueChangeEvent.getNewValue().toString());
+        ValueExpression ve14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.QuotationSortBy}", String.class);
+        String quotSort=(String)ve14.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        ValueExpression ve15 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedRFQId}", String.class);
+        String rfqId=(String)ve15.getValue(AdfmfJavaUtilities.getAdfELContext());
+        System.out.println("New Selected RFQ ID:"+rfqId);
+      
+        try{
+        RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();    
+        // Clear any previously set request properties, if any
+        restServiceAdapter.clearRequestProperties();
+        // Set the connection name
+        restServiceAdapter.setConnectionName("enrich");
+            
+                
+        restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+        restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+        restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+        restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+        restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_sort_options/");
+        String postData= "{\n" +
+        "  \"GET_SORT_OPTIONS_Input\" : {\n" +
+        "   \"RESTHeader\": {\n" +
+        "    },\n" +
+        "   \"InputParameters\": {\n" +
+        "        \"P_TYPE\": \"QUOTE\"\n" +
+        "     }\n" +
+        "  }\n" +
+        "}";
+            
+           
+            
+            restServiceAdapter.setRetryLimit(0);
+            System.out.println("postData===============================" + postData);
+            
+          String  response = restServiceAdapter.send(postData);
+            
+            System.out.println("response===============================" + response);
+            
+           JSONObject resp=new JSONObject(response);
+             JSONObject output=resp.getJSONObject("OutputParameters");
+            JSONObject data=output.getJSONObject("X_SORT_OPTIONS_TL");
+            QuotationSortList.sort_List.clear();
+            quotationSortList.clear();
+            if(data.get("X_SORT_OPTIONS_TL_ITEM") instanceof  JSONArray){
+              JSONArray segments=data.getJSONArray("X_SORT_OPTIONS_TL_ITEM");
+              for(int i=0;i<segments.length();i++) {
+                JSONObject notification=segments.getJSONObject(i);
+                String lookupType=notification.getString("LOOKUP_TYPE");
+                String lookupCode=notification.getString("LOOKUP_CODE");
+               
+                String meaning=notification.getString("MEANING");
+                QuotationSort sort=new QuotationSort(lookupType, lookupCode, meaning);
+                QuotationSortList.sort_List.add(sort);
+                quotationSortList.add(sort);
+                //System.out.println("Quotation List Size"+quotationSortList.size());  
+                  
+              }
+            
+            }
+            
+            else if(data.get("X_SORT_OPTIONS_TL_ITEM") instanceof  JSONObject){
+               
+                JSONObject notification=data.getJSONObject("X_SORT_OPTIONS_TL_ITEM");
+                String lookupType=notification.getString("LOOKUP_TYPE");
+                String lookupCode=notification.getString("LOOKUP_CODE");
+                
+                String meaning=notification.getString("MEANING");
+                
+                
+                QuotationSort sort=new QuotationSort(lookupType, lookupCode, meaning);
+                QuotationSortList.sort_List.add(sort);
+                quotationSortList.add(sort);  
+               
+            }
+                System.out.println("Quotation List Size"+QuotationSortList.sort_List.size());
+             
+           
+            
+            
+            }
+            catch(Exception e){
+            e.printStackTrace();
+            }
+        String updateQuotSort="";
+        if(!quotSort.equalsIgnoreCase("")){
+        
+        QuotationSort qst=(QuotationSort)quotationSortList.get((Integer.parseInt(quotSort)));
+        updateQuotSort=qst.getLookupCode();
+        System.out.println("New Value mul Org++++++++"+updateQuotSort);
+            ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.QuotationSortValue}", String.class);
+            ve4.setValue(AdfmfJavaUtilities.getAdfELContext(), updateQuotSort);
+        
+        }
+      
+        /*try{
+                     
+        RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+        // Clear any previously set request properties, if any
+        restServiceAdapter.clearRequestProperties();
+        // Set the connection name
+        restServiceAdapter.setConnectionName("enrich");
+        
+        restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+        restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+        restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+        restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+        restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_quotations/");
+        String postData= "{\n" + 
+        "\n" + 
+        "  \"GET_QUOTATIONS_Input\" : {\n" + 
+        "\n" + 
+        "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_quotations/\",\n" + 
+        "\n" + 
+        "   \"RESTHeader\": {\n" + 
+        "\n" + 
+        "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+        "    },\n" + 
+        "\n" + 
+        "   \"InputParameters\": {\n" + 
+        "\n" + 
+        "        \"P_RFQ_ID\":\""+rfqId+"\",\n" +
+        "\n" + 
+        "        \"P_SORT_OPTION\":\""+updateQuotSort+"\"\n" +                 
+                         
+        "\n" + 
+        "     }\n" + 
+        "\n" + 
+        "  }\n" + 
+        "\n" + 
+        "}  ";
+                                    restServiceAdapter.setRetryLimit(0);
+           System.out.println("postData===============================" + postData);
+            
+           String response = restServiceAdapter.send(postData);
+            
+           System.out.println("response===============================" + response);
+            
+            
+            JSONObject resp=new JSONObject(response);
+            JSONObject output=resp.getJSONObject("OutputParameters");
+            JSONObject summTBL=output.getJSONObject("X_QUOTATIONS_TL");
+               
+             QuotationList.s_jobs.clear();
+           
+            if(summTBL.get("X_QUOTATIONS_TL_ITEM") instanceof JSONArray) {
+                System.out.println("inside json");
+                
+                JSONArray summItm=summTBL.getJSONArray("X_QUOTATIONS_TL_ITEM");
+               
+                for(int i=0;i<summItm.length();i++) {
+                    System.out.println("for");
+                    JSONObject data=(JSONObject)summItm.get(i);
+                    
+                    rfqId=data.getString("RFQ_ID");
+                    String itemDescription=data.getString("ITEM_DESCRIPTION");
+                    String quotationId=data.getString("QUOTATION_ID");
+                    String quotationNo=data.getString("QUOTATION_NUM");
+                    String quotationLineId=data.getString("QUOTATION_LINE_ID");
+                    String quotationLineNo=data.getString("QUOTATION_LINE_NUM");
+                    String vendorId=data.getString("VENDOR_ID");
+                    String vendorName=data.getString("VENDOR_NAME");
+                    String quantity=data.getString("QUANTITY");
+                    String uom=data.getString("UOM");
+                    String promiseDate=data.getString("PROMISE_DATE");
+                    if (promiseDate.contains("{")) {
+                                            promiseDate = "";
+                                        }
+                    String price=data.getString("PRICE");
+                    String currencyCode=data.getString("CURRENCY_CODE");
+                    String supplierQuotationNo=data.getString("SUPPLIER_QUOTATION_NUM");
+                    String needByDate=data.getString("NEED_BY_DATE");
+                  
+                    Quotation q=new Quotation(rfqId, itemDescription, quotationId, quotationNo, quotationLineId, quotationLineNo, vendorId, vendorName, quantity, uom, promiseDate, price, currencyCode, supplierQuotationNo,"/images/no.png",needByDate); 
+                    QuotationList.s_jobs.add(q);
+                    
+               
+                }
+                
+                
+                
+                
+            }
+            
+            if(summTBL.get("X_QUOTATIONS_TL_ITEM") instanceof JSONObject) {
+                
+                JSONObject data=summTBL.getJSONObject("X_QUOTATIONS_TL_ITEM");
+                
+                rfqId=data.getString("RFQ_ID");
+                String itemDescription=data.getString("ITEM_DESCRIPTION");
+                String quotationId=data.getString("QUOTATION_ID");
+                String quotationNo=data.getString("QUOTATION_NUM");
+                String quotationLineId=data.getString("QUOTATION_LINE_ID");
+                String quotationLineNo=data.getString("QUOTATION_LINE_NUM");
+                String vendorId=data.getString("VENDOR_ID");
+                String vendorName=data.getString("VENDOR_NAME");
+                String quantity=data.getString("QUANTITY");
+                String uom=data.getString("UOM");
+                if (uom.contains("{")) {
+                    uom = "";
+                }
+                String promiseDate=data.getString("PROMISE_DATE");
+                if (promiseDate.contains("{")) {
+                    promiseDate = "";
+                }
+                String price=data.getString("PRICE");
+                if (price.contains("{")) {
+                    price = "";
+                }
+                String currencyCode=data.getString("CURRENCY_CODE");
+                if (currencyCode.contains("{")) {
+                    currencyCode = "";
+                }
+                String supplierQuotationNo=data.getString("SUPPLIER_QUOTATION_NUM");
+                
+                if (supplierQuotationNo.contains("{")) {
+                    supplierQuotationNo = "";
+                }
+                
+                String needByDate=data.getString("NEED_BY_DATE");
+                
+                if (needByDate.contains("{")) {
+                    needByDate = "";
+                }
+                
+                
+                Quotation q=new Quotation(rfqId, itemDescription, quotationId, quotationNo, quotationLineId, quotationLineNo, vendorId, vendorName, quantity, uom, promiseDate, price, currencyCode, supplierQuotationNo,"/images/no.png",needByDate); 
+                QuotationList.s_jobs.add(q);
+                
+                
+            }
+            
+            
+            
+            
+        }
+        
+        catch(Exception e){
+            e.printStackTrace();
+        }*/
+        try{
+            BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.quotations.iterator}");   
+            vex.setDataProvider(QuotationList.s_jobs);
+            
+            
+            MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.refresh.execute}", Object.class, new Class[] {});
+            me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+            
+           // System.out.println("Size is "+ mobile.QuotationList.s_jobs.size()+" "+vex.getTotalRowCount());
+            
+            AdfmfJavaUtilities.flushDataChangeEvent();
+            
+            
+        }
+        catch(Exception e) {
+            
+            e.printStackTrace();
+            
+            AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                         AdfmfJavaUtilities.getFeatureName(),
+                                         "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                         "Cannot connect to Services on Oracle Server.",
+                                         null,
+                                         null }); 
+        }
+        
+        
+        
+       
+        
+        
     }
 }

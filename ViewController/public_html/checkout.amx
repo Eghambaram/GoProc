@@ -122,6 +122,7 @@
                     </amx:cellFormat>
                 </amx:rowLayout>
             </amx:tableLayout>
+           
             <!--<amx:tableLayout width="100%" id="tl2" inlineStyle="margin-right:0;" shortDesc="table">
             <amx:rowLayout id="rl2">
                 <amx:cellFormat id="cf3" width="25%" halign="start">
@@ -311,6 +312,7 @@
                                     <amx:outputText value="#{row.rowid}" id="ot5"/>
                                 </amx:cellFormat>
                             </amx:rowLayout>
+<!-- Temprory Comment
                             <amx:rowLayout id="yrrlwq1">
                                 <amx:cellFormat width="2px" id="yacfwrq3"/>
                                 <amx:cellFormat width="100%" halign="start" id="zyaqcfqw8" valign="top">
@@ -331,7 +333,17 @@
                                         <amx:selectItems value="#{bindings.naturalAccounts.items}" id="sqi1"/>
                                     </amx:selectOneChoice>
                                 </amx:cellFormat>
-                            </amx:rowLayout>                         
+                            </amx:rowLayout>
+                            -->
+                               <amx:rowLayout id="yrrrlwq1">
+                                <amx:cellFormat width="2px" id="yrrqacfwrq3"/>
+                                <amx:cellFormat width="100%" halign="start" id="zqryaqcfqw8" valign="top">
+                             <amx:selectOneChoice value="#{row.costCenterNaturalAccount}"
+                                 label="Cost Center - GL Account" id="soc3">
+                                <amx:selectItems value="#{bindings.costCenterNaturalAccounts.items}" id="si3"/>
+                            </amx:selectOneChoice>
+                            </amx:cellFormat>
+                            </amx:rowLayout>
                             <amx:rowLayout id="ral1">
                                 <amx:cellFormat width="2px" id="yacfwr8"/>
                                 <amx:cellFormat width="100%" halign="start" id="yacfw8" valign="top">

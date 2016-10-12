@@ -38,6 +38,8 @@
     <page id="mobile_Noti_detailPageDef" path="mobile.pageDefs.Noti_detailPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
+    <dc id="CostCenterNaturalAccountsList" path="mobile.CostCenterNaturalAccountsList"/>
+    <dc id="QuotationSortList" path="mobile.QuotationSortList"/>
     <dc id="RejectionReasonList" path="mobile.RejectionReasonList"/>
     <dc id="NaturalAcccountList" path="mobile.NaturalAcccountList"/>
     <dc id="MultiOrgList" path="mobile.MultiOrgList"/>

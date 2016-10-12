@@ -21,6 +21,11 @@
     <accessorIterator MasterBinding="NaturalAcccountListIterator" Binds="naturalAccounts" RangeSize="25"
                       DataControl="NaturalAcccountList" BeanClass="mobile.NaturalAccounts"
                       id="naturalAccountsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="CostCenterNaturalAccountsList"
+              id="CostCenterNaturalAccountsListIterator"/>
+    <accessorIterator MasterBinding="CostCenterNaturalAccountsListIterator" Binds="costCenterNaturalAccounts"
+                      RangeSize="25" DataControl="CostCenterNaturalAccountsList"
+                      BeanClass="mobile.CostCenterNaturalAccounts" id="costCenterNaturalAccountsIterator"/>
   </executables>
   <bindings>
     <tree IterBinding="assetsIterator1" id="assets2">
@@ -43,6 +48,7 @@
           <Item Value="rowid"/>
           <Item Value="costCenter"/>
           <Item Value="naturalAccount"/>
+          <Item Value="costCenterNaturalAccount"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -75,6 +81,13 @@
           id="naturalAccounts" DTSupportsMRU="true" SelectItemValueMode="ListObject" StaticList="false">
       <AttrNames>
         <Item Value="description"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="costCenterNaturalAccountsIterator" ListOperMode="navigation"
+          ListIter="costCenterNaturalAccountsIterator" id="costCenterNaturalAccounts" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="dispValue"/>
       </AttrNames>
     </list>
   </bindings>

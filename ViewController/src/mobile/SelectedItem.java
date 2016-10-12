@@ -31,6 +31,16 @@ public class SelectedItem {
     private String indixCategoryId="";
     private String indixAttributes="";
     private String naturalAccount="";
+    private String costCenterNaturalAccount="";
+
+    public void setCostCenterNaturalAccount(String costCenterNaturalAccount) {
+        this.costCenterNaturalAccount = costCenterNaturalAccount;
+        propertyChangeSupport.firePropertyChange("costCenterNaturalAccount", this.costCenterNaturalAccount,costCenterNaturalAccount);
+    }
+
+    public String getCostCenterNaturalAccount() {
+        return costCenterNaturalAccount;
+    }
 
     public void setNaturalAccount(String naturalAccount) {
         this.naturalAccount = naturalAccount;
@@ -168,7 +178,7 @@ public class SelectedItem {
     
   
     
-    public SelectedItem(String poNo,String vendorName,String vendorSiteCode,String productCategory,String productTitle,String unitPrice,String imageUrl,String checked,String source,String uom,String quantity,String deliver_to_location,String need_by_date,String amount,String rowId,String costCenter,String itemRef,String indixCategoryId, String indixAttributes, String naturalAccount) {
+    public SelectedItem(String poNo,String vendorName,String vendorSiteCode,String productCategory,String productTitle,String unitPrice,String imageUrl,String checked,String source,String uom,String quantity,String deliver_to_location,String need_by_date,String amount,String rowId,String costCenter,String itemRef,String indixCategoryId, String indixAttributes, String naturalAccount,String costCenterNaturalAccount) {
         super();
         
         
@@ -192,6 +202,7 @@ public class SelectedItem {
         this.indixCategoryId=indixCategoryId;
         this.indixAttributes=indixAttributes;
         this.naturalAccount=naturalAccount;
+        this.costCenterNaturalAccount=costCenterNaturalAccount;
     }
     
     

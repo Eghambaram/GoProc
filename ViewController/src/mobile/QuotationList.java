@@ -200,6 +200,15 @@ public class QuotationList {
                ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.password}", String.class);
                String password = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
                
+                ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.QuotationSortValue}", String.class);
+                String sortOption = (String)ve4.getValue(AdfmfJavaUtilities.getAdfELContext());
+               
+              
+                   
+               ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedRFQId}", String.class);
+               ve8.setValue(AdfmfJavaUtilities.getAdfELContext(),rfqId);     
+                   
+                            
                RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
                // Clear any previously set request properties, if any
                restServiceAdapter.clearRequestProperties();
@@ -224,7 +233,10 @@ public class QuotationList {
                "\n" + 
                "   \"InputParameters\": {\n" + 
                "\n" + 
-               "        \"P_RFQ_ID\":"+rfqId+"\n" + 
+               "        \"P_RFQ_ID\":\""+rfqId+"\",\n" +
+               "\n" + 
+               "        \"P_SORT_OPTION\":\""+sortOption+"\"\n" +                 
+                                
                "\n" + 
                "     }\n" + 
                "\n" + 
@@ -274,8 +286,15 @@ public class QuotationList {
                            String currencyCode=data.getString("CURRENCY_CODE");
                            String supplierQuotationNo=data.getString("SUPPLIER_QUOTATION_NUM");
                            String needByDate=data.getString("NEED_BY_DATE");
+                           
+                           String showQuoteDiverse=data.getString("SUPP_BUS_CLASS_COUNT");
+                           System.out.println("showQuoteDiverse-->"+showQuoteDiverse);
+                           String quoteDiverseImage="false";
+                           if( Integer.parseInt(showQuoteDiverse) > 0) {
+                           quoteDiverseImage="true";
+                           }
                          
-                           Quotation q=new Quotation(rfqId, itemDescription, quotationId, quotationNo, quotationLineId, quotationLineNo, vendorId, vendorName, quantity, uom, promiseDate, price, currencyCode, supplierQuotationNo,"/images/no.png",needByDate); 
+                           Quotation q=new Quotation(rfqId, itemDescription, quotationId, quotationNo, quotationLineId, quotationLineNo, vendorId, vendorName, quantity, uom, promiseDate, price, currencyCode, supplierQuotationNo,"/images/no.png",needByDate,quoteDiverseImage); 
                            boolean ret=QuotationList.s_jobs.add(q);
                            System.out.println("Add "+ret);
                       
@@ -327,8 +346,15 @@ public class QuotationList {
                            needByDate = "";
                        }
                        
+                       String showQuoteDiverse=data.getString("SUPP_BUS_CLASS_COUNT");
+                       System.out.println("showQuoteDiverse-->"+showQuoteDiverse);
+                       String quoteDiverseImage="false";
+                       if( Integer.parseInt(showQuoteDiverse) > 0) {
+                       quoteDiverseImage="true";
+                       }
                        
-                       Quotation q=new Quotation(rfqId, itemDescription, quotationId, quotationNo, quotationLineId, quotationLineNo, vendorId, vendorName, quantity, uom, promiseDate, price, currencyCode, supplierQuotationNo,"/images/no.png",needByDate); 
+                       
+                       Quotation q=new Quotation(rfqId, itemDescription, quotationId, quotationNo, quotationLineId, quotationLineNo, vendorId, vendorName, quantity, uom, promiseDate, price, currencyCode, supplierQuotationNo,"/images/no.png",needByDate,quoteDiverseImage); 
                        boolean ret=QuotationList.s_jobs.add(q);
                        System.out.println("Add "+ret);
                        

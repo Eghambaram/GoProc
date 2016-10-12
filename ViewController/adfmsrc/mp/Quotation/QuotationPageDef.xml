@@ -14,6 +14,9 @@
     <accessorIterator MasterBinding="DeliverToLocationListIterator" Binds="deliverToLocations" RangeSize="25"
                       DataControl="DeliverToLocationList" BeanClass="mobile.DeliverToLocation"
                       id="deliverToLocationsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="QuotationSortList" id="QuotationSortListIterator"/>
+    <accessorIterator MasterBinding="QuotationSortListIterator" Binds="quotationSort" RangeSize="25"
+                      DataControl="QuotationSortList" BeanClass="mobile.QuotationSort" id="quotationSortIterator"/>
   </executables>
   <bindings>
     <methodAction id="toggleSpringboard" RequiresUpdateModel="true" Action="invokeMethod" MethodName="toggleSpringboard"
@@ -43,6 +46,7 @@
           <Item Value="currencyCode"/>
           <Item Value="supplierQuotationNo"/>
           <Item Value="selected"/>
+          <Item Value="quoteDiverseImage"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -65,5 +69,11 @@
     <methodAction id="proceedPlaceOrder" RequiresUpdateModel="true" Action="invokeMethod" MethodName="proceedPlaceOrder"
                   IsViewObjectMethod="false" DataControl="QuotationList"
                   InstanceName="data.QuotationList.dataProvider"/>
+    <list IterBinding="quotationSortIterator" ListOperMode="navigation" ListIter="quotationSortIterator"
+          id="quotationSort" DTSupportsMRU="false" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="meaning"/>
+      </AttrNames>
+    </list>
   </bindings>
 </pageDefinition>

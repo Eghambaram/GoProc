@@ -24,6 +24,16 @@ public class Quotation {
     public String supplierQuotationNo="";
     public String selected="";
     public String needByDate="";
+    public String quoteDiverseImage="";
+
+    public void setQuoteDiverseImage(String quoteDiverseImage) {
+        this.quoteDiverseImage = quoteDiverseImage;
+        propertyChangeSupport.firePropertyChange("quoteDiverseImage", this.quoteDiverseImage,quoteDiverseImage);
+    }
+
+    public String getQuoteDiverseImage() {
+        return quoteDiverseImage;
+    }
 
     public void setNeedByDate(String needByDate) {
         this.needByDate = needByDate;
@@ -173,7 +183,7 @@ public class Quotation {
         super();
     }
     
-    public Quotation(String rfqId,String itemDescription,String quotationId,String quotationNo,String quotationLineId,String quotationLineNo,String vendorId,String vendorName,String quantity,String uom,String promiseDate,String price,String currencyCode,String supplierQuotationNo,String selected,String needByDate) {
+    public Quotation(String rfqId,String itemDescription,String quotationId,String quotationNo,String quotationLineId,String quotationLineNo,String vendorId,String vendorName,String quantity,String uom,String promiseDate,String price,String currencyCode,String supplierQuotationNo,String selected,String needByDate, String quoteDiverseImage) {
        this.rfqId=rfqId;
         this.itemDescription=itemDescription;
         this.quotationId=quotationId;
@@ -190,6 +200,7 @@ public class Quotation {
         this.supplierQuotationNo=supplierQuotationNo;    
         this.selected=selected;
         this.needByDate=needByDate;
+        this.quoteDiverseImage=quoteDiverseImage;
     }
     
     public void addPropertyChangeListener(PropertyChangeListener l) {

@@ -2300,7 +2300,7 @@ public class Rest {
             System.out.println("After Attrib=====> "+specList); 
         }
         
-        SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "false", item.getSource(), item.getUom(), "1", "1", "1",item.getUnitPrice(),String.valueOf(randomInt),"",item.getRowId(),item.getIndixCategoryId(),specList,"");
+        SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "false", item.getSource(), item.getUom(), "1", "1", "1",item.getUnitPrice(),String.valueOf(randomInt),"",item.getRowId(),item.getIndixCategoryId(),specList,"","");
         
         for(int i=0;i<row.getAttributeCount();i++) {
             
@@ -2894,7 +2894,7 @@ public class Rest {
                     System.out.println("After Attrib=====> "+specList); 
                 }
                 
-                SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "false", item.getSource(), item.getUom(), "1", "1", "1",item.getUnitPrice(),item.getRowId(),"",item.getRowId(),item.getIndixCategoryId(),specList,"");
+                SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "false", item.getSource(), item.getUom(), "1", "1", "1",item.getUnitPrice(),item.getRowId(),"",item.getRowId(),item.getIndixCategoryId(),specList,"","");
                 SelectedItemsList.items_selected.add(selectItem); 
                 SelectedItemsList.s_jobs.add(selectItem); 
                 
@@ -6422,8 +6422,7 @@ public class Rest {
     }
     
     public void getRejectionReasons(String rr) {
-            ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
-            ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+            
             //Get Rejection Code Reasons for dropdown
                try{
                    

@@ -92,7 +92,7 @@ public class ItemsList {
         public static HashMap<Integer,Integer> pageMap=new HashMap();
         public static List Specification = new ArrayList();
         public static List naturalAccountList = new ArrayList();
-        
+        public static List costCenterNaturalAccountsList = new ArrayList();
      
         public ItemsList() {
             if (s_jobs == null) {
@@ -168,6 +168,120 @@ public class ItemsList {
         
         
         public void doSelectItem(){
+            
+            try {
+                //CostCenter with Natural Account
+                ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+                String userId = (String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
+                
+                ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+                String multiOrgId = (String)ve6.getValue(AdfmfJavaUtilities.getAdfELContext());
+                
+                ValueExpression vf3 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_costNaturalAccount}", String.class);
+                String default_cost_natural_accout = (String)vf3.getValue(AdfmfJavaUtilities.getAdfELContext());
+
+                System.out.println("Dafult Cost Center Value-->"+default_cost_natural_accout);
+
+                ValueExpression vf31 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_costNaturalAccountId}", String.class);
+                vf31.setValue(AdfmfJavaUtilities.getAdfELContext(), "");
+
+                RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();                    
+                                // Natural Accounts
+                            
+                            restServiceAdapter = Model.createRestServiceAdapter();
+                            // Clear any previously set request properties, if any
+                            restServiceAdapter.clearRequestProperties();
+                            // Set the connection name
+                            restServiceAdapter.setConnectionName("enrich");
+                            
+                            restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                            restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                            restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                            restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                            restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_cc_acct_lov/");
+                            String postData= "{\n" + 
+                                "  \"GET_CC_ACCT_LOV_Input\" : {\n" + 
+                                "   \"RESTHeader\": {\n" + 
+                                "    },\n" + 
+                                "   \"InputParameters\": {\n" + 
+                                "          \"P_USER_ID\" : \""+userId+"\"\n" + 
+                                "         ,\"P_ORG_ID\" : \""+multiOrgId+"\"\n" + 
+                                "       }          \n" + 
+                                "   }\n" + 
+                                "}\n";
+                                
+                               restServiceAdapter.setRetryLimit(0);
+                               System.out.println("postData===============================" + postData);
+                                
+                              String response = restServiceAdapter.send(postData);
+                                
+                                System.out.println("response===============================" + response); 
+                               JSONObject  resp=new JSONObject(response);
+                                JSONObject output=resp.getJSONObject("OutputParameters");
+                            try{
+                                JSONObject data=output.getJSONObject("X_CC_ACCT_TL");
+                                NaturalAcccountList.acc_List.clear();
+                                naturalAccountList.clear();
+                                
+                                if(data.get("X_CC_ACCT_TL_ITEM") instanceof  JSONArray){
+                                  JSONArray segments=data.getJSONArray("X_CC_ACCT_TL_ITEM");
+                                  for(int i=0;i<segments.length();i++) {
+                                      JSONObject na=(JSONObject)segments.get(i);
+                                      String costCenter=na.getString("COST_CENTER");
+                                      String naturalAccount=na.getString("NATURAL_ACCOUNT");
+                                      String costCenterDisc=na.getString("COST_CENTER_DESC");
+                                      String naturalAccountDisc=na.getString("NATURAL_ACCT_DESC");
+                                      String DispValue=na.getString("DISPLAY_VALUE");
+                                      System.out.println("Dafult Cost Center Value-->"+default_cost_natural_accout+"---"+DispValue);
+                                      if(DispValue.equalsIgnoreCase(default_cost_natural_accout)) {
+                                          vf31.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(i));
+                                          
+                                          System.out.println("Dafult Cost Center Value-->"+default_cost_natural_accout);
+
+                                      }
+                                      
+                                      CostCenterNaturalAccounts c=new CostCenterNaturalAccounts(costCenter, naturalAccount, costCenterDisc, naturalAccountDisc, DispValue);
+                                      CostCenterNaturalAccountsList.CC_NA_List.add(c);
+                                      costCenterNaturalAccountsList.add(c);
+                                      
+                                  }
+                                
+                                }
+                                
+                                else if(data.get("X_CC_ACCT_TL_ITEM") instanceof  JSONObject){
+                                   
+                                   JSONObject na=data.getJSONObject("X_CC_ACCT_TL_ITEM");
+                                    String costCenter=na.getString("COST_CENTER");
+                                    String naturalAccount=na.getString("NATURAL_ACCOUNT");
+                                    String costCenterDisc=na.getString("COST_CENTER_DESC");
+                                    String naturalAccountDisc=na.getString("NATURAL_ACCT_DESC");
+                                    String DispValue=na.getString("DISPLAY_VALUE");
+                                    if(DispValue.equalsIgnoreCase(default_cost_natural_accout)) {
+                                        vf31.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(0));
+                                    }
+                                    
+                                    CostCenterNaturalAccounts c=new CostCenterNaturalAccounts(costCenter, naturalAccount, costCenterDisc, naturalAccountDisc, DispValue);
+                                    CostCenterNaturalAccountsList.CC_NA_List.add(c);
+                                    costCenterNaturalAccountsList.add(c);
+                                   
+                                }
+                                  /*  AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                                                      .evaluateELExpression("#{bindings.naturalAccounts}");
+                                    AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
+                                    accountListIterator.refresh();*/
+                                
+                                }
+                                catch(Exception e) {
+                                    e.printStackTrace();
+                                }
+                                
+                          
+            }
+            
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+            
             BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");  
             Item item=(Item)vex.getDataProvider();
             GenericType row= (GenericType)vex.getCurrentRow();
@@ -185,10 +299,13 @@ public class ItemsList {
             String default_deliver_to_location = (String)ve49.getValue(AdfmfJavaUtilities.getAdfELContext()); 
         
             ValueExpression ve150 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_natural_account}", String.class);
-            String default_natural_account = (String)ve150.getValue(AdfmfJavaUtilities.getAdfELContext()); 
+            String default_natural_account = (String)ve150.getValue(AdfmfJavaUtilities.getAdfELContext());
             
+            ValueExpression ve151 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_costNaturalAccountId}", String.class);
+            String default_cost_natural_account = (String)ve151.getValue(AdfmfJavaUtilities.getAdfELContext()); 
+
             String natural=default_natural_account;
-            System.out.println("Natural-->"+default_natural_account);
+            System.out.println("Natural-->"+default_natural_account+"---->"+default_cost_natural_account);
             
           /*  NaturalAccounts nAcc;
             if(natural.equalsIgnoreCase("")){
@@ -236,7 +353,7 @@ public class ItemsList {
             }
             
             
-        SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account);
+        SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,default_cost_natural_account);
         
         
             
@@ -659,7 +776,92 @@ public class ItemsList {
                     e.printStackTrace();
                 }
 
+//CostCenter with Natural Account
                 
+                // Natural Accounts
+            
+            restServiceAdapter = Model.createRestServiceAdapter();
+            // Clear any previously set request properties, if any
+            restServiceAdapter.clearRequestProperties();
+            // Set the connection name
+            restServiceAdapter.setConnectionName("enrich");
+            
+            restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+            restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+            restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+            restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+            restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_cc_acct_lov/");
+                postData= "{\n" + 
+                "  \"GET_CC_ACCT_LOV_Input\" : {\n" + 
+                "   \"RESTHeader\": {\n" + 
+                "    },\n" + 
+                "   \"InputParameters\": {\n" + 
+                "   	   \"P_USER_ID\" : \""+userId+"\"\n" + 
+                "   	  ,\"P_ORG_ID\" : \""+multiOrgId+"\"\n" + 
+                "       }	   \n" + 
+                "   }\n" + 
+                "}\n";
+                
+               restServiceAdapter.setRetryLimit(0);
+               System.out.println("postData===============================" + postData);
+                
+                response = restServiceAdapter.send(postData);
+                
+                System.out.println("response===============================" + response); 
+                 resp=new JSONObject(response);
+                 output=resp.getJSONObject("OutputParameters");
+            try{
+                 data=output.getJSONObject("X_CC_ACCT_TL");
+                NaturalAcccountList.acc_List.clear();
+                naturalAccountList.clear();
+                
+                if(data.get("X_CC_ACCT_TL_ITEM") instanceof  JSONArray){
+                  JSONArray segments=data.getJSONArray("X_CC_ACCT_TL_ITEM");
+                  for(int i=0;i<segments.length();i++) {
+                      JSONObject na=(JSONObject)segments.get(i);
+                      String costCenter=na.getString("COST_CENTER");
+                      String naturalAccount=na.getString("NATURAL_ACCOUNT");
+                      String costCenterDisc=na.getString("COST_CENTER_DESC");
+                      String naturalAccountDisc=na.getString("NATURAL_ACCT_DESC");
+                      String DispValue=na.getString("DISPLAY_VALUE");
+                     /* if(name.equalsIgnoreCase(default_natural_account_seg)) {
+                          default_natural_account_description=String.valueOf(i);
+                      }*/
+                      
+                      CostCenterNaturalAccounts c=new CostCenterNaturalAccounts(costCenter, naturalAccount, costCenterDisc, naturalAccountDisc, DispValue);
+                      CostCenterNaturalAccountsList.CC_NA_List.add(c);
+                      costCenterNaturalAccountsList.add(c);
+                      
+                  }
+                
+                }
+                
+                else if(data.get("X_CC_ACCT_TL_ITEM") instanceof  JSONObject){
+                   
+                   JSONObject na=data.getJSONObject("X_CC_ACCT_TL_ITEM");
+                    String costCenter=na.getString("COST_CENTER");
+                    String naturalAccount=na.getString("NATURAL_ACCOUNT");
+                    String costCenterDisc=na.getString("COST_CENTER_DESC");
+                    String naturalAccountDisc=na.getString("NATURAL_ACCT_DESC");
+                    String DispValue=na.getString("DISPLAY_VALUE");
+                    /*if(name.equalsIgnoreCase(default_natural_account_seg)) {
+                        default_natural_account_description=String.valueOf(0);
+                    }*/
+                    
+                    CostCenterNaturalAccounts c=new CostCenterNaturalAccounts(costCenter, naturalAccount, costCenterDisc, naturalAccountDisc, DispValue);
+                    CostCenterNaturalAccountsList.CC_NA_List.add(c);
+                    costCenterNaturalAccountsList.add(c);
+                   
+                }
+                  /*  AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                                      .evaluateELExpression("#{bindings.naturalAccounts}");
+                    AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
+                    accountListIterator.refresh();*/
+                
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
                 
                 
             }
@@ -3042,10 +3244,10 @@ public class ItemsList {
                                     naturalAccountList.add(c);
                                    
                                 }
-                                  /*  AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                                    AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
                                                       .evaluateELExpression("#{bindings.naturalAccounts}");
                                     AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
-                                    accountListIterator.refresh();*/
+                                    accountListIterator.refresh();
                                 
                                 }
                                 catch(Exception e) {
@@ -3296,7 +3498,7 @@ public class ItemsList {
                                   }
 
 
-                     SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", "1", "",item.getUnitPrice(),String.valueOf(randomInt),"",item.getRowId(),item.getIndixCategoryId(),specList,"");
+                     SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", "1", "",item.getUnitPrice(),String.valueOf(randomInt),"",item.getRowId(),item.getIndixCategoryId(),specList,"","");
                      SelectedItemsList.s_jobs.add(selectItem) ; 
                               }
                             }
@@ -3843,7 +4045,7 @@ public class ItemsList {
                                        loc=(DeliverToLocation)deliverToLocationList.get(Integer.parseInt(row.getAttribute("deliver_to_location").toString()));
                                        }
                                        
-                                       System.out.println("MakeCheckOUT--> ItemValues"+item.getNaturalAccount()+"Deliver To location"+item.getDeliver_to_location());
+                                       System.out.println("Deliver To location"+loc.getDescription());
                                        
                                        sb.append("    \"DELIVER_TO_LOCATION\":\""+loc.getCode()+"\",\n");
                                        String arr[]=item.getNeed_by_date().split("T");
@@ -3879,17 +4081,29 @@ public class ItemsList {
                                            c=(CostCenter)costCenterList.get(Integer.parseInt(row.getAttribute("costCenter").toString()));
                                        }
                                        
+                                       System.out.println("CostCenter with Natural Account:"+c.getDescription());
+                                       
+                                       //Cost Center with Natural Accounts
+                                       CostCenterNaturalAccounts ccNacc;
+                                       if(row.getAttribute("costCenterNaturalAccount").toString().equalsIgnoreCase("")){
+                                           ccNacc=(CostCenterNaturalAccounts)costCenterNaturalAccountsList.get(0);
+                                       }
+                                       else{
+                                           ccNacc=(CostCenterNaturalAccounts)costCenterNaturalAccountsList.get(Integer.parseInt(row.getAttribute("costCenterNaturalAccount").toString()));
+                                       }
+                                       System.out.println("CostCenter with Natural Account:"+ccNacc.getCostCenter()+"  "+ ccNacc.getNaturalAccount());
                                        //Natural Accounts
-                                       NaturalAccounts nAcc;
+                                   /*    NaturalAccounts nAcc;
                                        if(row.getAttribute("naturalAccount").toString().equalsIgnoreCase("")){
                                            nAcc=(NaturalAccounts)naturalAccountList.get(0);
                                        }
                                        else{
                                            nAcc=(NaturalAccounts)naturalAccountList.get(Integer.parseInt(row.getAttribute("naturalAccount").toString()));
-                                       }
+                                       }*/
                                        
-                                       sb.append("    \"COST_CENTER\":\""+c.getName()+"\",\n");
-                                       sb.append("    \"NATURAL_ACCOUNT\":\""+nAcc.getDescription()+"\",\n");
+                                       
+                                       sb.append("    \"COST_CENTER\":\""+ccNacc.getCostCenterDisc()+"\",\n");
+                                       sb.append("    \"NATURAL_ACCOUNT\":\""+ccNacc.getNaturalAccountDisc()+"\",\n");
                                        sb.append("    \"CHARGE_ACCOUNT\":\"\",\n");
                                        sb.append("    \"MARKUP_PRICE\":\"\",\n");
                                        sb.append("    \"REQUISITION_HEADER_ID\":\"\",\n");
