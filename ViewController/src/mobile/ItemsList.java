@@ -689,7 +689,7 @@ public class ItemsList {
 
 // Natural Accounts
             
-            restServiceAdapter = Model.createRestServiceAdapter();
+      /*      restServiceAdapter = Model.createRestServiceAdapter();
             // Clear any previously set request properties, if any
             restServiceAdapter.clearRequestProperties();
             // Set the connection name
@@ -771,11 +771,11 @@ public class ItemsList {
                     AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
                     accountListIterator.refresh();*/
                 
-                }
+         /*       }
                 catch(Exception e) {
                     e.printStackTrace();
                 }
-
+*/
 //CostCenter with Natural Account
                 
                 // Natural Accounts
@@ -812,9 +812,10 @@ public class ItemsList {
                  output=resp.getJSONObject("OutputParameters");
             try{
                  data=output.getJSONObject("X_CC_ACCT_TL");
-                NaturalAcccountList.acc_List.clear();
-                naturalAccountList.clear();
-                
+            //    NaturalAcccountList.acc_List.clear();
+              //  naturalAccountList.clear();
+                CostCenterNaturalAccountsList.CC_NA_List.clear();
+                costCenterNaturalAccountsList.clear();
                 if(data.get("X_CC_ACCT_TL_ITEM") instanceof  JSONArray){
                   JSONArray segments=data.getJSONArray("X_CC_ACCT_TL_ITEM");
                   for(int i=0;i<segments.length();i++) {

@@ -88,13 +88,17 @@ public class Login {
             List deliverToLocationList=new ArrayList();
             List costCenterList=new ArrayList();
             List naturalAccountList = new ArrayList();
+           
+           
+            
         ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_name}", String.class);
         String userName = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
         userName=userName.trim();
         
-        /*ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.password}", String.class);
-        String password = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());*/
-        
+     /*   ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.password}", String.class);
+        String password = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
+        */
+            
         RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
         // Clear any previously set request properties, if any
         restServiceAdapter.clearRequestProperties();
@@ -147,13 +151,11 @@ public class Login {
             ValueExpression ove113 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
             ove113.setValue(AdfmfJavaUtilities.getAdfELContext(),org_id);
             
-            
             ValueExpression fve13 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_firstName}", String.class);
             fve13.setValue(AdfmfJavaUtilities.getAdfELContext(),user_firstName);
             
             ValueExpression lve13 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_lastName}", String.class);
             lve13.setValue(AdfmfJavaUtilities.getAdfELContext(),user_lastName);
-            
         
              System.out.println("Terms and Condition"+terms);      
              if(status.equalsIgnoreCase("Y") && terms.equalsIgnoreCase("Y")) {
@@ -181,7 +183,8 @@ public class Login {
                  AdfmfContainerUtilities.resetFeature("mp.Quotation",false);
                  AdfmfContainerUtilities.resetFeature("mp.springboard");
                  }
-             
+                 
+                
                  
                  ValueExpression ve14 = AdfmfJavaUtilities.getValueExpression("#{deviceScope.device.uuid}", String.class);
                  String device_serial_id=(String)ve14.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -206,8 +209,10 @@ public class Login {
                  ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_natural_account}", String.class);
                  ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                  
-                 ValueExpression ve25 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_cost_natural_account}", String.class);
-                 ve25.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                 ValueExpression ve300 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.CostDescription}", String.class);
+                  ve300.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                 ValueExpression ve301 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.NaturalDescription}", String.class);
+                 ve301.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                  
                  String multi_orgID="";
                      if(!org_id.contains(("{\"@xsi:nil\":\"true\"}"))) 
@@ -460,6 +465,9 @@ public class Login {
                                  catch(Exception e) {
                                      e.printStackTrace();
                                  }
+                             
+                 
+                             
                  //Start MULTI-ORG
                  //get cost center list
                   
@@ -573,7 +581,7 @@ public class Login {
                  // =====Alias End 
                  
                  //register the device related info to oracle
-                 
+               
                  restServiceAdapter = Model.createRestServiceAdapter();
                          // Clear any previously set request properties, if any
                          restServiceAdapter.clearRequestProperties();
@@ -607,8 +615,8 @@ public class Login {
                          "        \"P_DEVICE_MODEL\" : \""+device_model+"\",\n" + 
                          "\n" + 
                          "        \"P_TOKEN\" : \""+device_token+"\",\n" +
-                        "\n" +
-                        "        \"P_TNC_ACCEPTED\" : \"Y\"\n" + 
+                         "\n" +
+                         "        \"P_TNC_ACCEPTED\" : \"Y\"\n" + 
                          "\n" + 
                          "     }\n" + 
                          "\n" + 
@@ -678,7 +686,7 @@ public class Login {
                                    if(c.getName().trim().equalsIgnoreCase(pref.getString("ATTRIBUTE_VALUE").trim()))     {
                                        System.out.println("Match occurs "+c.getDescription());
                                        ve18.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
-                                       ve25.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
+                                       ve300.setValue(AdfmfJavaUtilities.getAdfELContext(),c.getDescription());
                                    }
                                }
                                
@@ -693,6 +701,7 @@ public class Login {
                                    if(na.getSegValue().trim().equalsIgnoreCase(pref.getString("ATTRIBUTE_VALUE").trim()))     {
                                        System.out.println("Match occurs "+na.getDescription());
                                        ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
+                                       ve301.setValue(AdfmfJavaUtilities.getAdfELContext(),na.getDescription());
                                    }
                                }
                                
@@ -733,7 +742,7 @@ public class Login {
                                  if(c.getName().trim().equalsIgnoreCase(pref.getString("ATTRIBUTE_VALUE").trim()))     {
                                      System.out.println("Match occurs "+c.getDescription());
                                      ve18.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
-                                     ve25.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
+                                     
                                  }
                              }
                          }
@@ -767,8 +776,23 @@ public class Login {
                  ValueExpression ve33 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
                  String DefaultMultiOrgOrg=(String)ve33.getValue(AdfmfJavaUtilities.getAdfELContext());
                  
+                 ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.CostDescription}", String.class);
+                 String costDefault=(String)vf1.getValue(AdfmfJavaUtilities.getAdfELContext());
+                 ValueExpression vf2 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.NaturalDescription}", String.class);
+                 String natralDefault=(String)vf2.getValue(AdfmfJavaUtilities.getAdfELContext());
+                 
+                 
+                 System.out.println("New Cost Center Combination"+costDefault+"----"+natralDefault);
                  ////////////////
                  System.out.println("--- Check Default--"+DefaultMultiOrgOrg);
+                 
+                 String costNaturalAccount=costDefault+"-"+natralDefault;
+                 
+                 ValueExpression vf3 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_costNaturalAccount}", String.class);
+                 vf3.setValue(AdfmfJavaUtilities.getAdfELContext(), costNaturalAccount);
+                 
+                 
+                 System.out.println("---Natural Cost Check Default--"+costNaturalAccount);
                  
                  if(homeScreen.equalsIgnoreCase("req_sts")){
                      AdfmfContainerUtilities.gotoFeature("mp.Requisition"); 
@@ -859,6 +883,7 @@ public class Login {
                                               "Invalid UserName or Password",
                                               null,
                                               null });*/
+
              }
             
             
