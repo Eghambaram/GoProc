@@ -179,6 +179,12 @@ public class ItemsList {
                 
                 ValueExpression vf3 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_costNaturalAccount}", String.class);
                 String default_cost_natural_accout = (String)vf3.getValue(AdfmfJavaUtilities.getAdfELContext());
+                
+                ValueExpression loc_code = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationCode}", String.class);
+                String default_loc_code=(String)loc_code.getValue(AdfmfJavaUtilities.getAdfELContext());
+                
+                ValueExpression vf_loc_code = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationValue}", String.class);
+                vf_loc_code.setValue(AdfmfJavaUtilities.getAdfELContext(), "");
 
                 System.out.println("Dafult Cost Center Value-->"+default_cost_natural_accout);
 
@@ -276,6 +282,97 @@ public class ItemsList {
                                 }
                                 
                           
+            
+            
+            //Deliver to Location   
+               
+           
+            // Clear any previously set request properties, if any
+            restServiceAdapter.clearRequestProperties();
+            // Set the connection name
+            restServiceAdapter.setConnectionName("enrich");
+            
+            restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+            restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+            restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+            restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+            restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_deliver_to/");
+            postData= "{\n" + 
+            "\n" + 
+            "  \"GET_DELIVER_TO_Input\" : {\n" + 
+            "\n" + 
+            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_deliver_to/\",\n" + 
+            "\n" + 
+            "   \"RESTHeader\": {\n" + 
+            "\n" + 
+            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+            "    },\n" + 
+            "\n" + 
+            "   \"InputParameters\": {\n" + 
+            "\n" + 
+               "        \"P_USER_ID\":\""+userId+"\",\n" + 
+                              "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
+            "\n" + 
+            "     }\n" + 
+            "\n" + 
+            "  }\n" + 
+            "\n" + 
+            "}  ";
+                                        restServiceAdapter.setRetryLimit(0);
+               System.out.println("postData===============================" + postData);
+                
+               response = restServiceAdapter.send(postData);
+                
+                System.out.println("response===============================" + response); 
+                resp=new JSONObject(response);
+                output=resp.getJSONObject("OutputParameters");
+               JSONObject data=new JSONObject();
+             try{
+                 data=output.getJSONObject("X_DELIVER_TO_TL");
+                DeliverToLocationList.s_jobs.clear();
+                    deliverToLocationList.clear();
+
+                    DeliverToLocation l2=new DeliverToLocation("Please Select","Please Select","Please Select"); 
+                    DeliverToLocationList.s_jobs.add(l2);
+                    deliverToLocationList.add(l2);
+
+                
+                if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONArray){
+                  JSONArray segments=data.getJSONArray("X_DELIVER_TO_TL_ITEM");
+                  for(int i=0;i<segments.length();i++) {
+                    JSONObject location=segments.getJSONObject(i);
+                    String locationId=location.getString("LOCATION_ID");
+                    String locationCode=location.getString("LOCATION_CODE");
+                    String locationDescription=location.getString("DESCRIPTION");
+                      if(locationCode.equalsIgnoreCase(default_loc_code)) {
+                          vf_loc_code.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(i+1));
+                      }
+                     
+                    DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
+                    DeliverToLocationList.s_jobs.add(loc);
+                      deliverToLocationList.add(loc);
+                  }
+                
+                }
+                
+                else if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONObject){
+                   
+                   JSONObject location=data.getJSONObject("X_DELIVER_TO_TL_ITEM");
+                    String locationId=location.getString("LOCATION_ID");
+                    String locationCode=location.getString("LOCATION_CODE");
+                    String locationDescription=location.getString("DESCRIPTION");
+                        if(locationCode.equalsIgnoreCase(default_loc_code)) {
+                            vf_loc_code.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(0));
+                        }
+                    DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
+                    DeliverToLocationList.s_jobs.add(loc);
+                    deliverToLocationList.add(loc);
+                   
+                }
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
             }
             
             catch(Exception e) {
@@ -295,7 +392,7 @@ public class ItemsList {
             ValueExpression ve48 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_cost_center}", String.class);
             String default_cost_center = (String)ve48.getValue(AdfmfJavaUtilities.getAdfELContext());
                
-            ValueExpression ve49 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to}", String.class);
+            ValueExpression ve49 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationValue}", String.class);
             String default_deliver_to_location = (String)ve49.getValue(AdfmfJavaUtilities.getAdfELContext()); 
         
             ValueExpression ve150 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_natural_account}", String.class);
@@ -352,6 +449,7 @@ public class ItemsList {
                 System.out.println("After Attrib=====> "+specList); 
             }
             
+            System.out.println("Deliver To Location-->"+default_deliver_to_location);
             
         SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,default_cost_natural_account);
         
@@ -555,6 +653,11 @@ public class ItemsList {
                   data=output.getJSONObject("X_DELIVER_TO_TL");
                  DeliverToLocationList.s_jobs.clear();
                      deliverToLocationList.clear();
+
+                     DeliverToLocation l2=new DeliverToLocation("Please Select","Please Select","Please Select"); 
+                     DeliverToLocationList.s_jobs.add(l2);
+                     deliverToLocationList.add(l2);
+
                  
                  if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONArray){
                    JSONArray segments=data.getJSONArray("X_DELIVER_TO_TL_ITEM");
@@ -563,9 +666,7 @@ public class ItemsList {
                      String locationId=location.getString("LOCATION_ID");
                      String locationCode=location.getString("LOCATION_CODE");
                      String locationDescription=location.getString("DESCRIPTION");
-                      if(locationId.equalsIgnoreCase(default_deliver_to_location_id)) {
-                          default_deliver_to_location_name=String.valueOf(i);
-                      }
+                      
                      DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
                      DeliverToLocationList.s_jobs.add(loc);
                        deliverToLocationList.add(loc);
@@ -579,9 +680,7 @@ public class ItemsList {
                      String locationId=location.getString("LOCATION_ID");
                      String locationCode=location.getString("LOCATION_CODE");
                      String locationDescription=location.getString("DESCRIPTION");
-                     if(locationId.equalsIgnoreCase(default_deliver_to_location_id)) {
-                         default_deliver_to_location_name=String.valueOf(0);
-                     }
+                     
                      DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
                      DeliverToLocationList.s_jobs.add(loc);
                      deliverToLocationList.add(loc);
@@ -960,6 +1059,9 @@ public class ItemsList {
                     
                     ValueExpression isContractedItemPresent = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.isContractedItemPresent}", String.class);
                     isContractedItemPresent.setValue(AdfmfJavaUtilities.getAdfELContext(), "false");
+                  
+                   ValueExpression ve119 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySortOption}", String.class);
+                   ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
     
     
                     ValueExpression ve_is_query_ref = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.isQueryRefSet}", String.class);
@@ -1424,9 +1526,11 @@ public class ItemsList {
                                                    //   System.out.println("***********");
                                                   }
                            
-                           if(Integer.parseInt(result_size)<20) {
+                           System.out.println("Total Item in Orace + indix---->"+size);
+                           
+                          /* if(Integer.parseInt(result_size)<20) {
                                size=ItemsList.items_list.size();
-                           }
+                           }*/
                            
                        
                        }
@@ -1441,9 +1545,9 @@ public class ItemsList {
                        
                        
                        }
-                       else{
+                       /*else{
                            size=ItemsList.items_list.size();
-                       }
+                       }*/
                        
                        
                        
@@ -1472,7 +1576,7 @@ public class ItemsList {
                            ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),"More than 500 results found");
                        }
                        else{
-                           ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),ItemsList.items_list.size()+" results found");
+                           ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),size+" results found");
                        }
                        
                            ValueExpression ve71 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayPrev}", String.class);
@@ -1681,6 +1785,8 @@ public class ItemsList {
             
              
              if(itemType.equalsIgnoreCase("goods")){
+                     ValueExpression ve31 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
+                     aliasCategoriesId = (String)ve31.getValue(AdfmfJavaUtilities.getAdfELContext());
              
              try{
              
@@ -1700,17 +1806,25 @@ public class ItemsList {
                                ValueExpression ve_category_ref = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.categoryRef}", String.class);
                               String veCategoryRef=(String) ve_category_ref.getValue(AdfmfJavaUtilities.getAdfELContext());
                               
-                                ValueExpression ve31 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
-                                aliasCategoriesId = (String)ve31.getValue(AdfmfJavaUtilities.getAdfELContext());
+                               
+                                
                                 url = "https://api.indix.com/v2/universal/products?countryCode=US&brandId="+brand_ref+veCategoryRef+"&availability=IN_STOCK&lastRecordedIn=30&pageNumber="+pageNo+"&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc"; 
                                 }
                                 
                              
-                                else{
-                                 url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+"&"+categoryRef+"availability=IN_STOCK&lastRecordedIn=30&pageNumber="+pageNo+"&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
-                                }
+                          /*  else{
+                                System.out.println("Category ID-->"+aliasCategoriesId+"Category Ref--->"+categoryRef);
+                             url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+"&"+categoryRef+"availability=IN_STOCK&lastRecordedIn=30&pageNumber="+pageNo+"&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+                            }*/
                                 
-                            
+                            else if(!aliasCategoriesId.equals(""))
+                            {
+                                url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+aliasCategoriesId+"&availability=IN_STOCK&lastRecordedIn=30&pageNumber="+pageNo+"&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+                            //         url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+aliasCategoriesId+"&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+                            }
+                            else {
+                                url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+"&availability=IN_STOCK&lastRecordedIn=30&pageNumber="+pageNo+"&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+                            }
                               
                             
                         }
@@ -1725,11 +1839,13 @@ public class ItemsList {
                                                                         
                                ValueExpression ve_category_ref = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.categoryRef}", String.class);
                               String veCategoryRef=(String) ve_category_ref.getValue(AdfmfJavaUtilities.getAdfELContext());
+                                
                                
                               url = "https://api.indix.com/v2/universal/products?countryCode=US&brandId="+brand_ref+veCategoryRef+"&availability=IN_STOCK&lastRecordedIn=30&pageNumber="+pageNo+"&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc"; 
                             }
                             
                             else{
+                                System.out.println("Category ID-->"+aliasCategoriesId+"Category Ref--->"+categoryRef);
                                url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+"&"+categoryRef+"availability=IN_STOCK&lastRecordedIn=30&pageNumber="+pageNo+"&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                             }
                         }
@@ -2852,9 +2968,16 @@ public class ItemsList {
                 
                 ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchCount}", String.class);
              //   ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),pageSize+"/"+size+" results");
-             ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),ItemsList.items_list.size()+" results");
+             //Recently Change sort Values
              
+             //ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),ItemsList.items_list.size()+" results");
              
+                if(size>500){
+                    ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),"More than 500 results found");
+                }
+                else{
+                    ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),size+" results found");
+                }
              
 
                
@@ -2921,8 +3044,14 @@ public class ItemsList {
                 ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchCount}", String.class);
                // ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),pageSize+"/"+size+" results");
              //  ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),+size+" results");
-             ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),+ItemsList.items_list.size()+" results");
-                
+             //ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),+ItemsList.items_list.size()+" results");
+               
+                if(size>500){
+                    ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),"More than 500 results found");
+                }
+                else{
+                    ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),size+" results found");
+                } 
                
                 AdfmfJavaUtilities.flushDataChangeEvent();
                 
@@ -4103,8 +4232,8 @@ public class ItemsList {
                                        }*/
                                        
                                        
-                                       sb.append("    \"COST_CENTER\":\""+ccNacc.getCostCenterDisc()+"\",\n");
-                                       sb.append("    \"NATURAL_ACCOUNT\":\""+ccNacc.getNaturalAccountDisc()+"\",\n");
+                                       sb.append("    \"COST_CENTER\":\""+ccNacc.getCostCenter()+"\",\n");
+                                       sb.append("    \"NATURAL_ACCOUNT\":\""+ccNacc.getNaturalAccount()+"\",\n");
                                        sb.append("    \"CHARGE_ACCOUNT\":\"\",\n");
                                        sb.append("    \"MARKUP_PRICE\":\"\",\n");
                                        sb.append("    \"REQUISITION_HEADER_ID\":\"\",\n");
@@ -4277,7 +4406,7 @@ public class ItemsList {
          boolean isNeedByDateEmpty=false;
          boolean isQuantityEmpty=false;
          boolean isQuantityDecimal=false;
-        
+         boolean isDeliverToLocationEmpty=false;
          
          //String action="req_submit";
          
@@ -4288,7 +4417,7 @@ public class ItemsList {
          {
              vex.setCurrentIndex(i);
              SelectedItem item=(SelectedItem)vex.getDataProvider();
-             System.out.println("***"+item.getProductTitle()+" "+item.getChecked());
+             System.out.println("***"+item.getProductTitle()+" "+item.getChecked()+"Deliver To Location"+item.getDeliver_to_location());
              
              if(item.getChecked().equalsIgnoreCase("true")) {
                  isSelected=true;
@@ -4296,11 +4425,16 @@ public class ItemsList {
                  if(item.getNeed_by_date().equalsIgnoreCase("")){
                      isNeedByDateEmpty=true;
                  }
+                 if(item.getDeliver_to_location().equalsIgnoreCase("") || item.getDeliver_to_location().equalsIgnoreCase("0")){
+                     isDeliverToLocationEmpty=true;
+                 }
              }
              
              if(item.getQuantity().equalsIgnoreCase("")){
                  isQuantityEmpty=true;
              }
+             
+             
              if((Double.parseDouble(item.getQuantity())%1!=0)) {
                  isQuantityDecimal=true;
              }
@@ -4309,7 +4443,7 @@ public class ItemsList {
         
          if(isSelected){
         
-             if(!isNeedByDateEmpty && !isQuantityEmpty && !isQuantityDecimal){
+             if(!isNeedByDateEmpty && !isQuantityEmpty && !isQuantityDecimal && !isDeliverToLocationEmpty){
         //System.out.println(vex.getCurrentRowKey());
         System.out.println("********date"+isNeedByDateEmpty+"Qty"+isQuantityEmpty+"QtyDecimal"+isQuantityDecimal);
                  AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
@@ -4345,6 +4479,15 @@ public class ItemsList {
                                                   "Need by date cannot be empty",
                                                   null,
                                                   null }); 
+                 }
+                 if(isDeliverToLocationEmpty){
+                     AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                  AdfmfJavaUtilities.getFeatureName(),
+                                                  "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                  "Please Choose Your Deliver To Location",
+                                                  null,
+                                                  null }); 
+                     
                  }
              }
          

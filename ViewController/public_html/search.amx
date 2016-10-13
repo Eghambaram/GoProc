@@ -314,7 +314,7 @@
                                        text="Refine your search" id="cb21"></amx:commandButton>
                 </amx:cellFormat>
             </amx:rowLayout>
-            <amx:rowLayout rendered="#{pageFlowScope.displayAddToCart}" id="rl12">
+            <amx:rowLayout rendered="#{pageFlowScope.displaySortOption}" id="rl12">
                 <amx:cellFormat width="10%" id="cf14" columnSpan="2"></amx:cellFormat>
                 <amx:cellFormat halign="end" width="90%" id="cf16">
                   <!--  <amx:commandLink inlineStyle="" id="commandLink11" actionListener="#{Rest.showPopup}" text="Filter"></amx:commandLink>-->

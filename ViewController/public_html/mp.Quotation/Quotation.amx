@@ -234,9 +234,9 @@
                                                     inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;white-space: pre-wrap;"
                                                     id="ot2"/>
                                 </amx:cellFormat>
-                                <amx:cellFormat width="60px" halign="start"
+                                <amx:cellFormat width="60px" halign="end"
                                         height="#{deviceScope.device.os=='Android'?'22':'19'}px" id="cfq7">
-                            <amx:image id="i1" rendered="#{row.quoteDiverseImage}" source="/images/diverse_contract.png"/>
+                            <amx:image id="i1" rendered="#{row.quoteDiverseImage}" source="/images/diverse.png"/>
                         </amx:cellFormat>
                             </amx:rowLayout>
                             </amx:tableLayout>

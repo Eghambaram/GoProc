@@ -2037,6 +2037,14 @@ public class UOMList {
             ValueExpression ve_deliverLocation = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.deliverToLocationCode}", String.class);
             String deliver_Location=(String)ve_deliverLocation.getValue(AdfmfJavaUtilities.getAdfELContext());
             System.out.println("Deliver To Location Refined Search--->"+deliver_Location);
+            String loc="";
+            if(!deliver_Location.equalsIgnoreCase("")){
+               DeliverToLocation loc_code=(DeliverToLocation)DeliverToLocationList.s_jobs.get((Integer.parseInt(deliver_Location)));
+               loc=loc_code.getCode();
+               
+            }
+            System.out.println("Deliver To Location Refined Search Value--->"+loc);
+            
 
             sb = new StringBuffer("[\n");
            
@@ -2053,7 +2061,7 @@ public class UOMList {
             sb.append("    \"UOM_CODE\":\""+u+"\",\n");
             sb.append("    \"UNIT_PRICE\":\"\",\n");
             sb.append("    \"CURRENCY_CODE\":\"USD\",\n");
-            sb.append("    \"DELIVER_TO_LOCATION\":\"Metlife\",\n");
+            sb.append("    \"DELIVER_TO_LOCATION\":\""+loc+"\",\n");
             String arr[]=needByDate.split("T");
             sb.append("    \"NEED_BY_DATE\":\""+arr[0]+"\",\n");
             sb.append("    \"SELECTED_FLAG\":\"Y\",\n");
@@ -2981,7 +2989,6 @@ public class UOMList {
         String needByDate="";
         String itemType="";
         boolean found=false;
-        
         String deliverLocation="";
         
                     ValueExpression ve130 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
@@ -2994,6 +3001,10 @@ public class UOMList {
             
         ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchType}", String.class);
         ve41.setValue(AdfmfJavaUtilities.getAdfELContext(), "R");
+        
+        ValueExpression ve_deliverLocation = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.deliverToLocationCode}", String.class);
+        deliverLocation = (String)ve_deliverLocation.getValue(AdfmfJavaUtilities.getAdfELContext());
+        System.out.println("Deliver To Location==============================="+deliverLocation+"---");
         
       /*   pageFlowScope.item_categories  === pageFlowScope.aliasOracleItemcategories
         * 
@@ -3088,7 +3099,7 @@ public class UOMList {
                      System.out.println("itemCategories===============================" + itemCategories); 
                      System.out.println("quantity===============================" + quantity); 
                      System.out.println("uom===============================" + uom); 
-                    if( quantity.equalsIgnoreCase("") || uom.equalsIgnoreCase("") || needByDate.equalsIgnoreCase("") ){
+                    if( quantity.equalsIgnoreCase("") || uom.equalsIgnoreCase("") || needByDate.equalsIgnoreCase("") || deliverLocation.equalsIgnoreCase("") || deliverLocation.equalsIgnoreCase("0")){
                         
                       
                         checkError = true; 
@@ -3641,6 +3652,9 @@ public class UOMList {
                                         ve72.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
                                         ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayAddToCart}", String.class);
                                         ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
+                                       
+                                        ValueExpression ve119 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySortOption}", String.class);
+                                        ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
                                      
                                     
                                         /*AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
@@ -3972,7 +3986,15 @@ public class UOMList {
                                                                 null,
                                                                 null }); 
                                }
-                              
+                                   else if(deliverLocation.equalsIgnoreCase("") || deliverLocation.equalsIgnoreCase("0")) {
+                                       
+                                       AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                                    AdfmfJavaUtilities.getFeatureName(),
+                                                                    "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                                    "Deliver To Location is mandatory...Please enter it and resubmit the search",
+                                                                    null,
+                                                                    null }); 
+                                   }
                               
                                }
                 }

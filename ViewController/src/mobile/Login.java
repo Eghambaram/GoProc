@@ -1611,6 +1611,15 @@ public class Login {
                  ////////////////
                  System.out.println("--- Check Default--"+DefaultMultiOrgOrg);
                  
+                 ValueExpression loc_no = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to}", String.class);
+                 String default_loc_no=(String)loc_no.getValue(AdfmfJavaUtilities.getAdfELContext());
+                 
+                 
+                 ValueExpression loc_code = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationCode}", String.class);
+                 String default_loc_code=(String)loc_code.getValue(AdfmfJavaUtilities.getAdfELContext());
+                 
+                 System.out.println("--- Check Default Deliver To Location--"+default_loc_no+"--------"+default_loc_code);
+                 
                  String costNaturalAccount=costDefault+"-"+natralDefault;
                  
                  ValueExpression vf3 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_costNaturalAccount}", String.class);
