@@ -217,6 +217,14 @@
 
 </amx:cellFormat>
 </amx:rowLayout>
+<amx:rowLayout  id="rqwqrl21">
+<amx:cellFormat id="cqqwrf1211" halign="start" columnSpan="3">
+                        <amx:selectOneChoice value="#{pageFlowScope.deliverToLocationCode}"  label="Deliver To Location" showRequired="true" id="soc5">
+                            <amx:selectItems value="#{bindings.deliverToLocations.items}" id="si8"/>
+                        </amx:selectOneChoice>
+                    </amx:cellFormat>
+</amx:rowLayout>
+
 <amx:rowLayout  id="rqtl21">
 <amx:cellFormat id="cqtf1211" halign="start" columnSpan="3">
 <amx:inputDate label="Need By Date"  id="id1" value="#{pageFlowScope.need_by_date}"

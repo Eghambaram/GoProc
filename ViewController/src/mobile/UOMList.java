@@ -49,6 +49,9 @@ public class UOMList {
     public static ArrayList<Lookup> frequencyPeriodList = new ArrayList<Lookup>(); 
     public static ArrayList<Lookup> serviceFrequencyTypeList = new ArrayList<Lookup>(); 
     public static ArrayList<Alias> aliasList = new ArrayList<Alias>();
+   
+   //New Deliver to Location
+    public static List deliverToLocationList=new ArrayList();
     public static int pageNo=1;
     public static List Specification = new ArrayList();
     
@@ -76,6 +79,17 @@ public class UOMList {
     }
     
     public static void populateUOM(){
+       
+        ValueExpression ve_user = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+        String userId = (String)ve_user.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        ValueExpression ve_orgId = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+        String multiOrgId = (String)ve_orgId.getValue(AdfmfJavaUtilities.getAdfELContext());
+
+        ValueExpression ve49 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationCode}", String.class);
+        String default_deliver_to_location_code = (String)ve49.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        System.out.println("Default Location Code-->"+default_deliver_to_location_code);
        
         ValueExpression showPotentialSupplier = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.potentialSuppliers}", String.class);
         showPotentialSupplier.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
@@ -282,15 +296,108 @@ public class UOMList {
             
             // =====Alias End
             
-            
+  //   Deliver to Location Start
+  
+  // Clear any previously set request properties, if any
+  restServiceAdapter.clearRequestProperties();
+  // Set the connection name
+  restServiceAdapter.setConnectionName("enrich");
+  
+  restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+  restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+  restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+  restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+  restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_deliver_to/");
+  postData= "{\n" + 
+  "\n" + 
+  "  \"GET_DELIVER_TO_Input\" : {\n" + 
+  "\n" + 
+  "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_deliver_to/\",\n" + 
+  "\n" + 
+  "   \"RESTHeader\": {\n" + 
+  "\n" + 
+  "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+  "    },\n" + 
+  "\n" + 
+  "   \"InputParameters\": {\n" + 
+  "\n" + 
+     "        \"P_USER_ID\":\""+userId+"\",\n" + 
+                    "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
+  "\n" + 
+  "     }\n" + 
+  "\n" + 
+  "  }\n" + 
+  "\n" + 
+  "}  ";
+                              restServiceAdapter.setRetryLimit(0);
+     System.out.println("postData===============================" + postData);
+      
+     response = restServiceAdapter.send(postData);
+      
+      System.out.println("response===============================" + response); 
+      resp=new JSONObject(response);
+      output=resp.getJSONObject("OutputParameters");
+     JSONObject data=new JSONObject();
+   try{
+       data=output.getJSONObject("X_DELIVER_TO_TL");
+      DeliverToLocationList.s_jobs.clear();
+          deliverToLocationList.clear();
+          DeliverToLocation l2=new DeliverToLocation("Please Select","Please Select","Please Select"); 
+          DeliverToLocationList.s_jobs.add(l2);
+          deliverToLocationList.add(l2);
+
+      if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONArray){
+        JSONArray segments=data.getJSONArray("X_DELIVER_TO_TL_ITEM");
+        for(int i=0;i<segments.length();i++) {
+          JSONObject location=segments.getJSONObject(i);
+          String locationId=location.getString("LOCATION_ID");
+          String locationCode=location.getString("LOCATION_CODE");
+          String locationDescription=location.getString("DESCRIPTION");
+           if(locationCode.equalsIgnoreCase(default_deliver_to_location_code)) {
+              System.out.println("Deliver to Location position"+"Match Occurs"+locationCode+"---"+default_deliver_to_location_code+"---"+String.valueOf(i));
+               ValueExpression ve_deliver_code = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.deliverToLocationCode}", String.class);
+               ve_deliver_code.setValue(AdfmfJavaUtilities.getAdfELContext(), String.valueOf((i+1)));
+           }
+          DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
+          DeliverToLocationList.s_jobs.add(loc);
+            deliverToLocationList.add(loc);
+        }
+      
+      }
+      
+      else if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONObject){
+         
+         JSONObject location=data.getJSONObject("X_DELIVER_TO_TL_ITEM");
+          String locationId=location.getString("LOCATION_ID");
+          String locationCode=location.getString("LOCATION_CODE");
+          String locationDescription=location.getString("DESCRIPTION");
+          if(locationCode.equalsIgnoreCase(default_deliver_to_location_code)) {
+              System.out.println("Deliver to Location position"+String.valueOf(0));
+          }
+          DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
+          DeliverToLocationList.s_jobs.add(loc);
+          deliverToLocationList.add(loc);
+         
+      }
+      }
+      catch(Exception e) {
+          e.printStackTrace();
+      }
+  
+  
+            ValueExpression ve_check_49 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.deliverToLocationCode}", String.class);
+            String default_deliver_to_location_rsearch = (String)ve_check_49.getValue(AdfmfJavaUtilities.getAdfELContext());
+  
+  System.out.println("Deliver to location Position in Refined Search Page"+default_deliver_to_location_rsearch);
+            //Deliver to Location Start
             String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             
             ValueExpression ve421 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.need_by_date}", String.class);
             ve421.setValue(AdfmfJavaUtilities.getAdfELContext(), "");
             DeliverToLocationList deliverToLocationList =new DeliverToLocationList();
             
-            ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
-            String userId = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
+      /*      ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+            String userId = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());*/
             
             if(itemType.equalsIgnoreCase("services")){
                 
@@ -327,7 +434,7 @@ public class UOMList {
                     System.out.println("response===============================" + response); 
                      resp=new JSONObject(response);
                      output=resp.getJSONObject("OutputParameters");
-                   JSONObject data=new JSONObject();
+                   data=new JSONObject();
                  try{
                      data=output.getJSONObject("X_SERVICE_LOC_TL");
                     ServiceLocationsList.s_jobs.clear();
@@ -1925,6 +2032,11 @@ public class UOMList {
                 UOM uo=(UOM)UOMList.s_jobs.get(0);
                 u=uo.getName();
             }
+            
+            // Deliver To Location
+            ValueExpression ve_deliverLocation = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.deliverToLocationCode}", String.class);
+            String deliver_Location=(String)ve_deliverLocation.getValue(AdfmfJavaUtilities.getAdfELContext());
+            System.out.println("Deliver To Location Refined Search--->"+deliver_Location);
 
             sb = new StringBuffer("[\n");
            
@@ -2868,7 +2980,9 @@ public class UOMList {
         String quantity="";
         String needByDate="";
         String itemType="";
-        boolean found=false;    
+        boolean found=false;
+        
+        String deliverLocation="";
         
                     ValueExpression ve130 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
                     String search = (String)ve130.getValue(AdfmfJavaUtilities.getAdfELContext()); 

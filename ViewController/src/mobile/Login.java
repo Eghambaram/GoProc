@@ -1025,6 +1025,10 @@ public class Login {
                  ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to}", String.class);
                  ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                  
+                 //Get Default Location Code
+                 ValueExpression ve_default_deliver_location = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationCode}", String.class);
+                 ve_default_deliver_location.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                 
                  ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_natural_account}", String.class);
                  ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                  
@@ -1534,6 +1538,7 @@ public class Login {
                                    System.out.println(loc.getId().trim()+"="+pref.getString("ATTRIBUTE_VALUE").trim());
                                    if(loc.getId().trim().equalsIgnoreCase(pref.getString("ATTRIBUTE_VALUE").trim()))     {
                                        System.out.println("Match occurs "+loc.getCode());
+                                       ve_default_deliver_location.setValue(AdfmfJavaUtilities.getAdfELContext(),loc.getCode());
                                        ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
                                    }
                                }
@@ -1573,6 +1578,7 @@ public class Login {
                                  System.out.println(loc.getId().trim()+"="+pref.getString("ATTRIBUTE_VALUE").trim());
                                  if(loc.getId().trim().equalsIgnoreCase(pref.getString("ATTRIBUTE_VALUE").trim()))     {
                                      System.out.println("Match occurs "+loc.getCode());
+                                     ve_default_deliver_location.setValue(AdfmfJavaUtilities.getAdfELContext(),loc.getCode());
                                      ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
                                  }
                              }

@@ -34,6 +34,10 @@
     <iterator Binds="root" RangeSize="25" DataControl="AliasList" id="AliasListIterator"/>
     <accessorIterator id="aliassIterator" MasterBinding="AliasListIterator" Binds="aliass" RangeSize="25"
                       DataControl="AliasList" BeanClass="mobile.Alias"/>
+    <iterator Binds="root" RangeSize="25" DataControl="DeliverToLocationList" id="DeliverToLocationListIterator"/>
+    <accessorIterator MasterBinding="DeliverToLocationListIterator" Binds="deliverToLocations" RangeSize="25"
+                      DataControl="DeliverToLocationList" BeanClass="mobile.DeliverToLocation"
+                      id="deliverToLocationsIterator"/>
   </executables>
   <bindings>
     <list IterBinding="categoriesIterator" ListOperMode="navigation" ListIter="categoriesIterator" id="categories"
@@ -162,6 +166,12 @@
           DTSupportsMRU="true" SelectItemValueMode="ListObject">
       <AttrNames>
         <Item Value="name"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="deliverToLocationsIterator" ListOperMode="navigation" ListIter="deliverToLocationsIterator"
+          id="deliverToLocations" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="code"/>
       </AttrNames>
     </list>
   </bindings>
