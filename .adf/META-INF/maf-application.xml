@@ -20,4 +20,7 @@
     <adfmf:domain id="d1">http://*</adfmf:domain>
     <adfmf:domain id="d2">https://*</adfmf:domain>
   </adfmf:remoteURLWhiteList>
+  <adfmf:configuration>
+    <adfmf:launchScreen url="splashScreen.html"/>
+  </adfmf:configuration>
 </adfmf:application>

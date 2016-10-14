@@ -2640,11 +2640,15 @@ public class RequesitionRest {
         ValueExpression ve18 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationId}", String.class);
         String s=(String)ve18.getValue(AdfmfJavaUtilities.getAdfELContext());
         
+        
+        
         ValueExpression ve21 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationMessageType}", String.class);
         String type=(String)ve21.getValue(AdfmfJavaUtilities.getAdfELContext());
         
         ValueExpression ve27 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationMessageName}", String.class);
         String name=(String)ve27.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        
         
         
         System.out.println("Notification id ="+s+" ="+AlertsList.alertList.size());
@@ -3748,76 +3752,86 @@ public class RequesitionRest {
         ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RejectionComments}", String.class);
         String rejectCommand=(String)ve23.getValue(AdfmfJavaUtilities.getAdfELContext());
         
+        
         System.out.println("Rejection Command"+rejectCommand+"Reject Reason"+rejectReason);
-        Rejection c=(Rejection)RejectionReasonList.rej_List.get(Integer.parseInt(rejectReason.toString()));
-        System.out.println("-----"+c.getLookupCode());
-        String LookupCode=c.getLookupCode();
-        
-        
-        try{
+        if(!rejectReason.equalsIgnoreCase("") && !rejectReason.equalsIgnoreCase("0")) {
+            System.out.println("Enter into if Loop");
+            Rejection c=(Rejection)RejectionReasonList.rej_List.get(Integer.parseInt(rejectReason.toString()));
+            System.out.println("-----"+c.getLookupCode());
+            String LookupCode=c.getLookupCode();
             
-            if(!LookupCode.equalsIgnoreCase("Please Select"))
-            {
-                System.out.println("---LookupCode--"+LookupCode);
-        RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
-        // Clear any previously set request properties, if any
-        restServiceAdapter.clearRequestProperties();
-        // Set the connection name
-        restServiceAdapter.setConnectionName("enrich");
-        
-        restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
-        restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
-        restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
-        restServiceAdapter.addRequestProperty("Content-Type", "application/json");
-        restServiceAdapter.setRequestURI("/webservices/rest/XXE_MOBILE_NOTIFN_SERVICE/process_response/");
-        String postData= "{\n" + 
-        "\n" + 
-        "  \"PROCESS_RESPONSE_Input\" : {\n" + 
-        "\n" + 
-        "   \"RESTHeader\": {\n" + 
-        "\n" + 
-        "    },\n" + 
-        "\n" + 
-        "   \"InputParameters\": {\n" + 
-        "\n" + 
-        "                     \"P_MESSAGE_TYPE\" : \""+type+"\",\n" + 
-        "\n" + 
-        "                     \"P_NOTIFICATION_ID\" : \""+s+"\",\n" + 
-        "\n" + 
-        "          \"P_RESPONSE_VALUE\" : \"REJECT\",\n" + 
-        "\n" + 
-        "          \"P_RESPONDER\" : \""+userName+"\"\n" + 
-        "\n" + 
-        "       }         \n" + 
-        "\n" + 
-        "   }\n" + 
-        "\n" + 
-        "}";
-            
-           
-           restServiceAdapter.setRetryLimit(0);
-           System.out.println("postData===============================" + postData);
-            
-           String response = restServiceAdapter.send(postData);
-            
-            
-            
-            AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
-                                                                           "adf.mf.api.amx.doNavigation", new Object[] { "__back" });  
-         
-            }
-            
+            try{
+                 
+             System.out.println("---LookupCode--"+LookupCode);
+             RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+             // Clear any previously set request properties, if any
+             restServiceAdapter.clearRequestProperties();
+             // Set the connection name
+             restServiceAdapter.setConnectionName("enrich");
+             
+             restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+             restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+             restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+             restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+             restServiceAdapter.setRequestURI("/webservices/rest/XXE_MOBILE_NOTIFN_SERVICE/process_response/");
+             String postData= "{\n" + 
+             "\n" + 
+             "  \"PROCESS_RESPONSE_Input\" : {\n" + 
+             "\n" + 
+             "   \"RESTHeader\": {\n" + 
+             "\n" + 
+             "    },\n" + 
+             "\n" + 
+             "   \"InputParameters\": {\n" + 
+             "\n" + 
+             "                     \"P_MESSAGE_TYPE\" : \""+type+"\",\n" + 
+             "\n" + 
+             "                     \"P_NOTIFICATION_ID\" : \""+s+"\",\n" + 
+             "\n" + 
+             "          \"P_RESPONSE_VALUE\" : \"REJECT\",\n" + 
+             "\n" + 
+             "          \"P_REJECT_REASON\" : \""+LookupCode+"\",\n" + 
+             "          \"P_COMMENTS\" : \""+rejectCommand+"\"\n" + 
+             "\n" +                    
+             
+             "       }         \n" + 
+             "\n" + 
+             "   }\n" + 
+             "\n" + 
+             "}";
+                 
+                
+                restServiceAdapter.setRetryLimit(0);
+                System.out.println("postData===============================" + postData);
+                 
+                String response = restServiceAdapter.send(postData);
+                 
+                     System.out.println("postData===============================" + response);
+                 
+                 AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
+                                                                                "adf.mf.api.amx.doNavigation", new Object[] { "__back" });  
+              
+                 }
+                 
+             
+                 
+             
+             catch(Exception e) {
+                 e.printStackTrace();
+             }
+        }
         else {
-                System.out.println("Inside Else loop");
-                AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
-                                                                           "checkRejectionValue",
-                                                                           new Object[] { });
-            }
-            
+            System.out.println("Inside Else loop");
+                         AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
+                                                                                    "checkRejectionValue",
+                                                                                    new Object[] { });
+
         }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+       
+           
+        
+       
+        
 
         
         
