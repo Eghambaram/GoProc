@@ -1503,12 +1503,13 @@ public class Login {
                            
                            if(pref.getString("ATTRIBUTE_NAME").equalsIgnoreCase("COST_CENTER")) {
                                
-                               for(int k=0;k<deliverToLocationList.size();k++) {
+                               for(int k=0;k<costCenterList.size();k++) {
                                    CostCenter c=(CostCenter)costCenterList.get(k);
                                    System.out.println(c.getName().trim()+"="+pref.getString("ATTRIBUTE_VALUE").trim());
                                    if(c.getName().trim().equalsIgnoreCase(pref.getString("ATTRIBUTE_VALUE").trim()))     {
                                        System.out.println("Match occurs "+c.getDescription());
-                                       ve18.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
+                                       //ve18.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
+                                       ve18.setValue(AdfmfJavaUtilities.getAdfELContext(),c.getDescription());
                                        ve300.setValue(AdfmfJavaUtilities.getAdfELContext(),c.getDescription());
                                    }
                                }
@@ -1523,7 +1524,8 @@ public class Login {
                                    System.out.println(na.getSegValue().trim()+"="+pref.getString("ATTRIBUTE_VALUE").trim());
                                    if(na.getSegValue().trim().equalsIgnoreCase(pref.getString("ATTRIBUTE_VALUE").trim()))     {
                                        System.out.println("Match occurs "+na.getDescription());
-                                       ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
+                                       //ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
+                                       ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),na.getDescription());
                                        ve301.setValue(AdfmfJavaUtilities.getAdfELContext(),na.getDescription());
                                    }
                                }

@@ -788,7 +788,7 @@ public class ItemsList {
 
 // Natural Accounts
             
-      /*      restServiceAdapter = Model.createRestServiceAdapter();
+            restServiceAdapter = Model.createRestServiceAdapter();
             // Clear any previously set request properties, if any
             restServiceAdapter.clearRequestProperties();
             // Set the connection name
@@ -865,16 +865,16 @@ public class ItemsList {
                     naturalAccountList.add(c);
                    
                 }
-                  /*  AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                 /*   AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
                                       .evaluateELExpression("#{bindings.naturalAccounts}");
                     AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
                     accountListIterator.refresh();*/
                 
-         /*       }
+                }
                 catch(Exception e) {
                     e.printStackTrace();
                 }
-*/
+
 //CostCenter with Natural Account
                 
                 // Natural Accounts
@@ -3775,7 +3775,10 @@ public class ItemsList {
             for(int i=0;i<vex.getTotalRowCount();i++)
              {
                  vex.setCurrentIndex(i);
+                System.out.println("Current Index"+i);
                  SelectedItem item=(SelectedItem)vex.getDataProvider();
+                
+                System.out.println("Item Details inside qty changed"+item.getProductTitle()+item.getDeliver_to_location());
                  Double d=Double.parseDouble(item.getUnitPrice());
                 
                 if(itemType.equalsIgnoreCase("goods") && (Double.parseDouble(item.getQuantity())%1==0)){

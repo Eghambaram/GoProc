@@ -6515,4 +6515,308 @@ public class Rest {
                
 }
 
+    public void rowCostCenterChange(ActionEvent actionEvent) {
+        // Add event code here...
+        
+        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets2.iterator}");
+        ValueExpression ve_row = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.cartRowId}", String.class);
+        String rowId=(String)ve_row.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costCenterValue}", String.class);
+        String costCenterItem=(String)ve4.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchCostCenterText}", String.class);
+        ve_searchText.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+        
+            
+        System.out.println("new Cost Center --->"+costCenterItem);
+        
+        for(int i=0;i<vex.getTotalRowCount();i++)
+         {
+             vex.setCurrentIndex(i);
+             SelectedItem item=(SelectedItem)vex.getDataProvider();
+             if(rowId.equalsIgnoreCase(item.getRowid()))
+             {
+             item.setCostCenter(String.valueOf(costCenterItem));
+            }
+            System.out.println("new Item Cost Center"+item.getCostCenter());    
+         }
+        vex.refresh();
+        
+        
+    }
+
+    public void getGLAccountValue(ActionEvent actionEvent) {
+        // Add event code here...
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+        String userId = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression vemul = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+        String multiOrgId=(String)vemul.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchGLAccountText}", String.class);
+        String searchText=(String)ve_searchText.getValue(AdfmfJavaUtilities.getAdfELContext());
+        System.out.println("Search Txt-->"+searchText);
+        
+        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets2.iterator}");
+        ValueExpression ve_row = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.cartRowId}", String.class);
+        String rowId=(String)ve_row.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        String costSeg="";
+        
+        for(int i=0;i<vex.getTotalRowCount();i++)
+         {
+             vex.setCurrentIndex(i);
+             SelectedItem item=(SelectedItem)vex.getDataProvider();
+             if(rowId.equalsIgnoreCase(item.getRowid()))
+             {
+             costSeg = item.getCostCenter();
+             
+            }
+            System.out.println("new Item Cost Center"+item.getCostCenter());    
+         }
+        
+        System.out.println("new Item Cost Center"+costSeg+"Cost Center List size"+CostCenterList.s_jobs.size());
+
+        String costCenterCode="";
+        
+        for(int k=0;k<CostCenterList.s_jobs.size();k++) {
+            CostCenter c=(CostCenter)CostCenterList.s_jobs.get(k);
+            System.out.println("Cost Center Name"+c.getName()+"Cost Center Description"+c.getDescription());
+            
+            if(c.getDescription().equalsIgnoreCase(costSeg))
+            {
+                costCenterCode=c.getName();
+            System.out.println("Match occurs "+c.getDescription());
+            }
+            
+        }
+        
+        System.out.println("Code for Costcenter"+costCenterCode);
+        // Natural Accounts
+        try{
+            List naturalAccountList = new ArrayList();
+            
+                   RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+                    restServiceAdapter = Model.createRestServiceAdapter();
+                    // Clear any previously set request properties, if any
+                    restServiceAdapter.clearRequestProperties();
+                    // Set the connection name
+                    restServiceAdapter.setConnectionName("enrich");
+                    
+                    restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                    restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                    restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                    restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                    restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_natural_acct/");
+                     String  postData= "{\n" + 
+                        "\n" + 
+                        "  \"GET_NATURAL_ACCT_Input\" : {\n" + 
+                        "\n" + 
+                        "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_natural_acct/\",\n" + 
+                        "\n" + 
+                        "   \"RESTHeader\": {\n" + 
+                        "\n" + 
+                        "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+                        "    },\n" + 
+                        "\n" + 
+                        "   \"InputParameters\": {\n" + 
+                        "\n" + 
+                        "          \"P_USER_ID\" : \""+userId+"\",\n" +
+                        "          \"P_ORG_ID\" : \""+multiOrgId+"\",\n" +
+                        "          \"P_COST_CENTER\" : \""+costCenterCode+"\",\n" + 
+                        "          \"P_SEARCH_TEXT\" : \""+searchText+"\"\n" +                    
+                        "\n" + 
+                        "     }\n" + 
+                        "\n" + 
+                        "  }\n" + 
+                        "\n" + 
+                        "}  ";
+                        
+                            restServiceAdapter.setRetryLimit(0);
+                       System.out.println("postData===============================" + postData);
+                        
+                        String response = restServiceAdapter.send(postData);
+         System.out.println("response===============================" + response);   
+         JSONObject resp=new JSONObject(response);
+         JSONObject output=resp.getJSONObject("OutputParameters");
+                    try{
+                       JSONObject  data=output.getJSONObject("X_NATURAL_ACC_TL");
+                        NaturalAcccountList.acc_List.clear();
+                        naturalAccountList.clear();
+                        
+                        if(data.get("X_NATURAL_ACC_TL_ITEM") instanceof  JSONArray){
+                          JSONArray segments=data.getJSONArray("X_NATURAL_ACC_TL_ITEM");
+                          for(int i=0;i<segments.length();i++) {
+                              //String name=(String)segments.get(i);
+                              JSONObject na=(JSONObject)segments.get(i);
+                              String name=na.getString("SEGMENT_VALUE");
+                              String description=na.getString("DESCRIPTION");
+                              
+                              NaturalAccounts n=new NaturalAccounts(name,description);
+                              NaturalAcccountList.acc_List.add(n);
+                              naturalAccountList.add(n);
+                              
+                          }
+                        
+                        }
+                        
+                        else if(data.get("X_NATURAL_ACC_TL_ITEM") instanceof  JSONObject){
+                           
+                           JSONObject na=data.getJSONObject("X_NATURAL_ACC_TL_ITEM");
+                            String name=na.getString("SEGMENT_VALUE");
+                            String description=na.getString("DESCRIPTION");
+                           
+                            NaturalAccounts n=new NaturalAccounts(name,description);
+                            NaturalAcccountList.acc_List.add(n);
+                            naturalAccountList.add(n);
+                           
+                        }
+                          
+                            AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                                              .evaluateELExpression("#{bindings.naturalAccounts}");
+                            AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
+                            accountListIterator.refresh();
+                        
+                        }
+                        catch(Exception e) {
+                            e.printStackTrace();
+                        }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+    }
+
+    public void rowGLAccountChange(ActionEvent actionEvent) {
+        // Add event code here...
+        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets2.iterator}");
+        ValueExpression ve_row = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.cartRowId}", String.class);
+        String rowId=(String)ve_row.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountValue}", String.class);
+        String GLItem=(String)ve4.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchGLAccountText}", String.class);
+        ve_searchText.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+        
+        System.out.println("GL Account --->"+GLItem);
+        
+        for(int i=0;i<vex.getTotalRowCount();i++)
+         {
+             vex.setCurrentIndex(i);
+             SelectedItem item=(SelectedItem)vex.getDataProvider();
+             if(rowId.equalsIgnoreCase(item.getRowid()))
+             {
+             item.setNaturalAccount(String.valueOf(GLItem));
+            }
+            System.out.println("new Item Cost Center"+item.getNaturalAccount());    
+         }
+        vex.refresh();
+    }
+
+    public void getCostCenterValue(ActionEvent actionEvent) {
+        // Add event code here...
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+        String userId = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression vemul = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+        String multiOrgId=(String)vemul.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchCostCenterText}", String.class);
+        String searchText=(String)ve_searchText.getValue(AdfmfJavaUtilities.getAdfELContext());
+        System.out.println("Search Txt-->"+searchText);
+        
+        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets2.iterator}");
+        ValueExpression ve_row = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.cartRowId}", String.class);
+        String rowId=(String)ve_row.getValue(AdfmfJavaUtilities.getAdfELContext());
+        try{
+            List costCenterList = new ArrayList();
+            
+                   RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+                    restServiceAdapter = Model.createRestServiceAdapter();
+                    // Clear any previously set request properties, if any
+                    restServiceAdapter.clearRequestProperties();
+                    // Set the connection name
+                    restServiceAdapter.setConnectionName("enrich");
+                    
+                    restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                    restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                    restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                    restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                    restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_cost_center/");
+                     String  postData= "{\n" +
+                           "\n" +
+                           "  \"GET_COST_CENTER_Input\" : {\n" +
+                           "\n" +
+                           "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_cost_center/\",\n" +
+                           "\n" +
+                           "   \"RESTHeader\": {\n" +
+                           "\n" +
+                           "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" +
+                           "    },\n" +
+                           "\n" +
+                           "   \"InputParameters\": {\n" +
+                           "\n" +
+                            "          \"P_USER_ID\" : \""+userId+"\",\n" +
+                            "          \"P_ORG_ID\" : \""+multiOrgId+"\",\n" +
+                            "          \"P_SEARCH_TEXT\" : \""+searchText+"\"\n" +                    
+                           "\n" +
+                           "     }\n" +
+                           "\n" +
+                           "  }\n" +
+                           "\n" +
+                           "}  ";
+                        
+                            restServiceAdapter.setRetryLimit(0);
+                       System.out.println("postData===============================" + postData);
+                        
+                        String response = restServiceAdapter.send(postData);
+                     System.out.println("response===============================" + response);   
+                     JSONObject resp=new JSONObject(response);
+                     JSONObject output=resp.getJSONObject("OutputParameters");
+                    try{
+                       JSONObject   data=output.getJSONObject("X_COST_CENTER_TL");
+                              CostCenterList.s_jobs.clear();
+                              costCenterList.clear();
+                        
+                            if(data.get("X_COST_CENTER_TL_ITEM") instanceof  JSONArray){
+                                                            JSONArray segments=data.getJSONArray("X_COST_CENTER_TL_ITEM");
+                                                            for(int i=0;i<segments.length();i++) {
+                                                                //String name=(String)segments.get(i);
+                                                                JSONObject ci=(JSONObject)segments.get(i);
+                                                                String name=ci.getString("SEGMENT_VALUE");
+                                                                String description=ci.getString("DESCRIPTION");
+                                                                CostCenter c=new CostCenter(name,description);
+                                                                CostCenterList.s_jobs.add(c);
+                                                                costCenterList.add(c);
+                                                                
+                                                            }
+                                                          
+                                                          }
+                                                          
+                                                          else if(data.get("X_COST_CENTER_TL_ITEM") instanceof  JSONObject){
+                                                             
+                                                             JSONObject ci=data.getJSONObject("X_COST_CENTER_TL_ITEM");
+                                                              String name=ci.getString("SEGMENT_VALUE");
+                                                              String description=ci.getString("DESCRIPTION");
+                                                              CostCenter c=new CostCenter(name,description);
+                                                              CostCenterList.s_jobs.add(c);
+                                                              costCenterList.add(c);
+                                                             
+                                                          }
+                                                            
+                            AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                                              .evaluateELExpression("#{bindings.costCenters}");
+                            AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
+                            accountListIterator.refresh();
+                        
+                        }
+                        catch(Exception e) {
+                            e.printStackTrace();
+                        }
+            }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+             
+    }
 }

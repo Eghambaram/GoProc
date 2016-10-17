@@ -188,6 +188,10 @@
                             </amx:rowLayout>
                         </amx:tableLayout>
                     </amx:panelGroupLayout>
+                    <!-- Test COST Center Start-->
+                    
+
+                    
                     <!--<amx:tableLayout width="100%" id="tl3">
                     <amx:rowLayout id="rl1">
                         <amx:cellFormat width="20%" halign="start" id="cf2">
@@ -290,7 +294,7 @@
                             </amx:rowLayout>
                             <amx:rowLayout id="rl2">
                                 <amx:cellFormat width="2px" id="cf4"/>
-                                                                <amx:cellFormat width="100%" height="15" id="cf10" shortDesc="Cell" valign="top"
+                                    <amx:cellFormat width="100%" height="15" id="cf10" shortDesc="Cell" valign="top"
                                                 halign="start">
                                        <amx:outputText value="Price: $#{row.unitPrice}"
                                                     styleClass="adfmf-listItem-output"
@@ -306,12 +310,41 @@
                                 </amx:cellFormat>
                             </amx:rowLayout>
                         </amx:tableLayout>
-                        <amx:tableLayout width="100%" id="tl4">
-                            <amx:rowLayout id="rel1" rendered="false">
-                                <amx:cellFormat width="2px" id="cef3">
-                                    <amx:outputText value="#{row.rowid}" id="ot5"/>
-                                </amx:cellFormat>
-                            </amx:rowLayout>
+                        <amx:tableLayout halign="start"  id="tlz01" borderWidth="0"  cellSpacing="0" width="100%">
+                         <amx:rowLayout  id="rl21">
+                        <amx:cellFormat id="cf1211" halign="start"  valign="top" columnSpan="2">
+                        <amx:inputText  label="Cost Center" value="#{row.costCenter}" id="it51" readOnly="true"/>
+                        
+                        </amx:cellFormat>
+                        <amx:cellFormat id="cf1218" halign="end" width="40px">
+                                    <amx:commandLink id="costl" actionListener="#{Rest.getCostCenterValue}">
+                                        <amx:image source="images/scan.png" id="ii3"/>
+                                        <amx:setPropertyListener id="sple11" from="#{row.rowid}"
+                                                                 to="#{pageFlowScope.cartRowId}" type="action"/>
+
+                                  <amx:showPopupBehavior popupId="popup12" type="action" align="after" alignId="pp1"/>
+                            </amx:commandLink>
+                        </amx:cellFormat>
+                        </amx:rowLayout>
+                        <amx:rowLayout  id="rel21">
+                        <amx:cellFormat id="cfe1211" halign="start"  valign="top" columnSpan="2">
+                        <amx:inputText  label="GL Account" value="#{row.naturalAccount}" id="ite51" readOnly="true"/>
+                        
+                        </amx:cellFormat>
+                        <amx:cellFormat id="cfe1218" halign="end" width="40px">
+                                    <amx:commandLink id="costel" actionListener="#{Rest.getGLAccountValue}">
+                                        <amx:image source="images/scan.png" id="iei3"/>
+                                        <amx:setPropertyListener id="splee11" from="#{row.rowid}"
+                                                                 to="#{pageFlowScope.cartRowId}" type="action"/>
+
+                                  <amx:showPopupBehavior popupId="GLpopup12" type="action" align="after" alignId="pp1"/>
+                            </amx:commandLink>
+                        </amx:cellFormat>
+                        </amx:rowLayout>
+
+                        </amx:tableLayout>
+
+
 <!-- Temprory Comment
                             <amx:rowLayout id="yrrlwq1">
                                 <amx:cellFormat width="2px" id="yacfwrq3"/>
@@ -335,6 +368,8 @@
                                 </amx:cellFormat>
                             </amx:rowLayout>
                             -->
+                            
+                     <!--   <amx:tableLayout width="100%" id="tl4">    
                                <amx:rowLayout id="yrrrlwq1">
                                 <amx:cellFormat width="2px" id="yrrqacfwrq3"/>
                                 <amx:cellFormat width="100%" halign="start" id="zqryaqcfqw8" valign="top">
@@ -343,7 +378,8 @@
                                 <amx:selectItems value="#{bindings.costCenterNaturalAccounts.items}" id="si3"/>
                             </amx:selectOneChoice>
                             </amx:cellFormat>
-                            </amx:rowLayout>
+                            </amx:rowLayout>-->
+                            <amx:tableLayout width="100%" id="tl4">
                             <amx:rowLayout id="ral1">
                                 <amx:cellFormat width="2px" id="yacfwr8"/>
                                 <amx:cellFormat width="100%" halign="start" id="yacfw8" valign="top">
@@ -391,5 +427,101 @@
                 </amx:rowLayout>
             </amx:tableLayout>
         </amx:panelGroupLayout>
+    </amx:popup>
+         <amx:popup id="popup12" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"  animation="slideUp">
+   
+<amx:tableLayout width="100%" id="tel1">
+<amx:rowLayout  id="rwel1">
+<amx:cellFormat id="cfe11" halign="end" width="100%">
+<amx:commandButton icon="images/close.png" id="cbs8b">
+<amx:closePopupBehavior popupId="popup12" type="action"/>
+</amx:commandButton>
+</amx:cellFormat>
+</amx:rowLayout>
+</amx:tableLayout>
+            <amx:tableLayout id="tl2121" width="100%">
+                <amx:rowLayout id="rl112">
+                    <amx:cellFormat id="cf1222" width="100%">
+                        <amx:inputText value="#{pageFlowScope.searchCostCenterText}" simple="true" id="inputText221">
+                        </amx:inputText>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="cf12412" width="40px">
+                        <amx:commandLink id="commandLink112" actionListener="#{Rest.getCostCenterValue}">
+                            <amx:image id="image212" source="/images/Search-24.png"/>
+                        </amx:commandLink>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout> 
+            
+ <amx:tableLayout width="100%" id="teql1" inlineStyle="height:450px;overflow:scroll;">
+ <amx:rowLayout  id="rwqel1">
+<amx:cellFormat id="cfqe11" halign="start" width="100%">
+                    <amx:listView var="row" value="#{bindings.costCenters1.collectionModel}"
+                                  fetchSize="#{bindings.costCenters1.rangeSize}"
+                                  selectedRowKeys="#{bindings.costCenters1.collectionModel.selectedRow}"
+                                  initialScrollRowKeys="#{bindings.costCenters1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.costCenters1.collectionModel.makeCurrent}"
+                                  showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv2">
+                        <amx:listItem id="li2" actionListener="#{Rest.rowCostCenterChange}">
+                            <amx:outputText value="#{row.description}" id="ot6"/>
+                                <amx:setPropertyListener from="#{row.description}" to="#{pageFlowScope.costCenterValue}"
+                                                         type="action" id="spl12"/>
+                                                          
+            <amx:closePopupBehavior popupId="popup12" type="action"/>
+         
+                        </amx:listItem>
+                    </amx:listView>
+                </amx:cellFormat>
+             </amx:rowLayout>
+             </amx:tableLayout>
+    </amx:popup>
+    
+        <amx:popup id="GLpopup12" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"  animation="slideUp">
+   
+<amx:tableLayout width="100%" id="GLtel1">
+<amx:rowLayout  id="GLrwel1">
+<amx:cellFormat id="GLcfe11" halign="end" width="100%">
+<amx:commandButton icon="images/close.png" id="GLcbs8b">
+<amx:closePopupBehavior popupId="GLpopup12" type="action"/>
+</amx:commandButton>
+</amx:cellFormat>
+</amx:rowLayout>
+</amx:tableLayout>
+            <amx:tableLayout id="GLtl2121" width="100%">
+                <amx:rowLayout id="GLrl112">
+                    <amx:cellFormat id="GLcf1222" width="100%">
+                        <amx:inputText value="#{pageFlowScope.searchGLAccountText}" simple="true" id="GLinputText221">
+                        </amx:inputText>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="GLcf12412" width="40px">
+                        <amx:commandLink id="GLcommandLink112" actionListener="#{Rest.getGLAccountValue}">
+                            <amx:image id="GLimage212" source="/images/Search-24.png"/>
+                        </amx:commandLink>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout> 
+            
+ <amx:tableLayout width="100%" id="GLteql1" inlineStyle="height:450px;overflow:scroll;">
+ <amx:rowLayout  id="GLrwqel1">
+<amx:cellFormat id="GLcfqe11" halign="start" width="100%">
+                    <amx:listView var="row" value="#{bindings.naturalAccounts1.collectionModel}"
+                                  fetchSize="#{bindings.naturalAccounts1.rangeSize}"
+                                  selectedRowKeys="#{bindings.naturalAccounts1.collectionModel.selectedRow}"
+                                  initialScrollRowKeys="#{bindings.naturalAccounts1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.naturalAccounts1.collectionModel.makeCurrent}"
+                                  showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv3">
+                                               <amx:listItem id="GLli2" actionListener="#{Rest.rowGLAccountChange}">
+                            <amx:outputText value="#{row.description}" id="GLot6"/>
+                                <amx:setPropertyListener from="#{row.description}" to="#{pageFlowScope.GLAccountValue}"
+                                                         type="action" id="GLspl12"/>
+                                                          
+            <amx:closePopupBehavior popupId="GLpopup12" type="action"/>
+         
+                        </amx:listItem>
+ 
+                    </amx:listView>
+                </amx:cellFormat>
+             </amx:rowLayout>
+             </amx:tableLayout>
     </amx:popup>
 </amx:view>

@@ -90,5 +90,19 @@
         <Item Value="dispValue"/>
       </AttrNames>
     </list>
+    <tree IterBinding="costCentersIterator" id="costCenters1">
+      <nodeDefinition DefName="mobile.CostCenter" Name="costCenters10">
+        <AttrNames>
+          <Item Value="description"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="naturalAccountsIterator" id="naturalAccounts1">
+      <nodeDefinition DefName="mobile.NaturalAccounts" Name="naturalAccounts10">
+        <AttrNames>
+          <Item Value="description"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
   </bindings>
 </pageDefinition>
