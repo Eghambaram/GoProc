@@ -77,6 +77,13 @@
                   IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>
     <methodAction id="makeCheckout" RequiresUpdateModel="true" Action="invokeMethod" MethodName="makeCheckout"
                   IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>
+    <methodAction id="rowCostCenterChange" RequiresUpdateModel="true" Action="invokeMethod" MethodName="rowCostCenterChange"
+                  IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>
+    <methodAction id="getGLAccountValue" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getGLAccountValue"
+                  IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>
+    <methodAction id="rowGLAccountChange" RequiresUpdateModel="true" Action="invokeMethod" MethodName="rowGLAccountChange"
+                  IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>              
+                  
     <list IterBinding="naturalAccountsIterator" ListOperMode="navigation" ListIter="naturalAccountsIterator"
           id="naturalAccounts" DTSupportsMRU="true" SelectItemValueMode="ListObject" StaticList="false">
       <AttrNames>

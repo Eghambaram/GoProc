@@ -6518,7 +6518,7 @@ public class Rest {
     public void rowCostCenterChange(ActionEvent actionEvent) {
         // Add event code here...
         
-        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets2.iterator}");
+     /*   BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets2.iterator}");
         ValueExpression ve_row = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.cartRowId}", String.class);
         String rowId=(String)ve_row.getValue(AdfmfJavaUtilities.getAdfELContext());
         ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costCenterValue}", String.class);
@@ -6536,35 +6536,43 @@ public class Rest {
              if(rowId.equalsIgnoreCase(item.getRowid()))
              {
              item.setCostCenter(String.valueOf(costCenterItem));
+             item.setNaturalAccount("");
             }
             System.out.println("new Item Cost Center"+item.getCostCenter());    
          }
-        vex.refresh();
+        vex.refresh();*/
+        MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.rowCostCenterChange.execute}", Object.class, new Class[] {});
+        me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
         
         
     }
 
     public void getGLAccountValue(ActionEvent actionEvent) {
         // Add event code here...
-        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+        /*ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
         String userId = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
         ValueExpression vemul = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
         String multiOrgId=(String)vemul.getValue(AdfmfJavaUtilities.getAdfELContext());
         
         ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchGLAccountText}", String.class);
         String searchText=(String)ve_searchText.getValue(AdfmfJavaUtilities.getAdfELContext());
-        System.out.println("Search Txt-->"+searchText);
+        System.out.println("Search Txt-->"+searchText+"Cost Center List"+CostCenterList.s_jobs.size()+"Deliver To Location"+DeliverToLocationList.s_jobs.size()+"Natural Account"+NaturalAcccountList.acc_List.size());
         
         BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets2.iterator}");
         ValueExpression ve_row = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.cartRowId}", String.class);
         String rowId=(String)ve_row.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        
+        System.out.println("Get Total RowCount Values-->"+vex.getTotalRowCount());
         
         String costSeg="";
         
         for(int i=0;i<vex.getTotalRowCount();i++)
          {
              vex.setCurrentIndex(i);
+             System.out.println("Get Total RowCount  Before Selected Item Values-->"+vex.getTotalRowCount());
              SelectedItem item=(SelectedItem)vex.getDataProvider();
+             System.out.println("Get Total RowCount  After Selected Item Values-->"+vex.getTotalRowCount());
              if(rowId.equalsIgnoreCase(item.getRowid()))
              {
              costSeg = item.getCostCenter();
@@ -6683,13 +6691,16 @@ public class Rest {
         catch(Exception e) {
             e.printStackTrace();
         }
+        */
         
+        MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.getGLAccountValue.execute}", Object.class, new Class[] {});
+        me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
         
     }
 
     public void rowGLAccountChange(ActionEvent actionEvent) {
         // Add event code here...
-        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets2.iterator}");
+       /* BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets2.iterator}");
         ValueExpression ve_row = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.cartRowId}", String.class);
         String rowId=(String)ve_row.getValue(AdfmfJavaUtilities.getAdfELContext());
         ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountValue}", String.class);
@@ -6710,7 +6721,9 @@ public class Rest {
             }
             System.out.println("new Item Cost Center"+item.getNaturalAccount());    
          }
-        vex.refresh();
+        vex.refresh();*/
+        MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.rowGLAccountChange.execute}", Object.class, new Class[] {});
+        me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
     }
 
     public void getCostCenterValue(ActionEvent actionEvent) {
@@ -6722,7 +6735,8 @@ public class Rest {
         
         ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchCostCenterText}", String.class);
         String searchText=(String)ve_searchText.getValue(AdfmfJavaUtilities.getAdfELContext());
-        System.out.println("Search Txt-->"+searchText);
+        System.out.println("Search Txt-->"+searchText+"Cost Center List"+CostCenterList.s_jobs.size()+"Deliver To Location"+DeliverToLocationList.s_jobs.size()+"Natural Account"+NaturalAcccountList.acc_List.size());
+        
         
         BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets2.iterator}");
         ValueExpression ve_row = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.cartRowId}", String.class);
@@ -6817,6 +6831,6 @@ public class Rest {
             e.printStackTrace();
         }
         
-             
+              
     }
 }

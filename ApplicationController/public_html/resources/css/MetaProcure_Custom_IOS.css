@@ -395,12 +395,12 @@ word-break: break-word;
   font-weight: normal;
 }
 
-  .amx-inputText.adfmf-inputText-Description1 .field-value input,
+.amx-inputText.adfmf-inputText-Description1 .field-value input,
 .amx-inputText.adfmf-inputText-Description1 .field-value textarea {
 word-break: break-word;
   overflow: hidden;
   width: 100%;
   text-align: left;
   font-weight: normal;
-  border: 1px solid #D5DFE5;
+  border: 1px solid #0E4876;
 }

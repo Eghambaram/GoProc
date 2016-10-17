@@ -3758,11 +3758,11 @@ public class RequesitionRest {
             System.out.println("Enter into if Loop");
             Rejection c=(Rejection)RejectionReasonList.rej_List.get(Integer.parseInt(rejectReason.toString()));
             System.out.println("-----"+c.getLookupCode());
-            String LookupCode=c.getLookupCode();
+            String LookupMeaning=c.getMeaning();
             
             try{
                  
-             System.out.println("---LookupCode--"+LookupCode);
+             System.out.println("---LookupCode--"+LookupMeaning);
              RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
              // Clear any previously set request properties, if any
              restServiceAdapter.clearRequestProperties();
@@ -3790,7 +3790,7 @@ public class RequesitionRest {
              "\n" + 
              "          \"P_RESPONSE_VALUE\" : \"REJECT\",\n" + 
              "\n" + 
-             "          \"P_REJECT_REASON\" : \""+LookupCode+"\",\n" + 
+             "          \"P_REJECT_REASON\" : \""+LookupMeaning+"\",\n" + 
              "          \"P_COMMENTS\" : \""+rejectCommand+"\"\n" + 
              "\n" +                    
              

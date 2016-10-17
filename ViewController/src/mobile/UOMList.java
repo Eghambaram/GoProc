@@ -1526,6 +1526,8 @@ public class UOMList {
         
         ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayAddToCart}", String.class);
         ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+            ValueExpression ve119 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySortOption}", String.class);
+            ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
         
         ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySearchCount}", String.class);
         ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
@@ -2320,6 +2322,8 @@ public class UOMList {
             
             ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayAddToCart}", String.class);
             ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+            ValueExpression ve119 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySortOption}", String.class);
+            ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
             
             ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySearchCount}", String.class);
             ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
@@ -2627,6 +2631,8 @@ public class UOMList {
             
             ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayAddToCart}", String.class);
             ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                ValueExpression ve119 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySortOption}", String.class);
+                ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
             
             ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySearchCount}", String.class);
             ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
@@ -2952,7 +2958,8 @@ public class UOMList {
                 
                 ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayAddToCart}", String.class);
                 ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
-                
+                ValueExpression ve119 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySortOption}", String.class);
+                ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
                 ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySearchCount}", String.class);
                 ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
                 
@@ -3876,6 +3883,8 @@ public class UOMList {
                                     {
                                 ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayAddToCart}", String.class);
                                 ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
+                                    /*    ValueExpression ve119 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySortOption}", String.class);
+                                        ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");*/
                                     }
                                     
                                 ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);

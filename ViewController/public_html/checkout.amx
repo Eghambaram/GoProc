@@ -173,7 +173,7 @@
                                                                value="#{row.checked}" label="" id="sbc1"
                                                                inlineStyle="margin-left:-10px;"/>
                                 </amx:cellFormat>
-                                <amx:cellFormat width="70   %" halign="start" height="43px" id="cf1">
+                                <amx:cellFormat width="70%" halign="start" height="43px" id="cf1">
                                     <amx:outputText value="#{row.productTitle}"
                                                     inlineStyle="word-break: break-word;white-space: pre-wrap;"
                                                     id="ot7"/>
@@ -313,31 +313,31 @@
                         <amx:tableLayout halign="start"  id="tlz01" borderWidth="0"  cellSpacing="0" width="100%">
                          <amx:rowLayout  id="rl21">
                         <amx:cellFormat id="cf1211" halign="start"  valign="top" columnSpan="2">
-                        <amx:inputText  label="Cost Center" value="#{row.costCenter}" id="it51" readOnly="true"/>
+                        <amx:inputText  label="Cost Center" value="#{row.costCenter}" id="it51" readOnly="true" styleClass="adfmf-inputText-Description1"/>
                         
                         </amx:cellFormat>
                         <amx:cellFormat id="cf1218" halign="end" width="40px">
                                     <amx:commandLink id="costl" actionListener="#{Rest.getCostCenterValue}">
-                                        <amx:image source="images/scan.png" id="ii3"/>
+                                        <amx:image source="/images/Search-24.png" id="ii3"/>
                                         <amx:setPropertyListener id="sple11" from="#{row.rowid}"
                                                                  to="#{pageFlowScope.cartRowId}" type="action"/>
 
-                                  <amx:showPopupBehavior popupId="popup12" type="action" align="after" alignId="pp1"/>
+                                  <amx:showPopupBehavior popupId="popup12" type="action" align="overlapMiddleCenter" alignId="pp1"/>
                             </amx:commandLink>
                         </amx:cellFormat>
                         </amx:rowLayout>
                         <amx:rowLayout  id="rel21">
                         <amx:cellFormat id="cfe1211" halign="start"  valign="top" columnSpan="2">
-                        <amx:inputText  label="GL Account" value="#{row.naturalAccount}" id="ite51" readOnly="true"/>
+                        <amx:inputText  label="GL Account" value="#{row.naturalAccount}" id="ite51"  readOnly="true" styleClass="adfmf-inputText-Description1"/>
                         
                         </amx:cellFormat>
                         <amx:cellFormat id="cfe1218" halign="end" width="40px">
                                     <amx:commandLink id="costel" actionListener="#{Rest.getGLAccountValue}">
-                                        <amx:image source="images/scan.png" id="iei3"/>
+                                        <amx:image source="/images/Search-24.png" id="iei3"/>
                                         <amx:setPropertyListener id="splee11" from="#{row.rowid}"
                                                                  to="#{pageFlowScope.cartRowId}" type="action"/>
 
-                                  <amx:showPopupBehavior popupId="GLpopup12" type="action" align="after" alignId="pp1"/>
+                                  <amx:showPopupBehavior popupId="GLpopup12" type="action" align="overlapMiddleCenter" alignId="pp1"/>
                             </amx:commandLink>
                         </amx:cellFormat>
                         </amx:rowLayout>
@@ -428,12 +428,16 @@
             </amx:tableLayout>
         </amx:panelGroupLayout>
     </amx:popup>
-         <amx:popup id="popup12" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"  animation="slideUp">
+         <amx:popup id="popup12" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"
+               animation="zoom" backgroundDimming="on">
    
-<amx:tableLayout width="100%" id="tel1">
-<amx:rowLayout  id="rwel1">
-<amx:cellFormat id="cfe11" halign="end" width="100%">
-<amx:commandButton icon="images/close.png" id="cbs8b">
+<amx:tableLayout width="100%" id="Cftel1" inlineStyle="border-bottom: 2px solid #0E4876">
+<amx:rowLayout  id="CLrwel1">
+<amx:cellFormat id="zCfe113" halign="start" width="100%">
+<amx:outputText value="Cost Centers" id="CLot2" inlineStyle="font-weight:bold;font-size:large;"/>
+</amx:cellFormat>
+<amx:cellFormat id="cCfe11" halign="end" width="100%">
+<amx:commandButton icon="images/close.png" id="ccbs8b">
 <amx:closePopupBehavior popupId="popup12" type="action"/>
 </amx:commandButton>
 </amx:cellFormat>
@@ -442,7 +446,7 @@
             <amx:tableLayout id="tl2121" width="100%">
                 <amx:rowLayout id="rl112">
                     <amx:cellFormat id="cf1222" width="100%">
-                        <amx:inputText value="#{pageFlowScope.searchCostCenterText}" simple="true" id="inputText221">
+                        <amx:inputText value="#{pageFlowScope.searchCostCenterText}" simple="true" hintText="Search Cost Center..." id="inputText221" styleClass="adfmf-inputText-Description1">
                         </amx:inputText>
                     </amx:cellFormat>
                     <amx:cellFormat id="cf12412" width="40px">
@@ -476,10 +480,14 @@
              </amx:tableLayout>
     </amx:popup>
     
-        <amx:popup id="GLpopup12" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"  animation="slideUp">
+        <amx:popup id="GLpopup12" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"
+               animation="zoom" backgroundDimming="on">
    
-<amx:tableLayout width="100%" id="GLtel1">
+<amx:tableLayout width="100%" id="GLtel1" inlineStyle="border-bottom: 2px solid #0E4876">
 <amx:rowLayout  id="GLrwel1">
+<amx:cellFormat id="zfe113" halign="start" width="100%">
+<amx:outputText value="GL Accounts" id="GLot2" inlineStyle="font-weight:bold;font-size:large;"/>
+</amx:cellFormat>
 <amx:cellFormat id="GLcfe11" halign="end" width="100%">
 <amx:commandButton icon="images/close.png" id="GLcbs8b">
 <amx:closePopupBehavior popupId="GLpopup12" type="action"/>
@@ -490,7 +498,7 @@
             <amx:tableLayout id="GLtl2121" width="100%">
                 <amx:rowLayout id="GLrl112">
                     <amx:cellFormat id="GLcf1222" width="100%">
-                        <amx:inputText value="#{pageFlowScope.searchGLAccountText}" simple="true" id="GLinputText221">
+                        <amx:inputText value="#{pageFlowScope.searchGLAccountText}" simple="true"  hintText="Search GL Account..." id="GLinputText221" styleClass="adfmf-inputText-Description1">
                         </amx:inputText>
                     </amx:cellFormat>
                     <amx:cellFormat id="GLcf12412" width="40px">
