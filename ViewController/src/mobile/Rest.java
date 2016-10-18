@@ -842,7 +842,14 @@ public class Rest {
         ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
         String oracleId = (String)ve6.getValue(AdfmfJavaUtilities.getAdfELContext());
         
+        ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
+        String itemType=(String)ve91.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        System.out.println("Item Type--->"+itemType);
+        
         System.out.println("++++itemAliasIndixId++"+itemAliasIndixId+"++++searchValue+++"+searchValue+"oracle ID "+ oracleId+"Alias indix length"+itemAliasIndixId.length());
+        if(itemType.equalsIgnoreCase("goods"))
+        {
         if(!oracleId.equals("") && !itemAliasIndixId.equals("") && !oracleId.equalsIgnoreCase("Please Select"))
         {
         doSearch();
@@ -852,6 +859,10 @@ public class Rest {
             AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
                                                                                                   "SearchWithItemCategories",
                                                                                                   new Object[] { });
+        }
+        }
+        else {
+            doSearch();
         }
     }
     public void proceedSearchwithCategories(String rr) {
@@ -5992,18 +6003,28 @@ public class Rest {
         ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
         String oracleId = (String)ve6.getValue(AdfmfJavaUtilities.getAdfELContext());
         
-        System.out.println("++++itemAliasIndixId++"+itemAliasIndixId+"++++searchValue+++"+searchValue+"oracle ID "+ oracleId);
-        if(!oracleId.equals("") && !itemAliasIndixId.equals("")  && !oracleId.equalsIgnoreCase("Please Select"))
+        ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
+        String itemType=(String)ve91.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        System.out.println("Item Type--->"+itemType);
+        
+        System.out.println("++++itemAliasIndixId++"+itemAliasIndixId+"++++searchValue+++"+searchValue+"oracle ID "+ oracleId+"Alias indix length"+itemAliasIndixId.length());
+        if(itemType.equalsIgnoreCase("goods"))
+        {
+        if(!oracleId.equals("") && !itemAliasIndixId.equals("") && !oracleId.equalsIgnoreCase("Please Select"))
         {
         doSearch();
         }
-        else {
+        
+        else {  
             AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
                                                                                                   "SearchWithItemCategories",
                                                                                                   new Object[] { });
         }
-        
-        //doSearch();
+        }
+        else {
+            doSearch();
+        }
     }
 
     public String clearAttachments() {
@@ -6177,6 +6198,11 @@ public class Rest {
         ValueExpression ve61 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasText}", String.class);
         ve61.setValue(AdfmfJavaUtilities.getAdfELContext(), valueChangeEvent.getNewValue().toString());
         
+        ValueExpression ve31 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasText}", String.class);
+        String  pos = (String)ve31.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        System.out.println("String Position-->"+pos);
+        
         Alias c=(Alias)AliasList.s_jobs.get(Integer.parseInt(valueChangeEvent.getNewValue().toString()));
         System.out.println(c.getName()+" "+c.getOracleCategotySeg()+" "+c.getIndixId());
         String aliasText="";
@@ -6184,6 +6210,9 @@ public class Rest {
        aliasText=c.getName();
         ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
         ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),c.getOracleCategotySeg());
+        
+        
+        
            String sample= c.getIndixId();
            String sample1 ="&categoryId="+sample;
            System.out.println("*******"+ sample1);

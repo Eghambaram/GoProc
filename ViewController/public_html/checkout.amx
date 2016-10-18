@@ -434,7 +434,7 @@
 <amx:tableLayout width="100%" id="Cftel1" inlineStyle="border-bottom: 2px solid #0E4876">
 <amx:rowLayout  id="CLrwel1">
 <amx:cellFormat id="zCfe113" halign="start" width="100%">
-<amx:outputText value="Cost Centers" id="CLot2" inlineStyle="font-weight:bold;font-size:large;"/>
+<amx:outputText value="Cost Centers" id="CLot2" inlineStyle="font-weight:bold;font-size:14px;"/>
 </amx:cellFormat>
 <amx:cellFormat id="cCfe11" halign="end" width="100%">
 <amx:commandButton icon="images/close.png" id="ccbs8b">
@@ -481,12 +481,12 @@
     </amx:popup>
     
         <amx:popup id="GLpopup12" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"
-               animation="zoom" backgroundDimming="on">
-   
+               animation="zoom">
+    <amx:panelGroupLayout id="pgl3">
 <amx:tableLayout width="100%" id="GLtel1" inlineStyle="border-bottom: 2px solid #0E4876">
 <amx:rowLayout  id="GLrwel1">
 <amx:cellFormat id="zfe113" halign="start" width="100%">
-<amx:outputText value="GL Accounts" id="GLot2" inlineStyle="font-weight:bold;font-size:large;"/>
+<amx:outputText value="GL Accounts" id="GLot2" inlineStyle="font-weight:bold;font-size:14px;"/>
 </amx:cellFormat>
 <amx:cellFormat id="GLcfe11" halign="end" width="100%">
 <amx:commandButton icon="images/close.png" id="GLcbs8b">
@@ -531,5 +531,6 @@
                 </amx:cellFormat>
              </amx:rowLayout>
              </amx:tableLayout>
+             </amx:panelGroupLayout>
     </amx:popup>
 </amx:view>

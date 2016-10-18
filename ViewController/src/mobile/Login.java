@@ -95,7 +95,7 @@ public class Login {
         String userName = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
         userName=userName.trim();
         
-     /*   ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.password}", String.class);
+        /* ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.password}", String.class);
         String password = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
         */
             
@@ -205,6 +205,10 @@ public class Login {
                  
                  ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to}", String.class);
                  ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                 
+                 //Get Default Location Code
+                 ValueExpression ve_default_deliver_location = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationCode}", String.class);
+                 ve_default_deliver_location.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                  
                  ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_natural_account}", String.class);
                  ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
@@ -680,12 +684,13 @@ public class Login {
                            
                            if(pref.getString("ATTRIBUTE_NAME").equalsIgnoreCase("COST_CENTER")) {
                                
-                               for(int k=0;k<deliverToLocationList.size();k++) {
+                               for(int k=0;k<costCenterList.size();k++) {
                                    CostCenter c=(CostCenter)costCenterList.get(k);
                                    System.out.println(c.getName().trim()+"="+pref.getString("ATTRIBUTE_VALUE").trim());
                                    if(c.getName().trim().equalsIgnoreCase(pref.getString("ATTRIBUTE_VALUE").trim()))     {
                                        System.out.println("Match occurs "+c.getDescription());
-                                       ve18.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
+                                       //ve18.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
+                                       ve18.setValue(AdfmfJavaUtilities.getAdfELContext(),c.getDescription());
                                        ve300.setValue(AdfmfJavaUtilities.getAdfELContext(),c.getDescription());
                                    }
                                }
@@ -700,7 +705,8 @@ public class Login {
                                    System.out.println(na.getSegValue().trim()+"="+pref.getString("ATTRIBUTE_VALUE").trim());
                                    if(na.getSegValue().trim().equalsIgnoreCase(pref.getString("ATTRIBUTE_VALUE").trim()))     {
                                        System.out.println("Match occurs "+na.getDescription());
-                                       ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
+                                       //ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
+                                       ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),na.getDescription());
                                        ve301.setValue(AdfmfJavaUtilities.getAdfELContext(),na.getDescription());
                                    }
                                }
@@ -715,6 +721,7 @@ public class Login {
                                    System.out.println(loc.getId().trim()+"="+pref.getString("ATTRIBUTE_VALUE").trim());
                                    if(loc.getId().trim().equalsIgnoreCase(pref.getString("ATTRIBUTE_VALUE").trim()))     {
                                        System.out.println("Match occurs "+loc.getCode());
+                                       ve_default_deliver_location.setValue(AdfmfJavaUtilities.getAdfELContext(),loc.getCode());
                                        ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
                                    }
                                }
@@ -754,6 +761,7 @@ public class Login {
                                  System.out.println(loc.getId().trim()+"="+pref.getString("ATTRIBUTE_VALUE").trim());
                                  if(loc.getId().trim().equalsIgnoreCase(pref.getString("ATTRIBUTE_VALUE").trim()))     {
                                      System.out.println("Match occurs "+loc.getCode());
+                                     ve_default_deliver_location.setValue(AdfmfJavaUtilities.getAdfELContext(),loc.getCode());
                                      ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k));
                                  }
                              }
@@ -785,6 +793,15 @@ public class Login {
                  System.out.println("New Cost Center Combination"+costDefault+"----"+natralDefault);
                  ////////////////
                  System.out.println("--- Check Default--"+DefaultMultiOrgOrg);
+                 
+                 ValueExpression loc_no = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to}", String.class);
+                 String default_loc_no=(String)loc_no.getValue(AdfmfJavaUtilities.getAdfELContext());
+                 
+                 
+                 ValueExpression loc_code = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationCode}", String.class);
+                 String default_loc_code=(String)loc_code.getValue(AdfmfJavaUtilities.getAdfELContext());
+                 
+                 System.out.println("--- Check Default Deliver To Location--"+default_loc_no+"--------"+default_loc_code);
                  
                  String costNaturalAccount=costDefault+"-"+natralDefault;
                  
