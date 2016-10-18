@@ -3451,6 +3451,9 @@ public class ItemsList {
               try{
                   data=output.getJSONObject("X_DELIVER_TO_TL");
                  DeliverToLocationList.s_jobs.clear();
+                     DeliverToLocation l2=new DeliverToLocation("Please Select","Please Select","Please Select"); 
+                     DeliverToLocationList.s_jobs.add(l2);
+                     deliverToLocationList.add(l2);
                  
                  if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONArray){
                    JSONArray segments=data.getJSONArray("X_DELIVER_TO_TL_ITEM");
@@ -3570,10 +3573,10 @@ public class ItemsList {
                                     naturalAccountList.add(c);
                                    
                                 }
-                                    AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                          /*          AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
                                                       .evaluateELExpression("#{bindings.naturalAccounts}");
                                     AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
-                                    accountListIterator.refresh();
+                                    accountListIterator.refresh();*/
                                 
                                 }
                                 catch(Exception e) {
@@ -3778,6 +3781,419 @@ public class ItemsList {
         
         
         public void doSelectItemDetails(){
+            //New Designstart
+            
+            try {
+                //CostCenter with Natural Account
+                ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+                String userId = (String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
+                
+                ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+                String multiOrgId = (String)ve6.getValue(AdfmfJavaUtilities.getAdfELContext());
+                
+                ValueExpression vf3 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_costNaturalAccount}", String.class);
+                String default_cost_natural_accout = (String)vf3.getValue(AdfmfJavaUtilities.getAdfELContext());
+                
+                ValueExpression loc_code = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationCode}", String.class);
+                String default_loc_code=(String)loc_code.getValue(AdfmfJavaUtilities.getAdfELContext());
+                
+                ValueExpression vf_loc_code = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationValue}", String.class);
+                vf_loc_code.setValue(AdfmfJavaUtilities.getAdfELContext(), "");
+                
+                
+            
+            
+                ValueExpression ve48 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_cost_center}", String.class);
+                String default_cost_center_Value = (String)ve48.getValue(AdfmfJavaUtilities.getAdfELContext());
+
+                ValueExpression ve150 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_natural_account}", String.class);
+                String default_natural_account_Value = (String)ve150.getValue(AdfmfJavaUtilities.getAdfELContext());
+                
+                ValueExpression ve_cost = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_cost_centerId}", String.class);
+                ve_cost.setValue(AdfmfJavaUtilities.getAdfELContext(), "");
+                
+                ValueExpression ve_natural = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_natural_accountId}", String.class);
+                ve_natural.setValue(AdfmfJavaUtilities.getAdfELContext(), "");
+                
+
+                System.out.println("Dafult Cost Center Value-->"+default_cost_natural_accout);
+
+                ValueExpression vf31 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_costNaturalAccountId}", String.class);
+                vf31.setValue(AdfmfJavaUtilities.getAdfELContext(), "");
+
+                RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+                
+                // GET Cost Center based MultiOrg 
+                
+                    restServiceAdapter = Model.createRestServiceAdapter();
+                     // Clear any previously set request properties, if any
+                     restServiceAdapter.clearRequestProperties();
+                     // Set the connection name
+                     restServiceAdapter.setConnectionName("enrich");
+                     
+                     restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                     restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                     restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                     restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                     restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_cost_center/");
+                     String postData= "{\n" +
+                           "\n" +
+                           "  \"GET_COST_CENTER_Input\" : {\n" +
+                           "\n" +
+                           "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_cost_center/\",\n" +
+                           "\n" +
+                           "   \"RESTHeader\": {\n" +
+                           "\n" +
+                           "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" +
+                           "    },\n" +
+                           "\n" +
+                           "   \"InputParameters\": {\n" +
+                           "\n" +
+                            "          \"P_USER_ID\" : \""+userId+"\",\n" +
+                            "          \"P_ORG_ID\" : \""+multiOrgId+"\"\n" +
+                           "\n" +
+                           "     }\n" +
+                           "\n" +
+                           "  }\n" +
+                           "\n" +
+                           "}  ";
+                         
+                        restServiceAdapter.setRetryLimit(0);
+                        System.out.println("postData===============================" + postData);
+                         
+                       String response = restServiceAdapter.send(postData);
+                         
+                         System.out.println("response===============================" + response); 
+                        JSONObject  resp=new JSONObject(response);
+                         JSONObject output=resp.getJSONObject("OutputParameters");
+                     try{
+                             JSONObject  data=output.getJSONObject("X_COST_CENTER_TL");
+                             CostCenterList.s_jobs.clear();
+                             costCenterList.clear();
+                         
+                             if(data.get("X_COST_CENTER_TL_ITEM") instanceof  JSONArray){
+                                                             JSONArray segments=data.getJSONArray("X_COST_CENTER_TL_ITEM");
+                                                             for(int i=0;i<segments.length();i++) {
+                                                                 JSONObject ci=(JSONObject)segments.get(i);
+                                                                 String name=ci.getString("SEGMENT_VALUE");
+                                                                 String description=ci.getString("DESCRIPTION");
+                                                                 if(description.equalsIgnoreCase(default_cost_center_Value)) {
+                                                                  ve_cost.setValue(AdfmfJavaUtilities.getAdfELContext(),description);
+                                                                   System.out.println("Dafult Cost Center Value-->"+default_cost_center_Value);
+
+                                                                  }
+                                                                 CostCenter c=new CostCenter(name,description);
+                                                                 CostCenterList.s_jobs.add(c);
+                                                                 costCenterList.add(c);
+                                                                 
+                                                             }
+                                                           
+                                                           }
+                                                           
+                                                           else if(data.get("X_COST_CENTER_TL_ITEM") instanceof  JSONObject){
+                                                              
+                                                              JSONObject ci=data.getJSONObject("X_COST_CENTER_TL_ITEM");
+                                                               String name=ci.getString("SEGMENT_VALUE");
+                                                               String description=ci.getString("DESCRIPTION");
+                                                               if(description.equalsIgnoreCase(default_cost_center_Value)) {
+                                                                ve_cost.setValue(AdfmfJavaUtilities.getAdfELContext(),description);
+                                                                System.out.println("Dafult Cost Center Value-->"+default_cost_center_Value);
+
+                                                                }
+                                                               CostCenter c=new CostCenter(name,description);
+                                                               CostCenterList.s_jobs.add(c);
+                                                               costCenterList.add(c);
+                                                              
+                                                           }
+                                                             
+                    
+                             }
+                             catch(Exception e) {
+                             e.printStackTrace();
+                             }
+                
+                // GET Natural Account based MultiOrg 
+                restServiceAdapter = Model.createRestServiceAdapter();
+                // Clear any previously set request properties, if any
+                restServiceAdapter.clearRequestProperties();
+                // Set the connection name
+                restServiceAdapter.setConnectionName("enrich");
+                
+                restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_natural_acct/");
+                    postData= "{\n" + 
+                    "\n" + 
+                    "  \"GET_NATURAL_ACCT_Input\" : {\n" + 
+                    "\n" + 
+                    "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_natural_acct/\",\n" + 
+                    "\n" + 
+                    "   \"RESTHeader\": {\n" + 
+                    "\n" + 
+                    "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+                    "    },\n" + 
+                    "\n" + 
+                    "   \"InputParameters\": {\n" + 
+                    "\n" + 
+                    "          \"P_USER_ID\" : \""+userId+"\",\n" +
+                    "          \"P_ORG_ID\" : \""+multiOrgId+"\"\n" + 
+                    "\n" + 
+                    "     }\n" + 
+                    "\n" + 
+                    "  }\n" + 
+                    "\n" + 
+                    "}  ";
+                    
+                        restServiceAdapter.setRetryLimit(0);
+                   System.out.println("postData===============================" + postData);
+                    
+                    response = restServiceAdapter.send(postData);
+                    
+                    System.out.println("response===============================" + response); 
+                     resp=new JSONObject(response);
+                     output=resp.getJSONObject("OutputParameters");
+                try{
+                    JSONObject data=output.getJSONObject("X_NATURAL_ACC_TL");
+                    NaturalAcccountList.acc_List.clear();
+                    naturalAccountList.clear();
+                    
+                    if(data.get("X_NATURAL_ACC_TL_ITEM") instanceof  JSONArray){
+                      JSONArray segments=data.getJSONArray("X_NATURAL_ACC_TL_ITEM");
+                      for(int i=0;i<segments.length();i++) {
+                          //String name=(String)segments.get(i);
+                          JSONObject na=(JSONObject)segments.get(i);
+                          String name=na.getString("SEGMENT_VALUE");
+                          String description=na.getString("DESCRIPTION");
+                          if(description.equalsIgnoreCase(default_natural_account_Value)) {
+                           ve_natural.setValue(AdfmfJavaUtilities.getAdfELContext(),description);
+                            System.out.println("Dafult GL Account Value-->"+default_natural_account_Value);
+                           }
+                          NaturalAccounts c=new NaturalAccounts(name,description);
+                          NaturalAcccountList.acc_List.add(c);
+                          naturalAccountList.add(c);
+                          
+                      }
+                    
+                    }
+                    
+                    else if(data.get("X_NATURAL_ACC_TL_ITEM") instanceof  JSONObject){
+                       
+                       JSONObject na=data.getJSONObject("X_NATURAL_ACC_TL_ITEM");
+                        String name=na.getString("SEGMENT_VALUE");
+                        String description=na.getString("DESCRIPTION");
+                        if(description.equalsIgnoreCase(default_natural_account_Value)) {
+                         ve_natural.setValue(AdfmfJavaUtilities.getAdfELContext(),description);
+                          System.out.println("Dafult GL Account Value-->"+default_natural_account_Value);
+                         }
+                        NaturalAccounts c=new NaturalAccounts(name,description);
+                        NaturalAcccountList.acc_List.add(c);
+                        naturalAccountList.add(c);
+                       
+                    }
+                     
+                    
+                    }
+                    catch(Exception e) {
+                        e.printStackTrace();
+                    }
+                
+                         
+                                // Natural Accounts
+                            
+                       /*     restServiceAdapter = Model.createRestServiceAdapter();
+                            // Clear any previously set request properties, if any
+                            restServiceAdapter.clearRequestProperties();
+                            // Set the connection name
+                            restServiceAdapter.setConnectionName("enrich");
+                            
+                            restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                            restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                            restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                            restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                            restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_cc_acct_lov/");
+                            String postData= "{\n" + 
+                                "  \"GET_CC_ACCT_LOV_Input\" : {\n" + 
+                                "   \"RESTHeader\": {\n" + 
+                                "    },\n" + 
+                                "   \"InputParameters\": {\n" + 
+                                "          \"P_USER_ID\" : \""+userId+"\"\n" + 
+                                "         ,\"P_ORG_ID\" : \""+multiOrgId+"\"\n" + 
+                                "       }          \n" + 
+                                "   }\n" + 
+                                "}\n";
+                                
+                               restServiceAdapter.setRetryLimit(0);
+                               System.out.println("postData===============================" + postData);
+                                
+                              String response = restServiceAdapter.send(postData);
+                                
+                                System.out.println("response===============================" + response); 
+                               JSONObject  resp=new JSONObject(response);
+                                JSONObject output=resp.getJSONObject("OutputParameters");
+                            try{
+                                JSONObject data=output.getJSONObject("X_CC_ACCT_TL");
+                                NaturalAcccountList.acc_List.clear();
+                                naturalAccountList.clear();
+                                
+                                if(data.get("X_CC_ACCT_TL_ITEM") instanceof  JSONArray){
+                                  JSONArray segments=data.getJSONArray("X_CC_ACCT_TL_ITEM");
+                                  for(int i=0;i<segments.length();i++) {
+                                      JSONObject na=(JSONObject)segments.get(i);
+                                      String costCenter=na.getString("COST_CENTER");
+                                      String naturalAccount=na.getString("NATURAL_ACCOUNT");
+                                      String costCenterDisc=na.getString("COST_CENTER_DESC");
+                                      String naturalAccountDisc=na.getString("NATURAL_ACCT_DESC");
+                                      String DispValue=na.getString("DISPLAY_VALUE");
+                                      System.out.println("Dafult Cost Center Value-->"+default_cost_natural_accout+"---"+DispValue);
+                                      if(DispValue.equalsIgnoreCase(default_cost_natural_accout)) {
+                                          vf31.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(i));
+                                          
+                                          System.out.println("Dafult Cost Center Value-->"+default_cost_natural_accout);
+
+                                      }
+                                      
+                                      CostCenterNaturalAccounts c=new CostCenterNaturalAccounts(costCenter, naturalAccount, costCenterDisc, naturalAccountDisc, DispValue);
+                                      CostCenterNaturalAccountsList.CC_NA_List.add(c);
+                                      costCenterNaturalAccountsList.add(c);
+                                      
+                                  }
+                                
+                                }
+                                
+                                else if(data.get("X_CC_ACCT_TL_ITEM") instanceof  JSONObject){
+                                   
+                                   JSONObject na=data.getJSONObject("X_CC_ACCT_TL_ITEM");
+                                    String costCenter=na.getString("COST_CENTER");
+                                    String naturalAccount=na.getString("NATURAL_ACCOUNT");
+                                    String costCenterDisc=na.getString("COST_CENTER_DESC");
+                                    String naturalAccountDisc=na.getString("NATURAL_ACCT_DESC");
+                                    String DispValue=na.getString("DISPLAY_VALUE");
+                                    if(DispValue.equalsIgnoreCase(default_cost_natural_accout)) {
+                                        vf31.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(0));
+                                    }
+                                    
+                                    CostCenterNaturalAccounts c=new CostCenterNaturalAccounts(costCenter, naturalAccount, costCenterDisc, naturalAccountDisc, DispValue);
+                                    CostCenterNaturalAccountsList.CC_NA_List.add(c);
+                                    costCenterNaturalAccountsList.add(c);
+                                   
+                                }
+                                 
+                                
+                                }
+                                catch(Exception e) {
+                                    e.printStackTrace();
+                                }
+                                */
+                          
+            
+            
+            //Deliver to Location   
+               
+            
+            // Clear any previously set request properties, if any
+            restServiceAdapter.clearRequestProperties();
+            // Set the connection name
+            restServiceAdapter.setConnectionName("enrich");
+            
+            restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+            restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+            restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+            restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+            restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_deliver_to/");
+            postData= "{\n" + 
+            "\n" + 
+            "  \"GET_DELIVER_TO_Input\" : {\n" + 
+            "\n" + 
+            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_deliver_to/\",\n" + 
+            "\n" + 
+            "   \"RESTHeader\": {\n" + 
+            "\n" + 
+            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+            "    },\n" + 
+            "\n" + 
+            "   \"InputParameters\": {\n" + 
+            "\n" + 
+               "        \"P_USER_ID\":\""+userId+"\",\n" + 
+                              "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
+            "\n" + 
+            "     }\n" + 
+            "\n" + 
+            "  }\n" + 
+            "\n" + 
+            "}  ";
+                                        restServiceAdapter.setRetryLimit(0);
+               System.out.println("postData===============================" + postData);
+                
+               response = restServiceAdapter.send(postData);
+                
+                System.out.println("response===============================" + response); 
+                resp=new JSONObject(response);
+                output=resp.getJSONObject("OutputParameters");
+               JSONObject data=new JSONObject();
+             try{
+                 data=output.getJSONObject("X_DELIVER_TO_TL");
+                DeliverToLocationList.s_jobs.clear();
+                    deliverToLocationList.clear();
+
+                    DeliverToLocation l2=new DeliverToLocation("Please Select","Please Select","Please Select"); 
+                    DeliverToLocationList.s_jobs.add(l2);
+                    deliverToLocationList.add(l2);
+
+                
+                if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONArray){
+                  JSONArray segments=data.getJSONArray("X_DELIVER_TO_TL_ITEM");
+                  for(int i=0;i<segments.length();i++) {
+                    JSONObject location=segments.getJSONObject(i);
+                    String locationId=location.getString("LOCATION_ID");
+                    String locationCode=location.getString("LOCATION_CODE");
+                    String locationDescription=location.getString("DESCRIPTION");
+                      if(locationCode.equalsIgnoreCase(default_loc_code)) {
+                          vf_loc_code.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(i+1));
+                      }
+                     
+                    DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
+                    DeliverToLocationList.s_jobs.add(loc);
+                      deliverToLocationList.add(loc);
+                  }
+                
+                }
+                
+                else if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONObject){
+                   
+                   JSONObject location=data.getJSONObject("X_DELIVER_TO_TL_ITEM");
+                    String locationId=location.getString("LOCATION_ID");
+                    String locationCode=location.getString("LOCATION_CODE");
+                    String locationDescription=location.getString("DESCRIPTION");
+                        if(locationCode.equalsIgnoreCase(default_loc_code)) {
+                            vf_loc_code.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(0));
+                        }
+                    DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
+                    DeliverToLocationList.s_jobs.add(loc);
+                    deliverToLocationList.add(loc);
+                   
+                }
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+            //End
+            
+            
+            ValueExpression ve48 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_cost_centerId}", String.class);
+             String default_cost_center = (String)ve48.getValue(AdfmfJavaUtilities.getAdfELContext());
+                
+             ValueExpression ve49 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationValue}", String.class);
+             String default_deliver_to_location = (String)ve49.getValue(AdfmfJavaUtilities.getAdfELContext()); 
+            
+             ValueExpression ve150 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_natural_accountId}", String.class);
+             String default_natural_account = (String)ve150.getValue(AdfmfJavaUtilities.getAdfELContext());
             ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
                    String itemType=(String)ve41.getValue(AdfmfJavaUtilities.getAdfELContext());
                    if(itemType!=null && !itemType.equalsIgnoreCase("")) {
@@ -3824,7 +4240,7 @@ public class ItemsList {
                                   }
 
 
-                     SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", "1", "",item.getUnitPrice(),String.valueOf(randomInt),"",item.getRowId(),item.getIndixCategoryId(),specList,"","");
+                     SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,"");
                      SelectedItemsList.s_jobs.add(selectItem) ; 
                               }
                             }
