@@ -6862,4 +6862,21 @@ public class Rest {
         
               
     }
+
+    public void freeformAddtoCart(ActionEvent actionEvent) {
+        // Add event code here...
+        try{
+                 
+                 boolean isSelected=false;
+                 boolean isNeedByDateEmpty=false;
+                 boolean isQuantityEmpty=false;
+                 boolean isQuantityDecimal=false;
+                 boolean isDeliverToLocationEmpty=false;
+                 boolean isCostCenterEmpty=false;
+                 boolean isGLAccountEmpty=false;
+        }
+        catch(Exception e){
+                     e.printStackTrace();
+       }
+    }
 }

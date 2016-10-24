@@ -22,6 +22,9 @@
     <view id="refined_search_services">
       <page>/refined_search_services.amx</page>
     </view>
+    <view id="freeform">
+      <page>/FreeForm.amx</page>
+    </view>
     <control-flow-rule id="__4">
       <from-activity-id>search</from-activity-id>
       <control-flow-case id="__5">
@@ -76,6 +79,24 @@
       <control-flow-case id="__14">
         <from-outcome>checkout</from-outcome>
         <to-activity-id>checkout</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__17">
+      <from-activity-id>freeform</from-activity-id>
+      <control-flow-case id="__18">
+        <from-outcome>checkout</from-outcome>
+        <to-activity-id>checkout</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__19">
+      <from-activity-id>*</from-activity-id>
+      <control-flow-case id="__21">
+        <from-outcome>buyerAssisted_default</from-outcome>
+        <to-activity-id>freeform</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__22">
+        <from-outcome>quickSearch_default</from-outcome>
+        <to-activity-id>search</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
   </task-flow-definition>

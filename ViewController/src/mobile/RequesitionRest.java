@@ -3920,6 +3920,8 @@ public class RequesitionRest {
         else
         {
             AdfmfContainerUtilities.gotoFeature("feature1");
+            AdfmfContainerUtilities.invokeContainerJavaScriptFunction("feature1",
+            "adf.mf.api.amx.doNavigation", new Object[] { "quickSearch_default" });
             System.out.println("Default Org Value is Empty...");
         }
         //SelectedItemsList.items_selected.clear();
@@ -5422,6 +5424,15 @@ public class RequesitionRest {
         
        
         
+        
+    }
+
+    public void buyerAssisted(ActionEvent actionEvent) {
+        // Add event code here...
+        AdfmfContainerUtilities.gotoFeature("feature1");
+        AdfmfContainerUtilities.invokeContainerJavaScriptFunction("feature1",
+        "adf.mf.api.amx.doNavigation", new Object[] { "buyerAssisted_default" });
+        // AdfmfContainerUtilities.invokeContainerJavaScriptFunction("feature1","adf.mf.api.amx.doNavigation", new Object[] { "buyerAssisted" });
         
     }
 }

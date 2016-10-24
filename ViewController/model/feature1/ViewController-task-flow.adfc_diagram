@@ -27,7 +27,7 @@
       <property
          name="fromOutcome">refresh</property>
       <property
-         name="sdm:polyPoints">T39,374.0,100.44238,381.0,100.44238,T50</property>
+         name="sdm:polyPoints">T33,370.5,100.44238,377.5,100.44238,T44</property>
    </ControlFlowCase>
    <View
       id="View7">
@@ -52,7 +52,7 @@
       <property
          name="fromOutcome">item_detail</property>
       <property
-         name="sdm:polyPoints">R54,423.562,157.94238,671.0,274.89062,L46</property>
+         name="sdm:polyPoints">R62,423.47668,164.94238,671.0,274.89062,L46</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -87,7 +87,7 @@
       <property
          name="fromOutcome">refined_search</property>
       <property
-         name="sdm:polyPoints">R46,423.74005,150.94238,829.7328,119.890625,L46</property>
+         name="sdm:polyPoints">R46,423.69238,150.94238,829.7629,123.390625,L50</property>
    </ControlFlowCase>
    <View
       id="View12">
@@ -112,7 +112,7 @@
       <property
          name="fromOutcome">checkout</property>
       <property
-         name="sdm:polyPoints">T61,388.0,100.44238,578.0,-18.75293,L50</property>
+         name="sdm:polyPoints">T67,391.5,100.44238,578.0,-15.25293,L54</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -122,7 +122,7 @@
       <property
          name="fromOutcome">ref_search</property>
       <property
-         name="sdm:polyPoints">L54,830.0,126.890625,424.00604,157.94238,R54</property>
+         name="sdm:polyPoints">L58,830.0,130.39062,423.92847,157.94238,R54</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -157,7 +157,7 @@
       <property
          name="fromOutcome">refined_search_services</property>
       <property
-         name="sdm:polyPoints">R30,422.0,136.94238,944.9276,-27.304688,L46</property>
+         name="sdm:polyPoints">R30,422.0,136.94238,944.94946,-23.804688,L50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -167,7 +167,7 @@
       <property
          name="fromOutcome">ref_search</property>
       <property
-         name="sdm:polyPoints">L54,946.0,-20.304688,423.07138,143.94238,R38</property>
+         name="sdm:polyPoints">L58,946.0,-16.804688,423.04956,143.94238,R38</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -177,7 +177,7 @@
       <property
          name="fromOutcome">checkout</property>
       <property
-         name="sdm:polyPoints">L42,830.0,116.390625,660.0,-18.75293,R50</property>
+         name="sdm:polyPoints">L42,830.0,116.390625,660.0,-15.25293,R54</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -188,5 +188,59 @@
          name="fromOutcome">checkout</property>
       <property
          name="sdm:polyPoints">L42,944.3724,-30.804688,660.0,-22.25293,R46</property>
+   </ControlFlowCase>
+   <View
+      id="View22">
+      <property
+         name="activityId">freeform</property>
+      <property
+         name="page">/FreeForm.amx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>freeform&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">-54.856445</property>
+      <property
+         name="x">434.0</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase23"
+      from="View22"
+      to="View12">
+      <property
+         name="fromOutcome">checkout</property>
+      <property
+         name="sdm:polyPoints">R50,475.0,-55.20703,578.0,-22.25293,L46</property>
+   </ControlFlowCase>
+   <WildcardControlFlowRule
+      id="WildcardControlFlowRule25">
+      <property
+         name="activityId">*</property>
+      <property
+         name="y">1.5976562</property>
+      <property
+         name="x">184.0</property>
+   </WildcardControlFlowRule>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase26"
+      from="WildcardControlFlowRule25"
+      to="View22">
+      <property
+         name="fromOutcome">buyerAssisted_default</property>
+      <property
+         name="sdm:polyPoints">R45,220.0,-1.7529297,393.0,-55.20703,L50</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase27"
+      from="WildcardControlFlowRule25"
+      to="View3">
+      <property
+         name="fromOutcome">quickSearch_default</property>
+      <property
+         name="sdm:polyPoints">R55,220.0,5.2470703,384.5,94.92401,T56</property>
    </ControlFlowCase>
 </SDM>

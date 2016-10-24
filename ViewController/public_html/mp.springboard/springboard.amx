@@ -98,7 +98,13 @@
                           actionListener="#{RequesitionRest.createRequition}">
                 <amx:outputText value="Create Requisition" id="ot11" inlineStyle="color: #C89C31;font-weight: bold;"/>
                 <!--<amx:setPropertyListener id="spl3" from="feature1" to="#{viewScope.featureid}"/>-->
-            </amx:listItem><!--
+            </amx:listItem>
+             <amx:listItem id="l3i1" inlineStyle="border: 1px solid #ffffff;"
+                          actionListener="#{RequesitionRest.buyerAssisted}">
+                <amx:outputText value="Buyer" id="ot311" inlineStyle="color: #C89C31;font-weight: bold;"/>
+                <!--<amx:setPropertyListener id="spl3" from="feature1" to="#{viewScope.featureid}"/>-->
+            </amx:listItem>
+            <!--
             #{bindings.gotoFeature.execute}-->
             <amx:listItem id="li3" inlineStyle="border: 1px solid #ffffff;"
                           actionListener="#{RequesitionRest.viewacceptSupplier}">

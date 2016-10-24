@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt" xmlns:notification="http://xmlns.ateam.com/notification">
+
+    <amx:panelPage id="pp1" inlineStyle="background-color: #F7F3F3;">
+    <amx:verbatim id="v3">
+
+        <![CDATA[
+
+         <script type="text/javascript">
+       
+      
+          function showGallery(){
+          plugins.imagePicker.getPictures(
+          function(results) {
+          for (var i = 0; i < results.length; i++) {
+             adf.mf.api.invokeMethod("mobile.Rest", "addAttachment", results[i], 
+            function() {}, function() {});   
+        }
+        }, function (error) {
+        console.log('Error: ' + error);
+        }, {
+        maxImages: 10,
+        width: 800
+       }
+    );
+ }
+        
+         </script>
+
+         ]]>
+
+        </amx:verbatim>
+    <amx:facet name="header">
+      <amx:outputText value="Buyer Assisted Requisition" id="hdr" inlineStyle="color: #FFFFFF;"/>
+    </amx:facet>
+    <amx:facet name="primary">
+            <amx:commandLink id="cl2" actionListener="#{bindings.toggleSpringboard.execute}" >
+                <amx:image source="/images/logo.png" id="i3"/>
+            </amx:commandLink>
+        </amx:facet>
+      <amx:facet name="secondary">
+            <amx:commandLink id="cl1"  actionListener="#{Rest.showCartItems}">
+                <notification:badge id="badge" class="notification-icon" unread="#{applicationScope.unreadCount}"/>
+                <amx:image id="i2" source="/images/Cart-24.png" shortDesc="Springboard Image"
+                           styleClass="admf-cart-design"/>
+            </amx:commandLink>
+           
+        </amx:facet>
+    
+    <amx:panelStretchLayout id="psl1" scrollPolicy="scroll" inlineStyle="margin:8px;">
+      <amx:facet name="top">
+       <!-- <amx:tableLayout id="tl2" width="100%" >
+          <amx:rowLayout id="rl2">
+            <amx:cellFormat id="cf3">
+             <amx:selectOneButton id="sob1"  simple="true">
+          <amx:selectItem id="si1" label="Goods" value="goods"/>
+          <amx:selectItem id="si2" label="Services" value="services"/>
+        </amx:selectOneButton>
+        </amx:cellFormat>
+          </amx:rowLayout>
+        </amx:tableLayout>-->
+       
+      </amx:facet>
+      <amx:facet name="center">
+      
+        <amx:tableLayout id="tl1" width="100%" inlineStyle="margin:4px;padding:8px;background-color: #FFFFFF;">
+           <amx:rowLayout id="r2arl1">
+            <amx:cellFormat id="r2acf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="r2pagl1" inlineStyle="margin-top:12px;">
+              <amx:outputText value="Item Type *" id="r2aot1"  styleClass="adfmf-outputText-style"/>
+        <amx:selectOneChoice id="selectOneChoice1"  simple="true" label="Choice" value="#{pageFlowScope.ItemType}">
+            <amx:selectItem label="Item 1" value="Please Select"/>
+            <amx:selectItem label="Item 2" value="item2"/>
+            <amx:selectItem label="Item 3" value="item3"/>
+          </amx:selectOneChoice>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+          <amx:rowLayout id="rl1">
+            <amx:cellFormat id="cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="pgl1">
+              <amx:outputText value="Item *" id="ot1" styleClass="adfmf-outputText-style"/>
+             <amx:inputText  id="i2t1" simple="true" value="#{pageFlowScope.ItemNo}" hintText="Enter Item Number"/>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+  
+          <amx:rowLayout id="r2rl1">
+            <amx:cellFormat id="r2cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="r2pgl1">
+              <amx:outputText value="Item Description *" id="r2ot1" styleClass="adfmf-outputText-style"/>
+             <amx:inputText  id="r2i2t1" simple="true" value="#{pageFlowScope.ItemDescriptionFrom}" hintText="Enter Item Description"/>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+            <amx:rowLayout id="r3rl1">
+            <amx:cellFormat id="r3cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="r3pgl1">
+              <amx:outputText value="Item Category *" id="r3ot1" styleClass="adfmf-outputText-style"/>
+              <amx:selectOneChoice id="selectOneChoic1e1"  simple="true" label="Choice" value="#{pageFlowScope.ItemCategoryForm}">
+            <amx:selectItem label="Item 1" value="Please Select"/>
+            <amx:selectItem label="Item 2" value="item2"/>
+            <amx:selectItem label="Item 3" value="item3"/>
+          </amx:selectOneChoice>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+          <amx:rowLayout id="r4rl1">
+            <amx:cellFormat id="r4cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="r4pgl1">
+              <amx:outputText value="Request Type *" id="r4ot1" styleClass="adfmf-outputText-style"/>
+            <amx:selectOneChoice id="selectOneChoiceR"  simple="true" label="Choice" value="#{pageFlowScope.RequestTypeForm}">
+            <amx:selectItem label="Item 1" value="Please Select"/>
+            <amx:selectItem label="Item 2" value="item2"/>
+            <amx:selectItem label="Item 3" value="item3"/>
+          </amx:selectOneChoice>
+          <!--
+                <amx:tableLayout id="tl4" width="100%">
+                  <amx:rowLayout id="rl4">
+                    <amx:cellFormat id="cf4" width="50%">
+                    <amx:selectBooleanCheckbox text="Existing Invoice" label="label1" simple="true" id="sbc1"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="cf14" width="50%">
+                    <amx:selectBooleanCheckbox text="Sole Source" label="label1" simple="true" id="sbc11"/>
+                    </amx:cellFormat>
+                  </amx:rowLayout>
+                   <amx:rowLayout id="rl41">
+                    <amx:cellFormat id="cf5" width="60%">
+                    <amx:selectBooleanCheckbox text="Government/Municipality" label="label1" simple="true" id="sbc2"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="cf15" width="40%">
+                    <amx:selectBooleanCheckbox text="Others" label="label1" simple="true" id="sbc22"/>
+                    </amx:cellFormat>
+                  </amx:rowLayout>
+                </amx:tableLayout>-->
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+            <amx:rowLayout id="r6rl1">
+            <amx:cellFormat id="rd6cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="r6pgl1">
+                <amx:tableLayout id="tl5" width="100%">
+                  <amx:rowLayout id="rl5">
+                    <amx:cellFormat id="cdf6" width="50%"><amx:outputText value="Qty *" id="r6ot1" styleClass="adfmf-outputText-style"/></amx:cellFormat>
+                    <amx:cellFormat id="cd1f6" width="50%"><amx:outputText value="UOM *" id="ot2" styleClass="adfmf-outputText-style"/></amx:cellFormat>
+                  </amx:rowLayout>
+                </amx:tableLayout>
+                <amx:tableLayout id="tl3" width="100%">
+                  <amx:rowLayout id="rl3">
+                    <amx:cellFormat id="cf2" width="50%">
+                    <amx:inputText  id="r6i2t1" simple="true"  hintText="Enter Qty" valueChangeListener="#{Rest.validateQuantityText}" value="#{pageFlowScope.quantity}"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="cf42" width="50%">
+                     <amx:selectOneChoice id="selectOneChoice2"  simple="true" value="#{pageFlowScope.UOMFrom}">
+                      <amx:selectItem label="Item 1" value="Please Select"/>
+                      <amx:selectItem label="Item 2" value="item2"/>
+                      <amx:selectItem label="Item 3" value="item3"/>
+                   </amx:selectOneChoice>
+                    </amx:cellFormat>
+                  </amx:rowLayout>
+                  
+                </amx:tableLayout>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+            <amx:rowLayout id="r5rl1">
+            <amx:cellFormat id="r5cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="r5pgl1">
+              <amx:outputText value="Max. Esitimated Price *" id="r5ot1" styleClass="adfmf-outputText-style"/>
+             <amx:inputText  id="r5i2t1" simple="true" value="#{pageFlowScope.MaxPriceFrom}" hintText="Enter Max. Esitimated Price"/>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+          <amx:rowLayout id="r7rl1">
+            <amx:cellFormat id="r7cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="r7pgl1">
+              <amx:outputText value="Deliver To Location *" id="r7ot1" styleClass="adfmf-outputText-style"/>
+             <amx:selectOneChoice id="selectOneChoice3"  simple="true" label="Choice" value="#{pageFlowScope.DeliverLocationForm}">
+                      <amx:selectItem label="Item 1" value="Please Select"/>
+                      <amx:selectItem label="Item 2" value="item2"/>
+                      <amx:selectItem label="Item 3" value="item3"/>
+                   </amx:selectOneChoice>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+               <amx:rowLayout id="re5rl1">
+            <amx:cellFormat id="re5cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="re5pgl1">
+              <amx:outputText value="Need By Date *" id="re5ot1" styleClass="adfmf-outputText-style" />
+             <amx:inputDate label="label1" id="id1" simple="true" value="#{pageFlowScope.need_by_date}"
+               valueChangeListener="#{Rest.validateNeedByDateChanged}"/>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+           <amx:rowLayout id="zrez9rl1">
+              <amx:cellFormat id="zrez8c4f1" width="100%" halign="start">
+              <amx:outputText value="Supplier" id="zrez8ot1" styleClass="adfmf-outputText-style"/>
+              <amx:panelGroupLayout id="zrez8pgl1">  
+                <amx:tableLayout id="ztl6" width="100%">
+                  <amx:rowLayout id="zrl6">
+                    <amx:cellFormat id="zcf7" width="90%" halign="start">
+                    <amx:inputText  id="zrez8i2t1" simple="true" value="#{pageFlowScope.supplierForm}" hintText="Search Supplier"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="zcf124"  width="10%" halign="start">
+                         <amx:commandLink rendered="true" id="zcommandLink1" >
+                        <amx:image id="zimage2" source="/images/Search-24.png"/>
+                    </amx:commandLink>
+                    </amx:cellFormat>
+                  </amx:rowLayout>
+                  </amx:tableLayout>
+                  </amx:panelGroupLayout>
+                  </amx:cellFormat>
+                  </amx:rowLayout>
+           <amx:rowLayout id="rew6rl1">
+            <amx:cellFormat id="rew6cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="rew6pgl1" inlineStyle="margin-top:-20px;">
+                <amx:selectBooleanCheckbox text="Supplier not known" label="label1" id="sbc1" simple="true" value="#{pageFlowScope.supplierNotForm}" inlineStyle="color: #353535;"/>
+                   </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+             <amx:rowLayout id="re7rl1">
+            <amx:cellFormat id="re7cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="re7pgl1">
+              <amx:outputText value="Supplier Site" id="re7ot1" styleClass="adfmf-outputText-style"/>
+             <amx:inputText  id="re7i2t1" simple="true" value="#{pageFlowScope.supplierSiteForm}" hintText="Enter Supplier Site"/>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+           <amx:rowLayout id="re9rl1">
+              <amx:cellFormat id="re8c4f1" width="100%" halign="start">
+              <amx:outputText value="Cost Center" id="re8ot1" styleClass="adfmf-outputText-style"/>
+              <amx:panelGroupLayout id="re8pgl1">  
+                <amx:tableLayout id="tl6" width="100%">
+                  <amx:rowLayout id="rl6">
+                    <amx:cellFormat id="cf7" width="90%" halign="start">
+                    <amx:inputText  id="re8i2t1" simple="true" value="#{pageFlowScope.costcenterForm}" hintText="Search your costcenter"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="cf124"  width="10%" halign="start">
+                         <amx:commandLink rendered="true" id="commandLink1" >
+                        <amx:image id="image2" source="/images/Search-24.png"/>
+                    </amx:commandLink>
+                    </amx:cellFormat>
+                  </amx:rowLayout>
+                  </amx:tableLayout>
+                  </amx:panelGroupLayout>
+                  </amx:cellFormat>
+                  </amx:rowLayout>
+             <amx:rowLayout id="zre9rl1">
+              <amx:cellFormat id="zre8c4f1" width="100%" halign="start">
+              <amx:outputText value="GL Account" id="zre8ot1" styleClass="adfmf-outputText-style"/>
+              <amx:panelGroupLayout id="zre8pgl1">  
+                <amx:tableLayout id="zqtl6" width="100%">
+                  <amx:rowLayout id="zqrl6">
+                    <amx:cellFormat id="qzcf7" width="90%" halign="start">
+                    <amx:inputText  id="zre8i2t1" simple="true" value="#{pageFlowScope.GLAccountForm}" hintText="Search GL Account"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="zqcf124"  width="10%" halign="start">
+                         <amx:commandLink rendered="true" id="zqcommandLink1" >
+                        <amx:image id="zqimage2" source="/images/Search-24.png"/>
+                    </amx:commandLink>
+                    </amx:cellFormat>
+                  </amx:rowLayout>
+                  </amx:tableLayout>
+                  </amx:panelGroupLayout>
+                  </amx:cellFormat>
+                  </amx:rowLayout>
+                  
+           <amx:rowLayout id="re69rl1">
+            <amx:cellFormat id="re9cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="re9pgl1">
+              <amx:outputText value="Supplier Part No." id="re9ot1" styleClass="adfmf-outputText-style"/>
+             <amx:inputText  id="re9i2t1" simple="true" value="#{pageFlowScope.partnoForm}" hintText="Enter Supplier Part No."/>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+           <amx:rowLayout id="re10rl1">
+            <amx:cellFormat id="re10cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="re10pgl1">
+              <amx:outputText value="Internal Reference No." id="re10ot1" styleClass="adfmf-outputText-style"/>
+             <amx:inputText  id="re10i2t1" simple="true" value="#{pageFlowScope.referencenoForm}" hintText="Enter Internal Reference No"/>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+           <amx:rowLayout id="re11rl1">
+            <amx:cellFormat id="re11cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="re11pgl1">
+                <amx:tableLayout id="tl2" width="100%">
+                  <amx:rowLayout id="rl2">
+                    <amx:cellFormat id="cfq3" width="60%">
+                  <amx:outputText value="Attachements" id="re11ot1" styleClass="adfmf-outputText-style"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="cf3" width="20%" halign="center">
+                    <amx:commandLink rendered="true" id="zaqcommandLink1" >
+                        <amx:image id="zaqimage2" source="/images/camera.png"/>
+                    </amx:commandLink>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="cfd4" width="20%" halign="center">
+                    <amx:commandLink rendered="true" id="zbqcommandLink1" actionListener="#{Rest.showGallery}">
+                        <amx:image id="zbqimage2" source="/images/attachment.png"/>
+                    </amx:commandLink>
+                    </amx:cellFormat>
+                  </amx:rowLayout>
+                </amx:tableLayout>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+           </amx:tableLayout>
+        <amx:tableLayout id="tl4" width="100%">
+        <amx:rowLayout id="rl4">
+            <amx:cellFormat id="cf4" halign="center">
+              <amx:commandButton text="Add To Cart" id="cb1" actionListener="#{Rest.freeformAddtoCart}" styleClass="adfmf-commandButton-style" inlineStyle="width:80%;"/>
+            </amx:cellFormat>
+          </amx:rowLayout>
+           <amx:rowLayout id="rel4">
+            <amx:cellFormat id="cef4"  halign="center">
+              <amx:commandButton text="Search" id="ceb1" styleClass="adfmf-commandButton-style"  inlineStyle="width:80%;"/>
+            </amx:cellFormat>
+          </amx:rowLayout>
+        </amx:tableLayout>
+        
+      </amx:facet>  
+       
+        <!--   <amx:panelFormLayout id="panelFormLayout1">
+          <amx:panelLabelAndMessage label="Output" id="plam1">
+            <amx:outputText id="outputText1" value="Text"/>
+          </amx:panelLabelAndMessage>
+          <amx:inputText id="inputText1" label="Input" value="Text"/>
+          <amx:selectOneChoice id="selectOneChoice1" label="Choice" value="item1">
+            <amx:selectItem label="Item 1" value="item1"/>
+            <amx:selectItem label="Item 2" value="item2"/>
+            <amx:selectItem label="Item 3" value="item3"/>
+          </amx:selectOneChoice>
+          <amx:selectBooleanCheckbox id="selectBooleanCheckbox1" label="Boolean" value="true"/>
+          <amx:selectBooleanSwitch id="selectBooleanSwitch1" label="Switch" value="true" offLabel="Off" onLabel="On"/>
+          <amx:panelLabelAndMessage label="Button" id="plam2">
+            <amx:commandButton id="commandButton1" text="Button1"/>
+          </amx:panelLabelAndMessage>
+          <amx:panelLabelAndMessage label="Link" id="plam3">
+            <amx:commandLink id="commandLink1" text="Link"/>
+          </amx:panelLabelAndMessage>
+        </amx:panelFormLayout>-->
+      
+    </amx:panelStretchLayout>
+  </amx:panelPage>
+</amx:view>

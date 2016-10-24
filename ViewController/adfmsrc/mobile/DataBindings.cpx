@@ -18,6 +18,7 @@
     <page path="/refined_search_services.amx" usageId="mobile_refined_search_servicesPageDef"/>
     <page path="/checkout_new.amx" usageId="mobile_checkout_newPageDef"/>
     <page path="/Noti_detail.amx" usageId="mobile_Noti_detailPageDef"/>
+    <page path="/FreeForm.amx" usageId="mobile_FreeFormPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="mobile_searchPageDef" path="mobile.pageDefs.searchPageDef"/>
@@ -36,6 +37,7 @@
     <page id="mobile_refined_search_servicesPageDef" path="mobile.pageDefs.refined_search_servicesPageDef"/>
     <page id="mobile_checkout_newPageDef" path="mobile.pageDefs.checkout_newPageDef"/>
     <page id="mobile_Noti_detailPageDef" path="mobile.pageDefs.Noti_detailPageDef"/>
+    <page id="mobile_FreeFormPageDef" path="mobile.pageDefs.FreeFormPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <dc id="CostCenterNaturalAccountsList" path="mobile.CostCenterNaturalAccountsList"/>
