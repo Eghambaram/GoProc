@@ -404,3 +404,69 @@ word-break: break-word;
   font-weight: normal;
   border: 1px solid #0E4876;
 }
+
+/* new Design*/
+/* New Design*/
+.amx-inputText .field-value .wrap {
+  display: inline-block;
+  color: #707173;
+  background-color: #F7F3F3;
+  padding: 8px;
+  box-sizing: border-box;
+  border-radius: 5px;
+ /* border: 1px solid #707173;*/
+}
+
+
+.amx-inputText .field-value .wrap > textarea {
+  margin-top: 9px;
+  margin-bottom: 9px;
+}
+
+/* ------ Generic Field label/value ------ */
+.field-label {
+  box-sizing: border-box;
+  vertical-align: middle;
+  color: #7B7C7E;
+  font-size: 14px;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+}
+.amx-commandButton.adfmf-commandButton-style {
+  min-height: 32px;
+  border: 1px solid #CC9933;
+  box-sizing: border-box;
+  background-color: #CC9933;
+  color: #FFFFFF;
+}
+
+.amx-commandButton.adfmf-commandButton-style1 {
+  min-height: 22px;
+  border: 1px solid #0E4876;
+  box-sizing: border-box;
+  background-color: #0E4876;
+  color: #FFFFFF;
+}
+
+
+.amx-outputText.adfmf-outputText-style {
+  font-weight: bold;
+  font-size: 14px;
+  margin-left:12px;
+  color: #353535;
+  
+}
+.amx-outputText.adfmf-outputText-style-values {
+  font-size: 12px;
+  margin-left:2px;
+  color: #353535;
+}
+
+
+.amx-selectBooleanCheckbox .checkbox-text {
+  display: inline-block;
+   color: #353535;
+  font-size: 14px;
+  font-weight: normal;
+}
