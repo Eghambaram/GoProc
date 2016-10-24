@@ -7,6 +7,9 @@
     <iterator Binds="root" RangeSize="25" DataControl="AlertsList" id="AlertsListIterator"/>
     <accessorIterator MasterBinding="AlertsListIterator" Binds="alerts" RangeSize="25" DataControl="AlertsList"
                       BeanClass="mobile.Alert" id="alertsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="RejectionReasonList" id="RejectionReasonListIterator"/>
+    <accessorIterator MasterBinding="RejectionReasonListIterator" Binds="rejection" RangeSize="25"
+                      DataControl="RejectionReasonList" BeanClass="mobile.Rejection" id="rejectionIterator"/>
   </executables>
   <bindings>
     <methodAction id="toggleSpringboard" RequiresUpdateModel="true" Action="invokeMethod" MethodName="toggleSpringboard"
@@ -23,5 +26,11 @@
         </AttrNames>
       </nodeDefinition>
     </tree>
+    <list IterBinding="rejectionIterator" ListOperMode="navigation" ListIter="rejectionIterator" id="rejection"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="meaning"/>
+      </AttrNames>
+    </list>
   </bindings>
 </pageDefinition>

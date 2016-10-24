@@ -55,6 +55,7 @@ public class RequesitionRest {
     
     public static List rejectionReasonList = new ArrayList();
     public static ArrayList<QuotationSort> quotationSortList = new ArrayList<QuotationSort>();
+    public static ArrayList<ItemType> itemTypeList = new ArrayList<ItemType>();
     public RequesitionRest() {
     }
 
@@ -5434,5 +5435,95 @@ public class RequesitionRest {
         "adf.mf.api.amx.doNavigation", new Object[] { "buyerAssisted_default" });
         // AdfmfContainerUtilities.invokeContainerJavaScriptFunction("feature1","adf.mf.api.amx.doNavigation", new Object[] { "buyerAssisted" });
         
+        ValueExpression ve_user = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+        String userId = (String)ve_user.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        ValueExpression ve_orgId = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+        String multiOrgId = (String)ve_orgId.getValue(AdfmfJavaUtilities.getAdfELContext());
+
+        ValueExpression ve49 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationCode}", String.class);
+        String default_deliver_to_location_code = (String)ve49.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
+                                                                                "getItemtype",
+                                                                                new Object[] { });
+      /*  try{
+                 RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();    
+                // Clear any previously set request properties, if any
+                restServiceAdapter.clearRequestProperties();
+                // Set the connection name
+                restServiceAdapter.setConnectionName("enrich");
+                    
+                        
+                restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_line_types/");
+                String postData= "{\n" + 
+                "  \"GET_LINE_TYPES_Input\" : {\n" + 
+                "   \"RESTHeader\": {\n" + 
+                "    },\n" + 
+                "   \"InputParameters\": {\n" + 
+                "       }	   \n" + 
+                "   }\n" + 
+                "}\n";
+                    
+                   
+                    
+                    restServiceAdapter.setRetryLimit(0);
+                    System.out.println("postData===============================" + postData);
+                    
+                  String  response = restServiceAdapter.send(postData);
+                    
+                    System.out.println("response===============================" + response);
+                    
+                   JSONObject resp=new JSONObject(response);
+                     JSONObject output=resp.getJSONObject("OutputParameters");
+                    JSONObject data=output.getJSONObject("X_LINE_TYPE_TL");
+                    ItemTypeList.itemType_List.clear();
+                    itemTypeList.clear();
+                    if(data.get("X_LINE_TYPE_TL_ITEM") instanceof  JSONArray){
+                      JSONArray segments=data.getJSONArray("X_LINE_TYPE_TL_ITEM");
+                      for(int i=0;i<segments.length();i++) {
+                        JSONObject notification=segments.getJSONObject(i);
+                        String lineTypeId=notification.getString("LINE_TYPE_ID");
+                        String lineTypeCode=notification.getString("LINE_TYPE_CODE");
+                        String lineTypeDisc=notification.getString("LINE_TYPE_DESC");
+                        ItemType item=new ItemType(lineTypeId, lineTypeCode, lineTypeDisc);
+                        ItemTypeList.itemType_List.add(item);
+                        itemTypeList.add(item);
+                          
+                      }
+                    
+                    }
+                    
+                    else if(data.get("X_LINE_TYPE_TL_ITEM") instanceof  JSONObject){
+                       
+                        JSONObject notification=data.getJSONObject("X_LINE_TYPE_TL_ITEM");
+                        String lineTypeId=notification.getString("LINE_TYPE_ID");
+                        String lineTypeCode=notification.getString("LINE_TYPE_CODE");
+                        String lineTypeDisc=notification.getString("LINE_TYPE_DESC");
+                        ItemType item=new ItemType(lineTypeId, lineTypeCode, lineTypeDisc);
+                        ItemTypeList.itemType_List.add(item);
+                        itemTypeList.add(item);
+                       
+                    }
+                        System.out.println("Item Type List Size"+ItemTypeList.itemType_List.size());
+                     
+                   
+                    
+        
+        }
+        catch(Exception e){
+        e.printStackTrace();
+        }
+      */
+     
+        
     }
+     public void getItemTypeValues(String rr) {
+         System.out.println("Hello ItemType");
+         
+     }
 }

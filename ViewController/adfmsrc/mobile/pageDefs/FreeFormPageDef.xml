@@ -4,10 +4,75 @@
   <parameters/>
   <executables>
     <variableIterator id="variables"/>
+    
+    <iterator Binds="root" RangeSize="25" DataControl="ImageList" id="ImageListIterator"/>
+    <accessorIterator MasterBinding="ImageListIterator" Binds="images" RangeSize="25" DataControl="ImageList"
+                      BeanClass="mobile.Image" id="imagesIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="AliasList" id="AliasListIterator"/>
+    <accessorIterator MasterBinding="AliasListIterator" Binds="aliass" RangeSize="25" DataControl="AliasList"
+                      BeanClass="mobile.Alias" id="aliassIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="UOMList" id="UOMListIterator"/>
+    <accessorIterator MasterBinding="UOMListIterator" Binds="UOM" RangeSize="25" DataControl="UOMList"
+                      BeanClass="mobile.UOM" id="UOMIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="DeliverToLocationList" id="DeliverToLocationListIterator"/>
+    <accessorIterator MasterBinding="DeliverToLocationListIterator" Binds="deliverToLocations" RangeSize="25"
+                      DataControl="DeliverToLocationList" BeanClass="mobile.DeliverToLocation"
+                      id="deliverToLocationsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="ItemTypeList" id="ItemTypeListIterator"/>
+    <accessorIterator MasterBinding="ItemTypeListIterator" Binds="itemType" RangeSize="25" DataControl="ItemTypeList"
+                      BeanClass="mobile.ItemType" id="itemTypeIterator"/>
   </executables>
   <bindings>
     <methodAction id="toggleSpringboard" RequiresUpdateModel="true" Action="invokeMethod" MethodName="toggleSpringboard"
                   IsViewObjectMethod="false" DataControl="ApplicationFeatures"
                   InstanceName="data.ApplicationFeatures.dataProvider"/>
+   <methodAction id="addToSelectedImage" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="addToSelectedImage" IsViewObjectMethod="false" DataControl="UOMList"
+                  InstanceName="data.UOMList.dataProvider"/>
+    <methodAction id="clearSelectedImage" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="clearSelectedImage" IsViewObjectMethod="false" DataControl="UOMList"
+                  InstanceName="data.UOMList.dataProvider"/>
+     <!-- new -->
+     <methodAction id="clearImage" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="clearImage" IsViewObjectMethod="false" DataControl="ImageList"
+                  InstanceName="data.ImageList.dataProvider"/>
+     <tree IterBinding="imagesIterator" id="images">
+      <nodeDefinition DefName="mobile.Image" Name="images0">
+        <AttrNames>
+          <Item Value="imageURL"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="imagesIterator" id="images1">
+      <nodeDefinition DefName="mobile.Image" Name="images10">
+        <AttrNames>
+          <Item Value="imageURL"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="aliassIterator" ListOperMode="navigation" ListIter="aliassIterator" id="aliass"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="name"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="UOMIterator" ListOperMode="navigation" ListIter="UOMIterator" id="UOM" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="name"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="deliverToLocationsIterator" ListOperMode="navigation" ListIter="deliverToLocationsIterator"
+          id="deliverToLocations" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="code"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="itemTypeIterator" ListOperMode="navigation" ListIter="itemTypeIterator" id="itemType"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="lineTypeDisc"/>
+      </AttrNames>
+    </list>
   </bindings>
 </pageDefinition>

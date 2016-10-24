@@ -25,6 +25,10 @@
        }
     );
  }
+ function getItemtype(){
+          adf.mf.api.invokeMethod("mobile.RequesitionRest", "getItemTypeValues", "", 
+            function() {}, function() {});
+       }
         
          </script>
 
@@ -68,19 +72,19 @@
            <amx:rowLayout id="r2arl1">
             <amx:cellFormat id="r2acf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r2pagl1" inlineStyle="margin-top:12px;">
-              <amx:outputText value="Item Type *" id="r2aot1"  styleClass="adfmf-outputText-style"/>
-        <amx:selectOneChoice id="selectOneChoice1"  simple="true" label="Choice" value="#{pageFlowScope.ItemType}">
-            <amx:selectItem label="Item 1" value="Please Select"/>
-            <amx:selectItem label="Item 2" value="item2"/>
-            <amx:selectItem label="Item 3" value="item3"/>
-          </amx:selectOneChoice>
+              <amx:outputText value="Item Type *" id="r2aot1"   styleClass="adfmf-outputText-style"/>
+                <amx:selectOneChoice value="#{pageFlowScope.ItemType}" simple="true" label="#{bindings.itemType.label}"
+                                     id="soc4">
+                  <amx:selectItems value="#{bindings.itemType.items}" id="si4"/>
+                </amx:selectOneChoice>
+               
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
           <amx:rowLayout id="rl1">
             <amx:cellFormat id="cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="pgl1">
-              <amx:outputText value="Item *" id="ot1" styleClass="adfmf-outputText-style"/>
+              <amx:outputText value="Item" id="ot1" styleClass="adfmf-outputText-style"/>
              <amx:inputText  id="i2t1" simple="true" value="#{pageFlowScope.ItemNo}" hintText="Enter Item Number"/>
               </amx:panelGroupLayout>
             </amx:cellFormat>
@@ -97,12 +101,11 @@
             <amx:rowLayout id="r3rl1">
             <amx:cellFormat id="r3cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r3pgl1">
+              
               <amx:outputText value="Item Category *" id="r3ot1" styleClass="adfmf-outputText-style"/>
-              <amx:selectOneChoice id="selectOneChoic1e1"  simple="true" label="Choice" value="#{pageFlowScope.ItemCategoryForm}">
-            <amx:selectItem label="Item 1" value="Please Select"/>
-            <amx:selectItem label="Item 2" value="item2"/>
-            <amx:selectItem label="Item 3" value="item3"/>
-          </amx:selectOneChoice>
+                <amx:selectOneChoice value="#{pageFlowScope.ItemCategoryForm}"  simple="true" label="#{bindings.aliass.label}" id="soc1">
+                  <amx:selectItems value="#{bindings.aliass.items}" id="si1"/>
+                </amx:selectOneChoice>
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
@@ -111,9 +114,8 @@
               <amx:panelGroupLayout id="r4pgl1">
               <amx:outputText value="Request Type *" id="r4ot1" styleClass="adfmf-outputText-style"/>
             <amx:selectOneChoice id="selectOneChoiceR"  simple="true" label="Choice" value="#{pageFlowScope.RequestTypeForm}">
-            <amx:selectItem label="Item 1" value="Please Select"/>
-            <amx:selectItem label="Item 2" value="item2"/>
-            <amx:selectItem label="Item 3" value="item3"/>
+            <amx:selectItem label="Please Select" value="Please Select"/>
+            <amx:selectItem label="Existing Invoice" value="Existing Invoice"/>
           </amx:selectOneChoice>
           <!--
                 <amx:tableLayout id="tl4" width="100%">
@@ -149,14 +151,13 @@
                 <amx:tableLayout id="tl3" width="100%">
                   <amx:rowLayout id="rl3">
                     <amx:cellFormat id="cf2" width="50%">
-                    <amx:inputText  id="r6i2t1" simple="true"  hintText="Enter Qty" valueChangeListener="#{Rest.validateQuantityText}" value="#{pageFlowScope.quantity}"/>
+                    <amx:inputText  id="r6i2t1" simple="true"  inputType="number" hintText="Enter Qty" valueChangeListener="#{Rest.validateQuantityText}" value="#{pageFlowScope.quantity}"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="cf42" width="50%">
-                     <amx:selectOneChoice id="selectOneChoice2"  simple="true" value="#{pageFlowScope.UOMFrom}">
-                      <amx:selectItem label="Item 1" value="Please Select"/>
-                      <amx:selectItem label="Item 2" value="item2"/>
-                      <amx:selectItem label="Item 3" value="item3"/>
-                   </amx:selectOneChoice>
+                      <amx:selectOneChoice value="#{pageFlowScope.UOMFrom}" label="#{bindings.UOM.label}" simple="true" id="soc2">
+                        <amx:selectItems value="#{bindings.UOM.items}" id="si2"/>
+                      </amx:selectOneChoice>
+                      
                     </amx:cellFormat>
                   </amx:rowLayout>
                   
@@ -176,11 +177,11 @@
             <amx:cellFormat id="r7cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r7pgl1">
               <amx:outputText value="Deliver To Location *" id="r7ot1" styleClass="adfmf-outputText-style"/>
-             <amx:selectOneChoice id="selectOneChoice3"  simple="true" label="Choice" value="#{pageFlowScope.DeliverLocationForm}">
-                      <amx:selectItem label="Item 1" value="Please Select"/>
-                      <amx:selectItem label="Item 2" value="item2"/>
-                      <amx:selectItem label="Item 3" value="item3"/>
-                   </amx:selectOneChoice>
+                <amx:selectOneChoice value="#{pageFlowScope.DeliverLocationForm}"
+                                     label="#{bindings.deliverToLocations.label}" id="soc3" simple="true" >
+                  <amx:selectItems value="#{bindings.deliverToLocations.items}" id="si3"/>
+                </amx:selectOneChoice>
+                
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
@@ -290,6 +291,13 @@
                     <amx:cellFormat id="cfq3" width="60%">
                   <amx:outputText value="Attachements" id="re11ot1" styleClass="adfmf-outputText-style"/>
                     </amx:cellFormat>
+                     <amx:cellFormat halign="center">
+                 <amx:commandLink action="#{Rest.refreshImageList}" id="cl122" styleClass="springboard-icon">
+                <amx:outputText value="#{pageFlowScope.selectedImagesCount}" inlineStyle="color:blue"  id="ot151">
+                </amx:outputText>
+                <amx:showPopupBehavior popupId="popup13" type="action" align="after" alignId="pp1"/>
+                </amx:commandLink>
+                </amx:cellFormat>        
                     <amx:cellFormat id="cf3" width="20%" halign="center">
                     <amx:commandLink rendered="true" id="zaqcommandLink1" >
                         <amx:image id="zaqimage2" source="/images/camera.png"/>
@@ -343,4 +351,46 @@
       
     </amx:panelStretchLayout>
   </amx:panelPage>
+  <amx:popup id="popup13" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"  animation="slideUp">
+   
+ <amx:tableLayout width="100%" id="ptl2">
+<amx:rowLayout  id="prl4">
+<amx:cellFormat id="pcf3" halign="end" width="100%">
+<amx:commandButton icon="images/close.png" id="pcb1">
+<amx:closePopupBehavior  popupId="popup13" type="action"/>
+</amx:commandButton>
+</amx:cellFormat>
+</amx:rowLayout>
+</amx:tableLayout>
+      
+ <amx:tableLayout width="100%" id="ptl3" inlineStyle="height:450px;overflow:scroll;">
+ <amx:rowLayout  id="prl6">
+<amx:cellFormat id="pcf4" halign="start" width="100%">
+  <amx:listView var="row" value="#{bindings.images.collectionModel}"
+                                  fetchSize="#{bindings.images.rangeSize}"
+                                  selectedRowKeys="#{bindings.images.collectionModel.selectedRow}"
+                                  initialScrollRowKeys="#{bindings.images.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.images.collectionModel.makeCurrent}"
+                                  styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll"
+                                  bufferStrategy="viewport" id="plv2">
+                        <amx:listItem id="pli2">
+                            <amx:tableLayout width="100%" id="ptl4">
+                                <amx:rowLayout id="prl7">
+                                    <amx:cellFormat width="60%" height="43px" halign="start" id="pcf5">
+                                        <amx:image inlineStyle="height:50px;width:50px" source="#{row.imageURL}" id="pi2"/>
+                                    </amx:cellFormat>
+                                    <amx:cellFormat width="40%" halign="end" height="43px" id="pcf125">
+                                        <amx:commandButton text="Delete" actionListener="#{Rest.deleteImage}" id="pcb2">
+                                         <amx:setPropertyListener from="#{row.imageURL}" to="#{pageFlowScope.imageURL}"
+                                                         type="action" id="pspl211"/>
+                                        </amx:commandButton>
+                                    </amx:cellFormat>
+                                </amx:rowLayout>
+                            </amx:tableLayout>
+                        </amx:listItem>
+                    </amx:listView>
+                </amx:cellFormat>
+ </amx:rowLayout>
+ </amx:tableLayout>
+    </amx:popup>
 </amx:view>

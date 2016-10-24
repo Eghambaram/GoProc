@@ -21,6 +21,11 @@
     <accessorIterator MasterBinding="NaturalAcccountListIterator" Binds="naturalAccounts" RangeSize="25"
                       DataControl="NaturalAcccountList" BeanClass="mobile.NaturalAccounts"
                       id="naturalAccountsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="CostCenterNaturalAccountsList"
+              id="CostCenterNaturalAccountsListIterator"/>
+    <accessorIterator MasterBinding="CostCenterNaturalAccountsListIterator" Binds="costCenterNaturalAccounts"
+                      RangeSize="25" DataControl="CostCenterNaturalAccountsList"
+                      BeanClass="mobile.CostCenterNaturalAccounts" id="costCenterNaturalAccountsIterator"/>
   </executables>
   <bindings>
     <tree IterBinding="assetsIterator1" id="assets2">
@@ -43,6 +48,7 @@
           <Item Value="rowid"/>
           <Item Value="costCenter"/>
           <Item Value="naturalAccount"/>
+          <Item Value="costCenterNaturalAccount"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -71,11 +77,39 @@
                   IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>
     <methodAction id="makeCheckout" RequiresUpdateModel="true" Action="invokeMethod" MethodName="makeCheckout"
                   IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>
+    <methodAction id="rowCostCenterChange" RequiresUpdateModel="true" Action="invokeMethod" MethodName="rowCostCenterChange"
+                  IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>
+    <methodAction id="getGLAccountValue" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getGLAccountValue"
+                  IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>
+    <methodAction id="rowGLAccountChange" RequiresUpdateModel="true" Action="invokeMethod" MethodName="rowGLAccountChange"
+                  IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>              
+                  
     <list IterBinding="naturalAccountsIterator" ListOperMode="navigation" ListIter="naturalAccountsIterator"
-          id="naturalAccounts" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+          id="naturalAccounts" DTSupportsMRU="true" SelectItemValueMode="ListObject" StaticList="false">
       <AttrNames>
         <Item Value="description"/>
       </AttrNames>
     </list>
+    <list IterBinding="costCenterNaturalAccountsIterator" ListOperMode="navigation"
+          ListIter="costCenterNaturalAccountsIterator" id="costCenterNaturalAccounts" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="dispValue"/>
+      </AttrNames>
+    </list>
+    <tree IterBinding="costCentersIterator" id="costCenters1">
+      <nodeDefinition DefName="mobile.CostCenter" Name="costCenters10">
+        <AttrNames>
+          <Item Value="description"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="naturalAccountsIterator" id="naturalAccounts1">
+      <nodeDefinition DefName="mobile.NaturalAccounts" Name="naturalAccounts10">
+        <AttrNames>
+          <Item Value="description"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
   </bindings>
 </pageDefinition>

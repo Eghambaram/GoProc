@@ -312,6 +312,7 @@ public class Login {
                  // Clear any previously set request properties, if any
                  restServiceAdapter.clearRequestProperties();
                  // Set the connection name
+                 
                  restServiceAdapter.setConnectionName("enrich");
                  
                  restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
