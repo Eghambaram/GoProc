@@ -322,5 +322,88 @@ public class SupplierList {
     public void test(String t){
         System.out.println("rrrrrrrr "+t);
     }
+    
+    public void showSuppliers() {
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+        String userId = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression vemul = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+        String multiOrgId=(String)vemul.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        
+        ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierFormSearchText}", String.class);
+        String searchText=(String)ve_searchText.getValue(AdfmfJavaUtilities.getAdfELContext());
+        try {
+            RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+            // Clear any previously set request properties, if any
+            restServiceAdapter.clearRequestProperties();
+            // Set the connection name
+            restServiceAdapter.setConnectionName("enrich");
+            
+            restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+            restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+            restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+            restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+            restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/predictive_search_supplier/");
+            String postData= "{\n" + 
+            "  \"PREDICTIVE_SEARCH_SUPPLIER_Input\" : {\n" + 
+            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/predictive_search_supplier/\",\n" + 
+            "   \"RESTHeader\": {\n" + 
+            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+            "    },\n" + 
+            "   \"InputParameters\": {\n" + 
+            "        \"P_TEXT\": \""+searchText+"\"\n" + 
+            "     }\n" + 
+            "  }\n" + 
+            "}  \n";
+    
+        
+            restServiceAdapter.setRetryLimit(0);
+            System.out.println("postData===============================" + postData);
+            
+            String response = restServiceAdapter.send(postData);
+            System.out.println("response===============================" + response);
+            
+            JSONObject resp=new JSONObject(response);
+            JSONObject output=resp.getJSONObject("OutputParameters");
+            try{
+                SupplierList.s_jobs.clear();
+                JSONObject data=output.getJSONObject("X_SEARCH_RESULTS_TL");
+                     if(data.get("X_SEARCH_RESULTS_TL_ITEM") instanceof  JSONArray){
+                        JSONArray segments=data.getJSONArray("X_SEARCH_RESULTS_TL_ITEM");
+                        for(int i=0;i<segments.length();i++) {
+                            String name=(String)segments.get(i);
+                            Supplier s=new Supplier(name);
+                            SupplierList.s_jobs.add(s);
+                        }
+                 }
+                else if(data.get("X_SEARCH_RESULTS_TL_ITEM") instanceof  JSONObject){
+                    JSONObject segments=data.getJSONObject("X_SEGMENT_VALUES_TL_ITEM");
+                       String name=(String)segments.get("X_SEARCH_RESULTS_TL_ITEM");
+                       Supplier s=new Supplier(name);
+                       SupplierList.s_jobs.add(s);
+                }
+                     
+                else{
+                String name=data.getString("X_SEARCH_RESULTS_TL_ITEM");
+                Supplier s=new Supplier(name);
+                SupplierList.s_jobs.add(s);
+                
+                }
 
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }   
+        
+        
+        }
+        
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.supplier.iterator}");  
+        vex.refresh();
+
+    }
 }

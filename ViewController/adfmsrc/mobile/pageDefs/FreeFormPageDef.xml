@@ -21,6 +21,22 @@
     <iterator Binds="root" RangeSize="25" DataControl="ItemTypeList" id="ItemTypeListIterator"/>
     <accessorIterator MasterBinding="ItemTypeListIterator" Binds="itemType" RangeSize="25" DataControl="ItemTypeList"
                       BeanClass="mobile.ItemType" id="itemTypeIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="RequestTypeList" id="RequestTypeListIterator"/>
+    <accessorIterator MasterBinding="RequestTypeListIterator" Binds="requestType" RangeSize="25"
+                      DataControl="RequestTypeList" BeanClass="mobile.RequestType" id="requestTypeIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="CostCenterList" id="CostCenterListIterator"/>
+    <accessorIterator MasterBinding="CostCenterListIterator" Binds="costCenters" RangeSize="25"
+                      DataControl="CostCenterList" BeanClass="mobile.CostCenter" id="costCentersIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="NaturalAcccountList" id="NaturalAcccountListIterator"/>
+    <accessorIterator MasterBinding="NaturalAcccountListIterator" Binds="naturalAccounts" RangeSize="25"
+                      DataControl="NaturalAcccountList" BeanClass="mobile.NaturalAccounts"
+                      id="naturalAccountsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="SupplierList" id="SupplierListIterator"/>
+    <accessorIterator MasterBinding="SupplierListIterator" Binds="supplier" RangeSize="25" DataControl="SupplierList"
+                      BeanClass="mobile.Supplier" id="supplierIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="SupplierSiteList" id="SupplierSiteListIterator"/>
+    <accessorIterator MasterBinding="SupplierSiteListIterator" Binds="supplierSite" RangeSize="25"
+                      DataControl="SupplierSiteList" BeanClass="mobile.SupplierSite" id="supplierSiteIterator"/>
   </executables>
   <bindings>
     <methodAction id="toggleSpringboard" RequiresUpdateModel="true" Action="invokeMethod" MethodName="toggleSpringboard"
@@ -74,5 +90,58 @@
         <Item Value="lineTypeDisc"/>
       </AttrNames>
     </list>
+   
+    <list IterBinding="requestTypeIterator" ListOperMode="navigation" ListIter="requestTypeIterator" id="requestType"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="meaning"/>
+      </AttrNames>
+    </list>
+    
+     <methodAction id="showCostCenters" RequiresUpdateModel="true" Action="invokeMethod" MethodName="showCostCenters"
+                  IsViewObjectMethod="false" DataControl="CostCenterList" InstanceName="data.CostCenterList.dataProvider"/>
+    
+    <methodAction id="showGLAcccounts" RequiresUpdateModel="true" Action="invokeMethod" MethodName="showGLAcccounts"
+                  IsViewObjectMethod="false" DataControl="NaturalAcccountList" InstanceName="data.NaturalAcccountList.dataProvider"/>
+    
+      <methodAction id="showSuppliers" RequiresUpdateModel="true" Action="invokeMethod" MethodName="showSuppliers"
+                  IsViewObjectMethod="false" DataControl="SupplierList" InstanceName="data.SupplierList.dataProvider"/>
+
+      <methodAction id="showSupplierSites" RequiresUpdateModel="true" Action="invokeMethod" MethodName="showSupplierSites"
+                  IsViewObjectMethod="false" DataControl="SupplierSiteList" InstanceName="data.SupplierSiteList.dataProvider"/>
+     <methodAction id="showCartFreeForm" RequiresUpdateModel="true" Action="invokeMethod" MethodName="showCartFreeForm"
+                  IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>             
+  
+    <tree IterBinding="costCentersIterator" id="costCenters">
+      <nodeDefinition DefName="mobile.CostCenter" Name="costCenters0">
+        <AttrNames>
+          <Item Value="description"/>
+          <Item Value="name"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="naturalAccountsIterator" id="naturalAccounts">
+      <nodeDefinition DefName="mobile.NaturalAccounts" Name="naturalAccounts0">
+        <AttrNames>
+          <Item Value="segValue"/>
+          <Item Value="description"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="supplierIterator" id="supplier">
+      <nodeDefinition DefName="mobile.Supplier" Name="supplier0">
+        <AttrNames>
+          <Item Value="name"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="supplierSiteIterator" id="supplierSite">
+      <nodeDefinition DefName="mobile.SupplierSite" Name="supplierSite0">
+        <AttrNames>
+          <Item Value="vendorSiteId"/>
+          <Item Value="vendorSiteCode"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
   </bindings>
 </pageDefinition>

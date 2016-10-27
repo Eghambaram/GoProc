@@ -642,7 +642,7 @@ public class ItemsList {
             
             System.out.println("Deliver To Location-->"+default_deliver_to_location+"Cost Center-->"+default_cost_center+"GL Account-->"+default_natural_account);
             
-            SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,default_cost_natural_account);
+            SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,default_cost_natural_account,"goods","","","","","","","","","","");
         
         
             
@@ -3356,6 +3356,7 @@ public class ItemsList {
         
         public void showCartDetail() {
             // Add event code here...
+            System.out.println("Hello Cart in Item List");
             
             ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
             String itemType=(String)ve41.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -4240,7 +4241,7 @@ public class ItemsList {
                                   }
 
 
-                     SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,"");
+                     SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,"","goods","","","","","","","","","","");
                      SelectedItemsList.s_jobs.add(selectItem) ; 
                               }
                             }
@@ -4757,6 +4758,9 @@ public class ItemsList {
                                        if(item.getSource().equalsIgnoreCase("Contracted")){
                                        sb.append("    \"PRODUCT_SOURCE\":\"O\",\n");
                                        }
+                                       else if(item.getSource().equalsIgnoreCase("U")) {
+                                           sb.append("    \"PRODUCT_SOURCE\":\"U\",\n");    
+                                       }
                                        else{
                                            sb.append("    \"PRODUCT_SOURCE\":\"I\",\n");
                                        }
@@ -4810,7 +4814,8 @@ public class ItemsList {
                                        sb.append("    \"VENDOR_CONTACT_PHONE\":\"\",\n");
                                        sb.append("    \"VENDOR_CONTACT_EMAIL\":\"james_fr@gmail.com\",\n");
                                        sb.append("    \"SELECTED_FLAG\":\"Y\",\n");
-                                       sb.append("    \"ITEM_TYPE\":\""+itemType+"\",\n");
+                                       sb.append("    \"ITEM_TYPE\":\""+item.getItemType()+"\",\n");
+                                       
                       //                 CostCenter c;
         //                                       if(!item.getCostCenter().equalsIgnoreCase("")){
         //                                         c=(CostCenter)costCenterList.get((Integer.parseInt(item.getCostCenter())));
@@ -4849,12 +4854,20 @@ public class ItemsList {
                                        
                                        sb.append("    \"COST_CENTER\":\""+item.getCostCenter()+"\",\n");
                                        sb.append("    \"NATURAL_ACCOUNT\":\""+item.getNaturalAccount()+"\",\n");
+                                       
+                                       sb.append("    \"ITEM_NUMBER\":\""+item.getItemNo()+"\",\n");
+                                       sb.append("    \"VENDOR_PART_NUM\":\""+item.getSupplierpartNo()+"\",\n");
+                                       sb.append("    \"MAX_ESTIMATED_PRICE \":\""+item.getMaxEstPrice()+"\",\n");
+                                       sb.append("    \"INTERNAL_REFERENCE_NUM\":\""+item.getInternalRefNo()+"\",\n");
+                                       sb.append("    \"LINE_REQUEST_TYPE\":\""+item.getLineReqType()+"\",\n");
+                                       
                                        sb.append("    \"CHARGE_ACCOUNT\":\"\",\n");
                                        sb.append("    \"MARKUP_PRICE\":\"\",\n");
                                        sb.append("    \"REQUISITION_HEADER_ID\":\"\",\n");
                                        sb.append("    \"REQUISITION_LINE_ID\":\"\",\n");
                                        sb.append("    \"COMMENTS\":\"\",\n");
                                        sb.append("    \"ATTACHMENT_FILE\":\"\",\n");
+                                       
                                        
                                        if(item.getSource().equalsIgnoreCase("Contracted")){                                    
                                         sb.append("    \"CONTRACT_ITEM_EXCEPTION\":\"N\",\n");
@@ -5379,6 +5392,398 @@ public class ItemsList {
                  System.out.println("new Item Cost Center"+item.getNaturalAccount());    
               }
              vex.refresh();
+            
+        }
+        
+        public void showCartFreeForm() {
+            
+          /*  System.out.println("Show Cart Free Form--->"+SelectedItemsList.s_jobs.size());
+            Double cartValue=0.0;
+            ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.cartTotal}", String.class);
+            for(int i=0;i<SelectedItemsList.s_jobs.size();i++)
+             {
+                 SelectedItem item=(SelectedItem)SelectedItemsList.s_jobs.get(i);
+                 //System.out.println("item-- Qty"+item.getQuantity()+item.getAmount());
+                 cartValue=cartValue+ (Double.parseDouble(item.getAmount())*Integer.parseInt(item.getQuantity()));
+                 
+             }
+            ve4.setValue(AdfmfJavaUtilities.getAdfELContext(), String.valueOf(Math.round(cartValue)));        
+            AdfmfJavaUtilities.flushDataChangeEvent();  
+            
+            AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
+                                                                                               "adf.mf.api.amx.doNavigation", new Object[] { "checkout" });*/
+            
+            //Old Cart
+            
+            Double cartValue=0.0;
+            
+            ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
+            String itemType=(String)ve41.getValue(AdfmfJavaUtilities.getAdfELContext());
+            //SelectedItemsList.s_jobs=SelectedItemsList.items_selected;
+            int count=SelectedItemsList.s_jobs.size();
+            
+            String default_cost_center_id="";
+            String default_cost_center_name="";
+            String default_deliver_to_location_id="";
+            String default_deliver_to_location_name="";
+            
+            String default_natural_account_seg="";
+            String default_natural_account_description="";
+            
+            if(count>0){
+            if(itemType!=null && !itemType.equalsIgnoreCase(""))  {
+            try{
+                
+                
+                
+            ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+            String userId = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
+            
+            ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+            String multiOrgId = (String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
+
+            
+            //             ValueExpression ve48 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_cost_center}", String.class);
+            //             default_cost_center_id = (String)ve48.getValue(AdfmfJavaUtilities.getAdfELContext());
+            //
+            //             ValueExpression ve49 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to}", String.class);
+            //             default_deliver_to_location_id = (String)ve49.getValue(AdfmfJavaUtilities.getAdfELContext());
+                
+                
+                
+                
+             //Deliver to Location   
+                
+             RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+             // Clear any previously set request properties, if any
+             restServiceAdapter.clearRequestProperties();
+             // Set the connection name
+             restServiceAdapter.setConnectionName("enrich");
+             
+             restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+             restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+             restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+             restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+             restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_deliver_to/");
+             String postData= "{\n" + 
+             "\n" + 
+             "  \"GET_DELIVER_TO_Input\" : {\n" + 
+             "\n" + 
+             "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_deliver_to/\",\n" + 
+             "\n" + 
+             "   \"RESTHeader\": {\n" + 
+             "\n" + 
+             "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+             "    },\n" + 
+             "\n" + 
+             "   \"InputParameters\": {\n" + 
+             "\n" + 
+                "        \"P_USER_ID\":\""+userId+"\",\n" + 
+                               "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
+             "\n" + 
+             "     }\n" + 
+             "\n" + 
+             "  }\n" + 
+             "\n" + 
+             "}  ";
+                                         restServiceAdapter.setRetryLimit(0);
+                System.out.println("postData===============================" + postData);
+                 
+                String response = restServiceAdapter.send(postData);
+                 
+                 System.out.println("response===============================" + response); 
+                 JSONObject resp=new JSONObject(response);
+                 JSONObject output=resp.getJSONObject("OutputParameters");
+                JSONObject data=new JSONObject();
+              try{
+                  data=output.getJSONObject("X_DELIVER_TO_TL");
+                 DeliverToLocationList.s_jobs.clear();
+                     deliverToLocationList.clear();
+
+                     DeliverToLocation l2=new DeliverToLocation("Please Select","Please Select","Please Select"); 
+                     DeliverToLocationList.s_jobs.add(l2);
+                     deliverToLocationList.add(l2);
+
+                 
+                 if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONArray){
+                   JSONArray segments=data.getJSONArray("X_DELIVER_TO_TL_ITEM");
+                   for(int i=0;i<segments.length();i++) {
+                     JSONObject location=segments.getJSONObject(i);
+                     String locationId=location.getString("LOCATION_ID");
+                     String locationCode=location.getString("LOCATION_CODE");
+                     String locationDescription=location.getString("DESCRIPTION");
+                      
+                     DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
+                     DeliverToLocationList.s_jobs.add(loc);
+                       deliverToLocationList.add(loc);
+                   }
+                 
+                 }
+                 
+                 else if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONObject){
+                    
+                    JSONObject location=data.getJSONObject("X_DELIVER_TO_TL_ITEM");
+                     String locationId=location.getString("LOCATION_ID");
+                     String locationCode=location.getString("LOCATION_CODE");
+                     String locationDescription=location.getString("DESCRIPTION");
+                     
+                     DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
+                     DeliverToLocationList.s_jobs.add(loc);
+                     deliverToLocationList.add(loc);
+                    
+                 }
+                 }
+                 catch(Exception e) {
+                     e.printStackTrace();
+                 }
+             
+                
+                
+                
+                
+                
+                
+                
+                
+                
+             //Cost center     
+            
+            restServiceAdapter = Model.createRestServiceAdapter();
+            // Clear any previously set request properties, if any
+            restServiceAdapter.clearRequestProperties();
+            // Set the connection name
+            restServiceAdapter.setConnectionName("enrich");
+            
+            restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+            restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+            restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+            restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+            restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_cost_center/");
+            postData= "{\n" + 
+            "\n" + 
+            "  \"GET_COST_CENTER_Input\" : {\n" + 
+            "\n" + 
+            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_cost_center/\",\n" + 
+            "\n" + 
+            "   \"RESTHeader\": {\n" + 
+            "\n" + 
+            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+            "    },\n" + 
+            "\n" + 
+            "   \"InputParameters\": {\n" + 
+            "\n" + 
+            "        \"P_USER_ID\":\""+userId+"\",\n" + 
+            "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
+                      
+            "\n" + 
+            "     }\n" + 
+            "\n" + 
+            "  }\n" + 
+            "\n" + 
+            "}  ";
+                                        restServiceAdapter.setRetryLimit(0);
+               System.out.println("postData===============================" + postData);
+                
+                response = restServiceAdapter.send(postData);
+                
+                System.out.println("response===============================" + response); 
+                 resp=new JSONObject(response);
+                 output=resp.getJSONObject("OutputParameters");
+            try{
+                 data=output.getJSONObject("X_COST_CENTER_TL");
+                CostCenterList.s_jobs.clear();
+                costCenterList.clear();
+                
+                if(data.get("X_COST_CENTER_TL_ITEM") instanceof  JSONArray){
+                  JSONArray segments=data.getJSONArray("X_COST_CENTER_TL_ITEM");
+                  for(int i=0;i<segments.length();i++) {
+                      //String name=(String)segments.get(i);
+                      JSONObject ci=(JSONObject)segments.get(i);
+                      String name=ci.getString("SEGMENT_VALUE");
+                      String description=ci.getString("DESCRIPTION");
+                      if(name.equalsIgnoreCase(default_cost_center_id)) {
+                          default_cost_center_name=String.valueOf(i);
+                      }
+                      CostCenter c=new CostCenter(name,description);
+                      CostCenterList.s_jobs.add(c);
+                      costCenterList.add(c);
+                      
+                  }
+                
+                }
+                
+                else if(data.get("X_COST_CENTER_TL_ITEM") instanceof  JSONObject){
+                   
+                   JSONObject ci=data.getJSONObject("X_COST_CENTER_TL_ITEM");
+                    String name=ci.getString("SEGMENT_VALUE");
+                    String description=ci.getString("DESCRIPTION");
+                    if(name.equalsIgnoreCase(default_cost_center_id)) {
+                        default_cost_center_name=String.valueOf(0);
+                    }
+                    CostCenter c=new CostCenter(name,description);
+                    CostCenterList.s_jobs.add(c);
+                    costCenterList.add(c);
+                   
+                }
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+            
+
+
+            // Natural Accounts
+            
+            restServiceAdapter = Model.createRestServiceAdapter();
+            // Clear any previously set request properties, if any
+            restServiceAdapter.clearRequestProperties();
+            // Set the connection name
+            restServiceAdapter.setConnectionName("enrich");
+            
+            restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+            restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+            restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+            restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+            restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_natural_acct/");
+                postData= "{\n" + 
+                "\n" + 
+                "  \"GET_NATURAL_ACCT_Input\" : {\n" + 
+                "\n" + 
+                "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_natural_acct/\",\n" + 
+                "\n" + 
+                "   \"RESTHeader\": {\n" + 
+                "\n" + 
+                "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+                "    },\n" + 
+                "\n" + 
+                "   \"InputParameters\": {\n" + 
+                "\n" + 
+                "          \"P_USER_ID\" : \""+userId+"\",\n" +
+                "          \"P_ORG_ID\" : \""+multiOrgId+"\"\n" + 
+                "\n" + 
+                "     }\n" + 
+                "\n" + 
+                "  }\n" + 
+                "\n" + 
+                "}  ";
+                
+                    restServiceAdapter.setRetryLimit(0);
+               System.out.println("postData===============================" + postData);
+                
+                response = restServiceAdapter.send(postData);
+                
+                System.out.println("response===============================" + response); 
+                 resp=new JSONObject(response);
+                 output=resp.getJSONObject("OutputParameters");
+            try{
+                 data=output.getJSONObject("X_NATURAL_ACC_TL");
+                NaturalAcccountList.acc_List.clear();
+                naturalAccountList.clear();
+                
+                if(data.get("X_NATURAL_ACC_TL_ITEM") instanceof  JSONArray){
+                  JSONArray segments=data.getJSONArray("X_NATURAL_ACC_TL_ITEM");
+                  for(int i=0;i<segments.length();i++) {
+                      //String name=(String)segments.get(i);
+                      JSONObject na=(JSONObject)segments.get(i);
+                      String name=na.getString("SEGMENT_VALUE");
+                      String description=na.getString("DESCRIPTION");
+                      if(name.equalsIgnoreCase(default_natural_account_seg)) {
+                          default_natural_account_description=String.valueOf(i);
+                      }
+                      NaturalAccounts c=new NaturalAccounts(name,description);
+                      NaturalAcccountList.acc_List.add(c);
+                      naturalAccountList.add(c);
+                      
+                  }
+                
+                }
+                
+                else if(data.get("X_NATURAL_ACC_TL_ITEM") instanceof  JSONObject){
+                   
+                   JSONObject na=data.getJSONObject("X_NATURAL_ACC_TL_ITEM");
+                    String name=na.getString("SEGMENT_VALUE");
+                    String description=na.getString("DESCRIPTION");
+                    if(name.equalsIgnoreCase(default_natural_account_seg)) {
+                        default_natural_account_description=String.valueOf(0);
+                    }
+                    NaturalAccounts c=new NaturalAccounts(name,description);
+                    NaturalAcccountList.acc_List.add(c);
+                    naturalAccountList.add(c);
+                   
+                }
+                 /*   AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                                      .evaluateELExpression("#{bindings.naturalAccounts}");
+                    AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
+                    accountListIterator.refresh();*/
+                
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+
+                
+                
+            }
+            catch(Exception e) {
+                
+                e.printStackTrace();
+                
+                AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                             AdfmfJavaUtilities.getFeatureName(),
+                                             "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                             "Cannot connect to Services on Oracle Server.",
+                                             null,
+                                             null }); 
+            }
+                
+                
+                
+            
+            
+                for(int i=0;i<SelectedItemsList.s_jobs.size();i++)
+                 {
+                     SelectedItem item=(SelectedItem)SelectedItemsList.s_jobs.get(i);
+                     cartValue=cartValue+ Double.parseDouble(item.getAmount());
+                     
+                 }
+                
+                ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.cartTotal}", String.class);
+                        ve4.setValue(AdfmfJavaUtilities.getAdfELContext(), String.valueOf(Math.round(cartValue)));        
+                        AdfmfJavaUtilities.flushDataChangeEvent();   
+                
+            //            BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets2.iterator}");
+            //            vex.refresh();
+                    
+                    
+            
+            
+            // return "checkout";
+                AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
+                                                                                                   "adf.mf.api.amx.doNavigation", new Object[] { "checkout" });    
+            
+            }
+            else{
+                
+                AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                             AdfmfJavaUtilities.getFeatureName(),
+                                             "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                             "Item Type is mandatory and cannot be empty.",
+                                             null,
+                                             null });    
+                
+            }
+            
+            }
+            else{
+                
+                AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                             AdfmfJavaUtilities.getFeatureName(),
+                                             "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                             "Your cart is empty.",
+                                             null,
+                                             null });    
+               
+            }
             
         }
 

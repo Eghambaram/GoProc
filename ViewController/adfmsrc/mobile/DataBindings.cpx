@@ -40,6 +40,8 @@
     <page id="mobile_FreeFormPageDef" path="mobile.pageDefs.FreeFormPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
+    <dc id="SupplierSiteList" path="mobile.SupplierSiteList"/>
+    <dc id="RequestTypeList" path="mobile.RequestTypeList"/>
     <dc id="ItemTypeList" path="mobile.ItemTypeList"/>
     <dc id="CostCenterNaturalAccountsList" path="mobile.CostCenterNaturalAccountsList"/>
     <dc id="QuotationSortList" path="mobile.QuotationSortList"/>

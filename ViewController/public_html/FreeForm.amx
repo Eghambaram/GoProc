@@ -9,7 +9,12 @@
 
          <script type="text/javascript">
        
-      
+      $(document).ready(function() {
+            
+            adf.mf.api.invokeMethod("mobile.RequesitionRest", "getFreeFormValues", "", 
+            function() {}, function() {});          
+            });
+            
           function showGallery(){
           plugins.imagePicker.getPictures(
           function(results) {
@@ -25,11 +30,7 @@
        }
     );
  }
- function getItemtype(){
-          adf.mf.api.invokeMethod("mobile.RequesitionRest", "getItemTypeValues", "", 
-            function() {}, function() {});
-       }
-        
+       
          </script>
 
          ]]>
@@ -44,7 +45,7 @@
             </amx:commandLink>
         </amx:facet>
       <amx:facet name="secondary">
-            <amx:commandLink id="cl1"  actionListener="#{Rest.showCartItems}">
+            <amx:commandLink id="cl1"  actionListener="#{Rest.showCartFreeForm}">
                 <notification:badge id="badge" class="notification-icon" unread="#{applicationScope.unreadCount}"/>
                 <amx:image id="i2" source="/images/Cart-24.png" shortDesc="Springboard Image"
                            styleClass="admf-cart-design"/>
@@ -54,7 +55,8 @@
     
     <amx:panelStretchLayout id="psl1" scrollPolicy="scroll" inlineStyle="margin:8px;">
       <amx:facet name="top">
-       <!-- <amx:tableLayout id="tl2" width="100%" >
+        
+        <!-- <amx:tableLayout id="tl2" width="100%" >
           <amx:rowLayout id="rl2">
             <amx:cellFormat id="cf3">
              <amx:selectOneButton id="sob1"  simple="true">
@@ -113,10 +115,12 @@
             <amx:cellFormat id="r4cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r4pgl1">
               <amx:outputText value="Request Type *" id="r4ot1" styleClass="adfmf-outputText-style"/>
-            <amx:selectOneChoice id="selectOneChoiceR"  simple="true" label="Choice" value="#{pageFlowScope.RequestTypeForm}">
-            <amx:selectItem label="Please Select" value="Please Select"/>
-            <amx:selectItem label="Existing Invoice" value="Existing Invoice"/>
-          </amx:selectOneChoice>
+                <amx:selectOneChoice simple="true" value="#{pageFlowScope.RequestTypeForm}" label="#{bindings.requestType.label}"
+                                     id="soc8">
+                                     <!--valueChangeListener="#{RequesitionRest.showSearchButton}"-->
+                  <amx:selectItems value="#{bindings.requestType.items}" id="si8"/>
+                </amx:selectOneChoice>
+                
           <!--
                 <amx:tableLayout id="tl4" width="100%">
                   <amx:rowLayout id="rl4">
@@ -154,7 +158,7 @@
                     <amx:inputText  id="r6i2t1" simple="true"  inputType="number" hintText="Enter Qty" valueChangeListener="#{Rest.validateQuantityText}" value="#{pageFlowScope.quantity}"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="cf42" width="50%">
-                      <amx:selectOneChoice value="#{pageFlowScope.UOMFrom}" label="#{bindings.UOM.label}" simple="true" id="soc2">
+                      <amx:selectOneChoice value="#{pageFlowScope.UOMFrom}" simple="true" id="soc2">
                         <amx:selectItems value="#{bindings.UOM.items}" id="si2"/>
                       </amx:selectOneChoice>
                       
@@ -204,8 +208,10 @@
                     <amx:inputText  id="zrez8i2t1" simple="true" value="#{pageFlowScope.supplierForm}" hintText="Search Supplier"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="zcf124"  width="10%" halign="start">
-                         <amx:commandLink rendered="true" id="zcommandLink1" >
+                         <amx:commandLink rendered="true" id="zcommandLink1"
+                                          actionListener="#{RequesitionRest.getSuppliersValueform}">
                         <amx:image id="zimage2" source="/images/Search-24.png"/>
+                        <amx:showPopupBehavior popupId="popupSupplier" type="action" align="overlapTopCenter" alignId="pp1"/>
                     </amx:commandLink>
                     </amx:cellFormat>
                   </amx:rowLayout>
@@ -224,9 +230,24 @@
             <amx:cellFormat id="re7cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="re7pgl1">
               <amx:outputText value="Supplier Site" id="re7ot1" styleClass="adfmf-outputText-style"/>
-             <amx:inputText  id="re7i2t1" simple="true" value="#{pageFlowScope.supplierSiteForm}" hintText="Enter Supplier Site"/>
-              </amx:panelGroupLayout>
-            </amx:cellFormat>
+               <amx:panelGroupLayout id="zreze8pgl1">  
+                <amx:tableLayout id="ztle6" width="100%">
+                  <amx:rowLayout id="zrle6">
+                    <amx:cellFormat id="zcef7" width="90%" halign="start">
+                    <amx:inputText  id="zreez8i2t1" simple="true" value="#{pageFlowScope.supplierSiteForm}" hintText="Enter Supplier Site"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="zcf1e24"  width="10%" halign="start">
+                         <amx:commandLink rendered="true" id="zecommandLink1"
+                                          actionListener="#{RequesitionRest.getSupplierSiteform}">
+                        <amx:image id="zeimage2" source="/images/Search-24.png"/>
+                    <amx:showPopupBehavior popupId="popupSupplierSite" type="action" align="overlapTopCenter" alignId="pp1"/>
+                    </amx:commandLink>
+                    </amx:cellFormat>
+                  </amx:rowLayout>
+                  </amx:tableLayout>
+                  </amx:panelGroupLayout>
+             </amx:panelGroupLayout>
+             </amx:cellFormat>
            </amx:rowLayout>
            <amx:rowLayout id="re9rl1">
               <amx:cellFormat id="re8c4f1" width="100%" halign="start">
@@ -235,11 +256,13 @@
                 <amx:tableLayout id="tl6" width="100%">
                   <amx:rowLayout id="rl6">
                     <amx:cellFormat id="cf7" width="90%" halign="start">
-                    <amx:inputText  id="re8i2t1" simple="true" value="#{pageFlowScope.costcenterForm}" hintText="Search your costcenter"/>
+                    <amx:inputText  id="re8i2t1" simple="true"  value="#{pageFlowScope.costcenterForm}" hintText="Search your costcenter"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="cf124"  width="10%" halign="start">
-                         <amx:commandLink rendered="true" id="commandLink1" >
+                         <amx:commandLink rendered="true" id="commandLink1"
+                                          actionListener="#{RequesitionRest.getCostCenterValueform}">
                         <amx:image id="image2" source="/images/Search-24.png"/>
+                        <amx:showPopupBehavior popupId="popupCost" type="action" align="overlapTopCenter" alignId="pp1"/>
                     </amx:commandLink>
                     </amx:cellFormat>
                   </amx:rowLayout>
@@ -257,8 +280,10 @@
                     <amx:inputText  id="zre8i2t1" simple="true" value="#{pageFlowScope.GLAccountForm}" hintText="Search GL Account"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="zqcf124"  width="10%" halign="start">
-                         <amx:commandLink rendered="true" id="zqcommandLink1" >
+                         <amx:commandLink rendered="true" id="zqcommandLink1"
+                                          actionListener="#{RequesitionRest.getGLAccountValueform}">
                         <amx:image id="zqimage2" source="/images/Search-24.png"/>
+                         <amx:showPopupBehavior popupId="popupGLAccount" type="action" align="overlapTopCenter" alignId="pp1"/>
                     </amx:commandLink>
                     </amx:cellFormat>
                   </amx:rowLayout>
@@ -288,10 +313,10 @@
               <amx:panelGroupLayout id="re11pgl1">
                 <amx:tableLayout id="tl2" width="100%">
                   <amx:rowLayout id="rl2">
-                    <amx:cellFormat id="cfq3" width="60%">
-                  <amx:outputText value="Attachements" id="re11ot1" styleClass="adfmf-outputText-style"/>
+                    <amx:cellFormat id="cfq3" width="30%">
+                  <amx:outputText value="Attachments" id="re11ot1" styleClass="adfmf-outputText-style"/>
                     </amx:cellFormat>
-                     <amx:cellFormat halign="center">
+                     <amx:cellFormat halign="start" width="30">
                  <amx:commandLink action="#{Rest.refreshImageList}" id="cl122" styleClass="springboard-icon">
                 <amx:outputText value="#{pageFlowScope.selectedImagesCount}" inlineStyle="color:blue"  id="ot151">
                 </amx:outputText>
@@ -313,14 +338,15 @@
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
-           </amx:tableLayout>
+         
+        </amx:tableLayout>
         <amx:tableLayout id="tl4" width="100%">
-        <amx:rowLayout id="rl4">
+        <amx:rowLayout id="rl4" rendered="#{pageFlowScope.showAddCartButton}">
             <amx:cellFormat id="cf4" halign="center">
               <amx:commandButton text="Add To Cart" id="cb1" actionListener="#{Rest.freeformAddtoCart}" styleClass="adfmf-commandButton-style" inlineStyle="width:80%;"/>
             </amx:cellFormat>
           </amx:rowLayout>
-           <amx:rowLayout id="rel4">
+           <amx:rowLayout id="rel4" rendered="#{pageFlowScope.showSearch}">
             <amx:cellFormat id="cef4"  halign="center">
               <amx:commandButton text="Search" id="ceb1" styleClass="adfmf-commandButton-style"  inlineStyle="width:80%;"/>
             </amx:cellFormat>
@@ -393,4 +419,193 @@
  </amx:rowLayout>
  </amx:tableLayout>
     </amx:popup>
+    
+ 
+<!-- Cost Center -->
+ <amx:popup id="popupCost" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"  animation="slideUp">
+<amx:tableLayout width="100%" id="tel1">
+<amx:rowLayout  id="rwel1">
+<amx:cellFormat id="cfe11" halign="end" width="100%">
+<amx:commandButton icon="images/close.png" id="cbs8b">
+<amx:closePopupBehavior popupId="popupCost" type="action"/>
+</amx:commandButton>
+</amx:cellFormat>
+</amx:rowLayout>
+</amx:tableLayout>
+    <amx:tableLayout id="tl2121" width="100%">
+                <amx:rowLayout id="rl112">
+                    <amx:cellFormat id="cf1222" width="100%">
+                        <amx:inputText value="#{pageFlowScope.costcenterFormSearchText}" simple="true" id="inputText221" hintText="Search Cost Center...">
+                        </amx:inputText>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="cf12412" width="40px">
+                        <amx:commandLink id="commandLink112" actionListener="#{RequesitionRest.getCostCenterValueform}">
+                            <amx:image id="image212" source="/images/Search-24.png"/>
+                        </amx:commandLink>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout>
+ <amx:tableLayout width="100%" id="teql1" inlineStyle="width:400px;height:400px;overflow:scroll;">
+ <amx:rowLayout  id="rwqel1">
+<amx:cellFormat id="cfqe11" halign="start" width="100%">
+          <amx:listView var="row" value="#{bindings.costCenters.collectionModel}"
+                        fetchSize="#{bindings.costCenters.rangeSize}"
+                        selectedRowKeys="#{bindings.costCenters.collectionModel.selectedRow}"
+                        initialScrollRowKeys="#{bindings.costCenters.collectionModel.selectedRow}"
+                        selectionListener="#{bindings.costCenters.collectionModel.makeCurrent}"
+                        showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv1">
+            <amx:listItem id="li2" actionListener="#{RequesitionRest.rowchangeCostCenterForm}">
+              <amx:outputText value="#{row.description}" id="ot3"/>
+               <amx:setPropertyListener from="#{row.description}" to="#{pageFlowScope.costcenterForm}"
+                                                         type="action" id="spl12"/> 
+            <amx:setPropertyListener from="#{row.name}" to="#{pageFlowScope.costcenterFormId}"
+                                                         type="action" id="spl13"/>
+            <amx:closePopupBehavior popupId="popupCost" type="action"/>                                                         
+            </amx:listItem>
+          </amx:listView>
+        </amx:cellFormat>
+             </amx:rowLayout>
+             </amx:tableLayout>
+    </amx:popup>
+    
+    <!-- GL Account -->
+<amx:popup id="popupGLAccount" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"  animation="slideUp">
+<amx:tableLayout width="100%" id="Ztel1">
+<amx:rowLayout  id="Zrwel1">
+<amx:cellFormat id="Zcfe11" halign="end" width="100%">
+<amx:commandButton icon="images/close.png" id="Zcbs8b">
+<amx:closePopupBehavior popupId="popupGLAccount" type="action"/>
+</amx:commandButton>
+</amx:cellFormat>
+</amx:rowLayout>
+</amx:tableLayout>
+    <amx:tableLayout id="Ztl2121" width="100%">
+                <amx:rowLayout id="Zrl112">
+                    <amx:cellFormat id="Zcf1222" width="100%">
+                        <amx:inputText value="#{pageFlowScope.GLAccountFormSearchText}" simple="true" id="ZinputText221" hintText="Search GL Accounts...">
+                        </amx:inputText>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="Zcf12412" width="40px">
+                        <amx:commandLink id="ZcommandLink112" actionListener="#{RequesitionRest.getGLAccountValueform}">
+                            <amx:image id="Zimage212" source="/images/Search-24.png"/>
+                        </amx:commandLink>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout>
+ <amx:tableLayout width="100%" id="Zteql1" inlineStyle="width:400px;height:400px;overflow:scroll;">
+ <amx:rowLayout  id="Zrwqel1">
+<amx:cellFormat id="Zcfqe11" halign="start" width="100%">
+          <amx:listView var="row" value="#{bindings.naturalAccounts.collectionModel}"
+                        fetchSize="#{bindings.naturalAccounts.rangeSize}"
+                        selectedRowKeys="#{bindings.naturalAccounts.collectionModel.selectedRow}"
+                        initialScrollRowKeys="#{bindings.naturalAccounts.collectionModel.selectedRow}"
+                        selectionListener="#{bindings.naturalAccounts.collectionModel.makeCurrent}"
+                        showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv2">
+            <amx:listItem id="lqi2" actionListener="#{RequesitionRest.rowchangeGLAccountForm}">
+              <amx:outputText value="#{row.description" id="otq3"/>
+               <amx:setPropertyListener from="#{row.description}" to="#{pageFlowScope.GLAccountForm}"
+                                                         type="action" id="spql12"/> 
+            <amx:setPropertyListener from="#{row.segValue}" to="#{pageFlowScope.GLAccountFormId}"
+                                                         type="action" id="spql13"/>
+            <amx:closePopupBehavior popupId="popupGLAccount" type="action"/>                                                         
+            </amx:listItem>
+          </amx:listView>
+        </amx:cellFormat>
+             </amx:rowLayout>
+             </amx:tableLayout>
+    </amx:popup>
+
+<!-- Supplier Popup -->
+<amx:popup id="popupSupplier" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"  animation="slideUp">
+<amx:tableLayout width="100%" id="Qtel1">
+<amx:rowLayout  id="Qrwel1">
+<amx:cellFormat id="Qcfe11" halign="end" width="100%">
+<amx:commandButton icon="images/close.png" id="Qcbs8b">
+<amx:closePopupBehavior popupId="popupSupplier" type="action"/>
+</amx:commandButton>
+</amx:cellFormat>
+</amx:rowLayout>
+</amx:tableLayout>
+    <amx:tableLayout id="Qtl2121" width="100%">
+                <amx:rowLayout id="Qrl112">
+                    <amx:cellFormat id="Qcf1222" width="100%">
+                        <amx:inputText value="#{pageFlowScope.SupplierFormSearchText}" simple="true" id="QinputText221" hintText="Search Suppliers...">
+                        </amx:inputText>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="Qcf12412" width="40px">
+                        <amx:commandLink id="QcommandLink112" actionListener="#{RequesitionRest.getSuppliersValueform}">
+                            <amx:image id="Qimage212" source="/images/Search-24.png"/>
+                        </amx:commandLink>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout>
+ <amx:tableLayout width="100%" id="Qteql1" inlineStyle="width:400px;height:400px;overflow:scroll;">
+ <amx:rowLayout  id="Qrwqel1">
+<amx:cellFormat id="Qcfqe11" halign="start" width="100%">
+          <amx:listView var="row" value="#{bindings.supplier.collectionModel}"
+                        fetchSize="#{bindings.supplier.rangeSize}"
+                        selectedRowKeys="#{bindings.supplier.collectionModel.selectedRow}"
+                        initialScrollRowKeys="#{bindings.supplier.collectionModel.selectedRow}"
+                        selectionListener="#{bindings.supplier.collectionModel.makeCurrent}"
+                        showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv3">
+            <amx:listItem id="li1" actionListener="#{RequesitionRest.rowchangeSupplierForm}">
+              <amx:outputText value="#{row.name}" id="ot4"/>
+               <amx:setPropertyListener from="#{row.name}" to="#{pageFlowScope.supplierForm}"
+                                                         type="action" id="Qspl12"/> 
+            <amx:closePopupBehavior popupId="popupSupplier" type="action"/>                                                         
+            </amx:listItem>
+          </amx:listView>
+        </amx:cellFormat>
+             </amx:rowLayout>
+             </amx:tableLayout>
+    </amx:popup>
+
+<!-- Supplier Sites -->
+<amx:popup id="popupSupplierSite" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"  animation="slideUp">
+<amx:tableLayout width="100%" id="Itel1">
+<amx:rowLayout  id="Irwel1">
+<amx:cellFormat id="Icfe11" halign="end" width="100%">
+<amx:commandButton icon="images/close.png" id="Icbs8b">
+<amx:closePopupBehavior popupId="popupSupplierSite" type="action"/>
+</amx:commandButton>
+</amx:cellFormat>
+</amx:rowLayout>
+</amx:tableLayout>
+    <amx:tableLayout id="Itl2121" width="100%">
+                <amx:rowLayout id="Irl112">
+                    <amx:cellFormat id="Icf1222" width="100%">
+                        <amx:inputText value="#{pageFlowScope.supplierSiteFormSearchText}" simple="true" id="IinputText221" hintText="Search Suppliers...">
+                        </amx:inputText>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="Icf12412" width="40px">
+                        <amx:commandLink id="IcommandLink112" actionListener="#{RequesitionRest.getSupplierSiteform}">
+                            <amx:image id="Iimage212" source="/images/Search-24.png"/>
+                        </amx:commandLink>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout>
+ <amx:tableLayout width="100%" id="Iteql1" inlineStyle="width:400px;height:400px;overflow:scroll;">
+ <amx:rowLayout  id="Irwqel1">
+<amx:cellFormat id="Icfqe11" halign="start" width="100%">
+          <amx:listView var="row" value="#{bindings.supplierSite.collectionModel}"
+                        fetchSize="#{bindings.supplierSite.rangeSize}"
+                        selectedRowKeys="#{bindings.supplierSite.collectionModel.selectedRow}"
+                        initialScrollRowKeys="#{bindings.supplierSite.collectionModel.selectedRow}"
+                        selectionListener="#{bindings.supplierSite.collectionModel.makeCurrent}"
+                        showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv4">
+            <amx:listItem id="li3" actionListener="#{RequesitionRest.rowchangeSupplierSiteForm}">
+              <amx:outputText value="#{row.vendorSiteCode}" id="ot5"/>
+               <amx:setPropertyListener from="#{row.vendorSiteCode}" to="#{pageFlowScope.supplierSiteForm}"
+                                                         type="action" id="Ispl12"/> 
+            <amx:setPropertyListener from="#{row.vendorSiteId}" to="#{pageFlowScope.supplierSiteFormId}"
+                                                         type="action" id="Ispl13"/>
+              <amx:closePopupBehavior popupId="popupSupplierSite" type="action"/> 
+            </amx:listItem>
+          </amx:listView>
+        </amx:cellFormat>
+             </amx:rowLayout>
+             </amx:tableLayout>
+    </amx:popup>
+    
+
 </amx:view>

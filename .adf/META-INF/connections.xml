@@ -26,7 +26,7 @@
     <RefAddresses>
       <XmlRefAddr addrType="enrich">
         <Contents>
-          <restconnection name="enrich" url="http://mpdev.enrich.com:8000">
+          <restconnection name="enrich" url="http://mptestext.enrich.com:8005">
             <authentication style="challenge">
               <type>basic</type>
             </authentication>

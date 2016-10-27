@@ -32,6 +32,122 @@ public class SelectedItem {
     private String indixAttributes="";
     private String naturalAccount="";
     private String costCenterNaturalAccount="";
+    
+    //New Added Filed for Free Form
+    private String itemType="";
+    private String itemNo="";
+    private String vendorPartNo="";
+    private String maxEstPrice="";
+    private String lineReqType="";
+    private String supplierName="";
+    private String supplierSite="";
+    private String suppliernotknown="";
+    private String internalRefNo="";
+    private String supplierpartNo="";
+    private String formAttachment="";
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+        propertyChangeSupport.firePropertyChange("itemType", this.itemType,itemType);
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public void setItemNo(String itemNo) {
+        this.itemNo = itemNo;
+        propertyChangeSupport.firePropertyChange("itemNo", this.itemNo,itemNo);
+    }
+
+    public String getItemNo() {
+        return itemNo;
+    }
+
+    public void setVendorPartNo(String vendorPartNo) {
+        this.vendorPartNo = vendorPartNo;
+        propertyChangeSupport.firePropertyChange("vendorPartNo", this.vendorPartNo,vendorPartNo);
+    }
+
+    public String getVendorPartNo() {
+        return vendorPartNo;
+    }
+
+    public void setMaxEstPrice(String maxEstPrice) {
+        this.maxEstPrice = maxEstPrice;
+        propertyChangeSupport.firePropertyChange("maxEstPrice", this.maxEstPrice,maxEstPrice);
+    }
+
+    public String getMaxEstPrice() {
+        return maxEstPrice;
+    }
+
+    public void setLineReqType(String lineReqType) {
+        this.lineReqType = lineReqType;
+        propertyChangeSupport.firePropertyChange("lineReqType", this.lineReqType,lineReqType);
+    }
+
+    public String getLineReqType() {
+        return lineReqType;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+        propertyChangeSupport.firePropertyChange("supplierName", this.supplierName,supplierName);
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierSite(String supplierSite) {
+        this.supplierSite = supplierSite;
+        propertyChangeSupport.firePropertyChange("supplierSite", this.supplierSite,supplierSite);
+    }
+
+    public String getSupplierSite() {
+        return supplierSite;
+    }
+
+    public void setSuppliernotknown(String suppliernotknown) {
+        this.suppliernotknown = suppliernotknown;
+        propertyChangeSupport.firePropertyChange("suppliernotknown", this.suppliernotknown,suppliernotknown);
+    }
+
+    public String getSuppliernotknown() {
+        return suppliernotknown;
+    }
+
+    public void setInternalRefNo(String internalRefNo) {
+        this.internalRefNo = internalRefNo;
+        propertyChangeSupport.firePropertyChange("internalRefNo", this.internalRefNo,internalRefNo);
+    }
+
+    public String getInternalRefNo() {
+        return internalRefNo;
+    }
+
+    public void setSupplierpartNo(String supplierpartNo) {
+        this.supplierpartNo = supplierpartNo;
+        propertyChangeSupport.firePropertyChange("supplierpartNo", this.supplierpartNo,supplierpartNo);
+    }
+
+    public String getSupplierpartNo() {
+        return supplierpartNo;
+    }
+
+    public void setFormAttachment(String formAttachment) {
+        this.formAttachment = formAttachment;
+        propertyChangeSupport.firePropertyChange("formAttachment", this.formAttachment,formAttachment);
+    }
+
+    public String getFormAttachment() {
+        return formAttachment;
+    }
+    
+    
+    //Old SelectItem
+    
 
     public void setCostCenterNaturalAccount(String costCenterNaturalAccount) {
         this.costCenterNaturalAccount = costCenterNaturalAccount;
@@ -178,7 +294,7 @@ public class SelectedItem {
     
   
     
-    public SelectedItem(String poNo,String vendorName,String vendorSiteCode,String productCategory,String productTitle,String unitPrice,String imageUrl,String checked,String source,String uom,String quantity,String deliver_to_location,String need_by_date,String amount,String rowId,String costCenter,String itemRef,String indixCategoryId, String indixAttributes, String naturalAccount,String costCenterNaturalAccount) {
+    public SelectedItem(String poNo,String vendorName,String vendorSiteCode,String productCategory,String productTitle,String unitPrice,String imageUrl,String checked,String source,String uom,String quantity,String deliver_to_location,String need_by_date,String amount,String rowId,String costCenter,String itemRef,String indixCategoryId, String indixAttributes, String naturalAccount,String costCenterNaturalAccount,String itemType, String itemNo, String vendorPartNo, String maxEstPrice, String lineReqType,String supplierName,String supplierSite,String suppliernotknown,String internalRefNo,String supplierpartNo,String formAttachment) {
         super();
         
         
@@ -203,6 +319,20 @@ public class SelectedItem {
         this.indixAttributes=indixAttributes;
         this.naturalAccount=naturalAccount;
         this.costCenterNaturalAccount=costCenterNaturalAccount;
+        
+        //Free Form
+        this.itemType=itemType;
+        this.itemNo=itemNo;
+        this.vendorPartNo=vendorPartNo;
+        this.maxEstPrice=maxEstPrice;
+        this.lineReqType=lineReqType;
+        this.supplierName=supplierName;
+        this.supplierSite=supplierSite;
+        this.suppliernotknown=suppliernotknown;
+        this.internalRefNo=internalRefNo;
+        this.supplierpartNo=supplierpartNo;
+        this.formAttachment=formAttachment;
+
     }
     
     

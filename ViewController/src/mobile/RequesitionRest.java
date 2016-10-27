@@ -56,6 +56,11 @@ public class RequesitionRest {
     public static List rejectionReasonList = new ArrayList();
     public static ArrayList<QuotationSort> quotationSortList = new ArrayList<QuotationSort>();
     public static ArrayList<ItemType> itemTypeList = new ArrayList<ItemType>();
+    public static ArrayList<Alias> aliasList = new ArrayList<Alias>();
+    //public static ArrayList<CostCenter> costCenterList = new ArrayList<CostCenter>();
+    public static List costCenterList=new ArrayList();
+    public static ArrayList<NaturalAccounts> naturalAccountList = new ArrayList<NaturalAccounts>();
+    public static ArrayList<RequestType> requestTypeList = new ArrayList<RequestType>();
     public RequesitionRest() {
     }
 
@@ -2882,7 +2887,7 @@ public class RequesitionRest {
             ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
             ve41.setValue(AdfmfJavaUtilities.getAdfELContext(),itemType);
             
-            SelectedItem sl=new SelectedItem(rl.getPoNo(), rl.getVendorName(), rl.getVendorSite(), rl.getCategory(), rl.getProductTitle(), rl.getUnitPrice(), "", "true", "O", rl.getUom(), rl.getQuantity(), rl.getDeliverToLocation(), rl.getNeedByDate(), rl.getLineTotal(), String.valueOf(randomInt), "","0","","","","");
+            SelectedItem sl=new SelectedItem(rl.getPoNo(), rl.getVendorName(), rl.getVendorSite(), rl.getCategory(), rl.getProductTitle(), rl.getUnitPrice(), "", "true", "O", rl.getUom(), rl.getQuantity(), rl.getDeliverToLocation(), rl.getNeedByDate(), rl.getLineTotal(), String.valueOf(randomInt), "","0","","","","","","","","","","","","","","","");
             SelectedItemsList.items_selected.add(sl);
         }
         
@@ -5433,6 +5438,9 @@ public class RequesitionRest {
         AdfmfContainerUtilities.gotoFeature("feature1");
         AdfmfContainerUtilities.invokeContainerJavaScriptFunction("feature1",
         "adf.mf.api.amx.doNavigation", new Object[] { "buyerAssisted_default" });
+        try{
+        AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
+                                                                  "chooseItemType", new Object[] { });
         // AdfmfContainerUtilities.invokeContainerJavaScriptFunction("feature1","adf.mf.api.amx.doNavigation", new Object[] { "buyerAssisted" });
         
         ValueExpression ve_user = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
@@ -5447,6 +5455,11 @@ public class RequesitionRest {
         AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
                                                                                 "getItemtype",
                                                                                 new Object[] { });
+        }
+        catch(Exception e){
+        e.printStackTrace();
+        }
+        
       /*  try{
                  RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();    
                 // Clear any previously set request properties, if any
@@ -5522,8 +5535,839 @@ public class RequesitionRest {
      
         
     }
-     public void getItemTypeValues(String rr) {
-         System.out.println("Hello ItemType");
+     public void getFreeFormValues(String rr) {
+         System.out.println("--------------Hello ItemType");
+        /* ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
+          //ve_searchText.setValue(AdfmfJavaUtilities.getAdfELContext(),"Search your costcenter");
+          ve_searchText.setValue(AdfmfJavaUtilities.getAdfELContext()," ");*/
          
+        ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showSearch}", String.class);
+        ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+        ValueExpression ve22 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showAddCartButton}", String.class);
+        ve22.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
+
+         ValueExpression ve2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemNo}", String.class);
+         ve2.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression ve3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemDescriptionFrom}", String.class);
+         ve3.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quantity}", String.class);
+         ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.MaxPriceFrom}", String.class);
+         ve8.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression ve10 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.need_by_date}", String.class);
+         ve10.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
+         ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierNotForm}", String.class);
+         ve12.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+         ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
+         ve13.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression ve14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
+         ve14.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression ve15 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountForm}", String.class);
+         ve15.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression ve16 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.partnoForm}", String.class);
+         ve16.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression ve17 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.referencenoForm}", String.class);
+         ve17.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         try{
+                          RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();    
+                         // Clear any previously set request properties, if any
+                         restServiceAdapter.clearRequestProperties();
+                         // Set the connection name
+                         restServiceAdapter.setConnectionName("enrich");
+                             
+                                 
+                         restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                         restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                         restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                         restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                         restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_line_types/");
+                         String postData= "{\n" + 
+                         "  \"GET_LINE_TYPES_Input\" : {\n" + 
+                         "   \"RESTHeader\": {\n" + 
+                         "    },\n" + 
+                         "   \"InputParameters\": {\n" + 
+                         "       }          \n" + 
+                         "   }\n" + 
+                         "}\n";
+                             
+                            
+                             
+                             restServiceAdapter.setRetryLimit(0);
+                             System.out.println("postData===============================" + postData);
+                             
+                           String  response = restServiceAdapter.send(postData);
+                             
+                             System.out.println("response===============================" + response);
+                             
+                            JSONObject resp=new JSONObject(response);
+                              JSONObject output=resp.getJSONObject("OutputParameters");
+                             JSONObject data=output.getJSONObject("X_LINE_TYPE_TL");
+                             ItemTypeList.itemType_List.clear();
+                             itemTypeList.clear();
+                             ItemType l2=new ItemType("Please Select","Please Select","Please Select"); 
+                             ItemTypeList.itemType_List.add(l2);
+                             itemTypeList.add(l2);
+                             if(data.get("X_LINE_TYPE_TL_ITEM") instanceof  JSONArray){
+                               JSONArray segments=data.getJSONArray("X_LINE_TYPE_TL_ITEM");
+                               for(int i=0;i<segments.length();i++) {
+                                 JSONObject notification=segments.getJSONObject(i);
+                                 String lineTypeId=notification.getString("LINE_TYPE_ID");
+                                 String lineTypeCode=notification.getString("LINE_TYPE_CODE");
+                                 String lineTypeDisc=notification.getString("LINE_TYPE_DESC");
+                                 ItemType item=new ItemType(lineTypeId, lineTypeCode, lineTypeDisc);
+                                 ItemTypeList.itemType_List.add(item);
+                                 itemTypeList.add(item);
+                                   
+                               }
+                             
+                             }
+                             
+                             else if(data.get("X_LINE_TYPE_TL_ITEM") instanceof  JSONObject){
+                                
+                                 JSONObject notification=data.getJSONObject("X_LINE_TYPE_TL_ITEM");
+                                 String lineTypeId=notification.getString("LINE_TYPE_ID");
+                                 String lineTypeCode=notification.getString("LINE_TYPE_CODE");
+                                 String lineTypeDisc=notification.getString("LINE_TYPE_DESC");
+                                 ItemType item=new ItemType(lineTypeId, lineTypeCode, lineTypeDisc);
+                                 ItemTypeList.itemType_List.add(item);
+                                 itemTypeList.add(item);
+                                
+                             }
+                                 System.out.println("Item Type List Size"+ItemTypeList.itemType_List.size());
+                              
+                            
+                             
+                 
+                 }
+                 catch(Exception e){
+                 e.printStackTrace();
+                 }
+         
+         
+         ValueExpression ve_user = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+         String userId = (String)ve_user.getValue(AdfmfJavaUtilities.getAdfELContext());
+         
+         ValueExpression ve_orgId = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+         String multiOrgId = (String)ve_orgId.getValue(AdfmfJavaUtilities.getAdfELContext());
+
+         ValueExpression ve49 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationCode}", String.class);
+         String default_deliver_to_location_code = (String)ve49.getValue(AdfmfJavaUtilities.getAdfELContext());
+         
+         System.out.println("Default Location Code-->"+default_deliver_to_location_code);
+         try{
+             RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+               // Clear any previously set request properties, if any
+               restServiceAdapter.clearRequestProperties();
+               // Set the connection name
+               restServiceAdapter.setConnectionName("enrich");
+               
+               restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+               restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                   ///
+               restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+               restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+               restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_uom/");
+               String postData= "{\n" + 
+               "\n" + 
+               "  \"GET_UOM_Input\" : {\n" + 
+               "\n" + 
+               "    \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_uom/\",\n" + 
+               "\n" + 
+               "   \"RESTHeader\": {\n" + 
+               "\n" + 
+               "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+               "\n" + 
+               "    },\n" + 
+               "\n" + 
+               "   \"InputParameters\": {\n" + 
+               "\n" + 
+               "     }\n" + 
+               "\n" + 
+               "   } \n" + 
+               "\n" + 
+               "}";
+             restServiceAdapter.setRetryLimit(0);
+             System.out.println("postData===============================" + postData);
+             
+             String response = restServiceAdapter.send(postData);
+             
+             JSONObject resp=new JSONObject(response);
+             JSONObject output=resp.getJSONObject("OutputParameters");
+             JSONObject tbl=output.getJSONObject("X_UOM_TL");
+             UOMList.s_jobs.clear();
+             UOM u1=new UOM("Please Select");
+             UOMList.s_jobs.add(u1);
+             if(tbl.get("X_UOM_TL_ITEM") instanceof  JSONArray){
+                  JSONArray segments=tbl.getJSONArray("X_UOM_TL_ITEM");
+                  for(int i=0;i<segments.length();i++) {
+                      JSONObject item=(JSONObject)segments.get(i);
+                      UOM u=new UOM(item.getString("UNIT_OF_MEASURE"));
+                      if(item.getString("UNIT_OF_MEASURE").equalsIgnoreCase("Each")){
+                          System.out.println("Each match "+i);
+                      ValueExpression ve421 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.UOMFrom}", String.class);
+                      ve421.setValue(AdfmfJavaUtilities.getAdfELContext(), String.valueOf((i+1)));
+                      }
+                      
+                      
+                      UOMList.s_jobs.add(u);
+                      
+                  }
+               
+               }
+               
+               else if(tbl.get("X_UOM_TL_ITEM") instanceof  JSONObject){
+                   
+                   JSONObject item=tbl.getJSONObject("X_UOM_TL_ITEM");
+                   UOM u=new UOM(item.getString("UNIT_OF_MEASURE"));
+                   if(item.getString("UNIT_OF_MEASURE").equalsIgnoreCase("Each")){
+                   ValueExpression ve421 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.uom1}", String.class);
+                   ve421.setValue(AdfmfJavaUtilities.getAdfELContext(), String.valueOf(1));
+                   }
+                   UOMList.s_jobs.add(u);
+                   
+                   //JSONObject segments=data.getJSONObject("X_SEGMENT_VALUES_TL_ITEM");
+                   
+               }
+             //====Alias
+              
+             restServiceAdapter = Model.createRestServiceAdapter();
+             // Clear any previously set request properties, if any
+             restServiceAdapter.clearRequestProperties();
+             // Set the connection name
+             restServiceAdapter.setConnectionName("enrich");
+             
+             restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+             restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+             restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+             restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+             restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_category_alias/");
+             postData= "{\n" + 
+              "\n" + 
+              "    \"GET_CATEGORY_ALIAS_Input\":{\n" + 
+              "        \"RESTHeader\":{\n" + 
+              "        },\n" + 
+              "        \"InputParameters\":{\n" + 
+              "        }\n" + 
+              "    }\n" + 
+              "\n" + 
+              "}";
+             
+                                         restServiceAdapter.setRetryLimit(0);
+                System.out.println("postData===============================" + postData);
+                 
+                response = restServiceAdapter.send(postData);
+                 
+                 System.out.println("response===============================" + response); 
+                  resp=new JSONObject(response);
+                  output=resp.getJSONObject("OutputParameters");
+                JSONObject data1=new JSONObject();
+              try{
+                  data1=output.getJSONObject("X_CATEGORY_ALIAS_TL");
+                    AliasList.s_jobs.clear();
+                    aliasList.clear();
+                 if(data1.get("X_CATEGORY_ALIAS_TL_ITEM") instanceof  JSONArray){
+                     Alias c2=new Alias("Please Select","Please Select","Please Select","Please Select"); 
+                     AliasList.s_jobs.add(c2);
+                     aliasList.add(c2);   
+                   JSONArray segments=data1.getJSONArray("X_CATEGORY_ALIAS_TL_ITEM");
+                   for(int i=0;i<segments.length();i++) {
+                     JSONObject alias=segments.getJSONObject(i);
+                     String aliasname=alias.getString("ALIAS_NAME");
+                     String oracleCategotyId=alias.getString("ORACLE_CATEGORY_ID");
+                     //String indixCategotyId=alias.getString("INDIX_CATEGORY");
+                     String oracleCategotySeg=alias.getString("ORACLE_CATEGORY_SEG");
+                       String indixCategotyId=""; 
+                       if(alias.get("INDIX_CATEGORY_TL") instanceof  JSONObject) {
+                           JSONObject indixTL=alias.getJSONObject("INDIX_CATEGORY_TL");
+                           indixCategotyId=indixTL.getString("INDIX_CATEGORY_TL_ITEM");
+                       }
+                       else {
+                           indixCategotyId=alias.getString("INDIX_CATEGORY_TL");
+                       }
+                       
+                       System.out.println("((((indixCategotyId)))))"+indixCategotyId);
+
+                     Alias als=new Alias(aliasname, oracleCategotyId, indixCategotyId, oracleCategotySeg);
+                     AliasList.s_jobs.add(als);
+                       aliasList.add(als);
+                   }
+                 
+                 }
+                 
+                 else if(data1.get("X_CATEGORY_ALIAS_TL_ITEM") instanceof  JSONObject){
+                     Alias c2=new Alias("Please Select","Please Select","Please Select","Please Select"); 
+                     AliasList.s_jobs.add(c2);
+                     aliasList.add(c2);
+                    JSONObject alias=data1.getJSONObject("X_CATEGORY_ALIAS_TL_ITEM");
+                     String aliasname=alias.getString("ALIAS_NAME");
+                     String oracleCategotyId=alias.getString("ORACLE_CATEGORY_ID");
+                     //String indixCategotyId=alias.getString("INDIX_CATEGORY");
+                     String oracleCategotySeg=alias.getString("ORACLE_CATEGORY_SEG");
+                     String indixCategotyId=""; 
+                     if(alias.get("INDIX_CATEGORY_TL") instanceof  JSONObject) {
+                         JSONObject indixTL=alias.getJSONObject("INDIX_CATEGORY_TL");
+                         indixCategotyId=indixTL.getString("INDIX_CATEGORY_TL_ITEM");
+                     }
+                     else {
+                         indixCategotyId=alias.getString("INDIX_CATEGORY_TL");
+                     }
+                     
+                     System.out.println("((((indixCategotyId)))))"+indixCategotyId);
+
+                     Alias als=new Alias(aliasname, oracleCategotyId, indixCategotyId, oracleCategotySeg);
+                     AliasList.s_jobs.add(als);
+                     aliasList.add(als);
+                 }
+                 }
+                 catch(Exception e) {
+                     e.printStackTrace();
+                 }
+             
+             
+             // =====Alias End
+             //   Deliver to Location Start
+             
+             // Clear any previously set request properties, if any
+             restServiceAdapter.clearRequestProperties();
+             // Set the connection name
+             restServiceAdapter.setConnectionName("enrich");
+             
+             restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+             restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+             restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+             restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+             restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_deliver_to/");
+             postData= "{\n" +
+             "\n" +
+             "  \"GET_DELIVER_TO_Input\" : {\n" +
+             "\n" +
+             "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_deliver_to/\",\n" +
+             "\n" +
+             "   \"RESTHeader\": {\n" +
+             "\n" +
+             "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" +
+             "    },\n" +
+             "\n" +
+             "   \"InputParameters\": {\n" +
+             "\n" +
+             "        \"P_USER_ID\":\""+userId+"\",\n" +
+                         "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
+             "\n" +
+             "     }\n" +
+             "\n" +
+             "  }\n" +
+             "\n" +
+             "}  ";
+                                   restServiceAdapter.setRetryLimit(0);
+             System.out.println("postData===============================" + postData);
+             response = restServiceAdapter.send(postData);
+                    
+                    System.out.println("response===============================" + response);
+                    resp=new JSONObject(response);
+                    output=resp.getJSONObject("OutputParameters");
+                    JSONObject data=new JSONObject();
+             try{
+                      data=output.getJSONObject("X_DELIVER_TO_TL");
+                      DeliverToLocationList.s_jobs.clear();
+                        deliverToLocationList.clear();
+                        DeliverToLocation l2=new DeliverToLocation("Please Select","Please Select","Please Select"); 
+                        DeliverToLocationList.s_jobs.add(l2);
+                        deliverToLocationList.add(l2);
+
+                      if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONArray){
+                      JSONArray segments=data.getJSONArray("X_DELIVER_TO_TL_ITEM");
+                      for(int i=0;i<segments.length();i++) {
+                        JSONObject location=segments.getJSONObject(i);
+                        String locationId=location.getString("LOCATION_ID");
+                        String locationCode=location.getString("LOCATION_CODE");
+                        String locationDescription=location.getString("DESCRIPTION");
+                         if(locationCode.equalsIgnoreCase(default_deliver_to_location_code)) {
+                            System.out.println("Deliver to Location position"+"Match Occurs"+locationCode+"---"+default_deliver_to_location_code+"---"+String.valueOf(i));
+                             ValueExpression ve_deliver_code = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.DeliverLocationForm}", String.class);
+                             ve_deliver_code.setValue(AdfmfJavaUtilities.getAdfELContext(), String.valueOf((i+1)));
+                         }
+                        DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
+                        DeliverToLocationList.s_jobs.add(loc);
+                          deliverToLocationList.add(loc);
+                      }
+                      
+                      }
+                      
+                      else if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONObject){
+                       
+                       JSONObject location=data.getJSONObject("X_DELIVER_TO_TL_ITEM");
+                        String locationId=location.getString("LOCATION_ID");
+                        String locationCode=location.getString("LOCATION_CODE");
+                        String locationDescription=location.getString("DESCRIPTION");
+                        if(locationCode.equalsIgnoreCase(default_deliver_to_location_code)) {
+                            System.out.println("Deliver to Location position"+String.valueOf(0));
+                        }
+                        DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
+                        DeliverToLocationList.s_jobs.add(loc);
+                        deliverToLocationList.add(loc);
+                       
+                      }
+                      }
+                      catch(Exception e) {
+                        e.printStackTrace();
+                      }
+             
+             //Get Cost Center Values
+             restServiceAdapter = Model.createRestServiceAdapter();
+                   // Clear any previously set request properties, if any
+                   restServiceAdapter.clearRequestProperties();
+                   // Set the connection name
+                   restServiceAdapter.setConnectionName("enrich");
+                   
+                   restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                   restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                   restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                   restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                   restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_cost_center/");
+                   postData= "{\n" +
+                          "\n" +
+                          "  \"GET_COST_CENTER_Input\" : {\n" +
+                          "\n" +
+                          "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_cost_center/\",\n" +
+                          "\n" +
+                          "   \"RESTHeader\": {\n" +
+                          "\n" +
+                          "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" +
+                          "    },\n" +
+                          "\n" +
+                          "   \"InputParameters\": {\n" +
+                          "\n" +
+                           "          \"P_USER_ID\" : \""+userId+"\",\n" +
+                           "          \"P_ORG_ID\" : \""+multiOrgId+"\",\n" +
+                           "          \"P_SEARCH_TEXT\" : \"\"\n" +                    
+                          "\n" +
+                          "     }\n" +
+                          "\n" +
+                          "  }\n" +
+                          "\n" +
+                          "}  ";
+                       
+                           restServiceAdapter.setRetryLimit(0);
+                      System.out.println("postData===============================" + postData);
+                      System.out.println("postData===============================" + postData);
+                          
+                       response = restServiceAdapter.send(postData);
+                       System.out.println("response===============================" + response);   
+                       resp=new JSONObject(response);
+                       output=resp.getJSONObject("OutputParameters");
+             try{
+                            data=output.getJSONObject("X_COST_CENTER_TL");
+                                   CostCenterList.s_jobs.clear();
+                                   costCenterList.clear();
+                             
+                                 if(data.get("X_COST_CENTER_TL_ITEM") instanceof  JSONArray){
+                                                                 JSONArray segments=data.getJSONArray("X_COST_CENTER_TL_ITEM");
+                                                                 for(int i=0;i<segments.length();i++) {
+                                                                     //String name=(String)segments.get(i);
+                                                                     JSONObject ci=(JSONObject)segments.get(i);
+                                                                     String name=ci.getString("SEGMENT_VALUE");
+                                                                     String description=ci.getString("DESCRIPTION");
+                                                                     CostCenter c=new CostCenter(name,description);
+                                                                     CostCenterList.s_jobs.add(c);
+                                                                     costCenterList.add(c);
+                                                                     
+                                                                 }
+                                                               
+                                                               }
+                                                               
+                                                               else if(data.get("X_COST_CENTER_TL_ITEM") instanceof  JSONObject){
+                                                                  
+                                                                  JSONObject ci=data.getJSONObject("X_COST_CENTER_TL_ITEM");
+                                                                   String name=ci.getString("SEGMENT_VALUE");
+                                                                   String description=ci.getString("DESCRIPTION");
+                                                                   CostCenter c=new CostCenter(name,description);
+                                                                   CostCenterList.s_jobs.add(c);
+                                                                   costCenterList.add(c);
+                                                                  
+                                                               }
+                                                                 
+                             
+                             }
+                             catch(Exception e) {
+                                 e.printStackTrace();
+                             }
+             // GET Natural Account based MultiOrg 
+             restServiceAdapter = Model.createRestServiceAdapter();
+             // Clear any previously set request properties, if any
+             restServiceAdapter.clearRequestProperties();
+             // Set the connection name
+             restServiceAdapter.setConnectionName("enrich");
+             
+             restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+             restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+             restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+             restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+             restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_natural_acct/");
+                 postData= "{\n" + 
+                 "\n" + 
+                 "  \"GET_NATURAL_ACCT_Input\" : {\n" + 
+                 "\n" + 
+                 "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_natural_acct/\",\n" + 
+                 "\n" + 
+                 "   \"RESTHeader\": {\n" + 
+                 "\n" + 
+                 "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+                 "    },\n" + 
+                 "\n" + 
+                 "   \"InputParameters\": {\n" + 
+                 "\n" + 
+                 "          \"P_USER_ID\" : \""+userId+"\",\n" +
+                 "          \"P_ORG_ID\" : \""+multiOrgId+"\"\n" + 
+                 "\n" + 
+                 "     }\n" + 
+                 "\n" + 
+                 "  }\n" + 
+                 "\n" + 
+                 "}  ";
+                 
+                     restServiceAdapter.setRetryLimit(0);
+                System.out.println("postData===============================" + postData);
+                 
+                 response = restServiceAdapter.send(postData);
+                 
+                 System.out.println("response===============================" + response); 
+                  resp=new JSONObject(response);
+                  output=resp.getJSONObject("OutputParameters");
+             try{
+                 data=output.getJSONObject("X_NATURAL_ACC_TL");
+                 NaturalAcccountList.acc_List.clear();
+                 naturalAccountList.clear();
+                 
+                 if(data.get("X_NATURAL_ACC_TL_ITEM") instanceof  JSONArray){
+                   JSONArray segments=data.getJSONArray("X_NATURAL_ACC_TL_ITEM");
+                   for(int i=0;i<segments.length();i++) {
+                       //String name=(String)segments.get(i);
+                       JSONObject na=(JSONObject)segments.get(i);
+                       String name=na.getString("SEGMENT_VALUE");
+                       String description=na.getString("DESCRIPTION");
+                /*       if(description.equalsIgnoreCase(default_natural_account_Value)) {
+                        ve_natural.setValue(AdfmfJavaUtilities.getAdfELContext(),description);
+                         System.out.println("Dafult GL Account Value-->"+default_natural_account_Value);
+                        }
+*/
+                       NaturalAccounts c=new NaturalAccounts(name,description);
+                       NaturalAcccountList.acc_List.add(c);
+                       naturalAccountList.add(c);
+                       
+                   }
+                 
+                 }
+                 
+                 else if(data.get("X_NATURAL_ACC_TL_ITEM") instanceof  JSONObject){
+                    
+                    JSONObject na=data.getJSONObject("X_NATURAL_ACC_TL_ITEM");
+                     String name=na.getString("SEGMENT_VALUE");
+                     String description=na.getString("DESCRIPTION");
+  /*                   if(description.equalsIgnoreCase(default_natural_account_Value)) {
+                      ve_natural.setValue(AdfmfJavaUtilities.getAdfELContext(),description);
+                       System.out.println("Dafult GL Account Value-->"+default_natural_account_Value);
+                      }
+*/
+                     NaturalAccounts c=new NaturalAccounts(name,description);
+                     NaturalAcccountList.acc_List.add(c);
+                     naturalAccountList.add(c);
+                    
+                 }
+                  
+                 
+                 }
+                 catch(Exception e) {
+                     e.printStackTrace();
+                 }
+             
+  
+          //GET  Request Type
+          // 
+          restServiceAdapter = Model.createRestServiceAdapter();
+          // Clear any previously set request properties, if any
+          restServiceAdapter.clearRequestProperties();
+          // Set the connection name
+          restServiceAdapter.setConnectionName("enrich");
+          
+          restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+          restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+          restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+          restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+          restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_request_type_lkup/");
+              postData= "{\n" + 
+              "  \"GET_REQUEST_TYPE_LKUP_Input\" : {\n" + 
+              "   \"RESTHeader\": {\n" + 
+              "    },\n" + 
+              "   \"InputParameters\": {\n" + 
+              "       }	   \n" + 
+              "   }\n" + 
+              "}\n";
+              
+              restServiceAdapter.setRetryLimit(0);
+              System.out.println("postData===============================" + postData);
+              
+              response = restServiceAdapter.send(postData);
+              
+              System.out.println("response===============================" + response); 
+               resp=new JSONObject(response);
+               output=resp.getJSONObject("OutputParameters");
+          try{
+              data=output.getJSONObject("X_REQUEST_TYPE_TL");
+              RequestTypeList.req_List.clear();
+              requestTypeList.clear();
+                  RequestType l2=new RequestType("Please Select","Please Select","Please Select"); 
+                  RequestTypeList.req_List.add(l2);
+                  requestTypeList.add(l2);
+              
+              if(data.get("X_REQUEST_TYPE_TL_ITEM") instanceof  JSONArray){
+                JSONArray segments=data.getJSONArray("X_REQUEST_TYPE_TL_ITEM");
+                for(int i=0;i<segments.length();i++) {
+                    JSONObject na=(JSONObject)segments.get(i);
+                    String lookupType=na.getString("LOOKUP_TYPE");
+                    String lookupCode=na.getString("LOOKUP_CODE");
+                    String meaning=na.getString("MEANING");
+                    RequestType c=new RequestType(lookupType, lookupCode, meaning);
+                    RequestTypeList.req_List.add(c);
+                    requestTypeList.add(c);
+                    
+                }
+              
+              }
+              
+              else if(data.get("X_REQUEST_TYPE_TL_ITEM") instanceof  JSONObject){
+                 
+                 JSONObject na=data.getJSONObject("X_REQUEST_TYPE_TL_ITEM");
+                  String lookupType=na.getString("LOOKUP_TYPE");
+                  String lookupCode=na.getString("LOOKUP_CODE");
+                  String meaning=na.getString("MEANING");
+                  RequestType c=new RequestType(lookupType, lookupCode, meaning);
+                  RequestTypeList.req_List.add(c);
+                  requestTypeList.add(c);                 
+              }
+               
+              
+              }
+              catch(Exception e) {
+                  e.printStackTrace();
+              }
+          
+         }
+         catch(Exception e) {
+            e.printStackTrace();
+         }
+         
+         AmxAttributeBinding itemType = (AmxAttributeBinding) AdfmfJavaUtilities
+                          .evaluateELExpression("#{bindings.itemType}");
+         AmxIteratorBinding itemTypeListIterator =  itemType.getIteratorBinding();
+         itemTypeListIterator.refresh();
+         
+         AmxAttributeBinding reqType = (AmxAttributeBinding) AdfmfJavaUtilities
+                          .evaluateELExpression("#{bindings.requestType}");
+         AmxIteratorBinding reqTypeListIterator =  reqType.getIteratorBinding();
+         reqTypeListIterator.refresh();
+         
+         AmxAttributeBinding deliverLoc = (AmxAttributeBinding) AdfmfJavaUtilities
+                          .evaluateELExpression("#{bindings.deliverToLocations}");
+         AmxIteratorBinding deliverLocListIterator =  deliverLoc.getIteratorBinding();
+         deliverLocListIterator.refresh();
+         
+         AmxAttributeBinding uomList = (AmxAttributeBinding) AdfmfJavaUtilities
+                          .evaluateELExpression("#{bindings.UOM}");
+         AmxIteratorBinding uomListIterator =  uomList.getIteratorBinding();
+         uomListIterator.refresh();
+         
+         /*AmxAttributeBinding costList = (AmxAttributeBinding) AdfmfJavaUtilities
+                           .evaluateELExpression("#{bindings.costCenters}");
+         AmxIteratorBinding costListIterator =  costList.getIteratorBinding();
+         costListIterator.refresh();*/
+         
+        /* AmxAttributeBinding naturalList = (AmxAttributeBinding) AdfmfJavaUtilities
+                           .evaluateELExpression("#{bindings.naturalAccounts}");
+         AmxIteratorBinding naturalListIterator =  naturalList.getIteratorBinding();
+         naturalListIterator.refresh();*/
      }
+
+    public void getCostCenterValueform(ActionEvent actionEvent) {
+        // Add event code here...
+        
+        // Add event code here...
+        /*
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+        String userId = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression vemul = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+        String multiOrgId=(String)vemul.getValue(AdfmfJavaUtilities.getAdfELContext());
+       
+        
+        ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterFormSearchText}", String.class);
+        String searchText=(String)ve_searchText.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        try{
+                    RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+                    restServiceAdapter = Model.createRestServiceAdapter();
+                    // Clear any previously set request properties, if any
+                    restServiceAdapter.clearRequestProperties();
+                    // Set the connection name
+                    restServiceAdapter.setConnectionName("enrich");
+                    
+                    restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                    restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                    restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                    restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                    restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_cost_center/");
+                     String  postData= "{\n" +
+                           "\n" +
+                           "  \"GET_COST_CENTER_Input\" : {\n" +
+                           "\n" +
+                           "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_cost_center/\",\n" +
+                           "\n" +
+                           "   \"RESTHeader\": {\n" +
+                           "\n" +
+                           "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" +
+                           "    },\n" +
+                           "\n" +
+                           "   \"InputParameters\": {\n" +
+                           "\n" +
+                            "          \"P_USER_ID\" : \""+userId+"\",\n" +
+                            "          \"P_ORG_ID\" : \""+multiOrgId+"\",\n" +
+                            "          \"P_SEARCH_TEXT\" : \""+searchText+"\"\n" +                    
+                           "\n" +
+                           "     }\n" +
+                           "\n" +
+                           "  }\n" +
+                           "\n" +
+                           "}  ";
+                        
+                            restServiceAdapter.setRetryLimit(0);
+                       System.out.println("postData===============================" + postData);
+                        
+                        String response = restServiceAdapter.send(postData);
+                     System.out.println("response===============================" + response);   
+                     JSONObject resp=new JSONObject(response);
+                     JSONObject output=resp.getJSONObject("OutputParameters");
+                    try{
+                       JSONObject   data=output.getJSONObject("X_COST_CENTER_TL");
+                              CostCenterList.s_jobs.clear();
+                              costCenterList.clear();
+                        
+                            if(data.get("X_COST_CENTER_TL_ITEM") instanceof  JSONArray){
+                                                            JSONArray segments=data.getJSONArray("X_COST_CENTER_TL_ITEM");
+                                                            for(int i=0;i<segments.length();i++) {
+                                                                //String name=(String)segments.get(i);
+                                                                JSONObject ci=(JSONObject)segments.get(i);
+                                                                String name=ci.getString("SEGMENT_VALUE");
+                                                                String description=ci.getString("DESCRIPTION");
+                                                                CostCenter c=new CostCenter(name,description);
+                                                                CostCenterList.s_jobs.add(c);
+                                                                costCenterList.add(c);
+                                                                
+                                                            }
+                                                          
+                                                          }
+                                                          
+                                                          else if(data.get("X_COST_CENTER_TL_ITEM") instanceof  JSONObject){
+                                                             
+                                                             JSONObject ci=data.getJSONObject("X_COST_CENTER_TL_ITEM");
+                                                              String name=ci.getString("SEGMENT_VALUE");
+                                                              String description=ci.getString("DESCRIPTION");
+                                                              CostCenter c=new CostCenter(name,description);
+                                                              CostCenterList.s_jobs.add(c);
+                                                              costCenterList.add(c);
+                                                             
+                                                          }
+                        
+                         
+                        }
+                        catch(Exception e) {
+                            e.printStackTrace();
+                        }
+            
+            
+            }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                          .evaluateELExpression("#{bindings.costCenters}");
+        AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
+        accountListIterator.refresh();
+        
+        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.costCenters1.iterator}");
+        vex.refresh();
+        
+        */
+        MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.showCostCenters.execute}", Object.class, new Class[] {});
+        me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+            
+        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.costCenters.iterator}");  
+        vex.refresh();
+    }
+
+    public void rowchangeCostCenterForm(ActionEvent actionEvent) {
+        // Add event code here...
+        ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterFormSearchText}", String.class);
+        ve_searchText.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+        
+    }
+
+    public void rowchangeGLAccountForm(ActionEvent actionEvent) {
+        // Add event code here...
+        ValueExpression v_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountFormSearchText}", String.class);
+        v_searchText.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+    }
+
+    public void getGLAccountValueform(ActionEvent actionEvent) {
+        // Add event code here...
+        
+        MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.showGLAcccounts.execute}", Object.class, new Class[] {});
+        me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+         
+        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.naturalAccounts.iterator}");  
+        vex.refresh();
+    }
+
+    public void getSuppliersValueform(ActionEvent actionEvent) {
+        // Add event code here...
+        MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.showSuppliers.execute}", Object.class, new Class[] {});
+        me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+    }
+
+    public void rowchangeSupplierForm(ActionEvent actionEvent) {
+        // Add event code here...
+        ValueExpression searchSupplierText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierFormSearchText}", String.class);
+        searchSupplierText.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+    }
+
+    public void getSupplierSiteform(ActionEvent actionEvent) {
+        // Add event code here...
+        MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.showSupplierSites.execute}", Object.class, new Class[] {});
+        me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+    }
+
+    public void rowchangeSupplierSiteForm(ActionEvent actionEvent) {
+        // Add event code here...
+        ValueExpression searchSiteText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteFormSearchText}", String.class);
+        searchSiteText.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+    }
+
+    public void showSearchButton(ValueChangeEvent valueChangeEvent) {
+        // Add event code here...
+       
+        RequestType c=(RequestType)RequestTypeList.req_List.get(Integer.parseInt(valueChangeEvent.getNewValue().toString()));
+        if(c.getMeaning().equalsIgnoreCase("others"))
+        {
+        ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showSearch}", String.class);
+        ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
+        ValueExpression ve22 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showAddCartButton}", String.class);
+        ve22.setValue(AdfmfJavaUtilities.getAdfELContext(),"flase");
+        }
+        else {
+            ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showSearch}", String.class);
+            ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+            ValueExpression ve21 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showAddCartButton}", String.class);
+            ve21.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
+        }
+    }
 }

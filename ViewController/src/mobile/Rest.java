@@ -2311,7 +2311,7 @@ public class Rest {
             System.out.println("After Attrib=====> "+specList); 
         }
         
-        SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "false", item.getSource(), item.getUom(), "1", "1", "1",item.getUnitPrice(),String.valueOf(randomInt),"",item.getRowId(),item.getIndixCategoryId(),specList,"","");
+        SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "false", item.getSource(), item.getUom(), "1", "1", "1",item.getUnitPrice(),String.valueOf(randomInt),"",item.getRowId(),item.getIndixCategoryId(),specList,"","","","","","","","","","","","","");
         
         for(int i=0;i<row.getAttributeCount();i++) {
             
@@ -2905,7 +2905,7 @@ public class Rest {
                     System.out.println("After Attrib=====> "+specList); 
                 }
                 
-                SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "false", item.getSource(), item.getUom(), "1", "1", "1",item.getUnitPrice(),item.getRowId(),"",item.getRowId(),item.getIndixCategoryId(),specList,"","");
+                SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "false", item.getSource(), item.getUom(), "1", "1", "1",item.getUnitPrice(),item.getRowId(),"",item.getRowId(),item.getIndixCategoryId(),specList,"","","","","","","","","","","","","");
                 SelectedItemsList.items_selected.add(selectItem); 
                 SelectedItemsList.s_jobs.add(selectItem); 
                 
@@ -4938,6 +4938,7 @@ public class Rest {
 
     public void showCartDetailsScreen(ActionEvent actionEvent) {
         // Add event code here...
+        System.out.println("Hello Cart-->");
         MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.showCartDetail.execute}", Object.class, new Class[] {});
         me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
     }
@@ -5009,6 +5010,7 @@ public class Rest {
             
         boolean isError=false;
         String error="";
+            
         ValueExpression ve130 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
         String search = (String)ve130.getValue(AdfmfJavaUtilities.getAdfELContext()); 
         
@@ -6866,17 +6868,207 @@ public class Rest {
     public void freeformAddtoCart(ActionEvent actionEvent) {
         // Add event code here...
         try{
-                 
-                 boolean isSelected=false;
-                 boolean isNeedByDateEmpty=false;
-                 boolean isQuantityEmpty=false;
-                 boolean isQuantityDecimal=false;
-                 boolean isDeliverToLocationEmpty=false;
-                 boolean isCostCenterEmpty=false;
-                 boolean isGLAccountEmpty=false;
+            
+            boolean isError=false;
+            String error="";
+
+            //Free Form Values
+
+            ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
+            String itemType=(String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemNo}", String.class);
+            String itemNo=(String)ve2.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemDescriptionFrom}", String.class);
+            String itemDescription=(String)ve3.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemCategoryForm}", String.class);
+            String itemCategory=(String)ve4.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RequestTypeForm}", String.class);
+            String reqType=(String)ve5.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quantity}", String.class);
+            String qty=(String)ve6.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.UOMFrom}", String.class);
+            String uom=(String)ve7.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.MaxPriceFrom}", String.class);
+            String maxPrice=(String)ve8.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve9 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.DeliverLocationForm}", String.class);
+            String deliverLoc=(String)ve9.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve10 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.need_by_date}", String.class);
+            String needByDate=(String)ve10.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
+            String supplier=(String)ve11.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierNotForm}", String.class);
+            String supplierNot=(String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
+            String supplierSite=(String)ve13.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
+            String costCenter=(String)ve14.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve15 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountForm}", String.class);
+            String glAccount=(String)ve15.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve16 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.partnoForm}", String.class);
+            String partNo=(String)ve16.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve17 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.referencenoForm}", String.class);
+            String refNo=(String)ve17.getValue(AdfmfJavaUtilities.getAdfELContext());
+            
+            System.out.println("itemType+itemNo+itemDescription+itemCategory+reqType+qty+uom+maxPrice+deliverLoc+needByDate+supplier+supplierNot+supplierSite+costCenter+glAccount+partNo+refNo-->"+itemType+itemNo+itemDescription+itemCategory+reqType+qty+uom+maxPrice+deliverLoc+needByDate+supplier+supplierNot+supplierSite+costCenter+glAccount+partNo+refNo);
+          
+          
+            if(itemType==null || itemType.equalsIgnoreCase("")){
+                isError=true;
+                error="itemType";
+            }
+            
+            if(itemCategory==null || itemCategory.equalsIgnoreCase("")){
+                isError=true;
+                error="itemCategory";
+            }
+            if(reqType==null || reqType.equalsIgnoreCase("")){
+                isError=true;
+                error="reqType";
+            }
+            if(qty==null || qty.equalsIgnoreCase("")){
+                     isError=true;
+                     error="quantity";
+                 }
+
+            if(uom==null || uom.equalsIgnoreCase("")){
+                     isError=true;
+                     error="uom";
+                 }
+
+            if(maxPrice==null || maxPrice.equalsIgnoreCase("")){
+                     isError=true;
+                     error="maxPrice";
+                 }
+
+             if(deliverLoc==null || deliverLoc.equalsIgnoreCase("")){
+                 isError=true;
+                 error="deliverLoc";
+             }
+
+             if(needByDate==null || needByDate.equalsIgnoreCase("")){
+                isError=true;
+                error="needByDate";
+                System.out.println("need by date is => "+needByDate);
+            }
+            
+            
+            if(!isError){            
+                
+            ItemType it=(ItemType)ItemTypeList.itemType_List.get((Integer.parseInt(itemType)));
+            System.out.println("Item Type-->"+it.getLineTypeCode()+it.getLineTypeCode());
+            
+            Alias al=(Alias)AliasList.s_jobs.get((Integer.parseInt(itemCategory)));
+            System.out.println("Alias-->"+al.getOracleId()+al.getIndixId());
+            
+            RequestType rt=(RequestType)RequestTypeList.req_List.get((Integer.parseInt(reqType)));
+            System.out.println("Req Type-->"+rt.getLookupCode()+rt.getMeaning());
+            
+            UOM um=(UOM)UOMList.s_jobs.get((Integer.parseInt(uom)));
+            System.out.println("UOM-->"+um.getName());
+            
+            DeliverToLocation loc=(DeliverToLocation)DeliverToLocationList.s_jobs.get((Integer.parseInt(deliverLoc)));
+            System.out.println("Deliver Loc-->"+loc.getCode()+loc.getDescription());
+            
+            String indixCategoryId="";
+            
+            
+                double result = Double.parseDouble(qty) * Double.parseDouble(maxPrice);
+                String amount = Double.toString(result); 
+            
+            Random randomGenerator = new Random();
+            int randomInt = randomGenerator.nextInt(1000000000);
+             
+            //SelectedItem sel= new SelectedItem(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice, imageUrl, checked, source, uom, quantity, deliver_to_location, need_by_date, amount, rowId, costCenter, itemRef, indixCategoryId, indixAttributes, naturalAccount, costCenterNaturalAccount, itemType, itemNo, vendorPartNo, maxEstPrice, lineReqType, supplierName, supplierSite, suppliernotknown, internalRefNo, supplierpartNo, formAttachment)
+                
+            SelectedItem selectItem= new SelectedItem("", supplier, supplierSite, al.getOracleCategotySeg(), itemDescription, maxPrice, "", "true", "U", um.getName(), qty, deliverLoc, needByDate, amount, String.valueOf(randomInt), costCenter, String.valueOf(randomInt), indixCategoryId, "", glAccount, "", it.getLineTypeCode(), itemNo, "", maxPrice, rt.getLookupCode(), supplier, supplierSite, supplierNot, refNo, partNo, "");
+            SelectedItemsList.s_jobs.add(selectItem) ;
+            System.out.println("<---Selected item List--->"+SelectedItemsList.s_jobs.size());
+            int count=SelectedItemsList.s_jobs.size();
+            ValueExpression ve_cart = AdfmfJavaUtilities.getValueExpression("#{applicationScope.unreadCount}", String.class);
+            ve_cart.setValue(AdfmfJavaUtilities.getAdfELContext(), String.valueOf(count));
+            AdfmfJavaUtilities.flushDataChangeEvent();
+            
+            }
+           else {
+                if(error.equalsIgnoreCase("itemType")){
+                                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                                 AdfmfJavaUtilities.getFeatureName(),
+                                                                 "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                                 "Item Type is mandatory",
+                                                                 null,
+                                                                 null }); 
+                                }
+                                else if(error.equalsIgnoreCase("itemCategory")){
+                                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                                 AdfmfJavaUtilities.getFeatureName(),
+                                                                 "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                                 "Item Category is mandatory.",
+                                                                 null,
+                                                                 null }); 
+                                }
+                                else if(error.equalsIgnoreCase("reqType")){
+                                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                                 AdfmfJavaUtilities.getFeatureName(),
+                                                                 "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                                 "Request Type is mandatory",
+                                                                 null,
+                                                                 null }); 
+                                }
+                                else if(error.equalsIgnoreCase("quantity")){
+                                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                                 AdfmfJavaUtilities.getFeatureName(),
+                                                                 "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                                 "Quantity is mandatory",
+                                                                 null,
+                                                                 null }); 
+                                }
+                                else if(error.equalsIgnoreCase("uom")){
+                                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                                 AdfmfJavaUtilities.getFeatureName(),
+                                                                 "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                                 "UOM is mandatory",
+                                                                 null,
+                                                                 null }); 
+                                }
+                                else if(error.equalsIgnoreCase("maxPrice")){
+                                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                                 AdfmfJavaUtilities.getFeatureName(),
+                                                                 "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                                 "Max.Esitimated Price is mandatory",
+                                                                 null,
+                                                                 null }); 
+                                }
+                                else if(error.equalsIgnoreCase("deliverLoc")){
+                                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                                 AdfmfJavaUtilities.getFeatureName(),
+                                                                 "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                                 "Deliver to Location is mandatory",
+                                                                 null,
+                                                                 null }); 
+                                }
+                                else if(error.equalsIgnoreCase("needByDate")){
+                                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                                 AdfmfJavaUtilities.getFeatureName(),
+                                                                 "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                                 "Need By Date is mandatory",
+                                                                 null,
+                                                                 null }); 
+                                }
+                                
+                                
+            }
+            
         }
         catch(Exception e){
                      e.printStackTrace();
        }
+            
+    }
+
+    public void showCartFreeForm(ActionEvent actionEvent) {
+        // Add event code here...
+        System.out.println("Hello Cart-->");
+        MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.showCartFreeForm.execute}", Object.class, new Class[] {});
+        me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
     }
 }
