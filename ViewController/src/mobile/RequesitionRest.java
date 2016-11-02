@@ -2887,7 +2887,7 @@ public class RequesitionRest {
             ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
             ve41.setValue(AdfmfJavaUtilities.getAdfELContext(),itemType);
             
-            SelectedItem sl=new SelectedItem(rl.getPoNo(), rl.getVendorName(), rl.getVendorSite(), rl.getCategory(), rl.getProductTitle(), rl.getUnitPrice(), "", "true", "O", rl.getUom(), rl.getQuantity(), rl.getDeliverToLocation(), rl.getNeedByDate(), rl.getLineTotal(), String.valueOf(randomInt), "","0","","","","","","","","","","","","","","","");
+            SelectedItem sl=new SelectedItem(rl.getPoNo(), rl.getVendorName(), rl.getVendorSite(), rl.getCategory(), rl.getProductTitle(), rl.getUnitPrice(), "", "true", "O", rl.getUom(), rl.getQuantity(), rl.getDeliverToLocation(), rl.getNeedByDate(), rl.getLineTotal(), String.valueOf(randomInt), "","0","","","","","","","","","","","","","","","","","","","");
             SelectedItemsList.items_selected.add(sl);
         }
         
@@ -5549,6 +5549,9 @@ public class RequesitionRest {
         
         ValueExpression ve22 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showAddCartButton}", String.class);
         ve22.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
+        
+         ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showOthers}", String.class);
+         ve23.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
 
          ValueExpression vec1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
          vec1.setValue(AdfmfJavaUtilities.getAdfELContext(),"");

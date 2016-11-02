@@ -20,21 +20,14 @@
       </XmlRefAddr>
     </RefAddresses>
   </Reference>
-  <Reference name="enrich" className="oracle.adf.model.connection.rest.RestConnection" credentialStoreKey="enrich"
-             xmlns="">
+  <Reference name="enrich" className="oracle.adf.model.connection.rest.RestConnection" xmlns="">
     <Factory className="oracle.adf.model.connection.rest.RestConnectionFactory"/>
     <RefAddresses>
       <XmlRefAddr addrType="enrich">
         <Contents>
-          <restconnection name="enrich" url="http://mpdev.enrich.com:8000">
-            <authentication style="challenge">
-              <type>basic</type>
-            </authentication>
-          </restconnection>
+          <restconnection name="enrich" url="http://mpdev.enrich.com:8000"/>
         </Contents>
       </XmlRefAddr>
-      <SecureRefAddr addrType="username"/>
-      <SecureRefAddr addrType="password"/>
     </RefAddresses>
   </Reference>
 </References>

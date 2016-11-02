@@ -2311,7 +2311,7 @@ public class Rest {
             System.out.println("After Attrib=====> "+specList); 
         }
         
-        SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "false", item.getSource(), item.getUom(), "1", "1", "1",item.getUnitPrice(),String.valueOf(randomInt),"",item.getRowId(),item.getIndixCategoryId(),specList,"","","","","","","","","","","","","");
+        SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "false", item.getSource(), item.getUom(), "1", "1", "1",item.getUnitPrice(),String.valueOf(randomInt),"",item.getRowId(),item.getIndixCategoryId(),specList,"","","","","","","","","","","","","","","","","");
         
         for(int i=0;i<row.getAttributeCount();i++) {
             
@@ -2905,7 +2905,7 @@ public class Rest {
                     System.out.println("After Attrib=====> "+specList); 
                 }
                 
-                SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "false", item.getSource(), item.getUom(), "1", "1", "1",item.getUnitPrice(),item.getRowId(),"",item.getRowId(),item.getIndixCategoryId(),specList,"","","","","","","","","","","","","");
+                SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "false", item.getSource(), item.getUom(), "1", "1", "1",item.getUnitPrice(),item.getRowId(),"",item.getRowId(),item.getIndixCategoryId(),specList,"","","","","","","","","","","","","","","","","");
                 SelectedItemsList.items_selected.add(selectItem); 
                 SelectedItemsList.s_jobs.add(selectItem); 
                 
@@ -6029,41 +6029,7 @@ public class Rest {
         }
     }
 
-    public String clearAttachments() {
-        // Add event code here...
-        
-        try{
-            //path for android
-            File folder;
-            
-            ValueExpression ve15 = AdfmfJavaUtilities.getValueExpression("#{deviceScope.device.os}", String.class);
-            String device_os=(String)ve15.getValue(AdfmfJavaUtilities.getAdfELContext());
-            if(device_os.equalsIgnoreCase("iOS")){
-                    String path=System.getProperty("user.dir");
-                    path=path.replace("/Documents", "/tmp");
-                    folder = new File(path);
-                }
-                else{
-                    folder = new File("//data//data//com.enrich.goprocure//cache");    
-                }
-            
-            
-            //folder = new File("//data//data//com.enrich.goprocure//cache");
-            
-            File[] listOfFiles = folder.listFiles();
-
-            for (File file : listOfFiles) {
-                if (file.isFile()) {
-                    file.delete();
-                }
-            }           
-            
-        }catch(Exception e){
-            e.printStackTrace();    
-        }
-        
-        return "__back";        
-    }
+   
     public void goBack(String rr) {
           AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
                                                                                                         "adf.mf.api.amx.doNavigation", new Object[] { "__back" });
@@ -7004,13 +6970,25 @@ public class Rest {
             boolean isPartialError=false;
             String partialError="";
             boolean isSupplierNotMatch=false;
-            if(supplier.equalsIgnoreCase(oracleFoundSupplier) || supplier.equalsIgnoreCase("") || supplier==null) {
-                isSupplierNotMatch=true;
-                
+            
+                if(supplier==null || supplier.equalsIgnoreCase("")){
+                    isSupplierNotMatch=true;
+                    
+                }
+            
+                if(!supplier.equalsIgnoreCase("")){
+                if(supplier.equalsIgnoreCase(oracleFoundSupplier)) {
+                    System.out.println("Enter Supplier--> if loop");
+                    isSupplierNotMatch=false;
+               }
+                else {
+                    isSupplierNotMatch=true;
+                }
             }
-            else {
-                isSupplierNotMatch=false;
-            }
+            
+            
+            
+            
 /*            int imageSize= selectedImages.size();
             System.out.println("Selected Image Size--->"+imageSize);
             System.out.println("Image List Size--->"+ImageList.imageList.size());
@@ -7059,7 +7037,7 @@ public class Rest {
                     
         }*/
             
-                if(!isError && isSupplierNotMatch) {
+                if(!isError && !isSupplierNotMatch) {
                     //SelectedItem sel= new SelectedItem(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice, imageUrl, checked, source, uom, quantity, deliver_to_location, need_by_date, amount, rowId, costCenter, itemRef, indixCategoryId, indixAttributes, naturalAccount, costCenterNaturalAccount, itemType, itemNo, vendorPartNo, maxEstPrice, lineReqType, supplierName, supplierSite, suppliernotknown, internalRefNo, supplierpartNo, formAttachment)
                         
                     System.out.println("<---Selected item List--->"+SelectedItemsList.s_jobs.size());
@@ -7142,8 +7120,8 @@ public class Rest {
                         Random randomGenerator = new Random();
                         int randomInt = randomGenerator.nextInt(1000000000);
                         
-                    //SelectedItem sel= new SelectedItem(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice, imageUrl, checked, source, uom, quantity, deliver_to_location, need_by_date, amount, rowId, costCenter, itemRef, indixCategoryId, indixAttributes, naturalAccount, costCenterNaturalAccount, itemType, itemNo, vendorPartNo, maxEstPrice, lineReqType, supplierName, supplierSite, suppliernotknown, internalRefNo, supplierpartNo, formAttachment)
-                    SelectedItem selectItem= new SelectedItem("", supplier, supplierSite, al.getOracleCategotySeg(), itemDescription, maxPrice, "", "true", "U", um.getName(), qty, deliverLoc, needByDate, amount, String.valueOf(randomInt), costCenter, String.valueOf(randomInt), indixCategoryId, "", glAccount, "", it.getLineTypeCode(), itemNo, "", maxPrice, rt.getLookupCode(), supplier, supplierSite, supplierNot, refNo, partNo, formAttachmentId);
+                    //SelectedItem sel= new SelectedItem(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice, imageUrl, checked, source, uom, quantity, deliver_to_location, need_by_date, amount, rowId, costCenter, itemRef, indixCategoryId, indixAttributes, naturalAccount, costCenterNaturalAccount, itemType, itemNo, vendorPartNo, maxEstPrice, lineReqType, supplierName, supplierSite, suppliernotknown, internalRefNo, supplierpartNo, formAttachment, vendorFname, vendorLname, vendorContact, vendorEmail)
+                    SelectedItem selectItem= new SelectedItem("", supplier, supplierSite, al.getOracleCategotySeg(), itemDescription, maxPrice, "", "true", "U", um.getName(), qty, deliverLoc, needByDate, amount, String.valueOf(randomInt), costCenter, String.valueOf(randomInt), indixCategoryId, "", glAccount, "", it.getLineTypeCode(), itemNo, "", maxPrice, rt.getLookupCode(), supplier, supplierSite, supplierNot, refNo, partNo, formAttachmentId,"","","","");
                     SelectedItemsList.s_jobs.add(selectItem) ;
                     int count=SelectedItemsList.s_jobs.size();
                     ValueExpression ve_cart = AdfmfJavaUtilities.getValueExpression("#{applicationScope.unreadCount}", String.class);
@@ -7182,12 +7160,13 @@ public class Rest {
                         vec17.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                         ValueExpression ve123 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedImagesCount}", String.class);
                         ve123.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        if(selectedImages.size()>0)
-                        {
+                        
                        ImageList.imageList.clear();
                        selectedImages.clear();
-                    }
+                    MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.clearSelectedImage.execute}", Object.class, new Class[] {});
+                    me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
                     
+                    clearAttachments();
                     AdfmfJavaUtilities.flushDataChangeEvent();
                 }
                 else {
@@ -7395,6 +7374,8 @@ public class Rest {
             ve22.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
             ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showSubmit}", String.class);
             ve23.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+            ValueExpression ve24 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showOthers}", String.class);
+            ve24.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
 
         }
         else if(rt.getMeaning().equalsIgnoreCase("Sole Source"))
@@ -7405,6 +7386,8 @@ public class Rest {
             ve22.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
             ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showSubmit}", String.class);
             ve23.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
+            ValueExpression ve24 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showOthers}", String.class);
+            ve24.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
         }
         else {
             ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showSearch}", String.class);
@@ -7413,6 +7396,8 @@ public class Rest {
             ve23.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
             ValueExpression ve22 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showAddCartButton}", String.class);
             ve22.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
+            ValueExpression ve24 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showOthers}", String.class);
+            ve24.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
         }
     }
 
@@ -7428,6 +7413,8 @@ public class Rest {
         
         ValueExpression vec3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
         vec3.setValue(AdfmfJavaUtilities.getAdfELContext(),itemDescription);
+        ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
+        ve91.setValue(AdfmfJavaUtilities.getAdfELContext(), "goods");
 
         AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
                                                                                             "adf.mf.api.amx.doNavigation", new Object[] { "quickSearch_default" });
@@ -7441,13 +7428,12 @@ public class Rest {
             boolean isError=false;
             String error="";
             String dummyResultCount= "0";
-            ValueExpression ve132 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
-            String multiOrgId = (String)ve132.getValue(AdfmfJavaUtilities.getAdfELContext());
-            ValueExpression ve133 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_name}", String.class);
-            String userName = (String)ve133.getValue(AdfmfJavaUtilities.getAdfELContext());
-            
-
+                        ValueExpression ve132 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+                        String multiOrgId = (String)ve132.getValue(AdfmfJavaUtilities.getAdfELContext());
+                        ValueExpression ve133 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_name}", String.class);
+                        String userName = (String)ve133.getValue(AdfmfJavaUtilities.getAdfELContext());
             //Free Form Values
+            
 
             ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
             String itemType=(String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -7471,6 +7457,8 @@ public class Rest {
             String needByDate=(String)ve10.getValue(AdfmfJavaUtilities.getAdfELContext());
             ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
             String supplier=(String)ve11.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression vef11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.foundOracleSupplierForm}", String.class);
+            String oracleFoundSupplier=(String)vef11.getValue(AdfmfJavaUtilities.getAdfELContext());
             ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierNotForm}", String.class);
             String supplierNot=(String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
             ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
@@ -7486,6 +7474,9 @@ public class Rest {
             
             System.out.println("Supplier Not Known"+supplierNot);
             System.out.println("itemType+itemNo+itemDescription+itemCategory+reqType+qty+uom+maxPrice+deliverLoc+needByDate+supplier+supplierNot+supplierSite+costCenter+glAccount+partNo+refNo-->"+itemType+itemNo+itemDescription+itemCategory+reqType+qty+uom+maxPrice+deliverLoc+needByDate+supplier+supplierNot+supplierSite+costCenter+glAccount+partNo+refNo);
+            int imageSize= selectedImages.size();
+            System.out.println("Selected Image Size--->"+imageSize);
+            System.out.println("Image List Size--->"+ImageList.imageList.size());
           
           
             if(itemType==null || itemType.equalsIgnoreCase("")){
@@ -7526,6 +7517,20 @@ public class Rest {
                 error="needByDate";
                 System.out.println("need by date is => "+needByDate);
             }
+            if(costCenter==null || costCenter.equalsIgnoreCase("")){
+               isError=true;
+               error="costCenter";
+            }
+            if(glAccount==null || glAccount.equalsIgnoreCase("")){
+               isError=true;
+               error="glAccount";
+            }
+            if(imageSize==0) {
+                isError=true;   
+                error="attachmentError";
+                
+            }
+
             
             
             if(!isError){            
@@ -7549,16 +7554,57 @@ public class Rest {
             
             boolean isPartialError=false;
             String partialError="";
-            int imageSize= selectedImages.size();
-            System.out.println("Selected Image Size--->"+imageSize);
+            boolean isSupplierNotMatch=false;
             
+                if(supplier==null || supplier.equalsIgnoreCase("")){
+                    isSupplierNotMatch=true;
+                    
+                }
+            
+                if(!supplier.equalsIgnoreCase("")){
+                if(supplier.equalsIgnoreCase(oracleFoundSupplier)) {
+                    System.out.println("Enter Supplier--> if loop");
+                    isSupplierNotMatch=false;
+               }
+                else {
+                    isSupplierNotMatch=true;
+                }
+            }
+            
+            
+            
+            
+        /*            int imageSize= selectedImages.size();
+            System.out.println("Selected Image Size--->"+imageSize);
+            System.out.println("Image List Size--->"+ImageList.imageList.size());
             if(!rt.getMeaning().equalsIgnoreCase("Others"))
             {
-            
-         
-                    if(rt.getMeaning().equalsIgnoreCase("Sole Source"))
+                
+                    if(imageSize==0) {
+                        isPartialError=true;   
+                        partialError="attachmentError";
+                        
+                    }
+
+                    if(rt.getMeaning().equalsIgnoreCase("Existing Invoice") || rt.getMeaning().equalsIgnoreCase("Government/Municipality")) {
+                        if((supplier==null || supplier.equalsIgnoreCase(""))){
+                                 isPartialError=true;   
+                                 partialError="supplier";
+                             }
+                        if(supplierSite==null || supplierSite.equalsIgnoreCase("")){
+                                 isPartialError=true;   
+                                 partialError="supplierSite";
+                             }
+                        if(imageSize==0) {
+                            isPartialError=true;   
+                            partialError="attachmentError";
+                            
+                        }
+                        
+                    }
+                    else if(rt.getMeaning().equalsIgnoreCase("Sole Source"))
                     {
-                        if((supplier==null || supplier.equalsIgnoreCase("")) && supplierNot.equalsIgnoreCase("false")){
+                        if((supplier==null || supplier.equalsIgnoreCase(""))){
                                  isPartialError=true;   
                                  partialError="supplier";
                              }
@@ -7572,272 +7618,306 @@ public class Rest {
                             
                         }
                     }
+               
                     
-        }
+        }*/
             
-                if(!isError && !isPartialError) {
+                if(!isError && !isSupplierNotMatch) {
                     //SelectedItem sel= new SelectedItem(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice, imageUrl, checked, source, uom, quantity, deliver_to_location, need_by_date, amount, rowId, costCenter, itemRef, indixCategoryId, indixAttributes, naturalAccount, costCenterNaturalAccount, itemType, itemNo, vendorPartNo, maxEstPrice, lineReqType, supplierName, supplierSite, suppliernotknown, internalRefNo, supplierpartNo, formAttachment)
                         
-                    System.out.println("<---Selected item List--->"+SelectedItemsList.s_jobs.size());
-                    System.out.println("<---Selected image List"+selectedImages.size());
-                        System.out.println("<---Image List Size"+ImageList.imageList.size());
-                        String formAttachmentId="";
-                       if(selectedImages.size()>0)
-                       {
-                        StringBuffer sb = new StringBuffer("[\n");
-                        for(int i=0;i<selectedImages.size();i++) {
-                                 System.out.println("Selected Images are ==>"+selectedImages.get(i));
-                                 String s=selectedImages.get(i);
-                                 String filepath[]=s.split("/");
-                                 int length=filepath.length;
-                                 String filename=filepath[length-1];
-                                 System.out.println("File name is ==>"+filename);
-                            
-                             
-                             sb.append("{\n");
-                             sb.append("    \"SEARCH_ID\":\"0\",\n");
-                             sb.append("    \"ATTACHMENT_FILE\":\""+EncodeBased64Binary.encodeFileToBase64Binary(selectedImages.get(i))+"\",\n");
-                             sb.append("    \"FILE_NAME\":\""+filename+"\",\n");
-                             sb.append("    \"FILE_CONTENT_TYPE\":\"image/jpeg\",\n");
-                             sb.append("    \"FILE_FORMAT\":\"image\"\n");
-                             sb.append("},");
-                           
-                        }
-                        String image_value = sb.substring(0, sb.length() - 1).concat("]");
-                        System.out.println("Image Value....."+image_value);
-                     //   String image_value = sb.substring(0, sb.length() - 1).concat("]");
-                      //  System.out.println("Image Value....."+image_value);
-                        
-                      RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
-                      restServiceAdapter = Model.createRestServiceAdapter();
-                      // Clear any previously set request properties, if any
-                      restServiceAdapter.clearRequestProperties();
-                      // Set the connection name
-                      restServiceAdapter.setConnectionName("enrich");
-                      
-                      restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
-                      restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
-                      restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
-                      restServiceAdapter.addRequestProperty("Content-Type", "application/json");
-                      restServiceAdapter.setRequestURI("/webservices/rest/XXEReqService/submit_attachments/");
-                      
-                      String imageRequest = "{\n" +
-                                             "\n" + 
-                                             "    \"SUBMIT_ATTACHMENTS_Input\":{\n" + 
-                                             "        \"@xmlns\":\"http://xmlns.oracle.com/apps/po/rest/XXEReqService/submit_attachments/\",\n" + 
-                                             "        \"RESTHeader\":{\n" + 
-                                             "            \"@xmlns\":\"http://xmlns.oracle.com/apps/po/rest/XXEReqService/header\"\n" + 
-                                             "        },\n" + 
-                                             "        \"InputParameters\":{\n" + 
-                                             "            \"P_SEARCH_GROUP_ID\":\"0\",\n" + 
-                                             "            \"P_CHECKOUT_FILES\":{\n" + 
-                                             "                \"P_CHECKOUT_FILES_ITEM\":"+image_value+"\n" + 
-                                             
-                                             "            }\n" + 
-                                             "        }\n" + 
-                                             "    }\n" + 
-                                             "\n" + 
-                                             "}";
-                      
-                        restServiceAdapter.setRetryLimit(0);
-                        System.out.println("postData===============================" + imageRequest);
-                        String response = restServiceAdapter.send(imageRequest);
-                        System.out.println("response===============================" + response);
-                        JSONObject groupIdResp=new JSONObject(response);
-                        JSONObject groupIdRespOutput = groupIdResp.getJSONObject("OutputParameters");
-                        String searchLineId = groupIdRespOutput.getString("X_SEARCH_RESULT_LINE_ID");
-                        String groupIdStatus = groupIdRespOutput.getString("X_RETURN_STATUS");
-                        formAttachmentId=searchLineId;
-                        System.out.println("Group ID---->"+searchLineId+"Group Status--->"+groupIdStatus);
-                       }
-                       
-                    
-                        double result = Double.parseDouble(qty) * Double.parseDouble(maxPrice);
-                        String amount = Double.toString(result); 
-                        
-                        Random randomGenerator = new Random();
-                    int randomInt = randomGenerator.nextInt(100);
-                        
-try{
-                   RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
-                    // Clear any previously set request properties, if any
-                    restServiceAdapter.clearRequestProperties();
-                    // Set the connection name
-                    restServiceAdapter.setConnectionName("enrich");
-                    
-                    restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
-                    restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
-                    restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
-                    restServiceAdapter.addRequestProperty("Content-Type", "application/json");
-                    restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/checkout/");
-
-                      StringBuffer sb = new StringBuffer("[\n");
-                           sb.append("{\n");
-                           sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
-                           sb.append("    \"DEVICE_SERIAL_ID\":\"ABCD\",\n");
-                           sb.append("    \"USER_ID\":\""+userName+"\",\n");
-                           sb.append("    \"SEARCH_TYPE\":\"R\",\n");
-                           sb.append("    \"SEARCH_TEXT\":\""+itemDescription+"\",\n");
-                           sb.append("    \"RESULT_COUNT\":\""+dummyResultCount+"\",\n");
-                           sb.append("    \"REQUEST_TYPE\":\"RFQ\",\n");
-                           sb.append("    \"ORG_ID\":\""+multiOrgId+"\",\n");
-                           sb.append("    \"SOURCE\":\"MOBILE\"\n");
-                           sb.append("},");
-                           
-                           String header_value = sb.substring(0, sb.length() - 1).concat("]");
-                        
-              
-                    sb = new StringBuffer("[\n");
-                            
-                            
-                            //  for(int i=0;i<ItemsList.items_ref.size();i++)
-                            //  {
-                               // Item it=(Item)ItemsList.items_ref.get(i);
-                            sb.append("{\n");
-                            sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
-                            sb.append("    \"PRODUCT_SOURCE\":\"U\",\n");
-                            sb.append("    \"PRODUCT_CATEGORY\":\""+al.getOracleId()+"\",\n");
-                            sb.append("    \"PRODUCT_TITLE\":\""+itemDescription+"\",\n");
-                            sb.append("    \"QUANTITY\":\""+qty+"\",\n");
-                            sb.append("    \"UOM_CODE\":\""+um.getName()+"\",\n");
-                            sb.append("    \"UNIT_PRICE\":\""+maxPrice+"\",\n");
-                            sb.append("    \"CURRENCY_CODE\":\"USD\",\n");
-                            sb.append("    \"DELIVER_TO_LOCATION\":\""+loc.getCode()+"\",\n");
-                            String arr[]=needByDate.split("T");
-                            sb.append("    \"NEED_BY_DATE\":\""+arr[0]+"\",\n");
-                            sb.append("    \"BPA_NUM\":\"\",\n");
-                            sb.append("    \"VENDOR_NAME\":\""+supplier+"\",\n");
-                            sb.append("    \"VENDOR_SITE\":\""+supplierSite+"\",\n");
-                            sb.append("    \"VENDOR_SITE_ADDRESS1\":\"\",\n");
-                            sb.append("    \"VENDOR_SITE_ADDRESS2\":\"\",\n");
-                            sb.append("    \"VENDOR_SITE_ADDRESS3\":\"\",\n");
-                            sb.append("    \"VENDOR_SITE_CITY\":\"\",\n");
-                            sb.append("    \"VENDOR_SITE_STATE\":\"\",\n");
-                            sb.append("    \"VENDOR_SITE_ZIP\":\"\",\n");
-                            sb.append("    \"VENDOR_SITE_COUNTRY\":\"\",\n");
-                            sb.append("    \"VENDOR_CONTACT_FIRST_NAME\":\"JAMES\",\n");
-                            sb.append("    \"VENDOR_CONTACT_LAST_NAME\":\"FRANKLINE\",\n");
-                            sb.append("    \"VENDOR_CONTACT_PHONE\":\"\",\n");
-                            sb.append("    \"VENDOR_CONTACT_EMAIL\":\"james_fr@gmail.com\",\n");
-                            sb.append("    \"SELECTED_FLAG\":\"Y\",\n");
-                            sb.append("    \"ITEM_TYPE\":\""+it.getLineTypeCode()+"\",\n");
-                            sb.append("    \"COST_CENTER\":\""+costCenter+"\",\n");
-                            sb.append("    \"NATURAL_ACCOUNT\":\""+glAccount+"\",\n");
-                            
-                            sb.append("    \"ITEM_NUMBER\":\""+itemNo+"\",\n");
-                            sb.append("    \"VENDOR_PART_NUM\":\""+partNo+"\",\n");
-                            sb.append("    \"MAX_ESTIMATED_PRICE \":\""+maxPrice+"\",\n");
-                            sb.append("    \"INTERNAL_REFERENCE_NUM\":\""+refNo+"\",\n");
-                            sb.append("    \"LINE_REQUEST_TYPE\":\""+rt.getLookupCode()+"\",\n");
-                            sb.append("    \"SEARCH_RESULT_LINE_ID\":\""+formAttachmentId+"\",\n");
-                            sb.append("    \"CHARGE_ACCOUNT\":\"\",\n");
-                            sb.append("    \"MARKUP_PRICE\":\"\",\n");
-                            sb.append("    \"REQUISITION_HEADER_ID\":\"\",\n");
-                            sb.append("    \"REQUISITION_LINE_ID\":\"\",\n");
-                            sb.append("    \"COMMENTS\":\"\",\n");
-                            sb.append("    \"ATTACHMENT_FILE\":\"\"\n");
-                            sb.append("},");
-                           String body_value = sb.substring(0, sb.length() - 1).concat("]");
-    
-                        sb = new StringBuffer("[\n");
-                        
-                        
-                        
-                            
-                        sb.append("{\n");
-                        sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
-                        sb.append("    \"VENDOR_NAME\":\""+supplier+"\",\n");
-                        sb.append("    \"VENDOR_SITE\":\""+supplierSite+"\",\n");
-                        sb.append("    \"VENDOR_SITE_ADDRESS1\":\"\",\n");
-                        sb.append("    \"VENDOR_SITE_CITY\":\"\",\n");
-                        sb.append("    \"VENDOR_SITE_STATE\":\"\",\n");
-                        sb.append("    \"VENDOR_SITE_ZIP\":\"\",\n");
-                        sb.append("    \"VENDOR_SITE_COUNTRY\":\"\",\n");
-                        sb.append("    \"VENDOR_CONTACT_LAST_NAME\":\"\",\n");
-                        sb.append("    \"VENDOR_CONTACT_PHONE\":\"\",\n");
-                        sb.append("    \"VENDOR_CONTACT_EMAIL\":\"\"\n");
-                        sb.append("},");
-                            
-                        
-                           
-                        String vendor_value = sb.substring(0, sb.length() - 1).concat("]");
-                        String data= "{\n" + 
-                         "  \"CHECKOUT_Input\" : {\n" +
-                         "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXEReqService/submit_requisition/\",\n" +
-                         "   \"RESTHeader\": {\n" +
-                         "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXEReqService/header\"\n" +
-                         "    },\n" +
-                         "   \"InputParameters\": {\n" +
-                         "        \"P_SEARCH_HEADER\": {\"P_SEARCH_HEADER_ITEM\": \n"+header_value+"\n" +
-                         "       },\n" +
-                         "        \"P_SEARCH_LINES\": {\"P_SEARCH_LINES_ITEM\": \n"+body_value+"\n" +
-                         "       }, \n" +
-                         "        \"P_RFQ_VENDORS\": {\"P_RFQ_VENDORS_ITEM\": \n"+vendor_value+"\n" +
-                         "       } \n" +           
-                         "      }\n" +
-                         "   }\n" +
-                         "}\n";
+                    //SelectedItem sel= new SelectedItem(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice, imageUrl, checked, source, uom, quantity, deliver_to_location, need_by_date, amount, rowId, costCenter, itemRef, indixCategoryId, indixAttributes, naturalAccount, costCenterNaturalAccount, itemType, itemNo, vendorPartNo, maxEstPrice, lineReqType, supplierName, supplierSite, suppliernotknown, internalRefNo, supplierpartNo, formAttachment)
+                                           
+                                       System.out.println("<---Selected item List--->"+SelectedItemsList.s_jobs.size());
+                                       System.out.println("<---Selected image List"+selectedImages.size());
+                                           System.out.println("<---Image List Size"+ImageList.imageList.size());
+                                           String formAttachmentId="";
+                                          if(selectedImages.size()>0)
+                                          {
+                                           StringBuffer sb = new StringBuffer("[\n");
+                                           for(int i=0;i<selectedImages.size();i++) {
+                                                    System.out.println("Selected Images are ==>"+selectedImages.get(i));
+                                                    String s=selectedImages.get(i);
+                                                    String filepath[]=s.split("/");
+                                                    int length=filepath.length;
+                                                    String filename=filepath[length-1];
+                                                    System.out.println("File name is ==>"+filename);
+                                               
+                                                
+                                                sb.append("{\n");
+                                                sb.append("    \"SEARCH_ID\":\"0\",\n");
+                                                sb.append("    \"ATTACHMENT_FILE\":\""+EncodeBased64Binary.encodeFileToBase64Binary(selectedImages.get(i))+"\",\n");
+                                                sb.append("    \"FILE_NAME\":\""+filename+"\",\n");
+                                                sb.append("    \"FILE_CONTENT_TYPE\":\"image/jpeg\",\n");
+                                                sb.append("    \"FILE_FORMAT\":\"image\"\n");
+                                                sb.append("},");
+                                              
+                                           }
+                                           String image_value = sb.substring(0, sb.length() - 1).concat("]");
+                                           System.out.println("Image Value....."+image_value);
+                                        //   String image_value = sb.substring(0, sb.length() - 1).concat("]");
+                                         //  System.out.println("Image Value....."+image_value);
+                                           
+                                         RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+                                         restServiceAdapter = Model.createRestServiceAdapter();
+                                         // Clear any previously set request properties, if any
+                                         restServiceAdapter.clearRequestProperties();
+                                         // Set the connection name
+                                         restServiceAdapter.setConnectionName("enrich");
                                          
+                                         restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                                         restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                                         restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                                         restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                                         restServiceAdapter.setRequestURI("/webservices/rest/XXEReqService/submit_attachments/");
+                                         
+                                         String imageRequest = "{\n" +
+                                                                "\n" + 
+                                                                "    \"SUBMIT_ATTACHMENTS_Input\":{\n" + 
+                                                                "        \"@xmlns\":\"http://xmlns.oracle.com/apps/po/rest/XXEReqService/submit_attachments/\",\n" + 
+                                                                "        \"RESTHeader\":{\n" + 
+                                                                "            \"@xmlns\":\"http://xmlns.oracle.com/apps/po/rest/XXEReqService/header\"\n" + 
+                                                                "        },\n" + 
+                                                                "        \"InputParameters\":{\n" + 
+                                                                "            \"P_SEARCH_GROUP_ID\":\"0\",\n" + 
+                                                                "            \"P_CHECKOUT_FILES\":{\n" + 
+                                                                "                \"P_CHECKOUT_FILES_ITEM\":"+image_value+"\n" + 
+                                                                
+                                                                "            }\n" + 
+                                                                "        }\n" + 
+                                                                "    }\n" + 
+                                                                "\n" + 
+                                                                "}";
+                                         
+                                           restServiceAdapter.setRetryLimit(0);
+                                           System.out.println("postData===============================" + imageRequest);
+                                           String response = restServiceAdapter.send(imageRequest);
+                                           System.out.println("response===============================" + response);
+                                           JSONObject groupIdResp=new JSONObject(response);
+                                           JSONObject groupIdRespOutput = groupIdResp.getJSONObject("OutputParameters");
+                                           String searchLineId = groupIdRespOutput.getString("X_SEARCH_RESULT_LINE_ID");
+                                           String groupIdStatus = groupIdRespOutput.getString("X_RETURN_STATUS");
+                                           formAttachmentId=searchLineId;
+                                           System.out.println("Group ID---->"+searchLineId+"Group Status--->"+groupIdStatus);
+                                          }
+                                          
+                                       
+                                           double result = Double.parseDouble(qty) * Double.parseDouble(maxPrice);
+                                           String amount = Double.toString(result); 
+                                           
+                                           Random randomGenerator = new Random();
+                                       int randomInt = randomGenerator.nextInt(100);
+                                           
+                    try{
+                                      RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+                                       // Clear any previously set request properties, if any
+                                       restServiceAdapter.clearRequestProperties();
+                                       // Set the connection name
+                                       restServiceAdapter.setConnectionName("enrich");
+                                       
+                                       restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                                       restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                                       restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                                       restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                                       restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/checkout/");
+
+                                         StringBuffer sb = new StringBuffer("[\n");
+                                              sb.append("{\n");
+                                              sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
+                                              sb.append("    \"DEVICE_SERIAL_ID\":\"ABCD\",\n");
+                                              sb.append("    \"USER_ID\":\""+userName+"\",\n");
+                                              sb.append("    \"SEARCH_TYPE\":\"R\",\n");
+                                              sb.append("    \"SEARCH_TEXT\":\""+itemDescription+"\",\n");
+                                              sb.append("    \"RESULT_COUNT\":\""+dummyResultCount+"\",\n");
+                                              sb.append("    \"REQUEST_TYPE\":\"RFQ\",\n");
+                                              sb.append("    \"ORG_ID\":\""+multiOrgId+"\",\n");
+                                              sb.append("    \"SOURCE\":\"MOBILE\"\n");
+                                              sb.append("},");
+                                              
+                                              String header_value = sb.substring(0, sb.length() - 1).concat("]");
+                                           
+                                 
+                                       sb = new StringBuffer("[\n");
+                                               
+                                               
+                                               //  for(int i=0;i<ItemsList.items_ref.size();i++)
+                                               //  {
+                                                  // Item it=(Item)ItemsList.items_ref.get(i);
+                                               sb.append("{\n");
+                                               sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
+                                               sb.append("    \"PRODUCT_SOURCE\":\"U\",\n");
+                                               sb.append("    \"PRODUCT_CATEGORY\":\""+al.getOracleId()+"\",\n");
+                                               sb.append("    \"PRODUCT_TITLE\":\""+itemDescription+"\",\n");
+                                               sb.append("    \"QUANTITY\":\""+qty+"\",\n");
+                                               sb.append("    \"UOM_CODE\":\""+um.getName()+"\",\n");
+                                               sb.append("    \"UNIT_PRICE\":\""+maxPrice+"\",\n");
+                                               sb.append("    \"CURRENCY_CODE\":\"USD\",\n");
+                                               sb.append("    \"DELIVER_TO_LOCATION\":\""+loc.getCode()+"\",\n");
+                                               String arr[]=needByDate.split("T");
+                                               sb.append("    \"NEED_BY_DATE\":\""+arr[0]+"\",\n");
+                                               sb.append("    \"BPA_NUM\":\"\",\n");
+                                               sb.append("    \"VENDOR_NAME\":\""+supplier+"\",\n");
+                                               sb.append("    \"VENDOR_SITE\":\""+supplierSite+"\",\n");
+                                               sb.append("    \"VENDOR_SITE_ADDRESS1\":\"\",\n");
+                                               sb.append("    \"VENDOR_SITE_ADDRESS2\":\"\",\n");
+                                               sb.append("    \"VENDOR_SITE_ADDRESS3\":\"\",\n");
+                                               sb.append("    \"VENDOR_SITE_CITY\":\"\",\n");
+                                               sb.append("    \"VENDOR_SITE_STATE\":\"\",\n");
+                                               sb.append("    \"VENDOR_SITE_ZIP\":\"\",\n");
+                                               sb.append("    \"VENDOR_SITE_COUNTRY\":\"\",\n");
+                                               sb.append("    \"VENDOR_CONTACT_FIRST_NAME\":\"\",\n");
+                                               sb.append("    \"VENDOR_CONTACT_LAST_NAME\":\"\",\n");
+                                               sb.append("    \"VENDOR_CONTACT_PHONE\":\"\",\n");
+                                               sb.append("    \"VENDOR_CONTACT_EMAIL\":\"\",\n");
+                                               sb.append("    \"SELECTED_FLAG\":\"Y\",\n");
+                                               sb.append("    \"ITEM_TYPE\":\""+it.getLineTypeCode()+"\",\n");
+                                               sb.append("    \"COST_CENTER\":\""+costCenter+"\",\n");
+                                               sb.append("    \"NATURAL_ACCOUNT\":\""+glAccount+"\",\n");
+                                               
+                                               sb.append("    \"ITEM_NUMBER\":\""+itemNo+"\",\n");
+                                               sb.append("    \"VENDOR_PART_NUM\":\""+partNo+"\",\n");
+                                               sb.append("    \"MAX_ESTIMATED_PRICE \":\""+maxPrice+"\",\n");
+                                               sb.append("    \"INTERNAL_REFERENCE_NUM\":\""+refNo+"\",\n");
+                                               sb.append("    \"LINE_REQUEST_TYPE\":\""+rt.getLookupCode()+"\",\n");
+                                               sb.append("    \"SEARCH_RESULT_LINE_ID\":\""+formAttachmentId+"\",\n");
+                                               sb.append("    \"CHARGE_ACCOUNT\":\"\",\n");
+                                               sb.append("    \"MARKUP_PRICE\":\"\",\n");
+                                               sb.append("    \"REQUISITION_HEADER_ID\":\"\",\n");
+                                               sb.append("    \"REQUISITION_LINE_ID\":\"\",\n");
+                                               sb.append("    \"COMMENTS\":\"\",\n");
+                                               sb.append("    \"ATTACHMENT_FILE\":\"\"\n");
+                                               sb.append("},");
+                                              String body_value = sb.substring(0, sb.length() - 1).concat("]");
+                       
+                                           sb = new StringBuffer("[\n");
+                                           
+                                           
+                                           
+                                               
+                                           sb.append("{\n");
+                                           sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
+                                           sb.append("    \"VENDOR_NAME\":\""+supplier+"\",\n");
+                                           sb.append("    \"VENDOR_SITE\":\""+supplierSite+"\",\n");
+                                           sb.append("    \"VENDOR_SITE_ADDRESS1\":\"\",\n");
+                                           sb.append("    \"VENDOR_SITE_CITY\":\"\",\n");
+                                           sb.append("    \"VENDOR_SITE_STATE\":\"\",\n");
+                                           sb.append("    \"VENDOR_SITE_ZIP\":\"\",\n");
+                                           sb.append("    \"VENDOR_SITE_COUNTRY\":\"\",\n");
+                                           sb.append("    \"VENDOR_CONTACT_LAST_NAME\":\"\",\n");
+                                           sb.append("    \"VENDOR_CONTACT_PHONE\":\"\",\n");
+                                           sb.append("    \"VENDOR_CONTACT_EMAIL\":\"\"\n");
+                                           sb.append("},");
+                                               
+                                           
+                                              
+                                           String vendor_value = sb.substring(0, sb.length() - 1).concat("]");
+                                           String data= "{\n" + 
+                                            "  \"CHECKOUT_Input\" : {\n" +
+                                            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXEReqService/submit_requisition/\",\n" +
+                                            "   \"RESTHeader\": {\n" +
+                                            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXEReqService/header\"\n" +
+                                            "    },\n" +
+                                            "   \"InputParameters\": {\n" +
+                                            "        \"P_SEARCH_HEADER\": {\"P_SEARCH_HEADER_ITEM\": \n"+header_value+"\n" +
+                                            "       },\n" +
+                                            "        \"P_SEARCH_LINES\": {\"P_SEARCH_LINES_ITEM\": \n"+body_value+"\n" +
+                                            "       }, \n" +
+                                            "        \"P_RFQ_VENDORS\": {\"P_RFQ_VENDORS_ITEM\": \n"+vendor_value+"\n" +
+                                            "       } \n" +           
+                                            "      }\n" +
+                                            "   }\n" +
+                                            "}\n";
+                                                            
+                                       
+                                       restServiceAdapter.setRetryLimit(0);
+                                       System.out.println("postData===============================" + data);
+                                       
+                                       String response = restServiceAdapter.send(data);
+                                           System.out.println("response===============================" + response);
+                                       }
+                                       catch(Exception e) {
+                                           e.printStackTrace();
+                                       }
+
                     
-                    restServiceAdapter.setRetryLimit(0);
-                    System.out.println("postData===============================" + data);
+                    ValueExpression vec1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
+                    vec1.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemNo}", String.class);
+                    vec2.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemDescriptionFrom}", String.class);
+                    vec3.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemCategoryForm}", String.class);
+                    vec4.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RequestTypeForm}", String.class);
+                    vec5.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quantity}", String.class);
+                    vec6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.MaxPriceFrom}", String.class);
+                    vec8.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec10 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.need_by_date}", String.class);
+                    vec10.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
+                    vec11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression ves11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.foundOracleSupplierForm}", String.class);
+                    ves11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierNotForm}", String.class);
+                    vec12.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                    ValueExpression vec13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
+                    vec13.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
+                    vec14.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec15 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountForm}", String.class);
+                    vec15.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec16 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.partnoForm}", String.class);
+                    vec16.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec17 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.referencenoForm}", String.class);
+                    vec17.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression ve123 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedImagesCount}", String.class);
+                    ve123.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression ves1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierFirstName}", String.class);
+                    ves1.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression ves2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierLastName}", String.class);
+                    ves2.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression ves3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierEmail}", String.class);
+                    ves3.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression ves4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierPhoneNo}", String.class);
+                    ves4.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                        ImageList.imageList.clear();
+                        selectedImages.clear();
+                    MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.clearSelectedImage.execute}", Object.class, new Class[] {});
+                    me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+                        clearAttachments();
+                        AdfmfJavaUtilities.flushDataChangeEvent();
                     
-                    String response = restServiceAdapter.send(data);
-                        System.out.println("response===============================" + response);
+                    
+                }
+                
+                else {
+                    
+                    System.out.println(" Enter into Show Popup Supplier");
+                    try{
+                        ValueExpression ves1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierFirstName}", String.class);
+                        ves1.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                        ValueExpression ves2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierLastName}", String.class);
+                        ves2.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                        ValueExpression ves3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierEmail}", String.class);
+                        ves3.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                        ValueExpression ves4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierPhoneNo}", String.class);
+                        ves4.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    Object errorMsg = AdfmfContainerUtilities.invokeContainerJavaScriptFunction(FeatureContext.getCurrentFeatureId(),
+                                                                                          "popupUtilsShowPopup", new Object[] {
+                                                                                          "commandLink34" });
                     }
                     catch(Exception e) {
-                        e.printStackTrace();
+                    e.printStackTrace();
                     }
                     
-                    
-                        ValueExpression vec1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
-                        vec1.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression vec2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemNo}", String.class);
-                        vec2.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression vec3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemDescriptionFrom}", String.class);
-                        vec3.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression vec4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemCategoryForm}", String.class);
-                        vec4.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression vec5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RequestTypeForm}", String.class);
-                        vec5.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression vec6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quantity}", String.class);
-                        vec6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression vec8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.MaxPriceFrom}", String.class);
-                        vec8.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression vec10 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.need_by_date}", String.class);
-                        vec10.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression vec11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
-                        vec11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression vec12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierNotForm}", String.class);
-                        vec12.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
-                        ValueExpression vec13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
-                        vec13.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression vec14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
-                        vec14.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression vec15 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountForm}", String.class);
-                        vec15.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression vec16 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.partnoForm}", String.class);
-                        vec16.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression vec17 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.referencenoForm}", String.class);
-                        vec17.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression ve123 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedImagesCount}", String.class);
-                        ve123.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        
-                        if(selectedImages.size()>0)
-                        {
-                       ImageList.imageList.clear();
-                       selectedImages.clear();
-                    }
-                    
-                    AdfmfJavaUtilities.flushDataChangeEvent();
-    
                 }
-                else {
+                /*else {
                     if(partialError.equalsIgnoreCase("supplier")){
                                         AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
                                                                      AdfmfJavaUtilities.getFeatureName(),
                                                                      "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
-                                                                     "Please either choose a 'Supplier' or check the box 'Supplier not known'",
+                                                                     "Supplier is mandatory",
                                                                      null,
                                                                      null }); 
                                     }
@@ -7858,7 +7938,7 @@ try{
                                                                      null }); 
                                     }
                     
-                }
+                }*/
             
             }
            else {
@@ -7927,6 +8007,32 @@ try{
                                                                  null }); 
                                 }
                                 
+                else if(error.equalsIgnoreCase("costCenter")){
+                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                 AdfmfJavaUtilities.getFeatureName(),
+                                                 "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                 "Cost Center is mandatory",
+                                                 null,
+                                                 null }); 
+                }
+                else if(error.equalsIgnoreCase("glAccount")){
+                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                 AdfmfJavaUtilities.getFeatureName(),
+                                                 "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                 "GL Account is mandatory",
+                                                 null,
+                                                 null }); 
+                }
+                
+                else if(error.equalsIgnoreCase("attachmentError")){
+                                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                                 AdfmfJavaUtilities.getFeatureName(),
+                                                                 "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                                 "Attachments are mandatory",
+                                                                 null,
+                                                                 null }); 
+                                }
+                
                                 
             }
             
@@ -7939,59 +8045,82 @@ try{
 
     public void submitSupplierDetails(ActionEvent actionEvent) {
         // Add event code here...
+        String dummyResultCount= "0";
+                    ValueExpression ve132 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+                    String multiOrgId = (String)ve132.getValue(AdfmfJavaUtilities.getAdfELContext());
+                    ValueExpression ve133 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_name}", String.class);
+                    String userName = (String)ve133.getValue(AdfmfJavaUtilities.getAdfELContext());
+                    
+        ValueExpression ve5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RequestTypeForm}", String.class);
+        String reqType=(String)ve5.getValue(AdfmfJavaUtilities.getAdfELContext());
+        RequestType rt=(RequestType)RequestTypeList.req_List.get((Integer.parseInt(reqType)));
+        System.out.println("Req Type-->"+rt.getLookupCode()+rt.getMeaning());
+        ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
+        String itemType=(String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemNo}", String.class);
+        String itemNo=(String)ve2.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemDescriptionFrom}", String.class);
+        String itemDescription=(String)ve3.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemCategoryForm}", String.class);
+        String itemCategory=(String)ve4.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quantity}", String.class);
+        String qty=(String)ve6.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.UOMFrom}", String.class);
+        String uom=(String)ve7.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.MaxPriceFrom}", String.class);
+        String maxPrice=(String)ve8.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve9 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.DeliverLocationForm}", String.class);
+        String deliverLoc=(String)ve9.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve10 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.need_by_date}", String.class);
+        String needByDate=(String)ve10.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
+        String supplier=(String)ve11.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierNotForm}", String.class);
+        String supplierNot=(String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
+        String supplierSite=(String)ve13.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
+        String costCenter=(String)ve14.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve15 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountForm}", String.class);
+        String glAccount=(String)ve15.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve16 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.partnoForm}", String.class);
+        String partNo=(String)ve16.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve17 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.referencenoForm}", String.class);
+        String refNo=(String)ve17.getValue(AdfmfJavaUtilities.getAdfELContext());
+    
+                ValueExpression veF1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierFirstName}", String.class);
+                String vendorFname=(String)veF1.getValue(AdfmfJavaUtilities.getAdfELContext());
+                ValueExpression veF2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierLastName}", String.class);
+                String vendorLname=(String)veF2.getValue(AdfmfJavaUtilities.getAdfELContext());
+                ValueExpression veF3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierEmail}", String.class);
+                String vendorEmail=(String)veF3.getValue(AdfmfJavaUtilities.getAdfELContext());
+                ValueExpression veF4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierPhoneNo}", String.class);
+                String vendorContact=(String)veF4.getValue(AdfmfJavaUtilities.getAdfELContext());
+      
+        ItemType it=(ItemType)ItemTypeList.itemType_List.get((Integer.parseInt(itemType)));
+        System.out.println("Item Type-->"+it.getLineTypeCode()+it.getLineTypeCode());
+        
+        Alias al=(Alias)AliasList.s_jobs.get((Integer.parseInt(itemCategory)));
+        System.out.println("Alias-->"+al.getOracleId()+al.getIndixId());
+        
+        /*  RequestType rt=(RequestType)RequestTypeList.req_List.get((Integer.parseInt(reqType)));
+        System.out.println("Req Type-->"+rt.getLookupCode()+rt.getMeaning());*/
+        
+        UOM um=(UOM)UOMList.s_jobs.get((Integer.parseInt(uom)));
+        System.out.println("UOM-->"+um.getName());
+        
+        DeliverToLocation loc=(DeliverToLocation)DeliverToLocationList.s_jobs.get((Integer.parseInt(deliverLoc)));
+        System.out.println("Deliver Loc-->"+loc.getCode()+loc.getDescription());
+
+        
         
         try{
-            ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
-                    String itemType=(String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemNo}", String.class);
-                    String itemNo=(String)ve2.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemDescriptionFrom}", String.class);
-                    String itemDescription=(String)ve3.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemCategoryForm}", String.class);
-                    String itemCategory=(String)ve4.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RequestTypeForm}", String.class);
-                    String reqType=(String)ve5.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quantity}", String.class);
-                    String qty=(String)ve6.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.UOMFrom}", String.class);
-                    String uom=(String)ve7.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.MaxPriceFrom}", String.class);
-                    String maxPrice=(String)ve8.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve9 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.DeliverLocationForm}", String.class);
-                    String deliverLoc=(String)ve9.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve10 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.need_by_date}", String.class);
-                    String needByDate=(String)ve10.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
-                    String supplier=(String)ve11.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierNotForm}", String.class);
-                    String supplierNot=(String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
-                    String supplierSite=(String)ve13.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
-                    String costCenter=(String)ve14.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve15 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountForm}", String.class);
-                    String glAccount=(String)ve15.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve16 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.partnoForm}", String.class);
-                    String partNo=(String)ve16.getValue(AdfmfJavaUtilities.getAdfELContext());
-                    ValueExpression ve17 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.referencenoForm}", String.class);
-                    String refNo=(String)ve17.getValue(AdfmfJavaUtilities.getAdfELContext());
+            if(!rt.getMeaning().equalsIgnoreCase("Sole Source")){
+               
 
 
-                    ItemType it=(ItemType)ItemTypeList.itemType_List.get((Integer.parseInt(itemType)));
-                    System.out.println("Item Type-->"+it.getLineTypeCode()+it.getLineTypeCode());
-                    
-                    Alias al=(Alias)AliasList.s_jobs.get((Integer.parseInt(itemCategory)));
-                    System.out.println("Alias-->"+al.getOracleId()+al.getIndixId());
-                    
-                    RequestType rt=(RequestType)RequestTypeList.req_List.get((Integer.parseInt(reqType)));
-                    System.out.println("Req Type-->"+rt.getLookupCode()+rt.getMeaning());
-                    
-                    UOM um=(UOM)UOMList.s_jobs.get((Integer.parseInt(uom)));
-                    System.out.println("UOM-->"+um.getName());
-                    
-                    DeliverToLocation loc=(DeliverToLocation)DeliverToLocationList.s_jobs.get((Integer.parseInt(deliverLoc)));
-                    System.out.println("Deliver Loc-->"+loc.getCode()+loc.getDescription());
-
+                   
         String indixCategoryId="";
 
                             System.out.println("<---Selected item List--->"+SelectedItemsList.s_jobs.size());
@@ -8074,8 +8203,8 @@ try{
                                 Random randomGenerator = new Random();
                                 int randomInt = randomGenerator.nextInt(1000000000);
                                 
-                            //SelectedItem sel= new SelectedItem(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice, imageUrl, checked, source, uom, quantity, deliver_to_location, need_by_date, amount, rowId, costCenter, itemRef, indixCategoryId, indixAttributes, naturalAccount, costCenterNaturalAccount, itemType, itemNo, vendorPartNo, maxEstPrice, lineReqType, supplierName, supplierSite, suppliernotknown, internalRefNo, supplierpartNo, formAttachment)
-                            SelectedItem selectItem= new SelectedItem("", supplier, supplierSite, al.getOracleCategotySeg(), itemDescription, maxPrice, "", "true", "U", um.getName(), qty, deliverLoc, needByDate, amount, String.valueOf(randomInt), costCenter, String.valueOf(randomInt), indixCategoryId, "", glAccount, "", it.getLineTypeCode(), itemNo, "", maxPrice, rt.getLookupCode(), supplier, supplierSite, supplierNot, refNo, partNo, formAttachmentId);
+                       //     SelectedItem sel= new SelectedItem(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice, imageUrl, checked, source, uom, quantity, deliver_to_location, need_by_date, amount, rowId, costCenter, itemRef, indixCategoryId, indixAttributes, naturalAccount, costCenterNaturalAccount, itemType, itemNo, vendorPartNo, maxEstPrice, lineReqType, supplierName, supplierSite, suppliernotknown, internalRefNo, supplierpartNo, formAttachment, vendorFname, vendorLname, vendorContact, vendorEmail)
+                            SelectedItem selectItem= new SelectedItem("", supplier, supplierSite, al.getOracleCategotySeg(), itemDescription, maxPrice, "", "true", "U", um.getName(), qty, deliverLoc, needByDate, amount, String.valueOf(randomInt), costCenter, String.valueOf(randomInt), indixCategoryId, "", glAccount, "", it.getLineTypeCode(), itemNo, "", maxPrice, rt.getLookupCode(), supplier, supplierSite, supplierNot, refNo, partNo, formAttachmentId, vendorFname, vendorLname, vendorContact, vendorEmail);
                             SelectedItemsList.s_jobs.add(selectItem) ;
                             int count=SelectedItemsList.s_jobs.size();
                             ValueExpression ve_cart = AdfmfJavaUtilities.getValueExpression("#{applicationScope.unreadCount}", String.class);
@@ -8122,17 +8251,315 @@ try{
                                 ves3.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                                 ValueExpression ves4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierPhoneNo}", String.class);
                                 ves4.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                                if(selectedImages.size()>0)
-                                {
-                               ImageList.imageList.clear();
-                               selectedImages.clear();
-                            }
+                                 ImageList.imageList.clear();
+                                 selectedImages.clear();
+                MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.clearSelectedImage.execute}", Object.class, new Class[] {});
+                me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+                                 clearAttachments();
                             
                             AdfmfJavaUtilities.flushDataChangeEvent();
+            }
+            else {
+                System.out.println("<---Selected item List--->"+SelectedItemsList.s_jobs.size());
+                System.out.println("<---Selected image List"+selectedImages.size());
+                    System.out.println("<---Image List Size"+ImageList.imageList.size());
+                    String formAttachmentId="";
+                   if(selectedImages.size()>0)
+                   {
+                    StringBuffer sb = new StringBuffer("[\n");
+                    for(int i=0;i<selectedImages.size();i++) {
+                             System.out.println("Selected Images are ==>"+selectedImages.get(i));
+                             String s=selectedImages.get(i);
+                             String filepath[]=s.split("/");
+                             int length=filepath.length;
+                             String filename=filepath[length-1];
+                             System.out.println("File name is ==>"+filename);
+                        
+                         
+                         sb.append("{\n");
+                         sb.append("    \"SEARCH_ID\":\"0\",\n");
+                         sb.append("    \"ATTACHMENT_FILE\":\""+EncodeBased64Binary.encodeFileToBase64Binary(selectedImages.get(i))+"\",\n");
+                         sb.append("    \"FILE_NAME\":\""+filename+"\",\n");
+                         sb.append("    \"FILE_CONTENT_TYPE\":\"image/jpeg\",\n");
+                         sb.append("    \"FILE_FORMAT\":\"image\"\n");
+                         sb.append("},");
+                       
+                    }
+                    String image_value = sb.substring(0, sb.length() - 1).concat("]");
+                    System.out.println("Image Value....."+image_value);
+                 //   String image_value = sb.substring(0, sb.length() - 1).concat("]");
+                  //  System.out.println("Image Value....."+image_value);
+                    
+                  RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+                  restServiceAdapter = Model.createRestServiceAdapter();
+                  // Clear any previously set request properties, if any
+                  restServiceAdapter.clearRequestProperties();
+                  // Set the connection name
+                  restServiceAdapter.setConnectionName("enrich");
+                  
+                  restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                  restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                  restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                  restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                  restServiceAdapter.setRequestURI("/webservices/rest/XXEReqService/submit_attachments/");
+                  
+                  String imageRequest = "{\n" +
+                                         "\n" + 
+                                         "    \"SUBMIT_ATTACHMENTS_Input\":{\n" + 
+                                         "        \"@xmlns\":\"http://xmlns.oracle.com/apps/po/rest/XXEReqService/submit_attachments/\",\n" + 
+                                         "        \"RESTHeader\":{\n" + 
+                                         "            \"@xmlns\":\"http://xmlns.oracle.com/apps/po/rest/XXEReqService/header\"\n" + 
+                                         "        },\n" + 
+                                         "        \"InputParameters\":{\n" + 
+                                         "            \"P_SEARCH_GROUP_ID\":\"0\",\n" + 
+                                         "            \"P_CHECKOUT_FILES\":{\n" + 
+                                         "                \"P_CHECKOUT_FILES_ITEM\":"+image_value+"\n" + 
+                                         
+                                         "            }\n" + 
+                                         "        }\n" + 
+                                         "    }\n" + 
+                                         "\n" + 
+                                         "}";
+                  
+                    restServiceAdapter.setRetryLimit(0);
+                    System.out.println("postData===============================" + imageRequest);
+                    String response = restServiceAdapter.send(imageRequest);
+                    System.out.println("response===============================" + response);
+                    JSONObject groupIdResp=new JSONObject(response);
+                    JSONObject groupIdRespOutput = groupIdResp.getJSONObject("OutputParameters");
+                    String searchLineId = groupIdRespOutput.getString("X_SEARCH_RESULT_LINE_ID");
+                    String groupIdStatus = groupIdRespOutput.getString("X_RETURN_STATUS");
+                    formAttachmentId=searchLineId;
+                    System.out.println("Group ID---->"+searchLineId+"Group Status--->"+groupIdStatus);
+                   }
+                   
+                
+                    double result = Double.parseDouble(qty) * Double.parseDouble(maxPrice);
+                    String amount = Double.toString(result); 
+                    
+                    Random randomGenerator = new Random();
+                int randomInt = randomGenerator.nextInt(100);
+                    
+                try{
+                RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+                // Clear any previously set request properties, if any
+                restServiceAdapter.clearRequestProperties();
+                // Set the connection name
+                restServiceAdapter.setConnectionName("enrich");
+                
+                restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/checkout/");
+
+                  StringBuffer sb = new StringBuffer("[\n");
+                       sb.append("{\n");
+                       sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
+                       sb.append("    \"DEVICE_SERIAL_ID\":\"ABCD\",\n");
+                       sb.append("    \"USER_ID\":\""+userName+"\",\n");
+                       sb.append("    \"SEARCH_TYPE\":\"R\",\n");
+                       sb.append("    \"SEARCH_TEXT\":\""+itemDescription+"\",\n");
+                       sb.append("    \"RESULT_COUNT\":\""+dummyResultCount+"\",\n");
+                       sb.append("    \"REQUEST_TYPE\":\"RFQ\",\n");
+                       sb.append("    \"ORG_ID\":\""+multiOrgId+"\",\n");
+                       sb.append("    \"SOURCE\":\"MOBILE\"\n");
+                       sb.append("},");
+                       
+                       String header_value = sb.substring(0, sb.length() - 1).concat("]");
+                    
+                
+                sb = new StringBuffer("[\n");
+                        
+                        
+                        //  for(int i=0;i<ItemsList.items_ref.size();i++)
+                        //  {
+                           // Item it=(Item)ItemsList.items_ref.get(i);
+                        sb.append("{\n");
+                        sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
+                        sb.append("    \"PRODUCT_SOURCE\":\"U\",\n");
+                        sb.append("    \"PRODUCT_CATEGORY\":\""+al.getOracleId()+"\",\n");
+                        sb.append("    \"PRODUCT_TITLE\":\""+itemDescription+"\",\n");
+                        sb.append("    \"QUANTITY\":\""+qty+"\",\n");
+                        sb.append("    \"UOM_CODE\":\""+um.getName()+"\",\n");
+                        sb.append("    \"UNIT_PRICE\":\""+maxPrice+"\",\n");
+                        sb.append("    \"CURRENCY_CODE\":\"USD\",\n");
+                        sb.append("    \"DELIVER_TO_LOCATION\":\""+loc.getCode()+"\",\n");
+                        String arr[]=needByDate.split("T");
+                        sb.append("    \"NEED_BY_DATE\":\""+arr[0]+"\",\n");
+                        sb.append("    \"BPA_NUM\":\"\",\n");
+                        sb.append("    \"VENDOR_NAME\":\""+supplier+"\",\n");
+                        sb.append("    \"VENDOR_SITE\":\""+supplierSite+"\",\n");
+                        sb.append("    \"VENDOR_SITE_ADDRESS1\":\"\",\n");
+                        sb.append("    \"VENDOR_SITE_ADDRESS2\":\"\",\n");
+                        sb.append("    \"VENDOR_SITE_ADDRESS3\":\"\",\n");
+                        sb.append("    \"VENDOR_SITE_CITY\":\"\",\n");
+                        sb.append("    \"VENDOR_SITE_STATE\":\"\",\n");
+                        sb.append("    \"VENDOR_SITE_ZIP\":\"\",\n");
+                        sb.append("    \"VENDOR_SITE_COUNTRY\":\"\",\n");
+                        sb.append("    \"VENDOR_CONTACT_FIRST_NAME\":\""+vendorFname+"\",\n");
+                        sb.append("    \"VENDOR_CONTACT_LAST_NAME\":\""+vendorLname+"\",\n");
+                        sb.append("    \"VENDOR_CONTACT_PHONE\":\""+vendorContact+"\",\n");
+                        sb.append("    \"VENDOR_CONTACT_EMAIL\":\""+vendorEmail+"\",\n");
+                        sb.append("    \"SELECTED_FLAG\":\"Y\",\n");
+                        sb.append("    \"ITEM_TYPE\":\""+it.getLineTypeCode()+"\",\n");
+                        sb.append("    \"COST_CENTER\":\""+costCenter+"\",\n");
+                        sb.append("    \"NATURAL_ACCOUNT\":\""+glAccount+"\",\n");
+                        
+                        sb.append("    \"ITEM_NUMBER\":\""+itemNo+"\",\n");
+                        sb.append("    \"VENDOR_PART_NUM\":\""+partNo+"\",\n");
+                        sb.append("    \"MAX_ESTIMATED_PRICE \":\""+maxPrice+"\",\n");
+                        sb.append("    \"INTERNAL_REFERENCE_NUM\":\""+refNo+"\",\n");
+                        sb.append("    \"LINE_REQUEST_TYPE\":\""+rt.getLookupCode()+"\",\n");
+                        sb.append("    \"SEARCH_RESULT_LINE_ID\":\""+formAttachmentId+"\",\n");
+                        sb.append("    \"CHARGE_ACCOUNT\":\"\",\n");
+                        sb.append("    \"MARKUP_PRICE\":\"\",\n");
+                        sb.append("    \"REQUISITION_HEADER_ID\":\"\",\n");
+                        sb.append("    \"REQUISITION_LINE_ID\":\"\",\n");
+                        sb.append("    \"COMMENTS\":\"\",\n");
+                        sb.append("    \"ATTACHMENT_FILE\":\"\"\n");
+                        sb.append("},");
+                       String body_value = sb.substring(0, sb.length() - 1).concat("]");
+                
+                    sb = new StringBuffer("[\n");
+                    
+                    
+                    
+                        
+                    sb.append("{\n");
+                    sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
+                    sb.append("    \"VENDOR_NAME\":\""+supplier+"\",\n");
+                    sb.append("    \"VENDOR_SITE\":\""+supplierSite+"\",\n");
+                    sb.append("    \"VENDOR_SITE_ADDRESS1\":\"\",\n");
+                    sb.append("    \"VENDOR_SITE_CITY\":\"\",\n");
+                    sb.append("    \"VENDOR_SITE_STATE\":\"\",\n");
+                    sb.append("    \"VENDOR_SITE_ZIP\":\"\",\n");
+                    sb.append("    \"VENDOR_SITE_COUNTRY\":\"\",\n");
+                    sb.append("    \"VENDOR_CONTACT_FIRST_NAME\":\""+vendorFname+"\",\n");
+                    sb.append("    \"VENDOR_CONTACT_LAST_NAME\":\""+vendorLname+"\",\n");
+                    sb.append("    \"VENDOR_CONTACT_PHONE\":\""+vendorContact+"\",\n");
+                    sb.append("    \"VENDOR_CONTACT_EMAIL\":\""+vendorEmail+"\"\n");
+                    sb.append("},");
+                        
+                    
+                       
+                    String vendor_value = sb.substring(0, sb.length() - 1).concat("]");
+                    String data= "{\n" + 
+                     "  \"CHECKOUT_Input\" : {\n" +
+                     "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXEReqService/submit_requisition/\",\n" +
+                     "   \"RESTHeader\": {\n" +
+                     "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXEReqService/header\"\n" +
+                     "    },\n" +
+                     "   \"InputParameters\": {\n" +
+                     "        \"P_SEARCH_HEADER\": {\"P_SEARCH_HEADER_ITEM\": \n"+header_value+"\n" +
+                     "       },\n" +
+                     "        \"P_SEARCH_LINES\": {\"P_SEARCH_LINES_ITEM\": \n"+body_value+"\n" +
+                     "       }, \n" +
+                     "        \"P_RFQ_VENDORS\": {\"P_RFQ_VENDORS_ITEM\": \n"+vendor_value+"\n" +
+                     "       } \n" +           
+                     "      }\n" +
+                     "   }\n" +
+                     "}\n";
+                                     
+                
+                restServiceAdapter.setRetryLimit(0);
+                System.out.println("postData===============================" + data);
+                
+                String response = restServiceAdapter.send(data);
+                    System.out.println("response===============================" + response);
+                    ValueExpression vec1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
+                    vec1.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemNo}", String.class);
+                    vec2.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemDescriptionFrom}", String.class);
+                    vec3.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemCategoryForm}", String.class);
+                    vec4.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RequestTypeForm}", String.class);
+                    vec5.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quantity}", String.class);
+                    vec6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.MaxPriceFrom}", String.class);
+                    vec8.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec10 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.need_by_date}", String.class);
+                    vec10.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
+                    vec11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression ves11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.foundOracleSupplierForm}", String.class);
+                    ves11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierNotForm}", String.class);
+                    vec12.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                    ValueExpression vec13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
+                    vec13.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
+                    vec14.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec15 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountForm}", String.class);
+                    vec15.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec16 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.partnoForm}", String.class);
+                    vec16.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression vec17 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.referencenoForm}", String.class);
+                    vec17.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression ve123 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedImagesCount}", String.class);
+                    ve123.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression ves1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierFirstName}", String.class);
+                    ves1.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression ves2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierLastName}", String.class);
+                    ves2.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression ves3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierEmail}", String.class);
+                    ves3.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ValueExpression ves4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierPhoneNo}", String.class);
+                    ves4.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    ImageList.imageList.clear();
+                    selectedImages.clear();
+                    MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.clearSelectedImage.execute}", Object.class, new Class[] {});
+                    me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+                    clearAttachments();
+                    AdfmfJavaUtilities.flushDataChangeEvent();
+                    
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+                
+            }
                         }
                 catch(Exception e){
                              e.printStackTrace();
                }
 
+    }
+    
+    public static void clearAttachments() {
+        // Add event code here...
+        
+        try{
+            //path for android
+            File folder;
+            
+            ValueExpression ve15 = AdfmfJavaUtilities.getValueExpression("#{deviceScope.device.os}", String.class);
+            String device_os=(String)ve15.getValue(AdfmfJavaUtilities.getAdfELContext());
+            if(device_os.equalsIgnoreCase("iOS")){
+                    String path=System.getProperty("user.dir");
+                    path=path.replace("/Documents", "/tmp");
+                    folder = new File(path);
+                }
+                else{
+                    folder = new File("//data//data//com.enrich.goprocure//cache");    
+                }
+           // File folder = new File("//data//data//com.enrich.goprocure//cache");
+            
+            File[] listOfFiles = folder.listFiles();
+
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    file.delete();
+                }
+            }           
+            
+        }catch(Exception e){
+            e.printStackTrace();    
+        }
+        
+            
     }
 }

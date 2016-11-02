@@ -71,8 +71,8 @@
        
       </amx:facet>
       <amx:facet name="center">
-      
-        <amx:tableLayout id="tl1" width="100%" inlineStyle="margin:4px;padding:8px;background-color: #FFFFFF;">
+        <amx:panelGroupLayout id="pgl2" inlineStyle="margin:4px;padding:8px;background-color: #FFFFFF;">
+        <amx:tableLayout id="tl1" width="100%">
            <amx:rowLayout id="r2arl1">
             <amx:cellFormat id="r2acf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r2pagl1" inlineStyle="margin-top:12px;">
@@ -145,6 +145,9 @@
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
+           
+           </amx:tableLayout>
+           <amx:tableLayout id="tlr1" width="100%" inlineStyle="background-color: #FFFFFF;" rendered="#{pageFlowScope.showOthers}">
             <amx:rowLayout id="r6rl1">
             <amx:cellFormat id="rd6cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r6pgl1">
@@ -261,7 +264,7 @@
            </amx:rowLayout>
            <amx:rowLayout id="re9rl1">
               <amx:cellFormat id="re8c4f1" width="100%" halign="start">
-              <amx:outputText value="Cost Center" id="re8ot1" styleClass="adfmf-outputText-style"/>
+              <amx:outputText value="Cost Center *" id="re8ot1" styleClass="adfmf-outputText-style"/>
               <amx:panelGroupLayout id="re8pgl1">  
                 <amx:tableLayout id="tl6" width="100%">
                   <amx:rowLayout id="rl6">
@@ -282,7 +285,7 @@
                   </amx:rowLayout>
              <amx:rowLayout id="zre9rl1">
               <amx:cellFormat id="zre8c4f1" width="100%" halign="start">
-              <amx:outputText value="GL Account" id="zre8ot1" styleClass="adfmf-outputText-style"/>
+              <amx:outputText value="GL Account *" id="zre8ot1" styleClass="adfmf-outputText-style"/>
               <amx:panelGroupLayout id="zre8pgl1">  
                 <amx:tableLayout id="zqtl6" width="100%">
                   <amx:rowLayout id="zqrl6">
@@ -350,7 +353,7 @@
            </amx:rowLayout>
          
         </amx:tableLayout>
-        
+        </amx:panelGroupLayout>
                          <amx:commandLink rendered="true" id="commandLink34">
                         <amx:showPopupBehavior popupId="supplierInfo" type="action" align="overlapTopCenter" alignId="pp1"/>
                     </amx:commandLink>
@@ -642,7 +645,7 @@
        <amx:tableLayout width="100%" id="zel1" inlineStyle="border-bottom: 2px solid #0E4876">
                 <amx:rowLayout id="zwel1">
                 <amx:cellFormat id="zfe113" halign="start" width="100%">
-                        <amx:outputText value="Supplier Contact Information" id="os1" inlineStyle="font-weight:bold;font-size:medium;"/>
+                        <amx:outputText value="Enter Supplier Contact Details" id="os1" inlineStyle="font-weight:bold;font-size:medium;"/>
                     </amx:cellFormat>
                     </amx:rowLayout>
                     </amx:tableLayout>

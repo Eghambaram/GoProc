@@ -8,9 +8,10 @@
     <accessorIterator MasterBinding="ItemsList1Iterator" Binds="assets" RangeSize="5000" DataControl="ItemsList1"
                       BeanClass="mobile.Item" id="assetsIterator1" Refresh="always"/>
     
-    <iterator Binds="root" RangeSize="25" DataControl="ImageList" id="ImageListIterator"/>
+   <iterator Binds="root" RangeSize="25" DataControl="ImageList" id="ImageListIterator"/>
     <accessorIterator MasterBinding="ImageListIterator" Binds="images" RangeSize="25" DataControl="ImageList"
                       BeanClass="mobile.Image" id="imagesIterator"/>
+
     <iterator Binds="root" RangeSize="25" DataControl="AliasList" id="AliasListIterator"/>
     <accessorIterator MasterBinding="AliasListIterator" Binds="aliass" RangeSize="25" DataControl="AliasList"
                       BeanClass="mobile.Alias" id="aliassIterator"/>
@@ -48,11 +49,10 @@
    <methodAction id="addToSelectedImage" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="addToSelectedImage" IsViewObjectMethod="false" DataControl="UOMList"
                   InstanceName="data.UOMList.dataProvider"/>
-    <methodAction id="clearSelectedImage" RequiresUpdateModel="true" Action="invokeMethod"
+<methodAction id="clearSelectedImage" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="clearSelectedImage" IsViewObjectMethod="false" DataControl="UOMList"
                   InstanceName="data.UOMList.dataProvider"/>
-     <!-- new -->
-     <methodAction id="clearImage" RequiresUpdateModel="true" Action="invokeMethod"
+<methodAction id="clearImage" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="clearImage" IsViewObjectMethod="false" DataControl="ImageList"
                   InstanceName="data.ImageList.dataProvider"/>
                     <tree IterBinding="assetsIterator1" id="assets5">
@@ -87,13 +87,7 @@
         </AttrNames>
       </nodeDefinition>
     </tree>
-    <tree IterBinding="imagesIterator" id="images1">
-      <nodeDefinition DefName="mobile.Image" Name="images10">
-        <AttrNames>
-          <Item Value="imageURL"/>
-        </AttrNames>
-      </nodeDefinition>
-    </tree>
+    
     <list IterBinding="aliassIterator" ListOperMode="navigation" ListIter="aliassIterator" id="aliass"
           DTSupportsMRU="true" SelectItemValueMode="ListObject">
       <AttrNames>

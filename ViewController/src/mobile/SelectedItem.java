@@ -45,6 +45,46 @@ public class SelectedItem {
     private String internalRefNo="";
     private String supplierpartNo="";
     private String formAttachment="";
+    private String vendorFname="";
+    private String vendorLname="";
+    private String vendorContact="";
+    private String vendorEmail="";
+
+    public void setVendorFname(String vendorFname) {
+        this.vendorFname = vendorFname;
+        propertyChangeSupport.firePropertyChange("vendorFname", this.vendorFname,vendorFname);
+    }
+
+    public String getVendorFname() {
+        return vendorFname;
+    }
+
+    public void setVendorLname(String vendorLname) {
+        this.vendorLname = vendorLname;
+        propertyChangeSupport.firePropertyChange("vendorLname", this.vendorLname,vendorLname);
+    }
+
+    public String getVendorLname() {
+        return vendorLname;
+    }
+
+    public void setVendorContact(String vendorContact) {
+        this.vendorContact = vendorContact;
+        propertyChangeSupport.firePropertyChange("vendorContact", this.vendorContact,vendorContact);
+    }
+
+    public String getVendorContact() {
+        return vendorContact;
+    }
+
+    public void setVendorEmail(String vendorEmail) {
+        this.vendorEmail = vendorEmail;
+        propertyChangeSupport.firePropertyChange("vendorEmail", this.vendorEmail,vendorEmail);
+    }
+
+    public String getVendorEmail() {
+        return vendorEmail;
+    }
 
     public void setItemType(String itemType) {
         this.itemType = itemType;
@@ -294,7 +334,7 @@ public class SelectedItem {
     
   
     
-    public SelectedItem(String poNo,String vendorName,String vendorSiteCode,String productCategory,String productTitle,String unitPrice,String imageUrl,String checked,String source,String uom,String quantity,String deliver_to_location,String need_by_date,String amount,String rowId,String costCenter,String itemRef,String indixCategoryId, String indixAttributes, String naturalAccount,String costCenterNaturalAccount,String itemType, String itemNo, String vendorPartNo, String maxEstPrice, String lineReqType,String supplierName,String supplierSite,String suppliernotknown,String internalRefNo,String supplierpartNo,String formAttachment) {
+    public SelectedItem(String poNo,String vendorName,String vendorSiteCode,String productCategory,String productTitle,String unitPrice,String imageUrl,String checked,String source,String uom,String quantity,String deliver_to_location,String need_by_date,String amount,String rowId,String costCenter,String itemRef,String indixCategoryId, String indixAttributes, String naturalAccount,String costCenterNaturalAccount,String itemType, String itemNo, String vendorPartNo, String maxEstPrice, String lineReqType,String supplierName,String supplierSite,String suppliernotknown,String internalRefNo,String supplierpartNo,String formAttachment,String vendorFname,String vendorLname,String vendorContact,String vendorEmail) {
         super();
         
         
@@ -332,7 +372,10 @@ public class SelectedItem {
         this.internalRefNo=internalRefNo;
         this.supplierpartNo=supplierpartNo;
         this.formAttachment=formAttachment;
-
+        this.vendorFname=vendorFname;
+        this.vendorLname=vendorLname;
+        this.vendorContact=vendorContact;
+        this.vendorEmail=vendorEmail;
     }
     
     

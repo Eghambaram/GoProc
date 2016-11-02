@@ -642,7 +642,7 @@ public class ItemsList {
             
             System.out.println("Deliver To Location-->"+default_deliver_to_location+"Cost Center-->"+default_cost_center+"GL Account-->"+default_natural_account);
             
-            SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,default_cost_natural_account,"goods","","","","","","","","","","");
+            SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,default_cost_natural_account,"goods","","","","","","","","","","","","","","");
         
         
             
@@ -4241,7 +4241,7 @@ public class ItemsList {
                                   }
 
 
-                     SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,"","goods","","","","","","","","","","");
+                     SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,"","goods","","","","","","","","","","","","","","");
                      SelectedItemsList.s_jobs.add(selectItem) ; 
                               }
                             }
@@ -4843,10 +4843,10 @@ public class ItemsList {
                                        sb.append("    \"VENDOR_SITE_STATE\":\"\",\n");
                                        sb.append("    \"VENDOR_SITE_ZIP\":\"\",\n");
                                        sb.append("    \"VENDOR_SITE_COUNTRY\":\"\",\n");
-                                       sb.append("    \"VENDOR_CONTACT_FIRST_NAME\":\"JAMES\",\n");
-                                       sb.append("    \"VENDOR_CONTACT_LAST_NAME\":\"FRANKLINE\",\n");
-                                       sb.append("    \"VENDOR_CONTACT_PHONE\":\"\",\n");
-                                       sb.append("    \"VENDOR_CONTACT_EMAIL\":\"james_fr@gmail.com\",\n");
+                                       sb.append("    \"VENDOR_CONTACT_FIRST_NAME\":\""+item.getVendorFname()+"\",\n");
+                                       sb.append("    \"VENDOR_CONTACT_LAST_NAME\":\""+item.getVendorLname()+"\",\n");
+                                       sb.append("    \"VENDOR_CONTACT_PHONE\":\""+item.getVendorContact()+"\",\n");
+                                       sb.append("    \"VENDOR_CONTACT_EMAIL\":\""+item.getVendorEmail()+"\",\n");
                                        sb.append("    \"SELECTED_FLAG\":\"Y\",\n");
                                        sb.append("    \"ITEM_TYPE\":\""+item.getItemType()+"\",\n");
                                        
