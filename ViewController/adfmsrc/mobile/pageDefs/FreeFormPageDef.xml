@@ -4,6 +4,9 @@
   <parameters/>
   <executables>
     <variableIterator id="variables"/>
+     <iterator Binds="root" RangeSize="5000" DataControl="ItemsList1" id="ItemsList1Iterator"/>
+    <accessorIterator MasterBinding="ItemsList1Iterator" Binds="assets" RangeSize="5000" DataControl="ItemsList1"
+                      BeanClass="mobile.Item" id="assetsIterator1" Refresh="always"/>
     
     <iterator Binds="root" RangeSize="25" DataControl="ImageList" id="ImageListIterator"/>
     <accessorIterator MasterBinding="ImageListIterator" Binds="images" RangeSize="25" DataControl="ImageList"
@@ -52,6 +55,31 @@
      <methodAction id="clearImage" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="clearImage" IsViewObjectMethod="false" DataControl="ImageList"
                   InstanceName="data.ImageList.dataProvider"/>
+                    <tree IterBinding="assetsIterator1" id="assets5">
+      <nodeDefinition DefName="mobile.Item" Name="assets50">
+        <AttrNames>
+          <Item Value="checked"/>
+          <Item Value="source"/>
+          <Item Value="uom"/>
+          <Item Value="imageUrl"/>
+          <Item Value="poNo"/>
+          <Item Value="vendorName"/>
+          <Item Value="vendorSiteCode"/>
+          <Item Value="productCategory"/>
+          <Item Value="productTitle"/>
+          <Item Value="unitPrice"/>
+          <Item Value="rowId"/>
+          <Item Value="showDiverseImage"/>
+          <Item Value="diverseImageURL"/>
+          <Item Value="sellerName"/>
+          <Item Value="showSeller"/>
+          <Item Value="attrib"/>
+          <Item Value="showAttrib"/>
+          <Item Value="spec"/>
+          <Item Value="showSpec"/>          
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
      <tree IterBinding="imagesIterator" id="images">
       <nodeDefinition DefName="mobile.Image" Name="images0">
         <AttrNames>
@@ -111,7 +139,10 @@
                   IsViewObjectMethod="false" DataControl="SupplierSiteList" InstanceName="data.SupplierSiteList.dataProvider"/>
      <methodAction id="showCartFreeForm" RequiresUpdateModel="true" Action="invokeMethod" MethodName="showCartFreeForm"
                   IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>             
-  
+     <methodAction id="refresh" RequiresUpdateModel="true" Action="invokeMethod" MethodName="refresh"
+                  IsViewObjectMethod="false" DataControl="ItemsList1" InstanceName="data.ItemsList1.dataProvider"/>
+   <!--<methodAction id="refresh" RequiresUpdateModel="true" Action="invokeMethod" MethodName="refresh"
+                  IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>-->
     <tree IterBinding="costCentersIterator" id="costCenters">
       <nodeDefinition DefName="mobile.CostCenter" Name="costCenters0">
         <AttrNames>

@@ -1252,7 +1252,7 @@ public class ItemsList {
                     isContractedItemPresent.setValue(AdfmfJavaUtilities.getAdfELContext(), "false");
                   
                    ValueExpression ve119 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySortOption}", String.class);
-                   ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
+                   ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
     
     
                     ValueExpression ve_is_query_ref = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.isQueryRefSet}", String.class);
@@ -4285,6 +4285,40 @@ public class ItemsList {
                         SelectedItem item1=(SelectedItem)vex.getDataProvider();
                         if(rowId.equalsIgnoreCase(item1.getRowid())) {
                             System.out.print("Row removed");
+                            if(!item1.getFormAttachment().equalsIgnoreCase("")) {
+                                try{
+                                RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+                                restServiceAdapter = Model.createRestServiceAdapter();
+                                // Clear any previously set request properties, if any
+                                restServiceAdapter.clearRequestProperties();
+                                // Set the connection name
+                                restServiceAdapter.setConnectionName("enrich");
+                                
+                                restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+                                restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+                                restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+                                restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+                                restServiceAdapter.setRequestURI("/webservices/rest/XXEReqService/delete_attachments/");
+                                
+                                String deleteAttachment = "{\n" + 
+                                "  \"DELETE_ATTACHMENTS_Input\" : {\n" + 
+                                "   \"RESTHeader\": {\n" + 
+                                "    },\n" + 
+                                "   \"InputParameters\": {\n" + 
+                                "        \"P_SEARCH_RESULT_LINE_ID\" : \""+item1.getFormAttachment()+"\"\n" + 
+                                "       }	   \n" + 
+                                "   }\n" + 
+                                "}";
+                                
+                                  restServiceAdapter.setRetryLimit(0);
+                                  System.out.println("postData===============================" + deleteAttachment);
+                                  String response = restServiceAdapter.send(deleteAttachment);
+                                  System.out.println("response===============================" + response);
+                                }
+                                catch(Exception e){
+                                             e.printStackTrace();
+                                }
+                            }
                             vex.removeCurrentRow();
                             SelectedItemsList.items_selected.remove(item1);
                             SelectedItemsList.purchase_items.remove(item1);
@@ -4860,7 +4894,7 @@ public class ItemsList {
                                        sb.append("    \"MAX_ESTIMATED_PRICE \":\""+item.getMaxEstPrice()+"\",\n");
                                        sb.append("    \"INTERNAL_REFERENCE_NUM\":\""+item.getInternalRefNo()+"\",\n");
                                        sb.append("    \"LINE_REQUEST_TYPE\":\""+item.getLineReqType()+"\",\n");
-                                       
+                                       sb.append("    \"SEARCH_RESULT_LINE_ID\":\""+item.getFormAttachment()+"\",\n");
                                        sb.append("    \"CHARGE_ACCOUNT\":\"\",\n");
                                        sb.append("    \"MARKUP_PRICE\":\"\",\n");
                                        sb.append("    \"REQUISITION_HEADER_ID\":\"\",\n");

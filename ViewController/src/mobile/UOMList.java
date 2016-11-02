@@ -1408,7 +1408,7 @@ public class UOMList {
                  int length=filepath.length;
                  String filename=filepath[length-1];
                  System.out.println("File name is ==>"+filename);
-            sb = new StringBuffer("[\n");
+                sb = new StringBuffer("[\n");
             
                  sb.append("{\n");
                  sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");

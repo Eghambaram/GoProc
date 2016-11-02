@@ -101,7 +101,7 @@
             </amx:listItem>
              <amx:listItem id="l3i1" inlineStyle="border: 1px solid #ffffff;"
                           actionListener="#{RequesitionRest.buyerAssisted}">
-                <amx:outputText value="Buyer Assisted" id="ot311" inlineStyle="color: #C89C31;font-weight: bold;"/>
+                <amx:outputText value="Buyer Assisted" id="ot311" inlineStyle="color: #C89C31;font-weight: bold;margin-left:20px"/>
                 <!--<amx:setPropertyListener id="spl3" from="feature1" to="#{viewScope.featureid}"/>-->
             </amx:listItem>
             <!--
@@ -144,7 +144,7 @@
         <amx:facet name="footer">
             <amx:outputText value="GoProcure v 1.01" id="fdr" inlineStyle="text-align: center; font-style: italic; font-size:small; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
             <amx:spacer id="s1"/>
-            <amx:outputText value="Drop:56(FreeForm-MPTEST)" id="fdr1" inlineStyle="text-align: center; font-style: italic; font-size:small; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
+            <amx:outputText value="Drop:56(FreeForm)" id="fdr1" inlineStyle="text-align: center; font-style: italic; font-size:small; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
         </amx:facet>
     </amx:panelPage>
 </amx:view>

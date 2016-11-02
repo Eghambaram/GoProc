@@ -5543,33 +5543,46 @@ public class RequesitionRest {
          
         ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showSearch}", String.class);
         ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+        
+        ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showSubmit}", String.class);
+        ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+        
         ValueExpression ve22 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showAddCartButton}", String.class);
         ve22.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
 
-         ValueExpression ve2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemNo}", String.class);
-         ve2.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-         ValueExpression ve3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemDescriptionFrom}", String.class);
-         ve3.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-         ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quantity}", String.class);
-         ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-         ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.MaxPriceFrom}", String.class);
-         ve8.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-         ValueExpression ve10 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.need_by_date}", String.class);
-         ve10.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-         ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
-         ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-         ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierNotForm}", String.class);
-         ve12.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
-         ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
-         ve13.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-         ValueExpression ve14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
-         ve14.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-         ValueExpression ve15 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountForm}", String.class);
-         ve15.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-         ValueExpression ve16 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.partnoForm}", String.class);
-         ve16.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-         ValueExpression ve17 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.referencenoForm}", String.class);
-         ve17.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
+         vec1.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemNo}", String.class);
+         vec2.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemDescriptionFrom}", String.class);
+         vec3.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemCategoryForm}", String.class);
+         vec4.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RequestTypeForm}", String.class);
+         vec5.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quantity}", String.class);
+         vec6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.MaxPriceFrom}", String.class);
+         vec8.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec10 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.need_by_date}", String.class);
+         vec10.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
+         vec11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierNotForm}", String.class);
+         vec12.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+         ValueExpression vec13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
+         vec13.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
+         vec14.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec15 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountForm}", String.class);
+         vec15.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec16 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.partnoForm}", String.class);
+         vec16.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vec17 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.referencenoForm}", String.class);
+         vec17.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression ve123 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedImagesCount}", String.class);
+         ve123.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         
          try{
                           RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();    
                          // Clear any previously set request properties, if any
@@ -5654,6 +5667,13 @@ public class RequesitionRest {
 
          ValueExpression ve49 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationCode}", String.class);
          String default_deliver_to_location_code = (String)ve49.getValue(AdfmfJavaUtilities.getAdfELContext());
+         
+         ValueExpression ve48 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_cost_center}", String.class);
+         String default_cost_center_Value = (String)ve48.getValue(AdfmfJavaUtilities.getAdfELContext());
+
+         ValueExpression ve150 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_natural_account}", String.class);
+         String default_natural_account_Value = (String)ve150.getValue(AdfmfJavaUtilities.getAdfELContext());
+
          
          System.out.println("Default Location Code-->"+default_deliver_to_location_code);
          try{
@@ -5969,6 +5989,12 @@ public class RequesitionRest {
                                                                      JSONObject ci=(JSONObject)segments.get(i);
                                                                      String name=ci.getString("SEGMENT_VALUE");
                                                                      String description=ci.getString("DESCRIPTION");
+                                                                     if(description.equalsIgnoreCase(default_cost_center_Value)) {
+                                                                      vec14.setValue(AdfmfJavaUtilities.getAdfELContext(),description);
+                                                                       System.out.println("Dafult Cost Center Value-->"+default_cost_center_Value);
+
+                                                                      }
+
                                                                      CostCenter c=new CostCenter(name,description);
                                                                      CostCenterList.s_jobs.add(c);
                                                                      costCenterList.add(c);
@@ -6047,11 +6073,11 @@ public class RequesitionRest {
                        JSONObject na=(JSONObject)segments.get(i);
                        String name=na.getString("SEGMENT_VALUE");
                        String description=na.getString("DESCRIPTION");
-                /*       if(description.equalsIgnoreCase(default_natural_account_Value)) {
-                        ve_natural.setValue(AdfmfJavaUtilities.getAdfELContext(),description);
+                       if(description.equalsIgnoreCase(default_natural_account_Value)) {
+                        vec15.setValue(AdfmfJavaUtilities.getAdfELContext(),description);
                          System.out.println("Dafult GL Account Value-->"+default_natural_account_Value);
                         }
-*/
+
                        NaturalAccounts c=new NaturalAccounts(name,description);
                        NaturalAcccountList.acc_List.add(c);
                        naturalAccountList.add(c);

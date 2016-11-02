@@ -145,9 +145,9 @@
                   IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider">
       <NamedData NDName="actionEvent" NDType="oracle.adfmf.amx.event.ActionEvent"/>
     </methodAction>
-    <methodAction id="filterItemsByCategory" RequiresUpdateModel="true" Action="invokeMethod"
+  <!--  <methodAction id="filterItemsByCategory" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="filterItemsByCategory" IsViewObjectMethod="false" DataControl="ItemsList"
-                  InstanceName="data.ItemsList.dataProvider"/>
+                  InstanceName="data.ItemsList.dataProvider"/> -->
     <methodAction id="clearFilter" RequiresUpdateModel="true" Action="invokeMethod" MethodName="clearFilter"
                   IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>
     <methodAction id="sortItems" RequiresUpdateModel="true" Action="invokeMethod" MethodName="sortItems"

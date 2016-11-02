@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
-          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt" xmlns:notification="http://xmlns.ateam.com/notification">
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt" xmlns:notification="http://xmlns.ateam.com/notification"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
 
     <amx:panelPage id="pp1" inlineStyle="background-color: #F7F3F3;">
     <amx:verbatim id="v3">
@@ -75,8 +77,8 @@
             <amx:cellFormat id="r2acf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r2pagl1" inlineStyle="margin-top:12px;">
               <amx:outputText value="Item Type *" id="r2aot1"   styleClass="adfmf-outputText-style"/>
-                <amx:selectOneChoice value="#{pageFlowScope.ItemType}" simple="true" label="#{bindings.itemType.label}"
-                                     id="soc4">
+                <amx:selectOneChoice value="#{pageFlowScope.ItemType}" simple="true"  label="#{bindings.itemType.label}"
+                                    valueChangeListener="#{Rest.itemTypeValues}" id="soc4">
                   <amx:selectItems value="#{bindings.itemType.items}" id="si4"/>
                 </amx:selectOneChoice>
                
@@ -116,8 +118,8 @@
               <amx:panelGroupLayout id="r4pgl1">
               <amx:outputText value="Request Type *" id="r4ot1" styleClass="adfmf-outputText-style"/>
                 <amx:selectOneChoice simple="true" value="#{pageFlowScope.RequestTypeForm}" label="#{bindings.requestType.label}"
-                                     id="soc8">
-                                     <!--valueChangeListener="#{RequesitionRest.showSearchButton}"-->
+                                     id="soc8" valueChangeListener="#{Rest.showSearchButton}">
+                                     
                   <amx:selectItems value="#{bindings.requestType.items}" id="si8"/>
                 </amx:selectOneChoice>
                 
@@ -155,10 +157,10 @@
                 <amx:tableLayout id="tl3" width="100%">
                   <amx:rowLayout id="rl3">
                     <amx:cellFormat id="cf2" width="50%">
-                    <amx:inputText  id="r6i2t1" simple="true"  inputType="number" hintText="Enter Qty" valueChangeListener="#{Rest.validateQuantityText}" value="#{pageFlowScope.quantity}"/>
+                    <amx:inputText  id="r6i2t1" simple="true" readOnly="#{pageFlowScope.quantityReadOnly}" inputType="number" hintText="Enter Qty" valueChangeListener="#{Rest.validateQuantityText}" value="#{pageFlowScope.quantity}"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="cf42" width="50%">
-                      <amx:selectOneChoice value="#{pageFlowScope.UOMFrom}" simple="true" id="soc2">
+                      <amx:selectOneChoice value="#{pageFlowScope.UOMFrom}" simple="true" readOnly="#{pageFlowScope.UOMReadOnly}" id="soc2">
                         <amx:selectItems value="#{bindings.UOM.items}" id="si2"/>
                       </amx:selectOneChoice>
                       
@@ -173,7 +175,7 @@
             <amx:cellFormat id="r5cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r5pgl1">
               <amx:outputText value="Max. Esitimated Price *" id="r5ot1" styleClass="adfmf-outputText-style"/>
-             <amx:inputText  id="r5i2t1" simple="true" value="#{pageFlowScope.MaxPriceFrom}" hintText="Enter Max. Esitimated Price"/>
+             <amx:inputText  id="r5i2t1" simple="true" value="#{pageFlowScope.MaxPriceFrom}" inputType="number" hintText="Enter Max. Esitimated Price"/>
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
@@ -219,13 +221,21 @@
                   </amx:panelGroupLayout>
                   </amx:cellFormat>
                   </amx:rowLayout>
-           <amx:rowLayout id="rew6rl1">
-            <amx:cellFormat id="rew6cf1" width="100%" halign="start">
-              <amx:panelGroupLayout id="rew6pgl1" inlineStyle="margin-top:-20px;">
-                <amx:selectBooleanCheckbox text="Supplier not known" label="label1" id="sbc1" simple="true" value="#{pageFlowScope.supplierNotForm}" inlineStyle="color: #353535;"/>
-                   </amx:panelGroupLayout>
+                  <amx:rowLayout id="Sr5rl1" rendered="false">
+            <amx:cellFormat id="Sr5cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="Sr5pgl1">
+              <amx:outputText value="#{pageFlowScope.foundOracleSupplierForm}" id="Sr5ot1" styleClass="adfmf-outputText-style"/>
+              </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
+      <!--     <amx:rowLayout id="rew6rl1">
+            <amx:cellFormat id="rew6cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="rew6pgl1" inlineStyle="margin-top:-20px;">
+                <amx:selectBooleanCheckbox text="Supplier not known" label="label1"  id="sbc1" simple="true" value="#{pageFlowScope.supplierNotForm}"
+                                           valueChangeListener="#{Rest.suppliernotFoundValue}" inlineStyle="color: #353535;"/>
+                   </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout> -->
              <amx:rowLayout id="re7rl1">
             <amx:cellFormat id="re7cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="re7pgl1">
@@ -295,16 +305,16 @@
            <amx:rowLayout id="re69rl1">
             <amx:cellFormat id="re9cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="re9pgl1">
-              <amx:outputText value="Supplier Part No." id="re9ot1" styleClass="adfmf-outputText-style"/>
-             <amx:inputText  id="re9i2t1" simple="true" value="#{pageFlowScope.partnoForm}" hintText="Enter Supplier Part No."/>
+              <amx:outputText value="Supplier Part Number" id="re9ot1" styleClass="adfmf-outputText-style"/>
+             <amx:inputText  id="re9i2t1" simple="true" value="#{pageFlowScope.partnoForm}" hintText="Enter Supplier Part Number"/>
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
            <amx:rowLayout id="re10rl1">
             <amx:cellFormat id="re10cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="re10pgl1">
-              <amx:outputText value="Internal Reference No." id="re10ot1" styleClass="adfmf-outputText-style"/>
-             <amx:inputText  id="re10i2t1" simple="true" value="#{pageFlowScope.referencenoForm}" hintText="Enter Internal Reference No"/>
+              <amx:outputText value="Internal Reference Number" id="re10ot1" styleClass="adfmf-outputText-style"/>
+             <amx:inputText  id="re10i2t1" simple="true" value="#{pageFlowScope.referencenoForm}" hintText="Enter Internal Reference Number"/>
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
@@ -313,22 +323,22 @@
               <amx:panelGroupLayout id="re11pgl1">
                 <amx:tableLayout id="tl2" width="100%">
                   <amx:rowLayout id="rl2">
-                    <amx:cellFormat id="cfq3" width="30%">
+                    <amx:cellFormat id="cfq3" width="20%" halign="start" valign="top">
                   <amx:outputText value="Attachments" id="re11ot1" styleClass="adfmf-outputText-style"/>
                     </amx:cellFormat>
-                     <amx:cellFormat halign="start" width="30">
+                     <amx:cellFormat halign="start" width="60%" valign="top">
                  <amx:commandLink action="#{Rest.refreshImageList}" id="cl122" styleClass="springboard-icon">
                 <amx:outputText value="#{pageFlowScope.selectedImagesCount}" inlineStyle="color:blue"  id="ot151">
                 </amx:outputText>
                 <amx:showPopupBehavior popupId="popup13" type="action" align="after" alignId="pp1"/>
                 </amx:commandLink>
                 </amx:cellFormat>        
-                    <amx:cellFormat id="cf3" width="20%" halign="center">
+                    <amx:cellFormat id="cf3" width="10%" halign="end" valign="top"> 
                     <amx:commandLink rendered="true" id="zaqcommandLink1" >
                         <amx:image id="zaqimage2" source="/images/camera.png"/>
                     </amx:commandLink>
                     </amx:cellFormat>
-                    <amx:cellFormat id="cfd4" width="20%" halign="center">
+                    <amx:cellFormat id="cfd4" width="10%" halign="center" valign="top">
                     <amx:commandLink rendered="true" id="zbqcommandLink1" actionListener="#{Rest.showGallery}">
                         <amx:image id="zbqimage2" source="/images/attachment.png"/>
                     </amx:commandLink>
@@ -340,15 +350,32 @@
            </amx:rowLayout>
          
         </amx:tableLayout>
+        
+                         <amx:commandLink rendered="true" id="commandLink34">
+                        <amx:showPopupBehavior popupId="supplierInfo" type="action" align="overlapTopCenter" alignId="pp1"/>
+                    </amx:commandLink>
         <amx:tableLayout id="tl4" width="100%">
         <amx:rowLayout id="rl4" rendered="#{pageFlowScope.showAddCartButton}">
             <amx:cellFormat id="cf4" halign="center">
               <amx:commandButton text="Add To Cart" id="cb1" actionListener="#{Rest.freeformAddtoCart}" styleClass="adfmf-commandButton-style" inlineStyle="width:80%;"/>
             </amx:cellFormat>
           </amx:rowLayout>
+          <amx:rowLayout id="rl24" rendered="false">
+            <amx:cellFormat id="c2f4" halign="center">
+            <amx:commandLink rendered="true" id="supllierContactInfo">
+            <amx:showPopupBehavior id="spb1" popupId="supplierInfo" type="action" align="overlapMiddleCenter" alignId="pp1"/>
+      </amx:commandLink>
+            </amx:cellFormat>
+          </amx:rowLayout>
            <amx:rowLayout id="rel4" rendered="#{pageFlowScope.showSearch}">
             <amx:cellFormat id="cef4"  halign="center">
-              <amx:commandButton text="Search" id="ceb1" styleClass="adfmf-commandButton-style"  inlineStyle="width:80%;"/>
+              <amx:commandButton text="Search" id="ceb1"  actionListener="#{Rest.searchFromFreeForm}" styleClass="adfmf-commandButton-style"  inlineStyle="width:80%;"/>
+            </amx:cellFormat>
+          </amx:rowLayout>
+           <amx:rowLayout id="rel5" rendered="#{pageFlowScope.showSubmit}">
+            <amx:cellFormat id="cef5"  halign="center">
+              <amx:commandButton text="Submit" id="ceb5" styleClass="adfmf-commandButton-style"
+                                 actionListener="#{Rest.submitFreeForm}" inlineStyle="width:80%;"/>
             </amx:cellFormat>
           </amx:rowLayout>
         </amx:tableLayout>
@@ -551,7 +578,9 @@
             <amx:listItem id="li1" actionListener="#{RequesitionRest.rowchangeSupplierForm}">
               <amx:outputText value="#{row.name}" id="ot4"/>
                <amx:setPropertyListener from="#{row.name}" to="#{pageFlowScope.supplierForm}"
-                                                         type="action" id="Qspl12"/> 
+                                                         type="action" id="Qspl12"/>
+              <amx:setPropertyListener from="#{row.name}" to="#{pageFlowScope.foundOracleSupplierForm}"
+                                                         type="action" id="Qspl14"/>                                           
             <amx:closePopupBehavior popupId="popupSupplier" type="action"/>                                                         
             </amx:listItem>
           </amx:listView>
@@ -605,6 +634,41 @@
         </amx:cellFormat>
              </amx:rowLayout>
              </amx:tableLayout>
+    </amx:popup>
+    
+    <!-- Supplier Info-->
+     <amx:popup id="supplierInfo"  animation="slideLeft" inlineStyle="margin: 40px">
+        <amx:panelGroupLayout id="pgl3">
+       <amx:tableLayout width="100%" id="zel1" inlineStyle="border-bottom: 2px solid #0E4876">
+                <amx:rowLayout id="zwel1">
+                <amx:cellFormat id="zfe113" halign="start" width="100%">
+                        <amx:outputText value="Supplier Contact Information" id="os1" inlineStyle="font-weight:bold;font-size:medium;"/>
+                    </amx:cellFormat>
+                    </amx:rowLayout>
+                    </amx:tableLayout>
+                    </amx:panelGroupLayout>
+     <amx:panelFormLayout id="pfl1">
+     <amx:inputText label="First Name" id="it1" value="#{pageFlowScope.SupplierFirstName}"/>
+            <amx:inputText label="Last Name" id="it2" value="#{pageFlowScope.SupplierLastName}"/>
+            <amx:inputText label="Email" id="it3" value="#{pageFlowScope.SupplierEmail}" inputType="email"/>
+            <amx:inputText label="Phone Number" id="it4" value="#{pageFlowScope.SupplierPhoneNo}" inputType="tel"/>
+           </amx:panelFormLayout>
+           <amx:tableLayout id="sle1" width="100%" inlineStyle="margin:4px;padding:8px;background-color: #FFFFFF;">
+              <amx:rowLayout id="s2erl1">
+          <amx:cellFormat id="cf5" width="50%">
+          <amx:commandButton text="Cancel" id="cbs1"  styleClass="adfmf-commandButton-style" inlineStyle="width:80%;">
+          <amx:closePopupBehavior popupId="supplierInfo" type="action"/>
+          </amx:commandButton>
+          </amx:cellFormat>
+          <amx:cellFormat id="cf6">
+          <amx:commandButton text="Ok" id="cbs2" actionListener="#{Rest.submitSupplierDetails}" styleClass="adfmf-commandButton-style" inlineStyle="width:80%;">
+          <amx:closePopupBehavior popupId="supplierInfo" type="action"/>
+          </amx:commandButton>
+          </amx:cellFormat>
+        </amx:rowLayout>
+              </amx:tableLayout>
+    
+    
     </amx:popup>
     
 
