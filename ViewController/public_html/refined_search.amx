@@ -66,7 +66,7 @@
       <amx:outputText value="Create Requisition"  id="ot1" inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
     </amx:facet>
          <amx:facet name="primary">
-                <amx:commandLink action="#{Rest.clearAttachments}" id="cl2" styleClass="springboard-icon">
+                <amx:commandLink action="__back" id="cl2" styleClass="springboard-icon">
          <amx:image source="/images/logo.png" id="i3"/>
                 </amx:commandLink>
         </amx:facet>   

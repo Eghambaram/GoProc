@@ -880,6 +880,12 @@ public class Rest {
           populateUOM();
         ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
         itemType=(String)ve91.getValue(AdfmfJavaUtilities.getAdfELContext());
+        ValueExpression ve3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
+        search = (String)ve3.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        if(!search.trim().equalsIgnoreCase(""))
+        {
+            
         if(itemType.equalsIgnoreCase("goods"))
         {
         AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
@@ -889,6 +895,7 @@ public class Rest {
             AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
                                                                                                    "adf.mf.api.amx.doNavigation", new Object[] { "refined_search_services" });
                  
+        }
         }
         
     }
@@ -6055,10 +6062,11 @@ public class Rest {
         ve17.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         ValueExpression ve18 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.uom1}", String.class);
         ve18.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-        ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayAddToCart}", String.class);
+     /*   ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayAddToCart}", String.class);
         ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
         ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySearchCount}", String.class);
         ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+   */
         ValueExpression veComments = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.rfqComments}", String.class);
         veComments.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         ValueExpression veImage = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.rfqImage}", String.class);

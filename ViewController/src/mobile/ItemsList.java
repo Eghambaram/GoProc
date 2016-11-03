@@ -1456,6 +1456,13 @@ public class ItemsList {
                                                         null }); 
                        }
                        
+                   
+                      System.out.println("Oracle item Values--->"+ItemsList.items_list.size());
+                      size=ItemsList.items_list.size();
+                      System.out.println("Oracle item Values size--->"+size);
+                      
+                      int indixcount=0;
+                      
                        
                        //since indix doesn't have services search we can restrict the search 
                        if(itemType.equalsIgnoreCase("goods")){
@@ -1466,16 +1473,16 @@ public class ItemsList {
                            //https://api.indix.com/v2/universal/products?countryCode=US&q=bearings&categoryId=23059&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc
                            String url="";
                            
-                           if(!aliasCategoriesId.equals(""))
+                           if(!aliasCategoriesId.equals("") && !aliasCategoriesId.contains("null"))
                            {
                                url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+aliasCategoriesId+"&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                       //         url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+aliasCategoriesId+"&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                            }
-                        /*   else if(fromUrl!=null && !fromUrl.equalsIgnoreCase("")) {
+                          else if(!fromUrl.equalsIgnoreCase("")) {
                                System.out.println("Enter into WebURL");
                                url = "https://api.indix.com/v2/universal/products?countryCode=US"+fromUrl+"&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                                System.out.println("Enter into WebURL"+ url);
-                           }*/
+                           }
                            
                   else {
                                url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+"&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
@@ -1514,13 +1521,14 @@ public class ItemsList {
                                                   output=resp.getJSONObject("result");
                                                   JSONArray resArr=output.getJSONArray("products");
                                                   String result_size=output.getString("count"); 
-                                                  if(Integer.parseInt(result_size)>500) {
+                                                /* if(Integer.parseInt(result_size)>500) {
                                                       size=ItemsList.items_list.size()+500;
                                                   }
                                                   else{
                                                       size=ItemsList.items_list.size()+Integer.parseInt(result_size);
-                                                  }
+                                                  }*/
                                                   
+                                                  indixcount=Integer.parseInt(result_size);
                           // System.out.println("resArr.length() "+resArr.length());
                                                   for(int i=0;i<resArr.length();i++) {
                                                       rowCount=1;
@@ -1726,7 +1734,9 @@ public class ItemsList {
                                                    //   System.out.println("***********");
                                                   }
                            
-                           System.out.println("Total Item in Orace + indix---->"+size);
+                           
+                           System.out.println("Oracle item Values--->"+ItemsList.items_list.size()); 
+                           System.out.println("Total Item in Orace + indix---->"+size+"  "+indixcount);
                            
                           /* if(Integer.parseInt(result_size)<20) {
                                size=ItemsList.items_list.size();
@@ -1751,14 +1761,39 @@ public class ItemsList {
                        
                        
                        
-                   
+                       System.out.println("Oracle item Values--->"+ItemsList.items_list.size()); 
+                       System.out.println("Total Item in Orace + indix---->"+size+"  "+indixcount);
                        
                        
+                       if(indixcount>500) {
+                           size=ItemsList.items_list.size()+500;
+                       }
+                       
+                       else if(indixcount < ItemsList.items_list.size()) {
+                           size=ItemsList.items_list.size();
+                       }
+                       
+                      /* else if(!fromUrl.equalsIgnoreCase("")) {
+                           size=ItemsList.items_list.size();
+                       }
+                       */
+                       else {
+                           size=indixcount;
+                       }
+                       
+                       
+                       if(ItemsList.items_list.size()>0) {
+                           rowCount=1;
+                       }
+                       
+                         
                        
                             populateItemsBasedOnPageNo();
                        
                        
                            pageSize=ItemsList.s_jobs.size();
+                           
+                           
                        
                            System.out.println("outside "+ItemsList.s_jobs.size());
                        
@@ -1802,7 +1837,7 @@ public class ItemsList {
                        
                        
                        
-                       if(rowCount>0 && !search.trim().equalsIgnoreCase(""))
+                       if(rowCount>0)
                            {
                                ValueExpression veAdd = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayAddToCart}", String.class);
                                 veAdd.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
@@ -1813,7 +1848,8 @@ public class ItemsList {
                                vedply.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
                            }
                      
-                       if(rowCount==0 && !search.trim().equalsIgnoreCase("")){
+                      // if(rowCount==0 && !search.trim().equalsIgnoreCase(""))
+                       if(rowCount==0){
                            
                            System.out.println("RowCOUNT inside If Loddp===Welcome"+rowCount);
                            System.out.println("Search String========Welcome "+search);
@@ -2865,7 +2901,8 @@ public class ItemsList {
             System.out.println("Enter into Sort Items");
             ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedSortBy}", String.class);
             String sortBy=(String)ve41.getValue(AdfmfJavaUtilities.getAdfELContext());
-            
+            ValueExpression ve17 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+            String multiOrgId = (String)ve17.getValue(AdfmfJavaUtilities.getAdfELContext());
             
             /*String defaultsortBy="relevance";
             
@@ -3015,13 +3052,12 @@ public class ItemsList {
                 "\n" + 
                 "    },\n" + 
                 "\n" + 
-                "   \"InputParameters\": {\n" + 
-                "\n" + 
-                "       }         \n" + 
-                "\n" + 
-                "   }\n" + 
-                "\n" + 
-                "}";
+                    "   \"InputParameters\": {\n" +
+                    "          \"P_ORG_ID\" : \""+multiOrgId+"\",\n" + 
+                    "        \"P_TYPE\": \"SEARCH\"\n" +
+                    "     }\n" +
+                    "  }\n" +
+                    "}";
                 
                    restServiceAdapter.setRetryLimit(0);
                    System.out.println("postData===============================" + postData);
