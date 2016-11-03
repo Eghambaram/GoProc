@@ -102,6 +102,14 @@
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
+            <amx:rowLayout id="ra2rl1" rendered="#{pageFlowScope.showWeb}">
+            <amx:cellFormat id="ra2cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="ra2pgl1">
+              <amx:outputText value="Web URL" id="ra2ot1" styleClass="adfmf-outputText-style"/>
+             <amx:inputText  id="ra2i2t1" simple="true" value="#{pageFlowScope.webURL}" hintText="Enter Item Description"/>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
             <amx:rowLayout id="r3rl1">
             <amx:cellFormat id="r3cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r3pgl1">

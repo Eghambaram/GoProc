@@ -5546,13 +5546,18 @@ public class RequesitionRest {
         
         ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showSubmit}", String.class);
         ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
-        
+         
+         
         ValueExpression ve22 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showAddCartButton}", String.class);
         ve22.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
         
          ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showOthers}", String.class);
          ve23.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
 
+         ValueExpression veb1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showWeb}", String.class);
+         veb1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+         ValueExpression vebe1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.webURL}", String.class);
+         vebe1.setValue(AdfmfJavaUtilities.getAdfELContext(),""); 
          ValueExpression vec1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
          vec1.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
          ValueExpression vec2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemNo}", String.class);

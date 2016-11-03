@@ -1279,6 +1279,9 @@ public class ItemsList {
                        
                        System.out.println("Category Mapped indix Id's--->"+aliasCategoriesId);
                        
+                       ValueExpression veb1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.formWebURL}", String.class);
+                       String fromUrl = (String)veb1.getValue(AdfmfJavaUtilities.getAdfELContext());
+                       
                        ValueExpression ve32 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
                        String oracleId = (String)ve32.getValue(AdfmfJavaUtilities.getAdfELContext());
                            
@@ -1468,6 +1471,12 @@ public class ItemsList {
                                url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+aliasCategoriesId+"&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                       //         url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+aliasCategoriesId+"&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                            }
+                        /*   else if(fromUrl!=null && !fromUrl.equalsIgnoreCase("")) {
+                               System.out.println("Enter into WebURL");
+                               url = "https://api.indix.com/v2/universal/products?countryCode=US"+fromUrl+"&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+                               System.out.println("Enter into WebURL"+ url);
+                           }*/
+                           
                   else {
                                url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+"&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                            }
