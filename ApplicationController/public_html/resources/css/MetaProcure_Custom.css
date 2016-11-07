@@ -591,34 +591,8 @@ word-break: break-word;
 
 
 /* New Design*/
-.amx-inputText .field-value .wrap {
-  display: inline-block;
-  color: #707173;
-  background-color: #F7F3F3;
-  padding: 8px;
-  box-sizing: border-box;
-  border-radius: 5px;
- /* border: 1px solid #707173;*/
-}
-
-
-.amx-inputText .field-value .wrap > textarea {
-  margin-top: 9px;
-  margin-bottom: 9px;
-}
-
-/* ------ Generic Field label/value ------ */
-.field-label {
-  box-sizing: border-box;
-  vertical-align: middle;
-  color: #7B7C7E;
-  font-size: 14px;
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-}
 .amx-commandButton.adfmf-commandButton-style {
-  min-height: 32px;
+  min-height: 24px;
   border: 1px solid #CC9933;
   box-sizing: border-box;
   background-color: #CC9933;
@@ -648,9 +622,22 @@ word-break: break-word;
 }
 
 
-.amx-selectBooleanCheckbox .checkbox-text {
-  display: inline-block;
-   color: #353535;
-  font-size: 14px;
-  font-weight: normal;
+.amx-image.list-avatar {
+    border: 2px solid #FFF;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    margin: 4px;
+    width: 144px;
+    height: 144px;
+}
+
+    .amx-android-generic .sortpopup, .amx-android-chrome .sortpopup {
+    height: 380px;
+    width: 250px;
+    border-radius: 10px;
+}
+
+.amx-ios .sortpopup {
+    height: 340px;
+    width: 250px;
+    border-radius: 10px;
 }

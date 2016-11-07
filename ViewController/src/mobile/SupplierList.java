@@ -328,9 +328,10 @@ public class SupplierList {
         String userId = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
         ValueExpression vemul = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
         String multiOrgId=(String)vemul.getValue(AdfmfJavaUtilities.getAdfELContext());
+/*        ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierFormSearchText}", String.class);
+        String searchText=(String)ve_searchText.getValue(AdfmfJavaUtilities.getAdfELContext());*/
         
-        
-        ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.SupplierFormSearchText}", String.class);
+        ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
         String searchText=(String)ve_searchText.getValue(AdfmfJavaUtilities.getAdfELContext());
         try {
             RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();

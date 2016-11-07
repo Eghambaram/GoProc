@@ -32,6 +32,28 @@
        }
     );
  }
+
+  function displayAlert(){
+         navigator.notification.alert(
+            'Items added to your cart successfully',  
+             alertDismissed,         
+             '',            
+              'Ok'                  
+           );
+       }
+       
+             function displayAlertQuotation(){
+          navigator.notification.alert(
+            'Thank you for submitting your request. It has been validated and sent to the buyer for further processing. You will receive a notification with further details as soon as we receive bids from the suppliers. If you have any questions, please contact our Buyer. Thank you.',  
+             alertDismissed,         
+             '',            
+              'Ok'                  
+           );
+       }
+       
+        function alertDismissed(buttonIndex) {
+          
+          }
        
          </script>
 
@@ -85,7 +107,7 @@
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
-          <amx:rowLayout id="rl1">
+          <amx:rowLayout id="rl1" rendered="#{applicationScope.showOthers}">
             <amx:cellFormat id="cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="pgl1">
               <amx:outputText value="Item" id="ot1" styleClass="adfmf-outputText-style"/>
@@ -155,7 +177,7 @@
            </amx:rowLayout>
            
            </amx:tableLayout>
-           <amx:tableLayout id="tlr1" width="100%" inlineStyle="background-color: #FFFFFF;" rendered="#{pageFlowScope.showOthers}">
+           <amx:tableLayout id="tlr1" width="100%" inlineStyle="background-color: #FFFFFF;" rendered="#{applicationScope.showOthers}">
             <amx:rowLayout id="r6rl1">
             <amx:cellFormat id="rd6cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r6pgl1">
@@ -185,8 +207,8 @@
             <amx:rowLayout id="r5rl1">
             <amx:cellFormat id="r5cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r5pgl1">
-              <amx:outputText value="Max. Esitimated Price *" id="r5ot1" styleClass="adfmf-outputText-style"/>
-             <amx:inputText  id="r5i2t1" simple="true" value="#{pageFlowScope.MaxPriceFrom}" inputType="number" hintText="Enter Max. Esitimated Price"/>
+              <amx:outputText value="Max. Estimated Price *" id="r5ot1" styleClass="adfmf-outputText-style"/>
+             <amx:inputText  id="r5i2t1" simple="true" value="#{pageFlowScope.MaxPriceFrom}" inputType="number" hintText="Enter Max. Estimated Price"/>
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
@@ -334,17 +356,11 @@
               <amx:panelGroupLayout id="re11pgl1">
                 <amx:tableLayout id="tl2" width="100%">
                   <amx:rowLayout id="rl2">
-                    <amx:cellFormat id="cfq3" width="20%" halign="start" valign="top">
+                    <amx:cellFormat id="cfq3" width="80%" halign="start" valign="top">
                   <amx:outputText value="Attachments" id="re11ot1" styleClass="adfmf-outputText-style"/>
                     </amx:cellFormat>
-                     <amx:cellFormat halign="start" width="60%" valign="top">
-                 <amx:commandLink action="#{Rest.refreshImageList}" id="cl122" styleClass="springboard-icon">
-                <amx:outputText value="#{pageFlowScope.selectedImagesCount}" inlineStyle="color:blue"  id="ot151">
-                </amx:outputText>
-                <amx:showPopupBehavior popupId="popup13" type="action" align="after" alignId="pp1"/>
-                </amx:commandLink>
-                </amx:cellFormat>        
-                    <amx:cellFormat id="cf3" width="10%" halign="end" valign="top"> 
+                            
+                    <amx:cellFormat id="cf3" width="10%" halign="center" valign="top"> 
                     <amx:commandLink rendered="true" id="zaqcommandLink1" >
                         <amx:image id="zaqimage2" source="/images/camera.png"/>
                     </amx:commandLink>
@@ -359,7 +375,15 @@
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
-         
+         <amx:rowLayout id="rl7">
+         <amx:cellFormat halign="center" width="100%" valign="top">
+                 <amx:commandLink action="#{Rest.refreshImageList}" id="cl122" styleClass="springboard-icon">
+                <amx:outputText value="#{pageFlowScope.selectedImagesCount}" inlineStyle="color:blue"  id="ot151">
+                </amx:outputText>
+                <amx:showPopupBehavior popupId="popup13" type="action" align="after" alignId="pp1"/>
+                </amx:commandLink>
+                </amx:cellFormat> 
+         </amx:rowLayout>
         </amx:tableLayout>
         </amx:panelGroupLayout>
                          <amx:commandLink rendered="true" id="commandLink34">
@@ -567,7 +591,7 @@
     <amx:tableLayout id="Qtl2121" width="100%">
                 <amx:rowLayout id="Qrl112">
                     <amx:cellFormat id="Qcf1222" width="100%">
-                        <amx:inputText value="#{pageFlowScope.SupplierFormSearchText}" simple="true" id="QinputText221" hintText="Search Suppliers...">
+                        <amx:inputText value="#{pageFlowScope.supplierForm}" simple="true" id="QinputText221" hintText="Search Suppliers...">
                         </amx:inputText>
                     </amx:cellFormat>
                     <amx:cellFormat id="Qcf12412" width="40px">

@@ -135,6 +135,17 @@
                   IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>             
      <methodAction id="refresh" RequiresUpdateModel="true" Action="invokeMethod" MethodName="refresh"
                   IsViewObjectMethod="false" DataControl="ItemsList1" InstanceName="data.ItemsList1.dataProvider"/>
+    <methodAction id="freeformAddtoCart" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="freeformAddtoCart" IsViewObjectMethod="false" DataControl="UOMList"
+                  InstanceName="data.UOMList.dataProvider"/>
+     <methodAction id="submitSupplierDetails" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="submitSupplierDetails" IsViewObjectMethod="false" DataControl="UOMList"
+                  InstanceName="data.UOMList.dataProvider"/>
+    <methodAction id="submitFreeForm" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="submitFreeForm" IsViewObjectMethod="false" DataControl="UOMList"
+                  InstanceName="data.UOMList.dataProvider"/>                  
+                  
+                  
    <!--<methodAction id="refresh" RequiresUpdateModel="true" Action="invokeMethod" MethodName="refresh"
                   IsViewObjectMethod="false" DataControl="ItemsList" InstanceName="data.ItemsList.dataProvider"/>-->
     <tree IterBinding="costCentersIterator" id="costCenters">

@@ -197,9 +197,9 @@
                                   selectedRowKeys="#{bindings.orders.collectionModel.selectedRow}"
                                   initialScrollRowKeys="#{bindings.orders.collectionModel.selectedRow}"
                                   selectionListener="#{bindings.orders.collectionModel.makeCurrent}"
-                                  styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll"
+                                   showMoreStrategy="autoScroll"
                                   bufferStrategy="viewport" id="lv1">
-                          <amx:listItem id="li1" actionListener="#{RequesitionRest.getRequesitionDetail}">
+                          <amx:listItem id="li1" actionListener="#{RequesitionRest.getRequesitionDetail}" showLinkIcon="true">
                         
                     <amx:tableLayout width="100%" id="tl1">
                         <amx:rowLayout id="rl1">
@@ -225,7 +225,7 @@
                             <amx:cellFormat width="2px" id="cf3"/>
                             <amx:cellFormat width="45%" halign="start" id="cf4">
                                     <amx:outputText value="Order No: #{row.searchGroupId}"
-                                                    inlineStyle="font-size: 14px;margin-top:5px; clear: both;color: #2F6BAC;font-family: Arial, sans-serif;white-space: pre-wrap;"
+                                                    inlineStyle="font-size: 14px;margin-top:5px; clear: both;font-weight: bold;font-family: Arial, sans-serif;white-space: pre-wrap;"
                                                     id="ot3"/>
                             </amx:cellFormat>
                             <amx:cellFormat width="2px" id="cf1"/>

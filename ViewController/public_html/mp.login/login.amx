@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
- <amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
+  <amx:panelPage id="pp1" inlineStyle="background-color: #0E4876;">
      <amx:verbatim id="v3">
     <![CDATA[
 
@@ -47,43 +47,56 @@
 
     </amx:verbatim>
 
-
-
+    
+    
+         <amx:panelStretchLayout id="psl1" scrollPolicy="scroll" inlineStyle="margin:2px;">
+      <amx:facet name="top"/>
+      <amx:facet name="center">
+     
+      <amx:panelGroupLayout id="pgl1" valign="middle" halign="center" inlineStyle="margin: 30% 5% 0% 5%;width:100;background-color: #FFFFFF; border: 1px solid #FFFFFF;border-radius:6px;">
+      <amx:tableLayout id="twl4" width="100%" inlineStyle="margin: 10% 0% 0% 0%;padding:10px;">
+        <amx:rowLayout id="rwl4">
+            <amx:cellFormat id="cwf4" halign="center">
+              <amx:image id="zimages2" source="/images/rsz_11rsz_goprocure_logo.png"/>
+            </amx:cellFormat>
+          </amx:rowLayout>
+          </amx:tableLayout>
+     <amx:tableLayout id="ztl6" width="100%" inlineStyle="margin: 10% 0% 0% 0%;padding:10px;">
+                  <amx:rowLayout id="zrl6">
+                    <amx:cellFormat id="zcf124"  halign="start" height="38">
+                        <amx:image id="zimage2" source="/images/user.png"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="zcf7" width="90%" halign="start">
+                    <amx:inputText  id="zrez8i2t1" simple="true" value="#{applicationScope.user_name}" hintText="User Name"/>
+                    </amx:cellFormat>
+                  </amx:rowLayout>
+                  <amx:rowLayout id="yrl6">
+                    <amx:cellFormat id="ycf124"  width="10%" halign="start">
+                        <amx:image id="yimage2" source="/images/key.png"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="ycf7" width="90%" halign="start">
+                    <amx:inputText  id="inputText2" simple="true" secret="true"  value="#{applicationScope.password}" keyboardDismiss="go" hintText="Password"/>
+                    </amx:cellFormat>
+                  </amx:rowLayout>
+                  </amx:tableLayout>
+     <amx:tableLayout id="tl4" width="100%" inlineStyle="padding:10px;">
+        <amx:rowLayout id="rl4">
+            <amx:cellFormat id="cf4" halign="center">
+              <amx:commandButton text="Login" id="cb1" actionListener="#{Login.validateLogin}" styleClass="adfmf-commandButton-style" inlineStyle="width:80%;"/>
+            </amx:cellFormat>
+          </amx:rowLayout>
         
-    <amx:facet name="header">
-      <amx:outputText value="GoProcure" id="ot1" inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
-    </amx:facet>
-   <amx:facet name="primary">
-                   <amx:commandLink id="cl2" styleClass="springboard-icon">
-                <amx:image id="i1" source="/images/logo.png" shortDesc="Springboard Image"/>
-                </amx:commandLink>
-        </amx:facet>
-    
-<amx:panelFormLayout inlineStyle="margin: 25% 5% 0% 5%;width:100;"   fieldHalign="center" id="pfl1" labelPosition="start" styleClass="admf-panelform">
-    <amx:inputText label="User Name" id="it3" value="#{applicationScope.user_name}"/>
-    <amx:inputText label="Password" secret="true"  value="#{applicationScope.password}" keyboardDismiss="go" id="inputText2"/>
-    
-    
-    </amx:panelFormLayout>
-   <amx:tableLayout id="tl1" inlineStyle="margin: 5% 25% 5% 25%;"  width="100%" borderWidth="0" cellSpacing="0">
-   <amx:rowLayout id="rl2">
-<amx:cellFormat id="cf3" halign="center" inlineStyle="padding: 10px 4px 4px 4px;">
-<!--actionListener="#{Rest.validateLogin}"-->
-<amx:commandButton text="Login" id="cb2" actionListener="#{Login.validateLogin}"  inlineStyle="width:100%;background-color:#C89C31; background-image:none;" styleClass="adfmf-commandButton-border"/>
+          <amx:rowLayout id="rl3">
+<amx:cellFormat id="cf31" halign="center">
+<amx:commandLink text="Forgot password / username?" action="forgotpass_user" inlineStyle="font-size: 12px;"/>
 </amx:cellFormat>
 </amx:rowLayout>
-<!--<amx:tableLayout halign="center" inlineStyle="margin-top:-2px;">
-<amx:rowLayout id="rl5">
-<amx:cellFormat id="cf35">
-<amx:selectBooleanCheckbox text="Remember User Name" id="sbc1"/>
-</amx:cellFormat>
-</amx:rowLayout>
-</amx:tableLayout>-->
-   <amx:rowLayout id="rl3">
-<amx:cellFormat id="cf31" halign="center" inlineStyle="padding: 0px 4px 10px 4px;">
-<amx:commandLink text="Forgot password / username?" action="forgotpass_user"/>
-</amx:cellFormat>
-</amx:rowLayout>
-    </amx:tableLayout>
+           
+        </amx:tableLayout>
+    
+    </amx:panelGroupLayout>
+      </amx:facet>
+    </amx:panelStretchLayout>
+    
   </amx:panelPage>
 </amx:view>

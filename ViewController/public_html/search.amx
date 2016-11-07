@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt" xmlns:notification="http://xmlns.ateam.com/notification">
-  <amx:loadingIndicatorBehavior id="lib1" failSafeDuration="100000000000000"/>
-    <amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
+  <amx:loadingIndicatorBehavior id="lib1" failSafeDuration="20000"/>
+     <amx:panelPage id="pp1" inlineStyle="background-color: #F7F3F3;">
         <amx:verbatim id="v3">
 
         <![CDATA[
@@ -179,12 +179,8 @@
                 <amx:image source="/images/logo.png" id="i3"/>
             </amx:commandLink>
         </amx:facet>
-        <!--<amx:facet name="primary">
-            <amx:commandButton inlineStyle="background-color:transparent;" action="__back" id="cb1"/>
-        </amx:facet>-->
+        
         <amx:facet name="secondary">
-            <!--<amx:commandButton id="loginIcon" icon="images/Cart-24.png"  action="checkout"
-                               inlineStyle="background-color:transparent;"/>-->
             <amx:commandLink id="cl1"  actionListener="#{Rest.showCartItems}">
                 <notification:badge id="badge" class="notification-icon" unread="#{applicationScope.unreadCount}"/>
                 <amx:image id="i2" source="/images/Cart-24.png" shortDesc="Springboard Image"
@@ -192,545 +188,297 @@
             </amx:commandLink>
            
         </amx:facet>
-        <amx:tableLayout id="twl21" width="100%">
-       <amx:rowLayout  id="rywql21">
-<amx:cellFormat id="cyqwf1211" halign="start" columnSpan="3">
-<amx:selectOneChoice value="#{pageFlowScope.aliasCategorieEmpty}" label="Item Categories" id="soc7"
-                             valueChangeListener="#{Rest.getAliasCategories}">
-            <amx:selectItems value="#{bindings.aliass.items}" id="si10"/>
-        </amx:selectOneChoice>
-</amx:cellFormat>
-</amx:rowLayout>
- 
-        </amx:tableLayout>
-        <amx:tableLayout id="tl21" width="100%">
-            <amx:rowLayout id="rl11">
-                <amx:cellFormat id="cf122" width="80%">
-<!--<amx:inputText id="it1" simple="true" hintText="Enter Name" keyboardDismiss="search"
-                                       autoCapitalize="none" autoCorrect="off" value="#{bindings.filter.inputValue}"/>-->
-                    <amx:inputText value="#{pageFlowScope.searchValue}" simple="true"  keyboardDismiss="search" id="inputText2">
-                    
-                    </amx:inputText>
-                </amx:cellFormat>
-                <!--<amx:cellFormat id="cf124" width="8%">
-                   <amx:image id="i4" source="/images/cancel.png"/>
-                </amx:cellFormat>-->
-                <amx:cellFormat id="cf18">
-                    <amx:commandLink id="cl7" actionListener="#{Rest.performSearch}">
-                        <amx:image id="i5" source="/images/Search-24.png"/>
+            <amx:panelStretchLayout id="psl1" scrollPolicy="scroll" inlineStyle="margin:2px;">
+      <amx:facet name="top">
+        <amx:panelGroupLayout id="pgl1">
+                 <amx:tableLayout id="ztl6" width="100%" halign="start">
+                  <amx:rowLayout id="zrl6">
+                    <amx:cellFormat id="zcf7" width="75%" halign="start">
+                    <amx:inputText  value="#{pageFlowScope.searchValue}" simple="true"  hintText="Search for Products, Brands and More " keyboardDismiss="search" id="inputText2"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="zcf3" width="15%" halign="start">
+                    <amx:commandButton text="Go" id="cb1" actionListener="#{Rest.performSearch}" styleClass="adfmf-commandButton-style"/>
+                    </amx:cellFormat>
+                    <amx:cellFormat id="zcf124"  width="10%" halign="center">
+                         <amx:commandLink rendered="true" id="zcommandLink1" >
+                        <amx:image id="zimage2" source="/images/filter.png"/>
+                                 <amx:showPopupBehavior popupId="popup-filter" type="action" align="cornerTopEnd" alignId="pp1"/>
                     </amx:commandLink>
-                </amx:cellFormat>
-            </amx:rowLayout>
-        </amx:tableLayout>
-        <amx:tableLayout id="tl4" width="100%" halign="center" inlineStyle="margin-left:-20px">
+                    </amx:cellFormat>
+                  </amx:rowLayout>
+                  </amx:tableLayout>
+        </amx:panelGroupLayout>
+      </amx:facet>
+       <amx:facet name="center">
+        <amx:panelGroupLayout id="pgl2" inlineStyle="background-color: #F7F3F3;" scrollPolicy="scroll">
+        <amx:tableLayout id="tl4" width="100%" halign="center">
             <amx:rowLayout id="rl111">
                 <amx:cellFormat id="cf522" valign="top">
-                    <!--<amx:selectOneRadio  label="Item Type" value="#{applicationScope.rdItemType}"
-                                    valueChangeListener="#{Rest.itemTypeChange}"   id="sor1" showRequired="true">
-                   <amx:selectItem id="si1" value="goods"  label="Goods"/>
-                   <amx:selectItem id="si2" value="services"   label="Services"/>
-        </amx:selectOneRadio>-->
                     <amx:selectOneButton value="#{applicationScope.rdItemType}"
                                          valueChangeListener="#{Rest.itemTypeChange}" id="sob1">
                         <amx:selectItem id="si1" value="goods" label="Goods"/>
                         <amx:selectItem id="si2" value="services" label="Services"/>
                     </amx:selectOneButton>
-                </amx:cellFormat>
+                    </amx:cellFormat>
             </amx:rowLayout>
-        </amx:tableLayout>
-        <!--<amx:listView var="row" value="#{bindings.assets1.collectionModel}" fetchSize="#{bindings.assets1.rangeSize}"
-                  selectedRowKeys="#{bindings.assets1.collectionModel.selectedRow}"
-                  selectionListener="#{bindings.assets1.collectionModel.makeCurrent}"
-                  styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll" bufferStrategy="viewport"
-                  id="lv1">
-     
-      <amx:listItem id="li1" action="#{Rest.getItemDetails}">
-        <amx:tableLayout width="100%" id="tl1">
-          <?audit suppress oracle.maf.warning-missing-shortDesc?>
-          <amx:rowLayout id="rl2">
-            <amx:cellFormat width="10px" rowSpan="2" id="cf4"/>
-            <amx:cellFormat width="80%" height="28px" id="cf5">
-              <amx:outputText value="#{row.productTitle}" id="ot5"/>
-            </amx:cellFormat>
-                    <amx:cellFormat width="10px" rowSpan="2" id="cf6"/>
-            
-          </amx:rowLayout>
-          <amx:rowLayout id="rl1">
-            <amx:cellFormat width="60%" height="12px">
-              <amx:outputText value="#{row.unitPrice}" styleClass="adfmf-listItem-captionText"/>
-            </amx:cellFormat>
-          
-          </amx:rowLayout>
-        </amx:tableLayout>
-         <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}" type="action"/>
-      </amx:listItem>
-    </amx:listView>-->
-        <!--<amx:listView var="row" value="#{bindings.assets2.collectionModel}" fetchSize="#{bindings.assets2.rangeSize}"
-                  selectedRowKeys="#{bindings.assets2.collectionModel.selectedRow}"
-                  selectionListener="#{bindings.assets2.collectionModel.makeCurrent}" showMoreStrategy="autoScroll"
-                  bufferStrategy="viewport" id="lv1">
-      <amx:listItem id="li1" action="#{Rest.getItemDetails}">
-        <amx:tableLayout width="100%" id="tl1">
-          <amx:rowLayout id="rl1">
-            <amx:cellFormat width="40px" halign="center" rowSpan="2" id="cf2">
-              <amx:image source="#{row.imageUrl}" id="i2"/>
-            </amx:cellFormat>
-            <amx:cellFormat width="60%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cf5">
-              <amx:outputText value="#{row.productTitle}" id="ot3"/>
-            </amx:cellFormat>
-            <amx:cellFormat width="10px" rowSpan="2" id="cf3"/>
-            <amx:cellFormat width="40%" halign="end" id="cf4">
-              <amx:outputText value="#{row.unitPrice}" styleClass="adfmf-listItem-highlightText" id="ot2"/>
-            </amx:cellFormat>
-          </amx:rowLayout>
-          <amx:rowLayout id="rl2">
-            <amx:cellFormat width="60%" height="#{deviceScope.device.os=='Android'?'22':'19'}px" id="cf7">
-              <amx:outputText value="#{row.poNo}" styleClass="adfmf-listItem-captionText" id="ot5"/>
-            </amx:cellFormat>
-            <amx:cellFormat width="40%" halign="end" id="cf6">
-              <amx:outputText value="#{row.vendorName}" styleClass="adfmf-listItem-captionText" id="ot4"/>
-            </amx:cellFormat>
-          </amx:rowLayout>
-        </amx:tableLayout>
-         <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}" type="action"/>
-      </amx:listItem>
-    </amx:listView>-->
-        <amx:tableLayout width="100%" id="tl11">
-            <amx:rowLayout rendered="#{pageFlowScope.displayAddToCart}" id="rl2">
-                <amx:cellFormat width="10px" id="cf2"/>
-                <amx:cellFormat width="40%" id="cf4" halign="start">
-                    <!--<amx:outputText value="#{row.productTitle}" id="ot4"/>-->
-                    <amx:commandButton text="Add to Cart" id="cb2" actionListener="#{Rest.addItemsToCart}"
-                                       inlineStyle="width:100%;background-color:#C89C31; background-image:none;"
-                                       styleClass="adfmf-commandButton-border-cart"/>
-                    <!--<amx:commandLink actionListener="#{Rest.addItemsToCart}" id="cb2"
-                                     inlineStyle="margin-left:5px;margin-right:5px;">
-                        <amx:image source="/images/Add_new.png" id="ib3" styleClass="adfmf-commandButton-border"/>
-                    </amx:commandLink>-->
-                </amx:cellFormat>
-                <amx:cellFormat halign="end" width="60%" id="cf6">
-                    <amx:commandButton inlineStyle="margin-right:5px; background-color:#C89C31;background-image:none;"
-                                       action="#{Rest.populateUOM}" styleClass="adfmf-commandButton-border-cart"
-                                       text="Refine your search" id="cb21"></amx:commandButton>
-                </amx:cellFormat>
+            <amx:rowLayout id="rl2">
+              <amx:cellFormat id="cf5">
+                <amx:panelGroupLayout id="pgl3" inlineStyle="margin:2px;">
+                  <amx:tableLayout id="tl2" width="100%">
+                    <amx:rowLayout id="rl3" rendered="#{pageFlowScope.displaySearchCount}">
+                      <amx:cellFormat id="cf6" width="60%" halign="start">
+                      <amx:outputText value="#{pageFlowScope.searchCount}" id="re10ot1" styleClass="adfmf-outputText-style-values"/>
+                      </amx:cellFormat>
+                      <!--rendered="#{pageFlowScope.displayAddToCart}"-->
+                      <amx:cellFormat id="cf7" width="40%" halign="start">
+                       <amx:commandButton text="Refined Search" id="ceb1" action="#{Rest.populateUOM}" styleClass="adfmf-commandButton-style" inlineStyle="width:100%;"/>
+                      </amx:cellFormat>
+                    </amx:rowLayout>
+                  </amx:tableLayout>
+                </amx:panelGroupLayout>
+              </amx:cellFormat>
             </amx:rowLayout>
-            <amx:rowLayout rendered="#{pageFlowScope.displaySortOption}" id="rl12">
-                <amx:cellFormat width="10%" id="cf14" columnSpan="2"></amx:cellFormat>
-                <amx:cellFormat halign="end" width="90%" id="cf16">
-                  <!--  <amx:commandLink inlineStyle="" id="commandLink11" actionListener="#{Rest.showPopup}" text="Filter"></amx:commandLink>-->
-                    <amx:commandLink inlineStyle="margin-left:15px;margin-right:5px" id="commandLink12" text="Sort">
-                        <amx:showPopupBehavior popupId="popup-new" type="action" align="after" alignId="pp1"/>
-                    </amx:commandLink>
-                </amx:cellFormat>
-            </amx:rowLayout>
-            </amx:tableLayout>
-        <amx:tableLayout width="100%" id="tl5">
-            <amx:rowLayout rendered="#{pageFlowScope.displaySearchCount}" id="rl31">
-                <amx:cellFormat width="70%" id="cf41" >
-                    <amx:outputText inlineStyle="margin-left:15px;margin-right:5px" value="#{pageFlowScope.searchCount}"
-                                    id="commandLink121"/>
-                    <!--<amx:commandLink inlineStyle="margin-left:15px;margin-right:5px" id="commandLink121"
-                                     text="#{pageFlowScope.searchCount}"/>-->
-                </amx:cellFormat>
-                <amx:cellFormat width="30%" id="cf12" halign="end">
-                    <amx:commandLink  rendered="#{pageFlowScope.displayPrev}" id="cl3"
-                                     actionListener="#{Rest.showPrevPageItems}" text="Prev"></amx:commandLink>
-                    <amx:commandLink  rendered="#{pageFlowScope.displayNext}" actionListener="#{Rest.getNextPageItems}"  inlineStyle="margin-left:15px;margin-right:5px" id="cl4" text="Next"/>
-                </amx:cellFormat>
-
-            </amx:rowLayout>
-        </amx:tableLayout>
-        <!--<amx:listView var="row" value="#{bindings.assets3.collectionModel}" fetchSize="#{bindings.assets3.rangeSize}"
-                  selectedRowKeys="#{bindings.assets3.collectionModel.selectedRow}"
-                  initialScrollRowKeys="#{bindings.assets3.collectionModel.selectedRow}"
-                  selectionListener="#{bindings.assets3.collectionModel.makeCurrent}"
-                  styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll" bufferStrategy="viewport"
-                  id="lv1">
-      <amx:listItem id="li1"  actionListener="#{Rest.selectItems}" >
-        <amx:tableLayout  id="tl1" width="100%">
-          <amx:rowLayout  id="rl3">
-          
-          
-          
-          
-            <amx:cellFormat width="20%" rendered="false"   id="cf1">
-              <amx:image id="i2" inlineStyle="width:  38px;height:38px" source="/images/check.png"/>
-               </amx:cellFormat>
-                
-                <amx:cellFormat width="90%"    id="cf2">
-              <amx:image id="i3" source="" />
-              
-              
-              -->
-        <!--<amx:selectBooleanCheckbox text="" value="#{row.checked}" label="" valueChangeListener="#{Rest.selectedItems}" id="sbc1"/>-->
-        <!--
-            <amx:outputText value="#{row.productTitle}" id="ot4"/>
-            </amx:cellFormat>
-           
-          </amx:rowLayout>
-        </amx:tableLayout>
-           <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}" type="action"/>
-      </amx:listItem>
-    </amx:listView>-->
-        <!--<amx:listView var="row" value="#{bindings.assets4.collectionModel}" fetchSize="#{bindings.assets4.rangeSize}"
-                  selectedRowKeys="#{bindings.assets4.collectionModel.selectedRow}"
-                  initialScrollRowKeys="#{bindings.assets4.collectionModel.selectedRow}"
-                  selectionListener="#{bindings.assets4.collectionModel.makeCurrent}"
-                  styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll" bufferStrategy="viewport"
-                  id="lv1">
-      <amx:listItem id="li1" actionListener="#{Rest.selectItems}">
-        <amx:tableLayout width="100%" id="tl1">
-          <amx:rowLayout id="rl1">
-            <amx:cellFormat width="40px" halign="center" id="cf2">
-              <amx:image source="#{row.checked}" id="i2"/>
-            </amx:cellFormat>
-            <amx:cellFormat width="100%" height="43px" id="cf1">
-              <amx:outputText value="#{row.productTitle}" id="ot2"/>
-            </amx:cellFormat>
-          </amx:rowLayout>
-        </amx:tableLayout>
-        <amx:setPropertyListener id="spl1" type="action"/>
-      </amx:listItem>
-    </amx:listView>-->
-        <!--    <amx:listView var="row" showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv2">
-      <amx:listItem id="li2"> !--><!--
-      rangeChangeListener="#{Rest.itemsRangeChange}-->
-        <amx:listView var="row" value="#{bindings.assets5.collectionModel}" fetchSize="#{bindings.assets5.rangeSize}"
+          </amx:tableLayout>
+          </amx:panelGroupLayout>
+                    <amx:panelGroupLayout id="pgl4" inlineStyle="background-color: #FFFFFF;">
+                    <amx:listView var="row" value="#{bindings.assets5.collectionModel}" fetchSize="#{bindings.assets5.rangeSize}"
                       selectedRowKeys="#{bindings.assets5.collectionModel.selectedRow}"
                       initialScrollRowKeys="#{bindings.assets5.collectionModel.selectedRow}"
                       selectionListener="#{bindings.assets5.collectionModel.makeCurrent}"
                       rangeChangeListener="#{Rest.itemsRangeChange}"
-                      styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll" bufferStrategy="viewport"
-                      id="lv1" >
+                      showMoreStrategy="autoScroll" bufferStrategy="viewport" 
+                      id="lv1">
+                      <!-- actionListener="#{Rest.selectItems}"-->
             <amx:listItem id="li1" actionListener="#{Rest.selectItems}">
-                <amx:tableLayout width="100%" id="tl2">
-                    <amx:rowLayout id="rl4">
-                        <amx:cellFormat width="40px" halign="start" valign="top" id="cf5">
-                            <amx:image source="#{row.checked}" id="il1"/>
-                        </amx:cellFormat>
-                        <amx:cellFormat width="100%" halign="start"
-                                        height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cf7">
-                            <amx:outputText value="#{row.productTitle}" id="ot4"
-                                            inlineStyle=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;font-size: 15px;font-weight: bold;"/>
-                        </amx:cellFormat>
-                        <amx:cellFormat width="60px" halign="start"
-                                        height="#{deviceScope.device.os=='Android'?'22':'19'}px" id="cfq7">
-                            <amx:image id="i1" rendered="#{row.showDiverseImage}" source="#{row.diverseImageURL}"/>
-                        </amx:cellFormat>
-                    </amx:rowLayout>
-                    <amx:rowLayout id="rl3">
-                        <amx:cellFormat width="40px" halign="start" id="cf8" valign="top">
-                            <amx:image source="#{row.imageUrl}" inlineStyle="height:30px;width:30px"
-                                       styleClass="login-avatar" id="i21"/>
-                        </amx:cellFormat>
-                        <amx:cellFormat width="100%" halign="start"
-                                        height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cf3">
-                            <amx:tableLayout id="tl3" halign="start" width="100%">
-                                <amx:rowLayout id="rl5">
-                                    <amx:cellFormat id="cf10" width="20px;">
-                                        <amx:outputText value="By" id="ot116"
-                                                        inlineStyle="margin-top: -8px; font-size: 14px; clear: both;color: #000000;font-family: Arial, sans-serif;"/>
-                                    </amx:cellFormat>
-                                    <amx:cellFormat id="cf9" width="100%">
-                                        <amx:outputText value="#{row.vendorName}" id="ot7"
-                                                        inlineStyle="margin-top: -8px; font-size: 14px; word-break: break-word;white-space: pre-wrap; clear: both;color: #0E4876;font-family: Arial, sans-serif;"/>
-                                    </amx:cellFormat>
-                                    
-                                </amx:rowLayout>
-                            </amx:tableLayout>
-                            <!--<amx:outputText value="Supplier: " id="ot116"
-                                            inlineStyle="margin-top: -8px; font-size: 14px; clear: both;color: #000000;font-family: Arial, sans-serif;"/>
-                            <amx:outputText value="#{row.vendorName}" id="ot7"
-                                            inlineStyle="margin-top: -8px; font-size: 14px; clear: both;color: #0E4876;font-family: Arial, sans-serif;font-weight: bold;"/>-->
-                        </amx:cellFormat>
-                        <amx:cellFormat width="20px" halign="end"
-                                        height="#{deviceScope.device.os=='Android'?'22':'19'}px" id="cf1">
-                            <amx:commandLink id="commandLink2" action="#{Rest.getItemDetails}">
-                                <amx:image id="cb3" source="images/submit.png"
-                                           inlineStyle="background-color:transparent;"/>
-                                <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}"
+                 <amx:tableLayout width="100%" id="tl3">
+                <amx:rowLayout id="rl4">
+                  <amx:cellFormat width="60px" halign="center" valign="top" id="cf9">
+                    <amx:commandLink id="cl5">
+                <amx:image source="#{row.checked}" id="i5"/>
+                <!--<amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}" type="action"/>
+                <amx:setPropertyListener from="#{row.vendorName}" to="#{pageFlowScope.vendorName}" type="action"/>
+                <amx:setPropertyListener from="#{row.rowId}" to="#{pageFlowScope.itemRowId}" type="action"/>-->
+            </amx:commandLink>
+                  </amx:cellFormat>
+                  <amx:cellFormat width="100%" halign="start" height="#{deviceScope.device.os=='Android'?'36':'32'}px" valign="middle" id="cf8">
+                    <amx:outputText value="#{row.productTitle}"
+                                    id="ot2" inlineStyle="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;font-size: 14px;color: #353535;font-weight: bold;"/>
+                  </amx:cellFormat>
+                   <amx:cellFormat width="40px" halign="start" valign="top" height="#{deviceScope.device.os=='Android'?'22':'19'}px" id="cf10">
+                    <amx:image rendered="#{row.showDiverseImage}" source="#{row.diverseImageURL}" id="i6"/>
+                  </amx:cellFormat>
+                </amx:rowLayout>
+              </amx:tableLayout>
+             <amx:tableLayout width="100%" id="ntl3" halign="start">
+                <amx:rowLayout id="nrl4">
+                  <amx:cellFormat  width="60px" rowSpan="4" halign="center" valign="top" id="ncf9">
+                <amx:image source="#{row.imageUrl}" inlineStyle="height:50px;width:40px"
+                                       styleClass="login-avatar" id="ni5"/>
+                  </amx:cellFormat>
+                  <amx:cellFormat width="100%" id="ncf8" valign="top">
+                  <amx:panelGroupLayout id="pgl5" layout="horizontal"  inlineStyle="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                  <amx:outputText value="By " id="Dwaotq3" inlineStyle="font-size: 14px;color: #353535;"/>
+                  <amx:outputText value="#{row.vendorName}" id="g2w1" inlineStyle="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size: 14px;color:#707173;"/>
+                  </amx:panelGroupLayout>
+                  </amx:cellFormat>
+                </amx:rowLayout>
+                <amx:rowLayout id="rl5">
+              <amx:cellFormat halign="start" id="cfq61" width="100%" valign="top">
+                  <amx:panelGroupLayout id="pgl6" layout="horizontal"  inlineStyle="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                  <amx:outputText value="$#{row.unitPrice}" id="ot4" inlineStyle="font-size: 14px;font-weight: bold; color:#FF6600"/>
+                  <amx:outputText value="/ #{row.uom}" id="ot5" inlineStyle="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size: 14px;color:#707173;"/>
+                  </amx:panelGroupLayout>
+                    </amx:cellFormat>
+            </amx:rowLayout>
+              <amx:rowLayout id="rl8">
+              <amx:cellFormat id="cf15" rendered="#{row.showSeller}">
+                  <amx:panelGroupLayout id="pgl7" layout="horizontal"  inlineStyle="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                  <amx:outputText value="Seller: " id="ot6" inlineStyle="font-size: 14px;color: #353535;"/>
+                  <amx:outputText value="#{row.sellerName}" id="ot7" inlineStyle="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size: 14px;color:#707173;"/>
+                  </amx:panelGroupLayout>
+            </amx:cellFormat>
+            </amx:rowLayout>
+                 <amx:rowLayout id="rl6">
+              <amx:cellFormat id="cf12">
+                <amx:panelGroupLayout id="pgl8">
+                  <amx:tableLayout id="tl5" width="100%">
+                    <amx:rowLayout id="rl7">
+                      <amx:cellFormat id="cf13"  width="70%">
+                       <amx:panelGroupLayout id="pgl9">
+                  <amx:tableLayout id="tl6">
+                  <amx:rowLayout id="rl9" rendered="#{row.showSpec}">
+                  <amx:cellFormat id="cf11" rendered="#{row.showSpec}">
+                  <amx:commandLink inlineStyle="font-size: 14px; clear: both;color: #0572CE;font-family: Arial, sans-serif;" id="cl9" text="Specs: ClickHere"
+                                             action="#{Rest.getAttributeDetails}">
+                   <amx:showPopupBehavior popupId="popup-spec" type="action" align="overlapMiddleCenter" alignId="pp1"/>
+                     <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}"
+                                                         type="action" id="spl2"/>
+                     <amx:setPropertyListener from="#{row.rowId}" to="#{pageFlowScope.itemRowId}"
+                                                         type="action" id="spl3"/>
+                                                         </amx:commandLink>
+                                                         </amx:cellFormat>
+                                                         </amx:rowLayout>
+                   <amx:rowLayout id="rl10" rendered="#{row.showAttrib}">
+                   <amx:cellFormat id="cf17" rendered="#{row.showAttrib}">
+                  <amx:panelGroupLayout id="pgl10" layout="horizontal" inlineStyle="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size: 14px;color:#707173;" >
+                  <amx:outputText value="Specs: #{row.attrib}" inlineStyle="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size: 14px;color:#707173;">
+                  </amx:outputText>
+                  </amx:panelGroupLayout>
+                   
+                   </amx:cellFormat>
+                   </amx:rowLayout>
+                  </amx:tableLayout>
+                  
+                      </amx:panelGroupLayout>
+                      </amx:cellFormat>
+                      <amx:cellFormat id="cf14" width="30%" valign="top" halign="end">
+                      <amx:commandButton text="Details" id="cb3" styleClass="adfmf-commandButton-style1" action="#{Rest.getItemDetails}">
+                                                      <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}"
                                                          type="action" id="spl1"/>
                                 <amx:setPropertyListener from="#{row.rowId}" to="#{pageFlowScope.itemRowId}"
                                                          type="action" id="spl12"/>
-                            </amx:commandLink>
-                        </amx:cellFormat>
-                    </amx:rowLayout>
-                    </amx:tableLayout>
-                    <amx:tableLayout width="100%">
-                    <amx:rowLayout id="rl131">
-                    <!--<amx:cellFormat width="40px" halign="start" id="cf19"/>-->
-                    <amx:cellFormat width="40%"  rendered="#{row.showSpec}" halign="start"  id="cf11" valign="top"
-                                        height="#{deviceScope.device.os=='Android'?'22':'19'}px">
-                            <amx:commandLink inlineStyle="font-size: 14px; clear: both;color: #0572CE;font-family: Arial, sans-serif;" id="cl9" text="Specs: ClickHere"
-                                             action="#{Rest.getAttributeDetails}">
-                        <amx:showPopupBehavior popupId="popup-spec" type="action" align="overlapBottom" alignId="pp1"/>
-                        <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}"
-                                                         type="action" id="spl2"/>
-                                <amx:setPropertyListener from="#{row.rowId}" to="#{pageFlowScope.itemRowId}"
-                                                         type="action" id="spl3"/>
-                    </amx:commandLink>
-                </amx:cellFormat>                                        
-                            <!--<amx:outputText value="Specification"
-                                            inlineStyle="margin-top: -14px; font-size: 14px; clear: both;color: #000000;font-family: Arial, sans-serif;"
-                                            id="ot2"/>-->
-                        
-                        <amx:cellFormat width="60%" halign="end"  id="cf21"
-                                        height="#{deviceScope.device.os=='Android'?'22':'19'}px">
-                            <amx:outputText value="Price: $#{row.unitPrice} #{row.uom}"
-                                            inlineStyle="font-size: 14px; clear: both;color: #000000;font-family: Arial, sans-serif;"
-                                            id="ot9"/>
-                        </amx:cellFormat>
-                    </amx:rowLayout>
-                    </amx:tableLayout>
-                   <amx:tableLayout width="100%">
-                    <amx:rowLayout id="rl7">
-                        <!--<amx:cellFormat width="40px" halign="start" id="cf20"/>-->
-                        <amx:cellFormat width="40%" rendered="#{row.showAttrib}" halign="start" id="cf24" valign="top"
-                                        height="#{deviceScope.device.os=='Android'?'22':'19'}px">
-                            <amx:outputText value="Specs: #{row.attrib}"
-                                            inlineStyle="font-size: 14px; break-word;white-space: pre-wrap; color: #000000;font-family: Arial, sans-serif;"
-                                            id="ot8"/>
-                        </amx:cellFormat>
-                        <amx:cellFormat rendered="#{row.showSeller}" width="60%" halign="end" id="cf17"
-                                        valign="top" height="#{deviceScope.device.os=='Android'?'22':'19'}px">
-                            <amx:outputText value="Seller: #{row.sellerName}"
-                                            inlineStyle="font-size: 14px; clear: both;color: #000000;font-family: Arial, sans-serif;"
-                                            id="ot10"/>
-                        </amx:cellFormat>
-                    </amx:rowLayout>
-                </amx:tableLayout>
-                <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}" type="action"/>
-                <amx:setPropertyListener from="#{row.vendorName}" to="#{pageFlowScope.vendorName}" type="action"/>
-            </amx:listItem>
-        </amx:listView>
-        <amx:tableLayout width="100%" id="tl6">
-            <amx:rowLayout rendered="#{pageFlowScope.displaySearchCount}" id="rl6">
-                <amx:cellFormat width="70%" id="cf13" >
-                    
-                    <!--<amx:commandLink inlineStyle="margin-left:15px;margin-right:5px" id="commandLink121"
-                                     text="#{pageFlowScope.searchCount}"/>-->
-                </amx:cellFormat>
-                <amx:cellFormat width="30%" id="cf15" halign="end">
-                    <amx:commandLink  rendered="#{pageFlowScope.displayPrev}" id="cl5"
-                                     actionListener="#{Rest.showPrevPageItems}" text="Prev"></amx:commandLink>
-                    <amx:commandLink  rendered="#{pageFlowScope.displayNext}" actionListener="#{Rest.getNextPageItems}"  inlineStyle="margin-left:15px;margin-right:5px"
-                                     id="cl6" text="Next"/>
-                </amx:cellFormat>
 
+</amx:commandButton>
+                      
+                      </amx:cellFormat>
+                    </amx:rowLayout>
+                  </amx:tableLayout>
+                </amx:panelGroupLayout>
+              </amx:cellFormat>
             </amx:rowLayout>
-        </amx:tableLayout>
-        
-        
-        
-        <amx:panelGroupLayout id="pgl1" rendered="true">
-            <amx:commandButton text="_hiddenShow" id="_popShowId" inlineStyle="visibility: hidden;">
-                <amx:showPopupBehavior popupId="popup1" type="action" align="after" alignId="pp1"/>
-            </amx:commandButton>
-        </amx:panelGroupLayout>
-       
-    </amx:panelPage>
-    
-    
-
-    <amx:popup id="popup-new"
-               inlineStyle="position:relative;margin-top:#{(deviceScope.hardware.screen.availableHeight-200)/2}px;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"
-               animation="slideUp">
-        <amx:panelGroupLayout id="pgl3">
-            <amx:tableLayout width="100%" id="zel1">
-                <amx:rowLayout id="zwel1">
-                    <amx:cellFormat id="zfe11" halign="end" width="100%">
-                        <amx:commandButton icon="images/close.png" id="zbs8b">
-                            <amx:closePopupBehavior popupId="popup-new" type="action"/>
-                        </amx:commandButton>
-                    </amx:cellFormat>
-                </amx:rowLayout>
-            </amx:tableLayout>
-            <amx:selectOneRadio label="Sort By" value="#{pageFlowScope.selectedSortBy}" simple="true" id="sorre1">
-                <amx:selectItem id="ite1" value="relevance" label="Relevance"/>
-                <amx:selectItem id="ite2" value="low_to_high" label="Price Low to High"/>
-                <amx:selectItem id="ite3" value="high_to_low" label="Price High to Low"/>
-            </amx:selectOneRadio>
-            <amx:tableLayout halign="center" id="ztl1" inlineStyle="width:100%" borderWidth="0" cellSpacing="0">
-                <amx:rowLayout id="zrl1">
-                    <amx:cellFormat id="zcf2" halign="center" inlineStyle="width:40%">
-                        <amx:commandButton text="Ok" actionListener="#{Rest.sortItems}" id="zcb2"
-                                           inlineStyle="width:85%; background-color:#C89C31;background-image:none;"
-                                           styleClass="adfmf-commandButton-border-cart">
-                            <amx:closePopupBehavior popupId="popup-new" type="action"/>
-                        </amx:commandButton>
-                    </amx:cellFormat>
-                </amx:rowLayout>
-            </amx:tableLayout>
-        </amx:panelGroupLayout>
-    </amx:popup>
-    <!--
-    
-    inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;text-align:center;"-->
-    <amx:popup id="popup1" animation="slideUp"
-               inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;text-align:center;">
-        <amx:panelGroupLayout id="panelGroupLayout1" halign="center">
-            <!--<amx:tableLayout id="tlq11" width="100%" borderWidth="0" cellSpacing="0">
-  <amx:rowLayout id="rl12">
-         <amx:cellFormat id="cf113" columnSpan="2" width="100%"  halign="start">
-            <amx:selectOneChoice value="#{bindings.categories.inputValue}"  valueChangeListener="#{Rest.getCategories1}" label="#{bindings.categories.label}"
-                                 id="soc6">
-              <amx:selectItems value="#{bindings.categories.items}" id="si6"/>
-            </amx:selectOneChoice>
-            <amx:selectOneChoice value="#{bindings.categories1.inputValue}" valueChangeListener="#{Rest.getCategories2}" label="#{bindings.categories1.label}"
-                                 id="soc1">
-              <amx:selectItems value="#{bindings.categories1.items}" id="si5"/>
-            </amx:selectOneChoice>
-            <amx:selectOneChoice value="#{bindings.categories2.inputValue}" valueChangeListener="#{Rest.getCategories3}" label="#{bindings.categories2.label}"
-                                 id="soc2">
-              <amx:selectItems value="#{bindings.categories2.items}"  id="si7"/>
-            </amx:selectOneChoice>
-            <amx:selectOneChoice value="#{bindings.categories3.inputValue}" label="#{bindings.categories3.label}"
-                                 id="soc3">
-              <amx:selectItems value="#{bindings.categories3.items}" id="si3"/>
-            </amx:selectOneChoice>
+                </amx:tableLayout>
       
-   </amx:cellFormat>
-  </amx:rowLayout>
-   <amx:rowLayout id="rql11">
-    <amx:cellFormat id="cqf11" halign="start" inlineStyle="padding: 4px;">
-      <amx:commandButton id="commandButton6" text="Cancel" action="submitRequisition"  inlineStyle="width:80%;" styleClass="adfmf-commandButton-border">
-                <amx:closePopupBehavior popupId="popup1" type="action"/>
-            </amx:commandButton>
-    </amx:cellFormat>
-    <amx:cellFormat id="cf112" halign="start" inlineStyle="padding: 4px;">
-            <amx:commandButton id="commandButton7" text="Ok" action="#{Rest.setCategories}" inlineStyle="width:80%;" styleClass="adfmf-commandButton-border">
-                                 <amx:closePopupBehavior popupId="popup1" type="action"/>
-             </amx:commandButton>
-    </amx:cellFormat>
-    </amx:rowLayout>
-    </amx:tableLayout>-->
-            <amx:tableLayout id="tlq11" width="100%" borderWidth="0" cellSpacing="0">
-                <amx:rowLayout id="rl121">
-                    <amx:cellFormat id="cf113" width="100%" halign="start">
-                        <amx:selectOneChoice value="#{bindings.categories.inputValue}"
-                                             valueChangeListener="#{Rest.getCategories1}" label="Level 1" id="soc6">
-                            <amx:selectItems value="#{bindings.categories.items}" id="si6"/>
-                        </amx:selectOneChoice>
-                    </amx:cellFormat>
-                </amx:rowLayout>
-                <amx:rowLayout id="tl121">
-                    <amx:cellFormat id="tf113" width="100%" halign="start">
-                        <amx:outputText value="#{pageFlowScope.categoryDescription}" id="ot11"/>
-                    </amx:cellFormat>
-                </amx:rowLayout>
-                <amx:rowLayout id="rl122">
-                    <amx:cellFormat id="cf114" width="100%" halign="start">
-                        <amx:selectOneChoice value="#{bindings.categories1.inputValue}"
-                                             valueChangeListener="#{Rest.getCategories2}" label="Level 2" id="soc1">
-                            <amx:selectItems value="#{bindings.categories1.items}" id="si5"/>
-                        </amx:selectOneChoice>
-                    </amx:cellFormat>
-                </amx:rowLayout>
-                <amx:rowLayout id="el121">
-                    <amx:cellFormat id="ef113" width="100%" halign="start">
-                        <amx:outputText value="#{pageFlowScope.categoryDescription1}" id="ot5"/>
-                    </amx:cellFormat>
-                </amx:rowLayout>
-                <amx:rowLayout id="rl123">
-                    <amx:cellFormat id="cf115" width="100%" halign="start">
-                        <amx:selectOneChoice value="#{bindings.categories2.inputValue}"
-                                             valueChangeListener="#{Rest.getCategories3}" label="Level 3" id="soc2">
-                            <amx:selectItems value="#{bindings.categories2.items}" id="si7"/>
-                        </amx:selectOneChoice>
-                    </amx:cellFormat>
-                </amx:rowLayout>
-                <amx:rowLayout id="fl121">
-                    <amx:cellFormat id="ff113" width="100%" halign="start">
-                        <amx:outputText value="#{pageFlowScope.categoryDescription2}" id="ot3"/>
-                    </amx:cellFormat>
-                </amx:rowLayout>
-                <amx:rowLayout id="rl125">
-                    <amx:cellFormat id="cf116" width="100%" halign="start">
-                        <amx:selectOneChoice value="#{bindings.categories3.inputValue}"
-                                             valueChangeListener="#{Rest.getCategories4}" label="Level 4" id="soc3">
-                            <amx:selectItems value="#{bindings.categories3.items}" id="si3"/>
-                        </amx:selectOneChoice>
-                    </amx:cellFormat>
-                </amx:rowLayout>
-                <amx:rowLayout id="gl121">
-                    <amx:cellFormat id="gf113" width="100%" halign="start">
-                        <amx:outputText value="#{pageFlowScope.categoryDescription3}" id="ot6"/>
-                    </amx:cellFormat>
-                </amx:rowLayout>
-            </amx:tableLayout>
-            <amx:tableLayout id="tl1" width="100%" borderWidth="0" cellSpacing="0">
-                <amx:rowLayout id="rl1">
-                    <amx:cellFormat id="cqf11" halign="start" inlineStyle="padding: 4px;">
-                        <amx:commandButton id="commandButton6" text="Cancel" action="submitRequisition"
-                                           inlineStyle="width:80%;" styleClass="adfmf-commandButton-border">
-                            <amx:closePopupBehavior popupId="popup1" type="action"/>
-                        </amx:commandButton>
-                    </amx:cellFormat>
-                    <amx:cellFormat id="cqf12" halign="start" inlineStyle="padding: 4px;">
-                        <amx:commandButton id="commandButton61" text="Clear" action="#{Rest.clearFilter}"
-                                           inlineStyle="width:80%;" styleClass="adfmf-commandButton-border">
-                            <amx:closePopupBehavior popupId="popup1" type="action"/>
-                        </amx:commandButton>
-                    </amx:cellFormat>
-                    <amx:cellFormat id="cf112" halign="start" inlineStyle="padding: 4px;">
-                        <amx:commandButton id="commandButton7" text="Ok" action="#{Rest.filterItemsByCategory}"
-                                           inlineStyle="width:80%;" styleClass="adfmf-commandButton-border">
-                            <amx:closePopupBehavior popupId="popup1" type="action"/>
-                        </amx:commandButton>
-                    </amx:cellFormat>
-                </amx:rowLayout>
+               <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}" type="action"/>
+                <amx:setPropertyListener from="#{row.vendorName}" to="#{pageFlowScope.vendorName}" type="action"/>
+                <amx:setPropertyListener from="#{row.rowId}" to="#{pageFlowScope.itemRowId}" type="action"/>
+              
+ 
+   </amx:listItem>
+   </amx:listView>     
+                 
+   </amx:panelGroupLayout>
+      </amx:facet>
+       <amx:facet name="bottom">
+        <amx:tableLayout id="tl1" width="100%" inlineStyle="background-color: #F7F3F3;">
+          <amx:rowLayout id="rl1">
+            <amx:cellFormat id="cf3" halign="center" width="15%">
+            <amx:commandLink id="cl6" rendered="#{pageFlowScope.displaySortOption}">
+            <amx:image id="i1" source="/images/sort-by.png"/>
+            <amx:showPopupBehavior popupId="popup-sort" type="action" align="cornerBottomStart" alignId="pp1"/>
+            </amx:commandLink>
+            </amx:cellFormat>
+            <amx:cellFormat id="cf2" halign="center" width="65%">
+                    <amx:commandButton text="Add To Cart" id="cb2" rendered="#{pageFlowScope.displayAddToCart}" 
+                    styleClass="adfmf-commandButton-style" inlineStyle="width:80%" actionListener="#{Rest.addItemsToCart}"/>
+            </amx:cellFormat>
+            <amx:cellFormat id="cf1" halign="center" width="15%">
+            <amx:commandLink  id="cl3"  rendered="#{pageFlowScope.displayPrev}" actionListener="#{Rest.showPrevPageItems}">
+            <amx:image id="i7" source="/images/reverse-arrow.png"/>
+            </amx:commandLink>
+            </amx:cellFormat>
+            <amx:cellFormat id="cf4" halign="center" width="15%">
+            <amx:commandLink  id="cl4" rendered="#{pageFlowScope.displayNext}" actionListener="#{Rest.getNextPageItems}">
+            <amx:image id="i4" source="/images/forward-arrow.png"/>
+            </amx:commandLink>
+            </amx:cellFormat>
+          </amx:rowLayout>
         </amx:tableLayout>
-       </amx:panelGroupLayout>
-    </amx:popup>
-    <amx:popup id="popup-spec"
-               inlineStyle="position:relative;margin-top:#{(deviceScope.hardware.screen.availableHeight-200)/2}px;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;height:350px;border-radius: 10px"
-               animation="slideUp" backgroundDimming="on">
-        <amx:tableLayout width="100%" id="tel1">
+      </amx:facet>
+      
+      </amx:panelStretchLayout>
+
+</amx:panelPage>
+
+<amx:popup id="popup-sort"
+               autoDismiss="true" animation="zoom" backgroundDimming="on" styleClass="sortpopup">
+    <amx:panelStretchLayout id="psl2" scrollPolicy="scroll">
+      <amx:facet name="top">
+          <amx:tableLayout width="100%" id="tel1" inlineStyle="background-color: #0E4876;">
             <amx:rowLayout id="rwel1">
-                <amx:cellFormat id="cf23" halign="start" width="80%">
-                    <amx:outputText value="Specifications" id="ot2"
-                                    inlineStyle="font-weight:bold; text-align:center;"></amx:outputText>
+                <amx:cellFormat id="cf16" halign="center" width="80%">
+                    <amx:outputText value="Sort By" id="ot3"
+                                    inlineStyle="font-weight:bold;color: #FFFFFF; text-align:center;"></amx:outputText>
                 </amx:cellFormat>
                 <amx:cellFormat id="cfe11" halign="end" width="20%">
-                    <!--<amx:commandButton icon="images/close.png" id="cbs8b">-->
-                    <amx:commandButton icon="images/close.png" id="cbs8b">
-                        <amx:closePopupBehavior popupId="popup-spec" type="action" id="cpb11"/>
+                    <amx:commandButton icon="/images/error.png" id="cbs8b">
+                        <amx:closePopupBehavior popupId="popup-sort" type="action" id="cpb11"/>
                     </amx:commandButton>
                 </amx:cellFormat>
             </amx:rowLayout>
         </amx:tableLayout>
-        <amx:spacer id="s17" height="5" inlineStyle="border-bottom: 1px solid #0E4876"/>
+        </amx:facet>
+        <amx:facet name="center">
         <amx:spacer id="s13" height="5"/>
-        <amx:tableLayout id="tl14" width="100%">
-            <amx:rowLayout id="rl16">
-                <amx:cellFormat id="cf22" width="100%" inlineStyle="overflow: scroll" >
-                <!--#{row.spec}-->
-                    <amx:outputText value="#{pageFlowScope.specDetails}"
-                                    inlineStyle="white-space:pre-wrap; font-weight:bold; border:none none none none medium medium medium medium currentColor currentColor currentColor currentColor; margin-bottom:10px; border-left-color:transparent; border-right-color:transparent; border-top-color:transparent; border-bottom-color:transparent; outline-color:transparent;" id="ot12"/>
-                    <!--<amx:listView var="row" value="#{bindings.assets.collectionModel}"
-                                  fetchSize="#{bindings.assets.rangeSize}"
-                                  selectedRowKeys="#{bindings.assets.collectionModel.selectedRow}"
-                                  initialScrollRowKeys="#{bindings.assets.collectionModel.selectedRow}"
-                                  selectionListener="#{bindings.assets.collectionModel.makeCurrent}"
-                                  styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll"
-                                  bufferStrategy="viewport" id="lv2" inlineStyle="width:100%; text-align:center;">
-                        <amx:listItem id="li2" actionListener="#{CycleCount.populateAssetInfo}"
-                                      inlineStyle="text-align:center;">
-                            <amx:outputText value="#{row.name}" id="ot10" inlineStyle="text-align:center;"/>
-                            <amx:closePopupBehavior popupId="popup1" type="action" id="cpb10"/>
-                            <amx:setPropertyListener from="#{row.name}" to="#{pageFlowScope.assetName}" type="action"
-                                                     id="spl2"/>
-                        </amx:listItem>
-                    </amx:listView>-->
+        <amx:selectOneRadio label="Sort By" value="#{pageFlowScope.selectedSortBy}" simple="true" valueChangeListener="#{Rest.sortItems}" id="sorre1">
+                <amx:selectItem id="ite1" value="relevance" label="Relevance"/>
+                <amx:selectItem id="ite2" value="low_to_high" label="Price Low to High"/>
+                <amx:selectItem id="ite3" value="high_to_low" label="Price High to Low"/>
+            </amx:selectOneRadio>
+        </amx:facet>
+        </amx:panelStretchLayout>
+        </amx:popup>
+        
+        
+        
+          <amx:popup id="popup-spec" animation="zoom" backgroundDimming="on" styleClass="sortpopup">
+                   <amx:panelStretchLayout id="spcpsl2" scrollPolicy="scroll">
+      <amx:facet name="top">
+          <amx:tableLayout width="100%" id="spctel1" inlineStyle="background-color: #0E4876;">
+            <amx:rowLayout id="spcrwel1">
+                <amx:cellFormat id="spccf16" halign="center" width="80%">
+                    <amx:outputText value="Specifications" id="spcot3"
+                                    inlineStyle="font-weight:bold;color: #FFFFFF; text-align:center;"></amx:outputText>
+                </amx:cellFormat>
+                <amx:cellFormat id="spccfe11" halign="end" width="20%">
+                    <amx:commandButton icon="/images/error.png" id="spccbs8b">
+                        <amx:closePopupBehavior popupId="popup-spec" type="action" id="spccpb11"/>
+                    </amx:commandButton>
                 </amx:cellFormat>
             </amx:rowLayout>
         </amx:tableLayout>
-        <!--<amx:commandButton id="commandButton7" text="Ok" action="submitRequisition" inlineStyle="width:80%;" styleClass="adfmf-commandButton-border">
-                                 <amx:closePopupBehavior popupId="popup1" type="action"/>
-             </amx:commandButton>-->
-    </amx:popup>
-</amx:view>
+        </amx:facet>
+        <amx:facet name="center">
+        <amx:spacer id="s1" height="5"/>
+                <amx:tableLayout id="tl14" width="100%">
+            <amx:rowLayout id="rl16">
+                <amx:cellFormat id="cf22" width="100%">
+                <!--#{row.spec}-->
+                    <amx:outputText value="#{pageFlowScope.specDetails}" inlineStyle="white-space:pre-wrap; font-weight:bold;" id="ot12"/>
+        </amx:cellFormat>
+        </amx:rowLayout>
+        </amx:tableLayout>
+</amx:facet>
+</amx:panelStretchLayout>
 
-       
-       
-       
+    </amx:popup>
+    <amx:popup id="popup-filter"
+               autoDismiss="true" animation="zoom" backgroundDimming="on" styleClass="sortpopup">
+    <amx:panelStretchLayout id="Fpsl2" scrollPolicy="scroll">
+      <amx:facet name="top">
+          <amx:tableLayout width="100%" id="Ftel1" inlineStyle="background-color: #0E4876;">
+            <amx:rowLayout id="Frwel1">
+                <amx:cellFormat id="Fcf16" halign="center" width="80%">
+                    <amx:outputText value="Filter By" id="Fot3"
+                                    inlineStyle="font-weight:bold;color: #FFFFFF; text-align:center;"></amx:outputText>
+                </amx:cellFormat>
+                <amx:cellFormat id="Fcfe11" halign="end" width="20%">
+                    <amx:commandButton icon="/images/error.png" id="Fcbs8b">
+                        <amx:closePopupBehavior popupId="popup-filter" type="action" id="Fcpb11"/>
+                    </amx:commandButton>
+                </amx:cellFormat>
+            </amx:rowLayout>
+        </amx:tableLayout>
+        </amx:facet>
+        <amx:facet name="center">
+        <amx:spacer id="Fs13" height="5"/>
+      <amx:selectOneChoice value="#{pageFlowScope.aliasCategorieEmpty}" label="Item Categories" id="Fsoc7"
+                             valueChangeListener="#{Rest.getAliasCategories}">
+            <amx:selectItems value="#{bindings.aliass.items}" id="Fsi10"/>
+        </amx:selectOneChoice>
+
+        </amx:facet>
+        </amx:panelStretchLayout>
+        </amx:popup>
+
+
+</amx:view>

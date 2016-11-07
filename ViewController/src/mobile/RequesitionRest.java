@@ -61,6 +61,7 @@ public class RequesitionRest {
     public static List costCenterList=new ArrayList();
     public static ArrayList<NaturalAccounts> naturalAccountList = new ArrayList<NaturalAccounts>();
     public static ArrayList<RequestType> requestTypeList = new ArrayList<RequestType>();
+    public static ArrayList<String> selectedImages = new ArrayList<String>();
     public RequesitionRest() {
     }
 
@@ -5438,9 +5439,11 @@ public class RequesitionRest {
         AdfmfContainerUtilities.gotoFeature("feature1");
         AdfmfContainerUtilities.invokeContainerJavaScriptFunction("feature1",
         "adf.mf.api.amx.doNavigation", new Object[] { "buyerAssisted_default" });
+        ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.showOthers}", String.class);
+        ve23.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
         try{
-        AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
-                                                                  "chooseItemType", new Object[] { });
+        //AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
+        //                                                          "chooseItemType", new Object[] { });
         // AdfmfContainerUtilities.invokeContainerJavaScriptFunction("feature1","adf.mf.api.amx.doNavigation", new Object[] { "buyerAssisted" });
         
         ValueExpression ve_user = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
@@ -5451,10 +5454,12 @@ public class RequesitionRest {
 
         ValueExpression ve49 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationCode}", String.class);
         String default_deliver_to_location_code = (String)ve49.getValue(AdfmfJavaUtilities.getAdfELContext());
+      
+         
         
-        AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
-                                                                                "getItemtype",
-                                                                                new Object[] { });
+        //AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
+          //                                                                      "getItemtype",
+            //                                                                    new Object[] { });
         }
         catch(Exception e){
         e.printStackTrace();
@@ -5536,10 +5541,21 @@ public class RequesitionRest {
         
     }
      public void getFreeFormValues(String rr) {
+         Rest.clearAttachments();    
+         
+         ImageList.imageList.clear();
+         selectedImages.clear();
+         Rest.selectedImages.clear();
+
          System.out.println("--------------Hello ItemType");
         /* ValueExpression ve_searchText = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
           //ve_searchText.setValue(AdfmfJavaUtilities.getAdfELContext(),"Search your costcenter");
           ve_searchText.setValue(AdfmfJavaUtilities.getAdfELContext()," ");*/
+         
+         
+        ValueExpression showOthers = AdfmfJavaUtilities.getValueExpression("#{applicationScope.showOthers}", String.class);
+        String showOthers_value = (String)showOthers.getValue(AdfmfJavaUtilities.getAdfELContext());
+         System.out.println("--------------Hello ItemType"+showOthers_value);
          
         ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showSearch}", String.class);
         ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
@@ -5551,9 +5567,7 @@ public class RequesitionRest {
         ValueExpression ve22 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showAddCartButton}", String.class);
         ve22.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
         
-         ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showOthers}", String.class);
-         ve23.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
-
+        
          ValueExpression veb1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showWeb}", String.class);
          veb1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
          ValueExpression vebe1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.webURL}", String.class);
@@ -5580,10 +5594,18 @@ public class RequesitionRest {
          vec12.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
          ValueExpression vec13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
          vec13.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         
          ValueExpression vec14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
          vec14.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
          ValueExpression vec15 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountForm}", String.class);
          vec15.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+
+//Application Scope Cost and Natural
+         ValueExpression vea14 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.costcenterForm}", String.class);
+         vea14.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         ValueExpression vea15 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.GLAccountForm}", String.class);
+         vea15.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+         
          ValueExpression vec16 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.partnoForm}", String.class);
          vec16.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
          ValueExpression vec17 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.referencenoForm}", String.class);
@@ -5999,6 +6021,7 @@ public class RequesitionRest {
                                                                      String description=ci.getString("DESCRIPTION");
                                                                      if(description.equalsIgnoreCase(default_cost_center_Value)) {
                                                                       vec14.setValue(AdfmfJavaUtilities.getAdfELContext(),description);
+                                                                      vea14.setValue(AdfmfJavaUtilities.getAdfELContext(),description);
                                                                        System.out.println("Dafult Cost Center Value-->"+default_cost_center_Value);
 
                                                                       }
@@ -6083,6 +6106,7 @@ public class RequesitionRest {
                        String description=na.getString("DESCRIPTION");
                        if(description.equalsIgnoreCase(default_natural_account_Value)) {
                         vec15.setValue(AdfmfJavaUtilities.getAdfELContext(),description);
+                        vea15.setValue(AdfmfJavaUtilities.getAdfELContext(),description);
                          System.out.println("Dafult GL Account Value-->"+default_natural_account_Value);
                         }
 
@@ -6403,5 +6427,15 @@ public class RequesitionRest {
             ValueExpression ve21 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showAddCartButton}", String.class);
             ve21.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
         }
+    }
+
+
+    public void showRejectResonPopup(ActionEvent actionEvent) {
+        // Add event code here...
+        ValueExpression ve22 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RejectReason}", String.class);
+        ve22.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+        
+        ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RejectionComments}", String.class);
+        ve23.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
     }
 }
