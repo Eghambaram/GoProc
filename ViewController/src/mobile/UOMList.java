@@ -4266,9 +4266,9 @@ public class UOMList {
                     ValueExpression vec13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
                     vec13.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                     ValueExpression vec14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
-                    vec14.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    vec14.setValue(AdfmfJavaUtilities.getAdfELContext(),default_costCenter);
                     ValueExpression vec15 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountForm}", String.class);
-                    vec15.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    vec15.setValue(AdfmfJavaUtilities.getAdfELContext(),default_GLAccount);
                     ValueExpression vec16 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.partnoForm}", String.class);
                     vec16.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                     ValueExpression vec17 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.referencenoForm}", String.class);
@@ -4754,7 +4754,7 @@ public class UOMList {
                         sb.append("{\n");
                         sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
                         sb.append("    \"PRODUCT_SOURCE\":\"U\",\n");
-                        sb.append("    \"PRODUCT_CATEGORY\":\""+al.getOracleId()+"\",\n");
+                        sb.append("    \"PRODUCT_CATEGORY\":\""+al.getOracleCategotySeg()+"\",\n");
                         sb.append("    \"PRODUCT_TITLE\":\""+itemDescription+"\",\n");
                         sb.append("    \"QUANTITY\":\""+qty+"\",\n");
                         sb.append("    \"UOM_CODE\":\""+um.getName()+"\",\n");
@@ -4925,6 +4925,10 @@ public class UOMList {
                         ValueExpression ve133 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_name}", String.class);
                         String userName = (String)ve133.getValue(AdfmfJavaUtilities.getAdfELContext());
             //Free Form Values
+            ValueExpression vea1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.costcenterForm}", String.class);
+            String default_costCenter = (String)vea1.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression vea2 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.GLAccountForm}", String.class);
+            String default_GLAccount = (String)vea2.getValue(AdfmfJavaUtilities.getAdfELContext());
             
 
             ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
@@ -5031,7 +5035,7 @@ public class UOMList {
             System.out.println("Item Type-->"+it.getLineTypeCode()+it.getLineTypeCode());
             
             Alias al=(Alias)AliasList.s_jobs.get((Integer.parseInt(itemCategory)));
-            System.out.println("Alias-->"+al.getOracleId()+al.getIndixId());
+            System.out.println("Alias-->"+al.getOracleCategotySeg()+al.getName()+al.getOracleId()+al.getIndixId());
             
             RequestType rt=(RequestType)RequestTypeList.req_List.get((Integer.parseInt(reqType)));
             System.out.println("Req Type-->"+rt.getLookupCode()+rt.getMeaning());
@@ -5237,7 +5241,7 @@ public class UOMList {
                                                sb.append("{\n");
                                                sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
                                                sb.append("    \"PRODUCT_SOURCE\":\"U\",\n");
-                                               sb.append("    \"PRODUCT_CATEGORY\":\""+al.getOracleId()+"\",\n");
+                                               sb.append("    \"PRODUCT_CATEGORY\":\""+al.getOracleCategotySeg()+"\",\n");
                                                sb.append("    \"PRODUCT_TITLE\":\""+itemDescription+"\",\n");
                                                sb.append("    \"QUANTITY\":\""+qty+"\",\n");
                                                sb.append("    \"UOM_CODE\":\""+um.getName()+"\",\n");
@@ -5356,9 +5360,9 @@ public class UOMList {
                     ValueExpression vec13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
                     vec13.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                     ValueExpression vec14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.costcenterForm}", String.class);
-                    vec14.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    vec14.setValue(AdfmfJavaUtilities.getAdfELContext(),default_costCenter);
                     ValueExpression vec15 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.GLAccountForm}", String.class);
-                    vec15.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    vec15.setValue(AdfmfJavaUtilities.getAdfELContext(),default_GLAccount);
                     ValueExpression vec16 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.partnoForm}", String.class);
                     vec16.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                     ValueExpression vec17 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.referencenoForm}", String.class);
