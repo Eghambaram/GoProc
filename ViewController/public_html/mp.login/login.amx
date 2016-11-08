@@ -67,7 +67,7 @@
                         <amx:image id="zimage2" source="/images/user.png"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="zcf7" width="90%" halign="start">
-                    <amx:inputText  id="zrez8i2t1" simple="true" value="#{applicationScope.user_name}" hintText="User Name"/>
+                    <amx:inputText  id="zrez8i2t1" simple="true" value="#{applicationScope.user_name}" hintText="User Name" styleClass="adfmf-inputText-newStyle"/>
                     </amx:cellFormat>
                   </amx:rowLayout>
                   <amx:rowLayout id="yrl6">
@@ -75,7 +75,7 @@
                         <amx:image id="yimage2" source="/images/key.png"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="ycf7" width="90%" halign="start">
-                    <amx:inputText  id="inputText2" simple="true" secret="true"  value="#{applicationScope.password}" keyboardDismiss="go" hintText="Password"/>
+                    <amx:inputText  id="inputText2" simple="true" secret="true"  value="#{applicationScope.password}" keyboardDismiss="go" hintText="Password" styleClass="adfmf-inputText-newStyle"/>
                     </amx:cellFormat>
                   </amx:rowLayout>
                   </amx:tableLayout>

@@ -405,185 +405,64 @@ word-break: break-word;
   border: 1px solid #0E4876;
 }
 
-/* new Design*/
 /* New Design*/
-.amx-panelPage-footer {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 48px;
-  display: block;
-  background-color: #F6F6F7;
-  border-top: 1px solid #D5D5D7;
-  z-index: 1;
-}
-
-/*Input Text*/
- 
-/*
-.amx-inputText .field-value .wrap {
-  display: inline-block;
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-  border-radius: 5px;
-  padding: 4px;
-  color: #000000;
-  border: 2px solid #184972;
-  // border-bottom: 1px solid rgba(0, 0, 0, 0.30)
-  background-color: #FFFFFF;
- 
-}*/
-/*.amx-inputText .field-value .wrap {
-  display: inline-block;
-  color: #707173;
-  background-color: #F7F3F3;
-padding: 8px;
-  box-sizing: border-box;
-  border-radius: 5px;
-/* border: 1px solid #707173;*/
-/*}*/
- 
-.amx-inputText .field-value .wrap {
-  display: inline-block;
-  background-color: #F7F3F3;
-/* padding: 8px;*/
-}
- 
- 
- 
- 
-.amx-inputText .field-value .wrap > textarea {
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
- 
-/* ------ Generic Field label/value ------ */
-.field-label {
-  box-sizing: border-box;
-  vertical-align: middle;
-  color: #7B7C7E;
-  font-size: 14px;
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-}
- 
- 
- 
-/* Panel Form*/
-.amx-panelFormLayout .field-label,
-.amx-panelFormLayout .field-value {
-  border-top: 1px solid #FFFFFF;
-  display: table-cell;
-  margin: 0;
-}
- 
-/* PFL Row and Label and Value Div's on top Styles */
-.amx-label-position-topCenter .amx-panelFormLayout_sizingTable > *,
-.amx-label-position-topStart .amx-panelFormLayout_sizingTable > *,
-.amx-label-position-topEnd  .amx-panelFormLayout_sizingTable > * {
-  display: block;
-  border-top: 1px solid #FFFFFF;
-}
- 
-.amx-panelFormLayout {
-/* margin: 19px 0;*/
-  padding: 0;
-  border: 1px solid #FFFFFF;
-  border-width: 1px 0;
-  background-color: #FFFFFF;
-}
- 
 .amx-commandButton.adfmf-commandButton-style {
-  min-height: 32px;
+  min-height: 24px;
   border: 1px solid #CC9933;
   box-sizing: border-box;
   background-color: #CC9933;
   color: #FFFFFF;
 }
- 
-/* --------- <amx:inputText> --------- */
- 
- 
-.adfmf-panelGroupLayout-groupBox .amx-inputText .field-value .wrap,
-.amx-style-groupbox .amx-inputText .field-value .wrap,
-.amx-panelFormLayout .amx-inputText .field-value .wrap,
-.amx-inputText .field-value .wrap {
-display: inline-block;
-  color: #707173;
-  background-color: #F7F3F3;
-  padding: 8px;
+
+.amx-commandButton.adfmf-commandButton-style1 {
+  min-height: 22px;
+  border: 1px solid #0E4876;
   box-sizing: border-box;
-  border-radius: 5px;
-  /*border-bottom: 1px solid rgba(0, 0, 0, 0.30);*/
+  background-color: #0E4876;
+  color: #FFFFFF;
 }
-/* Input text can have rows set to a value greater than 1 so we cannot force its height */
-.amx-panelFormLayout .amx-inputText .field-value .wrap,
-.amx-inputText .field-value .wrap {
-  height: auto;
-  line-height: 16px;
-  margin-bottom: 4px;
-}
-.amx-inputText .field-value .wrap > textarea {
-  margin-top: 12px;
-}
- 
-.adfmf-panelGroupLayout-groupBox .amx-inputText .field-value .wrap.amx-wrap-active,
-.amx-style-groupbox .amx-inputText .field-value .wrap.amx-wrap-active,
-.amx-panelFormLayout .amx-inputText .field-value .wrap.amx-wrap-active,
-.amx-inputText .field-value .wrap.amx-wrap-active,
-.adfmf-panelPage-springboard .field-value .wrap.amx-wrap-active {
-  border-bottom: 2px solid #0572CE;
-}
-.amx-inputText .field-value input,
-.amx-inputText .field-value textarea {
-  box-sizing: border-box;
-  -webkit-appearance: none;
-  outline: none;
-  border: none;
-  background: transparent;
-  display: inline-block;
-  position: relative;
-  padding: 0;
-  width: 100%;
-  font-size: 16px;
-  font-weight: normal;
-}
-.amx-inputText.adfmf-inputText-bold .field-value input,
-.amx-inputText.adfmf-inputText-bold .field-value textarea {
-  font-weight: bold;
-}
-.amx-inputText .field-value textarea {
-  display: block;
-  line-height: 20px;
-}
-.amx-inputText.amx-simple {
-  font-size: 14px;
-  position: relative;
-}
-.amx-inputText.amx-simple input,
-.amx-inputText.amx-simple textarea {
-  font-size: inherit;
-}
-.amx-inputText.amx-disabled {
-  opacity:0.30;
-  pointer-events: none;
- 
-}
- 
-/* --------- </amx:inputText> --------- */
- 
+
+
 .amx-outputText.adfmf-outputText-style {
   font-weight: bold;
   font-size: 14px;
-  margin-left:10px;
+  margin-left:12px;
   color: #353535;
- 
+  
 }
-.amx-selectBooleanCheckbox .checkbox-text {
-  display: inline-block;
-   color: #353535;
+.amx-outputText.adfmf-outputText-style-values {
   font-size: 12px;
+  margin-left:2px;
+  color: #353535;
+}
+
+
+.amx-image.list-avatar {
+    border: 2px solid #FFF;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    margin: 4px;
+    width: 144px;
+    height: 144px;
+}
+
+    .amx-android-generic .sortpopup, .amx-android-chrome .sortpopup {
+    height: 380px;
+    width: 250px;
+    border-radius: 10px;
+}
+
+.amx-ios .sortpopup {
+    height: 340px;
+    width: 250px;
+    border-radius: 10px;
+}
+
+.amx-inputText.adfmf-inputText-newStyle .field-value input,
+.amx-inputText.adfmf-inputText-newStyle .field-value textarea {
+word-break: break-word;
+  overflow: hidden;
+  width: 100%;
+  background-color: #F7F3F3;
+  text-align: left;
   font-weight: normal;
 }

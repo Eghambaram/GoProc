@@ -111,7 +111,7 @@
             <amx:cellFormat id="cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="pgl1">
               <amx:outputText value="Item" id="ot1" styleClass="adfmf-outputText-style"/>
-             <amx:inputText  id="i2t1" simple="true" value="#{pageFlowScope.ItemNo}" hintText="Enter Item Number"/>
+             <amx:inputText  id="i2t1" simple="true" value="#{pageFlowScope.ItemNo}" hintText="Enter Item Number" styleClass="adfmf-inputText-newStyle"/>
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
@@ -120,7 +120,7 @@
             <amx:cellFormat id="r2cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r2pgl1">
               <amx:outputText value="Item Description *" id="r2ot1" styleClass="adfmf-outputText-style"/>
-             <amx:inputText  id="r2i2t1" simple="true" value="#{pageFlowScope.ItemDescriptionFrom}" hintText="Enter Item Description"/>
+             <amx:inputText  id="r2i2t1" simple="true" value="#{pageFlowScope.ItemDescriptionFrom}" hintText="Enter Item Description" styleClass="adfmf-inputText-newStyle"/>
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
@@ -128,7 +128,7 @@
             <amx:cellFormat id="ra2cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="ra2pgl1">
               <amx:outputText value="Web URL" id="ra2ot1" styleClass="adfmf-outputText-style"/>
-             <amx:inputText  id="ra2i2t1" simple="true" value="#{pageFlowScope.webURL}" hintText="Enter Item Description"/>
+             <amx:inputText  id="ra2i2t1" simple="true" value="#{pageFlowScope.webURL}" hintText="Enter Web URL" styleClass="adfmf-inputText-newStyle"/>
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
@@ -190,7 +190,7 @@
                 <amx:tableLayout id="tl3" width="100%">
                   <amx:rowLayout id="rl3">
                     <amx:cellFormat id="cf2" width="50%">
-                    <amx:inputText  id="r6i2t1" simple="true" readOnly="#{pageFlowScope.quantityReadOnly}" inputType="number" hintText="Enter Qty" valueChangeListener="#{Rest.validateQuantityText}" value="#{pageFlowScope.quantity}"/>
+                    <amx:inputText  id="r6i2t1" simple="true" readOnly="#{pageFlowScope.quantityReadOnly}" inputType="number" hintText="Enter Qty"  styleClass="adfmf-inputText-newStyle" valueChangeListener="#{Rest.validateQuantityText}" value="#{pageFlowScope.quantity}"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="cf42" width="50%">
                       <amx:selectOneChoice value="#{pageFlowScope.UOMFrom}" simple="true" readOnly="#{pageFlowScope.UOMReadOnly}" id="soc2">
@@ -208,7 +208,7 @@
             <amx:cellFormat id="r5cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r5pgl1">
               <amx:outputText value="Max. Estimated Price *" id="r5ot1" styleClass="adfmf-outputText-style"/>
-             <amx:inputText  id="r5i2t1" simple="true" value="#{pageFlowScope.MaxPriceFrom}" inputType="number" hintText="Enter Max. Estimated Price"/>
+             <amx:inputText  id="r5i2t1" simple="true" value="#{pageFlowScope.MaxPriceFrom}" inputType="number" hintText="Enter Max. Estimated Price" styleClass="adfmf-inputText-newStyle"/>
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
@@ -240,7 +240,7 @@
                 <amx:tableLayout id="ztl6" width="100%">
                   <amx:rowLayout id="zrl6">
                     <amx:cellFormat id="zcf7" width="90%" halign="start">
-                    <amx:inputText  id="zrez8i2t1" simple="true" value="#{pageFlowScope.supplierForm}" hintText="Search Supplier"/>
+                    <amx:inputText  id="zrez8i2t1" simple="true" value="#{pageFlowScope.supplierForm}" hintText="Search Supplier" styleClass="adfmf-inputText-newStyle"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="zcf124"  width="10%" halign="start">
                          <amx:commandLink rendered="true" id="zcommandLink1"
@@ -277,7 +277,7 @@
                 <amx:tableLayout id="ztle6" width="100%">
                   <amx:rowLayout id="zrle6">
                     <amx:cellFormat id="zcef7" width="90%" halign="start">
-                    <amx:inputText  id="zreez8i2t1" simple="true" value="#{pageFlowScope.supplierSiteForm}" hintText="Enter Supplier Site"/>
+                    <amx:inputText  id="zreez8i2t1" simple="true" value="#{pageFlowScope.supplierSiteForm}" hintText="Enter Supplier Site" styleClass="adfmf-inputText-newStyle"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="zcf1e24"  width="10%" halign="start">
                          <amx:commandLink rendered="true" id="zecommandLink1"
@@ -299,7 +299,7 @@
                 <amx:tableLayout id="tl6" width="100%">
                   <amx:rowLayout id="rl6">
                     <amx:cellFormat id="cf7" width="90%" halign="start">
-                    <amx:inputText  id="re8i2t1" simple="true"  value="#{pageFlowScope.costcenterForm}" hintText="Search your costcenter"/>
+                    <amx:inputText  id="re8i2t1" simple="true"  value="#{pageFlowScope.costcenterForm}" hintText="Search your costcenter" styleClass="adfmf-inputText-newStyle"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="cf124"  width="10%" halign="start">
                          <amx:commandLink rendered="true" id="commandLink1"
@@ -320,7 +320,7 @@
                 <amx:tableLayout id="zqtl6" width="100%">
                   <amx:rowLayout id="zqrl6">
                     <amx:cellFormat id="qzcf7" width="90%" halign="start">
-                    <amx:inputText  id="zre8i2t1" simple="true" value="#{pageFlowScope.GLAccountForm}" hintText="Search GL Account"/>
+                    <amx:inputText  id="zre8i2t1" simple="true" value="#{pageFlowScope.GLAccountForm}" hintText="Search GL Account" styleClass="adfmf-inputText-newStyle"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="zqcf124"  width="10%" halign="start">
                          <amx:commandLink rendered="true" id="zqcommandLink1"
@@ -339,7 +339,7 @@
             <amx:cellFormat id="re9cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="re9pgl1">
               <amx:outputText value="Supplier Part Number" id="re9ot1" styleClass="adfmf-outputText-style"/>
-             <amx:inputText  id="re9i2t1" simple="true" value="#{pageFlowScope.partnoForm}" hintText="Enter Supplier Part Number"/>
+             <amx:inputText  id="re9i2t1" simple="true" value="#{pageFlowScope.partnoForm}" hintText="Enter Supplier Part Number" styleClass="adfmf-inputText-newStyle"/>
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
@@ -347,7 +347,7 @@
             <amx:cellFormat id="re10cf1" width="100%" halign="start">
               <amx:panelGroupLayout id="re10pgl1">
               <amx:outputText value="Internal Reference Number" id="re10ot1" styleClass="adfmf-outputText-style"/>
-             <amx:inputText  id="re10i2t1" simple="true" value="#{pageFlowScope.referencenoForm}" hintText="Enter Internal Reference Number"/>
+             <amx:inputText  id="re10i2t1" simple="true" value="#{pageFlowScope.referencenoForm}" hintText="Enter Internal Reference Number" styleClass="adfmf-inputText-newStyle"/>
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
@@ -497,7 +497,7 @@
     <amx:tableLayout id="tl2121" width="100%">
                 <amx:rowLayout id="rl112">
                     <amx:cellFormat id="cf1222" width="100%">
-                        <amx:inputText value="#{pageFlowScope.costcenterFormSearchText}" simple="true" id="inputText221" hintText="Search Cost Center...">
+                        <amx:inputText value="#{pageFlowScope.costcenterFormSearchText}" simple="true" id="inputText221" hintText="Search Cost Center..." styleClass="adfmf-inputText-newStyle">
                         </amx:inputText>
                     </amx:cellFormat>
                     <amx:cellFormat id="cf12412" width="40px">
@@ -544,7 +544,7 @@
     <amx:tableLayout id="Ztl2121" width="100%">
                 <amx:rowLayout id="Zrl112">
                     <amx:cellFormat id="Zcf1222" width="100%">
-                        <amx:inputText value="#{pageFlowScope.GLAccountFormSearchText}" simple="true" id="ZinputText221" hintText="Search GL Accounts...">
+                        <amx:inputText value="#{pageFlowScope.GLAccountFormSearchText}" simple="true" id="ZinputText221" hintText="Search GL Accounts..." styleClass="adfmf-inputText-newStyle">
                         </amx:inputText>
                     </amx:cellFormat>
                     <amx:cellFormat id="Zcf12412" width="40px">
@@ -591,7 +591,7 @@
     <amx:tableLayout id="Qtl2121" width="100%">
                 <amx:rowLayout id="Qrl112">
                     <amx:cellFormat id="Qcf1222" width="100%">
-                        <amx:inputText value="#{pageFlowScope.supplierForm}" simple="true" id="QinputText221" hintText="Search Suppliers...">
+                        <amx:inputText value="#{pageFlowScope.supplierForm}" simple="true" id="QinputText221" hintText="Search Suppliers..." styleClass="adfmf-inputText-newStyle">
                         </amx:inputText>
                     </amx:cellFormat>
                     <amx:cellFormat id="Qcf12412" width="40px">
@@ -638,7 +638,7 @@
     <amx:tableLayout id="Itl2121" width="100%">
                 <amx:rowLayout id="Irl112">
                     <amx:cellFormat id="Icf1222" width="100%">
-                        <amx:inputText value="#{pageFlowScope.supplierSiteFormSearchText}" simple="true" id="IinputText221" hintText="Search Suppliers...">
+                        <amx:inputText value="#{pageFlowScope.supplierSiteFormSearchText}" simple="true" id="IinputText221" hintText="Search Suppliers..." styleClass="adfmf-inputText-newStyle">
                         </amx:inputText>
                     </amx:cellFormat>
                     <amx:cellFormat id="Icf12412" width="40px">
