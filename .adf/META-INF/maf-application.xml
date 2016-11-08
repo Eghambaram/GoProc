@@ -15,6 +15,7 @@
                        width="280">
       <adfmf:springboardFeatureReference refId="mp.springboard" id="sfr1"/>
     </adfmf:springboard>
+    <adfmf:navigationBar enabled="false"/>
   </adfmf:navigation>
   <adfmf:remoteURLWhiteList>
     <adfmf:domain id="d1">http://*</adfmf:domain>

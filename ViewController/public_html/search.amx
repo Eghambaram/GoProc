@@ -299,15 +299,15 @@
             </amx:cellFormat>
             </amx:rowLayout>
                  <amx:rowLayout id="rl6">
-              <amx:cellFormat id="cf12">
-                <amx:panelGroupLayout id="pgl8">
+              <amx:cellFormat id="cf12" valign="top">
+                <amx:panelGroupLayout id="pgl8" valign="top">
                   <amx:tableLayout id="tl5" width="100%">
                     <amx:rowLayout id="rl7">
                       <amx:cellFormat id="cf13"  width="70%">
                        <amx:panelGroupLayout id="pgl9">
                   <amx:tableLayout id="tl6">
                   <amx:rowLayout id="rl9" rendered="#{row.showSpec}">
-                  <amx:cellFormat id="cf11" rendered="#{row.showSpec}">
+                  <amx:cellFormat id="cf11" rendered="#{row.showSpec}" valign="top">
                   <amx:commandLink inlineStyle="font-size: 14px; clear: both;color: #0572CE;font-family: Arial, sans-serif;" id="cl9" text="Specs: ClickHere"
                                              action="#{Rest.getAttributeDetails}">
                    <amx:showPopupBehavior popupId="popup-spec" type="action" align="overlapMiddleCenter" alignId="pp1"/>
@@ -319,7 +319,7 @@
                                                          </amx:cellFormat>
                                                          </amx:rowLayout>
                    <amx:rowLayout id="rl10" rendered="#{row.showAttrib}">
-                   <amx:cellFormat id="cf17" rendered="#{row.showAttrib}">
+                   <amx:cellFormat id="cf17" rendered="#{row.showAttrib}" valign="top">
                   <amx:panelGroupLayout id="pgl10" layout="horizontal" inlineStyle="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size: 14px;color:#707173;" >
                   <amx:outputText value="Specs: #{row.attrib}" inlineStyle="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size: 14px;color:#707173;">
                   </amx:outputText>
