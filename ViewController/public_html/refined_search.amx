@@ -67,7 +67,7 @@
     </amx:facet>
          <amx:facet name="primary">
                 <amx:commandLink action="__back" id="cl2" styleClass="springboard-icon">
-         <amx:image source="/images/logo.png" id="i3"/>
+         <amx:image source="/images/back1.png" id="i33"/>
                 </amx:commandLink>
         </amx:facet>   
      <!--   

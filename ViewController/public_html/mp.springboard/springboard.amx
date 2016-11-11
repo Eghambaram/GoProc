@@ -91,6 +91,7 @@
             </amx:cellFormat>
             </amx:rowLayout>
             </amx:tableLayout>
+            <!--background-color:  #0E4876;-->
         <amx:panelGroupLayout id="pgl1" inlineStyle="background-color:  #0E4876;">
         <!-- #{bindings.gotoFeature.execute}-->
         <amx:listView var="row" showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv1"  styleClass="adfmf-panelPage-springboard">

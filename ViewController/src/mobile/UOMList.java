@@ -94,10 +94,12 @@ public class UOMList {
        
         ValueExpression showPotentialSupplier = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.potentialSuppliers}", String.class);
         showPotentialSupplier.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
-        ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+        
+        /* ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
         ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         ValueExpression ve111 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
-        ve111.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+        ve111.setValue(AdfmfJavaUtilities.getAdfELContext(),""); */
+        
         ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.suppliers}", String.class);
         ve12.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.web_url}", String.class);
@@ -423,7 +425,9 @@ public class UOMList {
                 "   \"RESTHeader\": {\n" + 
                 "    },\n" + 
                 "   \"InputParameters\": {\n" + 
-                "   	   \"P_USER_ID\" : \""+userId+"\"\n" + 
+                "        \"P_USER_ID\":\""+userId+"\",\n" + 
+                                            "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
+                          "\n" + 
                 "       }	   \n" + 
                 "   }\n" + 
                 "}";
@@ -461,7 +465,7 @@ public class UOMList {
                         ServiceLocation c2=new ServiceLocation("Please Select","Please Select","Please Select"); 
                         ServiceLocationsList.s_jobs.add(c2);
                         serviceLocationList.add(c2);
-                       JSONObject location=data.getJSONObject("X_DELIVER_TO_TL_ITEM");
+                       JSONObject location=data.getJSONObject("X_SERVICE_LOC_TL_ITEM");
                         String locationId=location.getString("LOCATION_ID");
                         String locationCode=location.getString("LOCATION_CODE");
                         String locationDescription=location.getString("DESCRIPTION");
@@ -866,6 +870,9 @@ public class UOMList {
         ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
         String userId = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
         
+        ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+        String multiOrgId = (String)ve6.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
         String newValue="";
         
         
@@ -908,8 +915,9 @@ public class UOMList {
             "\n" + 
             "   \"InputParameters\": {\n" + 
             "\n" + 
-            "        \"P_USER_ID\":"+userId+"\n" + 
-            "\n" + 
+                "        \"P_USER_ID\":\""+userId+"\",\n" + 
+                                "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
+                "\n" +
             "     }\n" + 
             "\n" + 
             "  }\n" + 
@@ -1059,7 +1067,7 @@ public class UOMList {
             ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchType}", String.class);
             ve41.setValue(AdfmfJavaUtilities.getAdfELContext(), "R");
             
-            ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+            ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
             itemCategories = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
             
             ValueExpression ve5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quantity}", String.class);
@@ -1506,8 +1514,8 @@ public class UOMList {
                                                                    new Object[] { });
         
         
-        ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
-        ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+      /*  ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
+        ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");*/
         ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.suppliers}", String.class);
         ve12.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.web_url}", String.class);
@@ -1687,7 +1695,7 @@ public class UOMList {
             ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchType}", String.class);
             ve41.setValue(AdfmfJavaUtilities.getAdfELContext(), "R");
             
-            ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+            ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
             itemCategories = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
             
             ValueExpression ve2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.part_no}", String.class);
@@ -2300,8 +2308,8 @@ public class UOMList {
                                                                        new Object[] { });
             
             
-            ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
-            ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+          /*  ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
+            ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");*/
             ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.suppliers}", String.class);
             ve12.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
             ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.web_url}", String.class);
@@ -2611,8 +2619,8 @@ public class UOMList {
                                                                        new Object[] { });
             
             
-            ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
-            ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+          /*  ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
+            ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");*/
             ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.suppliers}", String.class);
             ve12.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
             ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.web_url}", String.class);
@@ -2932,8 +2940,8 @@ public class UOMList {
                 me1.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
                 
                 
-                ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
-                ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+             /*   ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
+                ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");*/
                 ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.suppliers}", String.class);
                 ve12.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                 ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.web_url}", String.class);
@@ -3014,13 +3022,13 @@ public class UOMList {
         deliverLocation = (String)ve_deliverLocation.getValue(AdfmfJavaUtilities.getAdfELContext());
         System.out.println("Deliver To Location==============================="+deliverLocation+"---");
         
-      /*   pageFlowScope.item_categories  === pageFlowScope.aliasOracleItemcategories
+      /*   pageFlowScope.item_categories  === applicationScope.aliasOracleItemcategories
         * 
        * ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.item_categories}", String.class);
         itemCategories = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
         */
         
-      ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+      ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
        itemCategories = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
         ValueExpression ve2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.part_no}", String.class);
         String partNo = (String)ve2.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -3040,6 +3048,8 @@ public class UOMList {
         ValueExpression ve61 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
         String searchText = (String)ve61.getValue(AdfmfJavaUtilities.getAdfELContext());  
         
+        ValueExpression vf60 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchSupplierValue}", String.class);
+        String searchSupplier = (String)vf60.getValue(AdfmfJavaUtilities.getAdfELContext()); 
         
         ValueExpression ve62 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.need_by_date}", String.class);
         needByDate = (String)ve62.getValue(AdfmfJavaUtilities.getAdfELContext());  
@@ -3117,6 +3127,12 @@ public class UOMList {
                         checkError = true; 
                         
                     }
+                    
+                    else if(!searchSupplier.equalsIgnoreCase("") ) {
+                        checkError = true;
+                    }
+                    
+                    
                     //itemCategories,supplierNames,product_url,partNo,brand,upc,quantity,uom,needByDate
                     else if(  (itemCategories.equalsIgnoreCase("") && supplierNames.equalsIgnoreCase("") && product_url.equalsIgnoreCase("") &&partNo.equalsIgnoreCase("")&& brand.equalsIgnoreCase("") && upc.equalsIgnoreCase("")&& !quantity.equalsIgnoreCase("")&& !uom.equalsIgnoreCase("") && !needByDate.equalsIgnoreCase(""))){
                    
@@ -3384,7 +3400,11 @@ public class UOMList {
                                 else if(categoryBrandSelected){
                                     
                                     try{
-                                     
+                                        
+                                        System.out.println("Enter into category and Brand Selection---"+ItemsList.s_jobs.size());
+                                        ItemsList.s_jobs.clear();
+                                        ItemsList.items_list.clear();
+                                    
                                     //get category Id from oracle and send the category id  along with the brand id
                                     
                                     RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
@@ -3574,8 +3594,8 @@ public class UOMList {
                                                             showAttrib = "false";
                                                             showSpec="false";
                                                             Specification.clear();
-                                                            /*BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");
-                                                            vex.refresh();*/
+                                                            BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");
+                                                            vex.refresh();
                                                          }else{
                                                            
                                                            Iterator<?> att = attValues.keys(); 
@@ -3597,8 +3617,8 @@ public class UOMList {
                                                          //                                                                          System.out.println("Single Attributes---------------->"+Specification);
                                                                    sb2.append(resultVal+"#,");
                                                                }
-                                                               /*BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");
-                                                               vex.refresh();*/
+                                                               BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");
+                                                               vex.refresh();
                                                          spec = sb2.toString();
                                                          System.out.println("Value at 1===> "+spec);
                                                          Specification.clear();
@@ -3622,8 +3642,8 @@ public class UOMList {
                                                            sb2.append(resultVal+"#,");
                                                              
                                                          //                                                                          System.out.println("Multi-Attribute LIST <------------->"+spec);
-                                                        /* BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");
-                                                         vex.refresh();*/
+                                                         BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");
+                                                         vex.refresh();
                                                          }
                                                          //spec = Specification.toString();
                                                          spec = sb2.toString();
@@ -3653,16 +3673,20 @@ public class UOMList {
                                     
                                     if(ItemsList.s_jobs.size()>0){
                                         
+                                        providerChangeSupport.fireProviderRefresh("assets");
+                                        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");
+                                        vex.refresh();
+                                        
                                         ValueExpression ve71 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayPrev}", String.class);
                                         ve71.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
                                         
                                         ValueExpression ve72 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayNext}", String.class);
-                                        ve72.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                                        ve72.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
                                         ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayAddToCart}", String.class);
                                         ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
                                        
                                         ValueExpression ve119 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySortOption}", String.class);
-                                        ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                                        ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
                                      
                                     
                                         /*AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
@@ -3882,14 +3906,21 @@ public class UOMList {
                                         System.out.println("ItemList Count:----->"+ItemsList.s_jobs.size());    
                                     if(ItemsList.s_jobs.size()>0)    
                                     {
+                                        providerChangeSupport.fireProviderRefresh("assets");
+                                        
+                                        
+                                        
+                                        
+                                        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");
+                                        vex.refresh();
                                 ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayAddToCart}", String.class);
                                 ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
                                     /*    ValueExpression ve119 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySortOption}", String.class);
                                         ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");*/
                                     }
                                     
-                                ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
-                                ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                               /* ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
+                                ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");*/
                                 ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.suppliers}", String.class);
                                 ve12.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                                 ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.web_url}", String.class);
@@ -3934,8 +3965,8 @@ public class UOMList {
                                 
                                 ValueExpression ve72 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayNext}", String.class);
                                 ve72.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
-                                ValueExpression ve101 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
-                                ve101.setValue(AdfmfJavaUtilities.getAdfELContext(),"");            
+                               /* ValueExpression ve101 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
+                                ve101.setValue(AdfmfJavaUtilities.getAdfELContext(),"");*/            
                                 AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
                                                                                                "adf.mf.api.amx.doNavigation", new Object[] { "ref_search" });   
                                             
@@ -4006,6 +4037,14 @@ public class UOMList {
                                                                     null }); 
                                    }
                               
+                               else if(!searchSupplier.equalsIgnoreCase("")){
+                                   AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                                AdfmfJavaUtilities.getFeatureName(),
+                                                                "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                                "Please Choose valid Previous/Potential Suppliers",
+                                                                null,
+                                                                null }); 
+                               }
                                }
                 }
     

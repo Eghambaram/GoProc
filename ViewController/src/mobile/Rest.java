@@ -838,11 +838,11 @@ public class Rest {
     
     public void performSearch(ActionEvent actionEvent) {
         
-        ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
+        ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
         String itemAliasIndixId = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
         ValueExpression ve2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
         String searchValue= (String)ve2.getValue(AdfmfJavaUtilities.getAdfELContext());
-        ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+        ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
         String oracleId = (String)ve6.getValue(AdfmfJavaUtilities.getAdfELContext());
         
         ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
@@ -866,6 +866,7 @@ public class Rest {
                                                                                                   new Object[] { });
         }
         }
+
         else {
             doSearch();
         }
@@ -1119,7 +1120,7 @@ public class Rest {
 
     public void makeRFQ(ActionEvent actionEvent) {
         
-        ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+        ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
          itemCategories = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
         
         ValueExpression ve2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.part_no}", String.class);
@@ -5036,7 +5037,7 @@ public class Rest {
         ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchType}", String.class);
         ve41.setValue(AdfmfJavaUtilities.getAdfELContext(), "R");
         
-        ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+        ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
         itemCategories = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
         
         ValueExpression ve5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quantity}", String.class);
@@ -5054,6 +5055,9 @@ public class Rest {
         
         ValueExpression ve_supp = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.suppliers}", String.class);
         String supplierNames = (String)ve_supp.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        ValueExpression vf60 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchSupplierValue}", String.class);
+        String searchSupplier = (String)vf60.getValue(AdfmfJavaUtilities.getAdfELContext()); 
         
         ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
         String userName = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -5541,7 +5545,11 @@ public class Rest {
              error="serviceLocation";
          }
          
-       
+         if(!searchSupplier.equalsIgnoreCase("") ) {
+            isError=true;
+            error="supplierNotOracle";
+        }
+        
 
         
          if(txtContractType!=null && txtContractType.equalsIgnoreCase("Time and Material")){
@@ -5829,6 +5837,15 @@ public class Rest {
                                                  null,
                                                  null }); 
                 }
+                else if(error.equalsIgnoreCase("supplierNotOracle")){
+                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                 AdfmfJavaUtilities.getFeatureName(),
+                                                 "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                 "Please Choose valid Previous/Potential Suppliers",
+                                                 null,
+                                                 null }); 
+                }
+                
                 //--
                 else{
                     AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
@@ -5855,8 +5872,8 @@ public class Rest {
                                                                  null, null
                     });
         }
-        ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
-        ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+      /*  ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
+        ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");*/
     }
         
 
@@ -6012,11 +6029,11 @@ public class Rest {
     public void makeSearch(String rr) {
         ValueExpression ve3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
         ve3.setValue(AdfmfJavaUtilities.getAdfELContext(),rr);
-        ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
+        ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
         String itemAliasIndixId = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
         ValueExpression ve2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
         String searchValue= (String)ve2.getValue(AdfmfJavaUtilities.getAdfELContext());
-        ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+        ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
         String oracleId = (String)ve6.getValue(AdfmfJavaUtilities.getAdfELContext());
         
         ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
@@ -6105,7 +6122,7 @@ public class Rest {
 //        BasicIterator vex2 = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.categoriesIterator3.iterator}");  
 //        vex2.refresh();
 
-        ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+        ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
         ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         
         ValueExpression ve117 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
@@ -6193,7 +6210,7 @@ public class Rest {
         String aliasText="";
        if(!c.getName().equalsIgnoreCase("Please Select")){
        aliasText=c.getName();
-        ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+        ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
         ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),c.getOracleCategotySeg());
         
         
@@ -6223,15 +6240,19 @@ public class Rest {
          }
          
        
-        ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
+        ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
         ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),aliasIndixValues);
+        ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
+        vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");           
         AdfmfJavaUtilities.flushDataChangeEvent();
        }
        else {
-           ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+           ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
            ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-           ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
+           ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
            ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+           ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
+           vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
            AdfmfJavaUtilities.flushDataChangeEvent();
        }
 
@@ -6251,8 +6272,9 @@ public class Rest {
         showPotentialSupplier.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
        }
     public void getAliasCategoiresValues(String rr) {
-            ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
-            ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+     /*       ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
+            ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");*/
+        
         try{
             System.out.println("--------------ALIASSSS-----");
             RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
@@ -6906,8 +6928,10 @@ public class Rest {
 
     public void showSearchButton(ValueChangeEvent valueChangeEvent) {
         // Add event code here...
+        System.out.println("Req Type Change-->"+RequestTypeList.req_List.size());
         ValueExpression ve5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RequestTypeForm}", String.class);
         String reqType=(String)ve5.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
         RequestType rt=(RequestType)RequestTypeList.req_List.get((Integer.parseInt(reqType)));
         System.out.println("Req Type-->"+rt.getLookupCode()+rt.getMeaning());
         if(rt.getMeaning().equalsIgnoreCase("Others")) {
@@ -7007,9 +7031,9 @@ public class Rest {
                   aliasIndixValues ="&categoryId="+spec1;
                  // System.out.println("<<Hello>>"+aliasIndixValues);
               }
-                ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
+                ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
                 ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),aliasIndixValues);
-                ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+                ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
                 ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),al.getOracleCategotySeg());
                 ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
                 ve8.setValue(AdfmfJavaUtilities.getAdfELContext(),itemCategory);
@@ -7018,9 +7042,9 @@ public class Rest {
                 
         }
         else {
-            ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
+            ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
             ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-            ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+            ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
             ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
             ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
             ve8.setValue(AdfmfJavaUtilities.getAdfELContext(),"");

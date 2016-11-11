@@ -2551,6 +2551,16 @@ public class RequesitionRest {
         ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
         ve23.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         
+        ValueExpression ove7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
+        ove7.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+        ValueExpression ove6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
+        ove6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");                        
+        ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
+        vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+
+        
+        
+        
         AdfmfJavaUtilities.flushDataChangeEvent();
         AdfmfContainerUtilities.resetFeature("feature1",false);   
         AdfmfContainerUtilities.resetFeature("mp.Requisition",false);
@@ -5097,7 +5107,7 @@ public class RequesitionRest {
                         ValueExpression ov13 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
                         ov13.setValue(AdfmfJavaUtilities.getAdfELContext(),updateMultiOrg);
 
-                        
+            
                     }
                     
                 }
@@ -5137,6 +5147,10 @@ public class RequesitionRest {
         AdfmfContainerUtilities.resetFeature("mp.Notification",false);    
         ValueExpression ove113 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.unreadCount}", String.class);
         ove113.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+        ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
+        vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                    
+
         System.out.println("update_multiOrg Via popup"+update_multiOrg+"Cart Value"+cartvalue);    
 
     }

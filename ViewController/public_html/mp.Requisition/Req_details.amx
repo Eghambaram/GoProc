@@ -24,7 +24,7 @@
         </amx:facet>
         <amx:facet name="primary">
             <amx:commandLink id="cl1" action="__back">
-                <amx:image source="/images/logo.png" id="i3"/>
+                <amx:image source="/images/back1.png" id="i3"/>
             </amx:commandLink>
         </amx:facet>
         <amx:facet name="secondary">

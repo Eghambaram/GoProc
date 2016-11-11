@@ -1263,6 +1263,8 @@ public class ItemsList {
                    
                    if(itemType!=null && !itemType.equalsIgnoreCase("")) {
                    
+                       if(itemType.equalsIgnoreCase("goods"))
+                       {
                    
                    try{
                        
@@ -1274,7 +1276,7 @@ public class ItemsList {
                        ValueExpression ve3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
                        search = (String)ve3.getValue(AdfmfJavaUtilities.getAdfELContext()); 
                        
-                       ValueExpression ve31 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
+                       ValueExpression ve31 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
                        aliasCategoriesId = (String)ve31.getValue(AdfmfJavaUtilities.getAdfELContext());
                        
                        System.out.println("Category Mapped indix Id's--->"+aliasCategoriesId);
@@ -1282,7 +1284,7 @@ public class ItemsList {
                        ValueExpression veb1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.formWebURL}", String.class);
                        String fromUrl = (String)veb1.getValue(AdfmfJavaUtilities.getAdfELContext());
                        
-                       ValueExpression ve32 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasOracleItemcategories}", String.class);
+                       ValueExpression ve32 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
                        String oracleId = (String)ve32.getValue(AdfmfJavaUtilities.getAdfELContext());
                            
                        ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchType}", String.class);
@@ -1473,7 +1475,7 @@ public class ItemsList {
                            //https://api.indix.com/v2/universal/products?countryCode=US&q=bearings&categoryId=23059&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc
                            String url="";
                            
-                           if(!aliasCategoriesId.equals("") && !aliasCategoriesId.contains("null"))
+                           if(!aliasCategoriesId.equals("") && !aliasCategoriesId.contains("null") && fromUrl.equalsIgnoreCase(""))
                            {
                                url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+aliasCategoriesId+"&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                       //         url = "https://api.indix.com/v2/universal/products"+"?"+"countryCode=US&q="+URLEncoder.encode(search)+aliasCategoriesId+"&availability=IN_STOCK&lastRecordedIn=30&pageSize=20&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
@@ -1905,6 +1907,14 @@ public class ItemsList {
                    catch(Exception e) {
                        e.printStackTrace();
                    }
+                       }
+                       else if(itemType.equalsIgnoreCase("services"))
+                       {
+                       UOMList.populateUOM();
+                       AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
+                                                                                                             "adf.mf.api.amx.doNavigation", new Object[] { "refined_search_services" });
+                       }
+                       
                    
                    }
                    else{
@@ -1917,7 +1927,10 @@ public class ItemsList {
                    }
                    ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedSortBy}", String.class);
                    ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"relevance");
-            sortItems();
+                   if(itemType.equalsIgnoreCase("goods"))
+                   {
+                    sortItems();
+                   }
                    //////////////
                    providerChangeSupport.fireProviderRefresh("assets");
                }
@@ -2026,7 +2039,7 @@ public class ItemsList {
             
              
              if(itemType.equalsIgnoreCase("goods")){
-                     ValueExpression ve31 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasIndixItemcategories}", String.class);
+                     ValueExpression ve31 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
                      aliasCategoriesId = (String)ve31.getValue(AdfmfJavaUtilities.getAdfELContext());
              
              try{

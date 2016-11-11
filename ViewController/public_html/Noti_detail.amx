@@ -36,32 +36,33 @@
         </amx:facet>
         <amx:facet name="primary">
             <amx:commandLink id="cl1" action="__back">
-                <amx:image source="/images/logo.png" id="i3"/>
+                <amx:image source="/images/back1.png" id="i3"/>
             </amx:commandLink>
         </amx:facet>
         <!--<amx:facet name="secondary">
             <amx:commandButton text="Change" inlineStyle="margin-right:5px; background-color:#0E4876;background-image:none;" styleClass="adfmf-commandButton-border-cart" id="cb1"/>
         </amx:facet>-->
-       
-        <amx:tableLayout width="100%" id="qarl1">
+              <amx:panelStretchLayout id="psl1" scrollPolicy="scroll">
+      <amx:facet name="top">
+        <amx:tableLayout width="100%" id="qarl1" inlineStyle="background-color: #61605E; padding:5px;border-radius: 10px;border: 2px solid #61605E;">
             <amx:rowLayout id="rrlw8">
-                <amx:cellFormat width="10px" id="acfwr8"/>
-                <amx:cellFormat width="30%" halign="start" id="acfw8" valign="top">
-                    <amx:outputText value="Title:" id="ot4"
-                                    inlineStyle="font-size: 14px;"/>
-                </amx:cellFormat>
-                <amx:cellFormat width="2px" id="acqfwr8"/>
-                <amx:cellFormat width="70%" halign="start" id="aqcfw8" valign="top">
-                    <amx:outputText value="#{pageFlowScope.notificationTitle}" id="oqt4"/>
+                <amx:cellFormat width="100%" halign="center"  id="aqcfw8" valign="middle">
+                    <amx:outputText value="Title: #{pageFlowScope.notificationTitle}" inlineStyle="color:#FFFFFF;" id="oqt4"/>
                 </amx:cellFormat>
             </amx:rowLayout>
+            </amx:tableLayout>
+            </amx:facet>
+            <amx:facet name="center">
+            
+            <amx:tableLayout width="100%" id="tl1"  inlineStyle="background-color: #FFFFFF;margin-left:5px;margin-right:5px;padding:5px;">
             <amx:rowLayout id="rrlw2">
-                <amx:cellFormat width="10px" id="acfwr81"/>
                 <amx:cellFormat width="100%" id="acfw41" halign="start" valign="top" columnSpan="3">
                     <amx:outputHtml id="oh1" value="#{pageFlowScope.notificationReason}"/>
                 </amx:cellFormat>
             </amx:rowLayout>
         </amx:tableLayout>
+        </amx:facet>
+        <amx:facet name="bottom">
         <amx:tableLayout width="80%" id="qarl2" halign="center" inlineStyle="margin-top:5px">
             <amx:rowLayout id="trFYI" rendered="#{pageFlowScope.displayFYI}">
                 <amx:cellFormat id="zcf2" halign="center" columnSpan="2">
@@ -87,6 +88,8 @@
                 </amx:cellFormat>
             </amx:rowLayout>
         </amx:tableLayout>
+        </amx:facet>
+        </amx:panelStretchLayout>
     </amx:panelPage>
     <amx:popup id="popup-new"
                autoDismiss="true" animation="zoom" backgroundDimming="on" styleClass="sortpopup">

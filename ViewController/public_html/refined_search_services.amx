@@ -73,9 +73,9 @@
              <amx:outputText value="Requisition for Service"  id="ot1" inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
         </amx:facet>
         <amx:facet name="primary">
-            <amx:commandLink action="#{Rest.clearAttachments}" id="cb1"
+            <amx:commandLink action="__back" id="cb1"
                              styleClass="springboard-icon">
-                <amx:image source="/images/logo.png" id="i3"/>
+                <amx:image source="/images/back1.png" id="i33"/>
             </amx:commandLink>
         </amx:facet>
         <amx:facet name="secondary">

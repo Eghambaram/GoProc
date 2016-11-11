@@ -70,7 +70,30 @@
         </amx:facet>
                 
              <amx:panelStretchLayout id="psl1" inlineStyle="background-color:#FFFFFF;">
-            <amx:facet name="top"/>
+              <amx:facet name="top">
+        <amx:tableLayout id="tl31" width="100%" inlineStyle="background-color: #F7F3F3;">
+          <amx:rowLayout id="r3l1">
+          <amx:cellFormat id="cf11" halign="start" valign="top" width="60%">
+                            <amx:panelGroupLayout id="pgl2"/>
+                            <amx:tableLayout id="tl5" width="100%" >
+                                <amx:rowLayout id="rl4">
+                                    <amx:cellFormat id="cf12" halign="center" valign="top">
+                                    <amx:outputText id="itq6" value="Cart Total"  inlineStyle="font-size: 16px;font-style: italic;font-weight: bold; color:#0E4876"/>
+                                    </amx:cellFormat>
+                                </amx:rowLayout>
+                                  <amx:rowLayout id="rle1">
+                                    <amx:cellFormat id="cef1" halign="center" valign="top">
+                                    <amx:outputText id="iteq6" value="$ #{pageFlowScope.cartTotal}"  inlineStyle="font-size: 16px;font-style: italic;font-style: bold;word-break: break-word;white-space: pre-wrap; color:#FF6600"/>
+                                    </amx:cellFormat>
+                                </amx:rowLayout>
+                            </amx:tableLayout>
+                        </amx:cellFormat>
+            <amx:cellFormat id="cf32" halign="center" width="40%">
+                    <amx:commandButton text="Checkout" id="cb2" styleClass="adfmf-commandButton-style" actionListener="#{Rest.makeRequesition}" inlineStyle="width:80%"/>
+            </amx:cellFormat>
+          </amx:rowLayout>
+        </amx:tableLayout>
+      </amx:facet>
             <amx:facet name="center">
                         <amx:listView var="row" value="#{bindings.assets2.collectionModel}"
                           fetchSize="#{bindings.assets2.rangeSize}"
@@ -218,30 +241,7 @@
             </amx:listView>
 
             </amx:facet>
-                              <amx:facet name="bottom">
-        <amx:tableLayout id="tl31" width="100%" inlineStyle="background-color: #F7F3F3;">
-          <amx:rowLayout id="r3l1">
-          <amx:cellFormat id="cf11" halign="start" valign="top" width="60%">
-                            <amx:panelGroupLayout id="pgl2"/>
-                            <amx:tableLayout id="tl5" width="100%" >
-                                <amx:rowLayout id="rl4">
-                                    <amx:cellFormat id="cf12" halign="center" valign="top">
-                                    <amx:outputText id="itq6" value="Cart Total"  inlineStyle="font-size: 16px;font-style: italic;font-weight: bold; color:#0E4876"/>
-                                    </amx:cellFormat>
-                                </amx:rowLayout>
-                                  <amx:rowLayout id="rle1">
-                                    <amx:cellFormat id="cef1" halign="center" valign="top">
-                                    <amx:outputText id="iteq6" value="$ #{pageFlowScope.cartTotal}"  inlineStyle="font-size: 16px;font-style: italic;font-style: bold;word-break: break-word;white-space: pre-wrap; color:#FF6600"/>
-                                    </amx:cellFormat>
-                                </amx:rowLayout>
-                            </amx:tableLayout>
-                        </amx:cellFormat>
-            <amx:cellFormat id="cf32" halign="center" width="40%">
-                    <amx:commandButton text="Checkout" id="cb2" styleClass="adfmf-commandButton-style" actionListener="#{Rest.makeRequesition}" inlineStyle="width:80%"/>
-            </amx:cellFormat>
-          </amx:rowLayout>
-        </amx:tableLayout>
-      </amx:facet>
+                            
 
             </amx:panelStretchLayout>
     </amx:panelPage>

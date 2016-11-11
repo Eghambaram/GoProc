@@ -636,6 +636,12 @@ word-break: break-word;
     border-radius: 10px;
 }
 
+    .amx-android-generic .sortpopup1, .amx-android-chrome .sortpopup1 {
+    height: 280px;
+    width: 250px;
+    border-radius: 10px;
+}
+
 .amx-ios .sortpopup {
     height: 340px;
     width: 250px;
