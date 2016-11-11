@@ -109,7 +109,8 @@
                                    showMoreStrategy="autoScroll"
                                   bufferStrategy="viewport" id="lv1">
                    
-            <amx:listItem showLinkIcon="false" id="li1" inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #D1D1D3;" actionListener="#{RequesitionRest.getRequesitionDetail}">
+                   <!--inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #D1D1D3;"-->
+            <amx:listItem showLinkIcon="false" id="li1"  actionListener="#{RequesitionRest.getRequesitionDetail}">
          
           <amx:tableLayout id="Otl1" width="100%" inlineStyle="margin-top:10px;">
             <amx:rowLayout id="Orl1">
