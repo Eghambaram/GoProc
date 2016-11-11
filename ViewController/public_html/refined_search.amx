@@ -145,7 +145,7 @@
 <amx:cellFormat id="cf181" halign="end" width="40px"  valign="top">
 
     <amx:commandButton icon="images/scan.png" id="cb8b1" actionListener="#{Rest.performSupplierSearch}">
-       <amx:showPopupBehavior popupId="popup112" type="action" align="after" alignId="pp1"/>
+       <amx:showPopupBehavior popupId="popupSupplier" type="action" align="overlapMiddleCenter" alignId="pp1"/>
     </amx:commandButton>
 
 </amx:cellFormat>
@@ -182,7 +182,7 @@
 <amx:cellFormat id="cf1218" halign="end" width="40px">
 
                <amx:commandButton icon="images/scan.png" actionListener="#{Rest.showBrandsPopup}" id="cb218b">
-                        <amx:showPopupBehavior popupId="popup12" type="action" align="after" alignId="pp1"/>
+                        <amx:showPopupBehavior popupId="popupBrand" type="action" align="overlapMiddleCenter" alignId="pp1"/>
     <!--<amx:showPopupBehavior popupId="popup1" type="action" align="after" alignId="pp1"/>-->
     </amx:commandButton>
                   
@@ -244,7 +244,7 @@
                  <amx:commandLink action="#{Rest.refreshImageList}" id="cl122" styleClass="springboard-icon">
                 <amx:outputText value="#{pageFlowScope.selectedImagesCount}" inlineStyle="color:blue"  id="ot151">
                 </amx:outputText>
-                <amx:showPopupBehavior popupId="popup13" type="action" align="after" alignId="pp1"/>
+                <amx:showPopupBehavior popupId="popupShowGallary" type="action" align="overlapMiddleCenter" alignId="pp1"/>
                 </amx:commandLink>
                 </amx:cellFormat>                
     <amx:cellFormat halign="end" height="45px">
@@ -400,17 +400,23 @@
 </amx:panelGroupLayout>        
     </amx:popup>
     
-      <amx:popup id="popup12" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"  animation="slideUp">
-   
- <amx:tableLayout width="100%" id="tel1">
-<amx:rowLayout  id="rwel1">
-<amx:cellFormat id="cfe11" halign="end" width="100%">
-<amx:commandButton icon="images/close.png" id="cbs8b">
-<amx:closePopupBehavior popupId="popup12" type="action"/>
-</amx:commandButton>
-</amx:cellFormat>
-</amx:rowLayout>
-</amx:tableLayout>
+      <amx:popup id="popupBrand" autoDismiss="true" animation="zoom" backgroundDimming="on" styleClass="sortpopup">
+    <amx:panelStretchLayout id="psl6" scrollPolicy="scroll">
+      <amx:facet name="top">
+          <amx:tableLayout width="100%" id="tl10" inlineStyle="background-color: #0E4876;">
+            <amx:rowLayout id="rl8">
+                <amx:cellFormat id="cf6" halign="center" width="80%">
+                    <amx:outputText value="Brands" id="ot10"
+                                    inlineStyle="font-weight:bold;color: #FFFFFF; text-align:center;"></amx:outputText>
+                </amx:cellFormat>
+                <amx:cellFormat id="cf14" halign="end" width="20%">
+                    <amx:commandButton icon="/images/error.png" id="cb5">
+                        <amx:closePopupBehavior popupId="popupBrand" type="action" id="cpb4"/>
+                    </amx:commandButton>
+                </amx:cellFormat>
+            </amx:rowLayout>
+        </amx:tableLayout>
+ 
             <amx:tableLayout id="tl2121" width="100%">
                 <amx:rowLayout id="rl112">
                     <amx:cellFormat id="cf1222" width="100%">
@@ -424,7 +430,10 @@
                     </amx:cellFormat>
                 </amx:rowLayout>
             </amx:tableLayout>
- <amx:tableLayout width="100%" id="teql1" inlineStyle="height:450px;overflow:scroll;">
+            </amx:facet>
+ <amx:facet name="center">
+ <amx:spacer id="s4" height="5"/>
+ <amx:tableLayout width="100%" id="teql1">
  <amx:rowLayout  id="rwqel1">
 <amx:cellFormat id="cfqe11" halign="start" width="100%">
       <amx:listView var="row" value="#{bindings.brands.collectionModel}" fetchSize="#{bindings.brands.rangeSize}"
@@ -440,7 +449,7 @@
              <amx:setPropertyListener from="#{row.name}" to="#{pageFlowScope.brand}"
                                                          type="action" id="spl12"/>
                                                          
-            <amx:closePopupBehavior popupId="popup12" type="action"/>
+            <amx:closePopupBehavior popupId="popupBrand" type="action"/>
                                                          
          </amx:listItem>
       </amx:listView>
@@ -450,21 +459,29 @@
              </amx:cellFormat>
              </amx:rowLayout>
              </amx:tableLayout>
+             </amx:facet>
+             </amx:panelStretchLayout>
+             
     </amx:popup>
     
-    <amx:popup id="popup112"
-               inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"
-               animation="slideUp">
-        <amx:panelGroupLayout id="pgl21">
-           <amx:tableLayout width="100%" id="tel11">
-                <amx:rowLayout id="rwel121">
-                    <amx:cellFormat id="cfe1121" halign="end" width="40px">
-                    <amx:commandButton text="Add" actionListener="#{Rest.selectSuppliers}" id="cbs18b12">
-                        <amx:closePopupBehavior popupId="popup112" type="action"/>
+    <amx:popup id="popupSupplier" autoDismiss="true" animation="zoom" backgroundDimming="on" styleClass="sortpopup">
+          <amx:panelStretchLayout id="psl5" scrollPolicy="scroll">
+      <amx:facet name="top">
+          <amx:tableLayout width="100%" id="tl9" inlineStyle="background-color: #0E4876;">
+            <amx:rowLayout id="rl10">
+                <amx:cellFormat id="cf12" halign="center" width="80%">
+                    <amx:outputText value="Suppliers" id="ot9"
+                                    inlineStyle="font-weight:bold;color: #FFFFFF; text-align:center;"></amx:outputText>
+                </amx:cellFormat>
+                <amx:cellFormat id="cf13" halign="end" width="20%">
+                    <amx:commandButton icon="/images/error.png" id="cb4">
+                        <amx:closePopupBehavior popupId="popupSupplier" type="action" id="cpb3"/>
                     </amx:commandButton>
-                    </amx:cellFormat>
-                </amx:rowLayout>
-            </amx:tableLayout>
+                </amx:cellFormat>
+            </amx:rowLayout>
+        </amx:tableLayout>
+
+        <amx:panelGroupLayout id="pgl21">
             <amx:tableLayout id="tl1" width="100%">
                 <amx:rowLayout id="rl2">
                     <amx:cellFormat id="cf1" width="100%">
@@ -478,72 +495,70 @@
                     </amx:cellFormat>
                 </amx:rowLayout>
             </amx:tableLayout>
+            </amx:panelGroupLayout>
+            </amx:facet>
+                  <amx:facet name="center">
+        <amx:spacer id="s3" height="5"/>
             <amx:selectManyCheckbox  value="#{pageFlowScope.supplierDefault}" simple="true" label=""
                                     id="smc2" valueChangeListener="#{Rest.onSupplierChange}">
                 <amx:selectItems value="#{bindings.supplier1.items}" id="si9"/>
             </amx:selectManyCheckbox>
-           <!-- <amx:commandButton text="ClearPotential" id="cb4" actionListener="#{Rest.clearPotentialSuppliers}"/>-->
-            <!--<amx:listView var="row" value="#{bindings.supplier.collectionModel}"
-                          fetchSize="#{bindings.supplier.rangeSize}"
-                          selectedRowKeys="#{bindings.supplier.collectionModel.selectedRow}"
-                          initialScrollRowKeys="#{bindings.supplier.collectionModel.selectedRow}"
-                          selectionListener="#{bindings.supplier.collectionModel.makeCurrent}"
-                          styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll" bufferStrategy="viewport"
-                          id="lv2">
-               <amx:listItem id="l1i1">
-                    <amx:tableLayout width="100%" id="tl1">
-                        <amx:rowLayout id="rl1112">
-                            <amx:cellFormat width="100px" halign="center" id="c12f2">
-                                <amx:selectOneRadio label=""  valueChangeListener="#{Rest.onSupplierSelect}" simple="true" id="sor2">
-                                    <amx:selectItem id="si4" label="#{row.name}" value="#{row.name}"/>
-                                </amx:selectOneRadio>
-                                <amx:selectManyCheckbox label="label1" id="smc1">
-                                    <amx:selectItem id="si8"/>
-                                </amx:selectManyCheckbox>
-                            </amx:cellFormat>
-                            --><!--<amx:cellFormat width="100%" height="43px" id="c12f1">
-                                <amx:outputText value="#{row.name}" id="ot122"/>
-                            </amx:cellFormat>--><!--
-                        </amx:rowLayout>
-                    </amx:tableLayout>
-                </amx:listItem>
-            </amx:listView>-->
-            
-        </amx:panelGroupLayout>
+</amx:facet>
+                  <amx:facet name="bottom">
+                <amx:tableLayout width="100%" id="tel11">
+                <amx:rowLayout id="rwel121">
+                    <amx:cellFormat id="cfe1121" halign="center">
+                                  <amx:commandButton text="Add" actionListener="#{Rest.selectSuppliers}" id="cb2"
+                    styleClass="adfmf-commandButton-style" inlineStyle="width:80%">
+                        <amx:closePopupBehavior popupId="popupSupplier" type="action"/>
+                    </amx:commandButton>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout>
+</amx:facet>
+</amx:panelStretchLayout>
     </amx:popup>
     
-     <amx:popup id="popup13" inlineStyle="position:relative;margin-left:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;margin-right:#{(deviceScope.hardware.screen.availableHeight*10)/100}px;width:#{deviceScope.hardware.screen.availableWidth};text-align:center;"  animation="slideUp">
-   
- <amx:tableLayout width="100%" id="tl2">
-<amx:rowLayout  id="rl4">
-<amx:cellFormat id="cf3" halign="end" width="100%">
-<amx:commandButton icon="images/close.png" id="cb1">
-<amx:closePopupBehavior popupId="popup13" type="action"/>
-</amx:commandButton>
-</amx:cellFormat>
-</amx:rowLayout>
-</amx:tableLayout>
+     <amx:popup id="popupShowGallary" autoDismiss="true" animation="zoom" backgroundDimming="on" styleClass="sortpopup">
+   <amx:panelStretchLayout id="psl2" scrollPolicy="scroll">
+    <amx:facet name="top">
+          <amx:tableLayout width="100%" id="tel1" inlineStyle="background-color: #0E4876;">
+            <amx:rowLayout id="rwel1">
+                <amx:cellFormat id="cf16" halign="center" width="80%">
+                    <amx:outputText value="Selected Images" id="ot6"
+                                    inlineStyle="font-weight:bold;color: #FFFFFF; text-align:center;"></amx:outputText>
+                </amx:cellFormat>
+                <amx:cellFormat id="cfe11" halign="end" width="20%">
+                    <amx:commandButton icon="/images/error.png" id="cbs8b">
+                        <amx:closePopupBehavior popupId="popupShowGallary" type="action" id="cpb11"/>
+                    </amx:commandButton>
+                </amx:cellFormat>
+            </amx:rowLayout>
+        </amx:tableLayout>
+        </amx:facet>
+        <amx:facet name="center">
+        <amx:spacer id="s13" height="5"/>
       
- <amx:tableLayout width="100%" id="tl3" inlineStyle="height:450px;overflow:scroll;">
- <amx:rowLayout  id="rl6">
-<amx:cellFormat id="cf4" halign="start" width="100%">
-     <amx:listView var="row" value="#{bindings.images.collectionModel}"
+ <amx:tableLayout width="100%" id="ptl3">
+ <amx:rowLayout  id="prl6">
+<amx:cellFormat id="pcf4" halign="start" width="100%">
+  <amx:listView var="row" value="#{bindings.images.collectionModel}"
                                   fetchSize="#{bindings.images.rangeSize}"
                                   selectedRowKeys="#{bindings.images.collectionModel.selectedRow}"
                                   initialScrollRowKeys="#{bindings.images.collectionModel.selectedRow}"
                                   selectionListener="#{bindings.images.collectionModel.makeCurrent}"
                                   styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll"
-                                  bufferStrategy="viewport" id="lv2">
-                        <amx:listItem id="li2">
-                            <amx:tableLayout width="100%" id="tl4">
-                                <amx:rowLayout id="rl7">
-                                    <amx:cellFormat width="60%" height="43px" halign="start" id="cf5">
-                                        <amx:image inlineStyle="height:50px;width:50px" source="#{row.imageURL}" id="i2"/>
+                                  bufferStrategy="viewport" id="plv2">
+                        <amx:listItem id="pli2">
+                            <amx:tableLayout width="100%" id="ptl4">
+                                <amx:rowLayout id="prl7">
+                                    <amx:cellFormat width="60%" height="43px" halign="start" id="pcf5">
+                                        <amx:image inlineStyle="height:50px;width:50px" source="#{row.imageURL}" id="pi2"/>
                                     </amx:cellFormat>
-                                    <amx:cellFormat width="40%" halign="end" height="43px" id="cf125">
-                                        <amx:commandButton text="Delete" actionListener="#{Rest.deleteImage}" id="cb2">
+                                    <amx:cellFormat width="40%" halign="end" height="43px" id="pcf125">
+                                        <amx:commandButton text="Delete" actionListener="#{Rest.deleteImage}" id="pcb2">
                                          <amx:setPropertyListener from="#{row.imageURL}" to="#{pageFlowScope.imageURL}"
-                                                         type="action" id="spl211"/>
+                                                         type="action" id="pspl211"/>
                                         </amx:commandButton>
                                     </amx:cellFormat>
                                 </amx:rowLayout>
@@ -553,7 +568,10 @@
                 </amx:cellFormat>
  </amx:rowLayout>
  </amx:tableLayout>
+ </amx:facet>
+ </amx:panelStretchLayout>
     </amx:popup>
+    
     
     
     

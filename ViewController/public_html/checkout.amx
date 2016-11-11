@@ -131,20 +131,26 @@
                         <amx:tableLayout width="100%" id="tl1" inlineStyle="margin-top:1px">
                             <amx:rowLayout id="rzefl2">
                                 <amx:cellFormat width="2px" id="czeff2" valign="top"/>
-                                <amx:cellFormat width="50%" height="15" id="czferf1" shortDesc="Cell" valign="top"
+                                <amx:cellFormat width="100%" height="15" id="czferf1" shortDesc="Cell" valign="top"
                                                 halign="start">
                                     <amx:outputText value=" Supplier: #{row.vendorName}" styleClass="adfmf-listItem-output"
-                                                    inlineStyle="font-size: 14px;clear: both;color: #000000;font-family: Arial, sans-serif; word-break: break-word;white-space: pre-wrap;"
+                                                    inlineStyle="font-size: 14px;clear: both;color: #000000;font-family: Arial, sans-serif;white-space: nowrap; text-overflow: ellipsis; overflow: hidden;"
                                                     id="ozterf2"/>
                                 </amx:cellFormat>
+                                </amx:rowLayout>
+                                <amx:rowLayout id="rl5">
+                                <amx:cellFormat width="2px" id="cf13" valign="top"/>
+                            
                                 <amx:cellFormat width="50%" height="15" id="cf9" shortDesc="Cell" valign="top"
                                                 halign="start">
                                     <amx:outputText value="Supplier Site: #{row.vendorSiteCode}" styleClass="adfmf-listItem-output"
-                                                    inlineStyle="font-size: 14px;clear: both;color: #000000;font-family: Arial, sans-serif; word-break: break-word;white-space: pre-wrap"
+                                                    inlineStyle="font-size: 14px;clear: both;color: #000000;font-family: Arial, sans-serif; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;"
                                                     id="ort2"/>
                                 </amx:cellFormat>
                             </amx:rowLayout>
                         </amx:tableLayout>
+                               
+                                
                         <amx:tableLayout width="100%" id="tl2">
                             <amx:rowLayout id="rl3">
                                 <amx:cellFormat width="2px" id="cf5"/>

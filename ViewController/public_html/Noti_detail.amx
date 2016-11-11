@@ -47,7 +47,7 @@
         <amx:tableLayout width="100%" id="qarl1" inlineStyle="background-color: #61605E; padding:5px;border-radius: 10px;border: 2px solid #61605E;">
             <amx:rowLayout id="rrlw8">
                 <amx:cellFormat width="100%" halign="center"  id="aqcfw8" valign="middle">
-                    <amx:outputText value="Title: #{pageFlowScope.notificationTitle}" inlineStyle="color:#FFFFFF;" id="oqt4"/>
+                    <amx:outputText value="#{pageFlowScope.notificationTitle}" inlineStyle="color:#FFFFFF;" id="oqt4"/>
                 </amx:cellFormat>
             </amx:rowLayout>
             </amx:tableLayout>
