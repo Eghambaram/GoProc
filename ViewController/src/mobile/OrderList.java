@@ -295,7 +295,11 @@ public class OrderList {
             
             ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
             String userId = (String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
-        
+            ValueExpression ve15 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+            String multiOrgId = (String)ve15.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve16 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.reqType}", String.class);
+            String reqTypes = (String)ve16.getValue(AdfmfJavaUtilities.getAdfELContext());
+                    
         RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
         // Clear any previously set request properties, if any
         restServiceAdapter.clearRequestProperties();
@@ -307,17 +311,20 @@ public class OrderList {
         restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
         restServiceAdapter.addRequestProperty("Content-Type", "application/json");
         restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_req_summary_v2/");
-        String postData= "{\n" + 
-        "  \"GET_REQ_SUMMARY_V2_Input\" : {\n" + 
-        "   \"RESTHeader\": {\n" + 
-        "    },\n" + 
-        "   \"InputParameters\": {\n" + 
-        "            \"P_USER_ID\":  \""+userId+"\",\n" + 
-        "            \"P_ITEM_DESCRIPTION\":  \""+veSearchText+"\"\n" +                         
-        "         \n" + 
-        "       }    \n" + 
-        "   }\n" + 
-        "}";
+            String postData= "{\n" + 
+            "  \"GET_REQ_SUMMARY_V2_Input\" : {\n" + 
+            "   \"RESTHeader\": {\n" + 
+            "    },\n" + 
+            "   \"InputParameters\": {\n" + 
+            "          \"P_USER_ID\" : \""+userId+"\",\n" +
+            "          \"P_ORG_ID\" : \""+multiOrgId+"\",\n" +
+            "          \"P_ITEM_DESCRIPTION\" : \""+veSearchText+"\",\n" +
+            "          \"P_DOCUMENT_TYPE\" : \""+reqTypes+"\"\n" +
+            "         \n" + 
+            "       }    \n" + 
+            "   }\n" + 
+            "}";
+
                                     restServiceAdapter.setRetryLimit(0);
            System.out.println("postData===============================" + postData);
             
@@ -517,5 +524,128 @@ public class OrderList {
         
     }
     
+    public void reqTypeRequisition() {
+        
+                try{
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.user_name}", String.class);
+        String userName = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        ValueExpression veSearch = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchRequisitionValue}", String.class);
+        String veSearchText = (String)veSearch.getValue(AdfmfJavaUtilities.getAdfELContext());           
+        
+        ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.password}", String.class);
+        String password = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
+            
+            ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+            String userId = (String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve15 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+            String multiOrgId = (String)ve15.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression ve16 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.reqType}", String.class);
+            String reqTypes = (String)ve16.getValue(AdfmfJavaUtilities.getAdfELContext());
+                    
+        RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+        // Clear any previously set request properties, if any
+        restServiceAdapter.clearRequestProperties();
+        // Set the connection name
+        restServiceAdapter.setConnectionName("enrich");
+        
+        restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+        restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+        restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+        restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+        restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_req_summary_v2/");
+            String postData= "{\n" + 
+            "  \"GET_REQ_SUMMARY_V2_Input\" : {\n" + 
+            "   \"RESTHeader\": {\n" + 
+            "    },\n" + 
+            "   \"InputParameters\": {\n" + 
+            "          \"P_USER_ID\" : \""+userId+"\",\n" +
+            "          \"P_ORG_ID\" : \""+multiOrgId+"\",\n" +
+            "          \"P_ITEM_DESCRIPTION\" : \"\",\n" +
+            "          \"P_DOCUMENT_TYPE\" : \""+reqTypes+"\"\n" +
+            "         \n" + 
+            "       }    \n" + 
+            "   }\n" + 
+            "}";
+
+                                    restServiceAdapter.setRetryLimit(0);
+           System.out.println("postData===============================" + postData);
+            
+           String response = restServiceAdapter.send(postData);
+            
+            System.out.println("response===============================" + response);
+            OrderList.s_jobs.clear();
+            JSONObject resp=new JSONObject(response);
+            JSONObject output=resp.getJSONObject("OutputParameters");
+            try{
+            JSONObject summTBL=output.getJSONObject("X_REQ_SUMMARY_TL");
+            RequisitionsList.s_jobs.clear();
+            if(summTBL.get("X_REQ_SUMMARY_TL_ITEM") instanceof JSONArray) {
+                System.out.println("Inside JSON ===============================" + response);                             
+                JSONArray summItm=summTBL.getJSONArray("X_REQ_SUMMARY_TL_ITEM");
+               
+                for(int i=0;i<summItm.length();i++) {
+                    JSONObject data=(JSONObject)summItm.get(i);
+                    
+                    String searchGroupId=data.getString("SEARCH_GROUP_ID");
+                    String requisitionDate=data.getString("REQ_DATE");
+                    String reqType=data.getString("REQUEST_TYPE");
+                    String totalAmount="$"+data.getString("AMOUNT");
+                   
+                    
+                    if(totalAmount.contains("{")){
+                        totalAmount = "";
+                        
+                    }
+                    
+                   Order or=new Order(searchGroupId, requisitionDate, reqType, totalAmount);
+                   OrderList.s_jobs.add(or);
+                }
+                
+            }
+            
+            if(summTBL.get("X_REQ_SUMMARY_TL_ITEM") instanceof JSONObject) {
+                
+                JSONObject data=(JSONObject)summTBL.getJSONObject("X_REQ_SUMMARY_TL_ITEM");
+                
+                String searchGroupId=data.getString("SEARCH_GROUP_ID");
+                String requisitionDate=data.getString("REQ_DATE");
+                String reqType=data.getString("REQUEST_TYPE");
+                String totalAmount="$"+data.getString("AMOUNT");
+                
+                
+                if(totalAmount.contains("{")){
+                    totalAmount = "";
+                    
+                }
+                
+                Order or=new Order(searchGroupId, requisitionDate, reqType, totalAmount);
+                OrderList.s_jobs.add(or);                     
+            
+            }
+            
+
+                
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+          
+        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.orders.iterator}");   
+        vex.refresh();
+            
+        }
+        catch(Exception e) {
+            
+            e.printStackTrace();
+            
+            AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                         AdfmfJavaUtilities.getFeatureName(),
+                                         "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                         "Cannot connect to Services on Oracle Server.",
+                                         null,
+                                         null }); 
+        }
+    }
     
 }
