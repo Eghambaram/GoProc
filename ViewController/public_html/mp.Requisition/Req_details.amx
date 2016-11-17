@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
-          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
-<amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
-
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt" xmlns:notification="http://xmlns.ateam.com/notification">
+    <amx:panelPage id="pp1" inlineStyle="background-color: #F7F3F3;">
     <amx:verbatim id="v3">
         <![CDATA[
 
@@ -17,7 +16,7 @@
          ]]>
 
   </amx:verbatim>
-        <amx:facet name="header">
+       <amx:facet name="header">
             <amx:outputText value="Order Details" id="ot1"
                             inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;"
                             styleClass="adfmf-commandButton-highlight"/>
@@ -35,234 +34,238 @@
             </amx:commandLink>
         </amx:facet>
         <amx:refreshContainer id="rc1" actionListener="#{RequesitionRest.getRequesitionDetail}" pullText="Pull To Refresh"/>
-        <amx:panelStretchLayout id="psl1">
+        <amx:panelStretchLayout id="psl1" inlineStyle="background-color:#FFFFFF; margin:2px">
             <amx:facet name="top">
-                <amx:tableLayout width="100%" id="tl1">
-                    <!--<amx:rowLayout id="rl1">
-                        <amx:cellFormat width="2px" id="cf3"/>
-                        <amx:cellFormat width="45%" halign="start" id="cf4">
-                            <amx:outputText value="Requisition: #{pageFlowScope.requisitionNo}"
-                                            inlineStyle="font-size: 14px; clear: both;font-family: Arial, sans-serif;"
-                                            id="ot3"/>
-                        </amx:cellFormat>
-                        <amx:cellFormat width="2px" id="cf1"/>
-                        <amx:cellFormat width="55%" halign="start" id="cf2">
-                            <amx:outputText value="Created By: #{applicationScope.user_name}"
-                                            inlineStyle="font-size: 14px;  clear: both;font-family: Arial, sans-serif;"
-                                            id="ot2"/>
-                        </amx:cellFormat>
-                    </amx:rowLayout>
-                    <amx:rowLayout id="rl2">
-                        <amx:cellFormat width="2px" id="cf7"/>
-                        <amx:cellFormat width="45%" halign="start" id="cf8">
-                            <amx:outputText value="Status: #{pageFlowScope.requisitionStatus}"
-                                            inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
-                                            id="ot5"/>
-                        </amx:cellFormat>
-                        <amx:cellFormat width="2px" id="cf9"/>
-                        <amx:cellFormat width="55%" halign="start" id="cf10">
-                            <amx:outputText value="Created Date: #{pageFlowScope.requisitionCreatedDate}"
-                                            inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
-                                            id="ot6"/>
-                        </amx:cellFormat>
-                    </amx:rowLayout>-->
-                    <amx:rowLayout id="rl1">
-                        <amx:cellFormat width="2px" id="cf3"/>
-                        <amx:cellFormat width="45%" halign="start" id="cf4">
-                            <amx:outputText value="Order No: #{pageFlowScope.reqSearchGroupId}"
-                                            inlineStyle="font-size: 14px; clear: both;font-family: Arial, sans-serif;"
-                                            id="ot3"/>
-                        </amx:cellFormat>
-                        <amx:cellFormat width="2px" id="cf1"/>
-                        <amx:cellFormat width="55%" halign="start" id="cf2">
-                            <amx:outputText value="Order Date: #{pageFlowScope.requisitionSearchDate}"
-                                            inlineStyle="font-size: 14px;  clear: both;font-family: Arial, sans-serif;"
-                                            id="ot2"/>
-                        </amx:cellFormat>
-                    </amx:rowLayout>
+                   <amx:panelGroupLayout id="pgl2" inlineStyle="background-color: #FFFFFF;">
                    
-                </amx:tableLayout>
+          <amx:tableLayout id="tl1" inlineStyle="background-color: #61605E; padding:5px;border: 2px solid #61605E; margin-top:10px" width="100%">
+            <amx:rowLayout id="rl1">
+              <amx:cellFormat id="cf1" halign="start" valign="middle" width="100%">
+                <amx:outputText value="ORDER NUMBER: #{pageFlowScope.reqSearchGroupId}" id="ot2" inlineStyle="color: #FFFFFF;font-size: 14px;"/>
+              </amx:cellFormat>
+              </amx:rowLayout>
+              <amx:rowLayout id="rl2">
+              <amx:cellFormat id="cf2" halign="start" valign="middle" width="100%">
+                <amx:outputText value="ORDER DATE: #{pageFlowScope.requisitionSearchDate}" id="ot3" inlineStyle="color: #FFFFFF;font-size: 14px;">
+                </amx:outputText>
+                </amx:cellFormat>
+            </amx:rowLayout>
+          </amx:tableLayout>
+        </amx:panelGroupLayout>
+ 
             </amx:facet>
             <amx:facet name="center">
-                <amx:listView var="row" value="#{bindings.requesitionLineItems.collectionModel}"
+           
+                <amx:panelGroupLayout id="pgl1">
+                           <amx:listView var="row" value="#{bindings.requesitionLineItems.collectionModel}"
                               fetchSize="#{bindings.requesitionLineItems.rangeSize}"
                               selectedRowKeys="#{bindings.requesitionLineItems.collectionModel.selectedRow}"
                               initialScrollRowKeys="#{bindings.requesitionLineItems.collectionModel.selectedRow}"
                               selectionListener="#{bindings.requesitionLineItems.collectionModel.makeCurrent}"
-                              styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll"
+                              showMoreStrategy="autoScroll"
                               bufferStrategy="viewport" id="lv2" inlineStyle="border:none;">
-                               <amx:listItem id="li1" inlineStyle="background-color:#ededed;border:none;">
-                        <amx:tableLayout width="100%" id="ltl1">
+                               <amx:listItem id="li1" inlineStyle="background-color:#FFFFFF;border:none; margin-right:-10px" showLinkIcon="false">
+                            <amx:panelGroupLayout id="pgl3" inlineStyle="padding:4px;border: 2px solid #F7F3F3;  margin-right:-10px">
+                            <amx:tableLayout width="100%" id="ltl1">
                             <amx:rowLayout id="lqrl1">
-                                <amx:cellFormat width="2px" id="lqcf3"/>
-                                <amx:cellFormat width="100%" halign="start" id="lqcf4" columnSpan="3">
+                                <amx:cellFormat width="100%" halign="start" id="lqcf4">
                                     <amx:outputText value="#{row.requisitionLineNo}. #{row.productTitle}"
-                                                    inlineStyle="word-break: break-word;white-space: pre-wrap; font-size: 16px;  font-weight: bold; clear: both;font-family: Arial, sans-serif;"
+                                                    inlineStyle="word-break: break-word;white-space: pre-wrap; font-size: 14px;  font-weight: bold; clear: both;font-family: Arial, sans-serif;"
                                                     id="lqot3"/>
                                 </amx:cellFormat>
                             </amx:rowLayout>
-                            </amx:tableLayout>
-<amx:tableLayout width="100%" id="lqtl1">
-                            <amx:rowLayout id="lrl1">
-                                <amx:cellFormat width="2px" id="lcf3"/>
-                                <amx:cellFormat width="45%" halign="start" id="lcf4">
-                                    <amx:outputText value="Qty: #{row.quantity}"
-                                                    inlineStyle="font-size: 14px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="lot3"/>
-                                </amx:cellFormat>
-                                <amx:cellFormat width="2px" id="lcf1"/>
-                                <amx:cellFormat width="55%" halign="start" id="lcf2">
-                                    <amx:outputText value="Deliver To Location:#{row.deliverToLocation}"
-                                                    inlineStyle="font-size: 14px;  word-break: break-word;white-space: pre-wrap;clear: both;font-family: Arial, sans-serif;"
-                                                    id="lot2"/>
-                                </amx:cellFormat>
-                            </amx:rowLayout>
-                            <amx:rowLayout id="lrl2">
-                                <amx:cellFormat width="2px" id="lcf7"/>
-                                <amx:cellFormat width="45%" halign="start" id="lcf8">
-                                    <amx:outputText value="Price:#{row.unitPrice} #{row.uom}"
-                                                    inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="lot5"/>
-                                </amx:cellFormat>
-                                <amx:cellFormat width="2px" id="lcf9"/>
-                                <amx:cellFormat width="55%" halign="start" id="lcf10">
-                                    <!--<amx:outputText value="PO:#{row.poNo}"
-                                                    inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="lot6"/>-->
-                                   <amx:outputText value="Need By Date: #{row.needByDate}"
-                                                    inlineStyle="word-break: break-word;white-space: pre-wrap;font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="zlot6"/>
-                                </amx:cellFormat>
-                            </amx:rowLayout>
-                         <amx:rowLayout id="lzrl2">
-                                <amx:cellFormat width="2px" id="lzcf7"/>
-                                <amx:cellFormat width="100%" halign="start" id="lzcf8" columnSpan="3">
-                                    <amx:outputText value="Total Amount:#{row.lineTotal}"
-                                                    inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="lzot5"/>
-                                </amx:cellFormat>
-                               <!-- <amx:cellFormat width="2px" id="lzcf9"/>
-                                <amx:cellFormat width="55%" halign="start" id="lzcf10">
-                                    <amx:outputText value="Supplier: #{row.vendorName}"
-                                                    inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="lzot6"/>
-                                </amx:cellFormat>
-                            </amx:rowLayout>
-                            <amx:rowLayout id="zlrl2">
-                                <amx:cellFormat width="2px" id="zlcf7"/>
-                                <amx:cellFormat width="100%" halign="start" id="zlcf8" columnSpan="3">
-                                    <amx:outputText value="Need By Date: #{row.needByDate}"
-                                                    inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="zlot6"/>
-                                </amx:cellFormat> -->
-                            </amx:rowLayout>
-
-                        </amx:tableLayout>
-                        
-                        
-                         <amx:tableLayout width="100%" id="tl2" rendered="#{row.showReqSection}">
-                          
-                            <amx:rowLayout id="rl2">
-                                <amx:cellFormat width="2px" id="cf5"/>
-                                <amx:cellFormat width="45%" halign="start" id="cf6">
-                                    <amx:outputText value="Req No #{row.reqNum}"
-                                                    inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="ot4"/>
-                                </amx:cellFormat>
-                                <amx:cellFormat width="2px" id="cf7"/>
-                                <amx:cellFormat width="55%" halign="start" id="cf8">
-                                   <amx:outputText value="Req Status: #{row.reqStatus}"
-                                                    inlineStyle="word-break: break-word;white-space: pre-wrap; font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="ot5"/>
-                                </amx:cellFormat>
-                            </amx:rowLayout>
-                         <amx:rowLayout id="rl3">
-                                <amx:cellFormat width="2px" id="cf9"/>
-                                <amx:cellFormat width="45%" halign="start" id="cf10">
-                                    <amx:outputText value="PO No:#{row.poNo}"
-                                                    inlineStyle="font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
+                              <amx:rowLayout id="lrl1" rendered="#{row.showReqSection}">
+                                <amx:cellFormat width="100%" halign="start" id="lcf4">
+                                       <amx:outputText value="Supplier: #{row.vendorName}"
+                                                    inlineStyle="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
                                                     id="ot6"/>
-                                </amx:cellFormat>
-                               <amx:cellFormat width="2px" id="lzcf9"/>
-                                <amx:cellFormat width="55%" halign="start" id="lzcf10">
-                                    <amx:outputText value="Supplier: #{row.vendorName}"
-                                                    inlineStyle="word-break: break-word;white-space: pre-wrap;font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="lzot6"/>
-                                </amx:cellFormat>
-                            </amx:rowLayout>
-                        </amx:tableLayout>
-                        
-                        
-                         <amx:tableLayout width="100%" id="tl3" rendered="#{row.showRfqSection}">
+                                    </amx:cellFormat>
+                                </amx:rowLayout>
                           
                             <amx:rowLayout id="rl4">
-                                <amx:cellFormat width="2px" id="cf11"/>
-                                <amx:cellFormat width="45%" halign="start" id="cf12">
-                                
-                                 <amx:commandLink id="commandLink112" action="#{RequesitionRest.showRFQDetails}">
-                                    
-                 
-                                    <amx:outputText value="RFQ No #{row.rfqNum}"
-                                                    inlineStyle="font-size: 14px; margin-top:5px; color: #2F6BAC; clear: both;font-family: Arial, sans-serif;"
-                                                    id="ot7"/>
-                                                    
-                                    <amx:setPropertyListener from="#{row.rfqHeaderId}"
-                                                             to="#{pageFlowScope.requisitionRfqHeaderId}" type="action"
-                                                             id="spl1"/>                
-                                    </amx:commandLink>                  
+                                <amx:cellFormat width="100%" halign="start" id="cf4">
+                                    <amx:outputText value="Qty: #{row.quantity}"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="ot5"/>
                                 </amx:cellFormat>
-                                <amx:cellFormat width="2px" id="cf13"/>
-                                <amx:cellFormat width="55%" halign="start" id="cf14">
-                                   <amx:outputText value="RFQ Status: #{row.rfqStatus}"
-                                                    inlineStyle="word-break: break-word;white-space: pre-wrap;font-size: 14px; margin-top:5px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="ot8"/>
+                                </amx:rowLayout>
+                                 <amx:rowLayout id="rl3">
+                                <amx:cellFormat width="100%" halign="start" id="cf3">
+                                    <amx:outputText value="Price: #{row.unitPrice} #{row.uom}"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="ot4"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                              <amx:rowLayout id="arl3">
+                                <amx:cellFormat width="100%" halign="start" id="acf3">
+                                    <amx:outputText value="Delivery Location: #{row.deliverToLocation}"
+                                                    inlineStyle="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="aot4"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                              <amx:rowLayout id="brl3">
+                                <amx:cellFormat width="100%" halign="start" id="bcf3">
+                                    <amx:outputText value="Need by Date: #{row.needByDate}"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="bot4"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                              <amx:rowLayout id="crl3" rendered="#{row.showReqSection}">
+                                <amx:cellFormat width="100%" halign="start" id="ccf3">
+                                    <amx:outputText value="Req No: #{row.reqNum}"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="cot4"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                              <amx:rowLayout id="drl3" rendered="#{row.showReqSection}">
+                                <amx:cellFormat width="100%" halign="start" id="dcf3">
+                                    <amx:outputText value="PO No: #{row.poNo}"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="dot4"/>
                                 </amx:cellFormat>
                             </amx:rowLayout>
                         
-                        </amx:tableLayout>
-                        
-                        
-                        
-                        
-                    </amx:listItem>
-                   
-                </amx:listView>
-                    <!--<amx:listView var="row" value="#{bindings.requesitionLineItems1.collectionModel}"
-                                  fetchSize="#{bindings.requesitionLineItems1.rangeSize}"
-                                  selectedRowKeys="#{bindings.requesitionLineItems1.collectionModel.selectedRow}"
-                                  initialScrollRowKeys="#{bindings.requesitionLineItems1.collectionModel.selectedRow}"
-                                  selectionListener="#{bindings.requesitionLineItems1.collectionModel.makeCurrent}"
-                                  styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll"
-                                  bufferStrategy="viewport" id="lv1">
-                        <amx:listItem id="li11">
-                            <amx:tableLayout width="100%" id="tl2">
-                                <amx:rowLayout id="rl4">
-                                    <amx:cellFormat width="10px" rowSpan="2" id="cf13"/>
-                                    <amx:cellFormat width="60%"
-                                                    height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cf11">
-                                        <amx:outputText value="#{row.requisitionLineNo}" id="ot8"/>
-                                    </amx:cellFormat>
-                                    <amx:cellFormat width="10px" rowSpan="2" id="cf12"/>
-                                    <amx:cellFormat width="40%" halign="end" id="cf14">
-                                        <amx:outputText value="#{row.productTitle}"
-                                                        styleClass="adfmf-listItem-highlightText" id="ot9"/>
-                                    </amx:cellFormat>
-                                </amx:rowLayout>
-                                <amx:rowLayout id="rl3">
-                                    <amx:cellFormat width="60%"
-                                                    height="#{deviceScope.device.os=='Android'?'22':'19'}px" id="cf6">
-                                        <amx:outputText value="#{row.quantity}"
-                                                        styleClass="adfmf-listItem-captionText" id="ot7"/>
-                                    </amx:cellFormat>
-                                    <amx:cellFormat width="40%" halign="end" id="cf5">
-                                        <amx:outputText value="#{row.deliverToLocation}"
-                                                        styleClass="adfmf-listItem-captionText" id="ot4"/>
-                                    </amx:cellFormat>
-                                </amx:rowLayout>
+                              <amx:rowLayout id="frl3" rendered="#{row.showRfqSection}">
+                                <amx:cellFormat width="100%" halign="start" id="fcf3">
+                                    <amx:outputText value="RFQ Status: #{row.rfqStatus}"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="fot4"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
                             </amx:tableLayout>
+                            <amx:panelGroupLayout id="pgl4" layout="horizontal" rendered="#{row.showRfqSection}">
+                                <amx:outputText value="RFQ No:"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="ot7"/>
+                                    <amx:commandLink id="commandLink112" action="#{RequesitionRest.showRFQDetails}" styleClass="adfmf-commandLink-noUnderline">
+                                      <amx:outputText value="#{row.rfqNum}"
+                                                    inlineStyle="color:#0E4876;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="ot8"/>
+                                                    <amx:setPropertyListener from="#{row.rfqHeaderId}"
+                                                             to="#{pageFlowScope.requisitionRfqHeaderId}" type="action"
+                                                             id="spl1"/>
+                                                     <amx:showPopupBehavior popupId="RFQDetails" type="action" align="overlapMiddleCenter" alignId="pp1"/>        
+                                                    </amx:commandLink>
+                                                    
+                                </amx:panelGroupLayout>
+                                <amx:panelGroupLayout id="pgl6" layout="horizontal" rendered="#{row.showReqSection}">
+                                <amx:outputText value="Status:"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="ot12"/>
+                                      <amx:outputText value="#{row.reqStatus}"
+                                                    inlineStyle="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;color:#000000;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="ot13"/>              
+                                                    
+                                </amx:panelGroupLayout>
+                                 <amx:panelGroupLayout id="pgl5" layout="horizontal">
+                                <amx:outputText value="Total Amount:"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="ot9"/>
+                                      <amx:outputText value="$ 450000"
+                                                    inlineStyle="color:#FF6600;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="ot10"/>              
+                                                    
+                                </amx:panelGroupLayout>
+                            </amx:panelGroupLayout>
                         </amx:listItem>
-                    </amx:listView>-->
-                </amx:facet>
+</amx:listView>
+</amx:panelGroupLayout>
+            </amx:facet>
         </amx:panelStretchLayout>
     </amx:panelPage>
+    
+    <amx:popup id="RFQDetails"  autoDismiss="true" animation="zoom" backgroundDimming="on" styleClass="sortpopup2">
+  <amx:panelStretchLayout id="psl7" scrollPolicy="scroll">
+      <amx:facet name="top">
+          <amx:tableLayout width="100%" id="tl11" inlineStyle="background-color: #0E4876;">
+            <amx:rowLayout id="rl13">
+                <amx:cellFormat id="cf17" halign="center" width="80%">
+                    <amx:outputText value="RFQ Details" id="ot11"
+                                    inlineStyle="font-weight:bold;color: #FFFFFF; text-align:center;"></amx:outputText>
+                </amx:cellFormat>
+                <amx:cellFormat id="cf18" halign="end" width="20%">
+                    <amx:commandButton icon="/images/error.png" id="cb6">
+                        <amx:closePopupBehavior popupId="RFQDetails" type="action" id="cpb5"/>
+                    </amx:commandButton>
+                </amx:cellFormat>
+            </amx:rowLayout>
+        </amx:tableLayout>
+        <amx:tableLayout id="atl1" inlineStyle="background-color: #61605E; padding:5px;border: 2px solid #61605E;" width="100%">
+            <amx:rowLayout id="arl1">
+              <amx:cellFormat id="acf1" halign="start" valign="middle" width="100%">
+                <amx:outputText value="RFQ No: #{pageFlowScope.requisitionRFQNo}" id="aot2" inlineStyle="color: #FFFFFF;font-size: 14px;"/>
+              </amx:cellFormat>
+              </amx:rowLayout>
+              <amx:rowLayout id="arl2">
+              <amx:cellFormat id="acf2" halign="start" valign="middle" width="100%">
+                <amx:outputText value="Created By: #{pageFlowScope.rfqCreatedBy}" id="aot3" inlineStyle="word-break: break-word;white-space: pre-wrap;color: #FFFFFF;font-size: 14px;">
+                </amx:outputText>
+                </amx:cellFormat>
+            </amx:rowLayout>
+          </amx:tableLayout>
+        </amx:facet>
+        <amx:facet name="center">
+   <amx:panelGroupLayout id="xpgl1" inlineStyle="background-color:#FFFFFF;">
+                            <amx:panelGroupLayout id="xpgl3" inlineStyle="padding:4px;border: 2px solid #ededed;  margin-right:-10px">
+                            <amx:tableLayout width="100%" id="xltl1">
+                            <amx:rowLayout id="xlqrl1">
+                                <amx:cellFormat width="100%" halign="start" id="xlqcf4">
+                                    <amx:outputText value="#{pageFlowScope.requisitionRFQItemDescription}"
+                                                    inlineStyle="word-break: break-word;white-space: pre-wrap; font-size: 14px;  font-weight: bold; clear: both;font-family: Arial, sans-serif;"
+                                                    id="xlqot3"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            
+                          
+                            <amx:rowLayout id="xrl4">
+                                <amx:cellFormat width="100%" halign="start" id="xcf4">
+                                    <amx:outputText value="Qty: #{pageFlowScope.requisitionRFQQty}"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="xot5"/>
+                                </amx:cellFormat>
+                                </amx:rowLayout>
+                                  <amx:rowLayout id="xlrl1">
+                                <amx:cellFormat width="100%" halign="start" id="xlcf4">
+                                       <amx:outputText value="Created Date: #{pageFlowScope.requisitionRFQCreatedDate}"
+                                                    inlineStyle="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="xot6"/>
+                                    </amx:cellFormat>
+                                </amx:rowLayout>
+                                 <amx:rowLayout id="xrl3">
+                                <amx:cellFormat width="100%" halign="start" id="xcf3">
+                                    <amx:outputText value="Close Date: #{pageFlowScope.requisitionRFQCloseDate}"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="xot4"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                              <amx:rowLayout id="xarl3">
+                                <amx:cellFormat width="100%" halign="start" id="xacf3">
+                                    <amx:outputText value="# of RFQs Sent: #{pageFlowScope.requisitionRFQSent}"
+                                                    inlineStyle="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="xaot4"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                              <amx:rowLayout id="xbrl3">
+                                <amx:cellFormat width="100%" halign="start" id="xbcf3">
+                                    <amx:outputText value="# of Bids Recieved: #{pageFlowScope.requisitionRFQBidsRecieved}"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="xbot4"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            </amx:tableLayout>
+                                <amx:panelGroupLayout id="xpgl4" layout="horizontal">
+                                <amx:outputText value="Status:"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="xot7"/>
+                                      <amx:outputText value="#{pageFlowScope.requisitionRFQtatus}"
+                                                    inlineStyle="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;color:#000000;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="xot8"/>              
+                                                    
+                                </amx:panelGroupLayout>
+                            
+                            </amx:panelGroupLayout>
+</amx:panelGroupLayout>    
+</amx:facet>
+</amx:panelStretchLayout>
+    </amx:popup>
 </amx:view>

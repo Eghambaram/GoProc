@@ -4487,8 +4487,13 @@ public class UOMList {
         String deliverLoc=(String)ve9.getValue(AdfmfJavaUtilities.getAdfELContext());
         ValueExpression ve10 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.need_by_date}", String.class);
         String needByDate=(String)ve10.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        // manually clear the Supplier Value ""
+        
+        
         ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
         String supplier=(String)ve11.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
         ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierNotForm}", String.class);
         String supplierNot=(String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
         ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);

@@ -8,6 +8,8 @@ import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.AbstractList;
@@ -497,14 +499,15 @@ public class RequesitionRest {
             
            String response = restServiceAdapter.send(postData);
             
+            System.out.println("response===============================" + response);
           //  System.out.println("response===============================" + response);
             JSONObject resp=new JSONObject(response);
             JSONObject output=resp.getJSONObject("OutputParameters");
             JSONObject summTBL=output.getJSONObject("X_RFQ_TL");
             
             RFQList.s_jobs.clear();
-            RFQ rfq1=new RFQ("", "", "Please Select", "","","");
-            RFQList.s_jobs.add(rfq1);
+         //   RFQ rfq1=new RFQ("", "", "Please Select", "","","");
+         //   RFQList.s_jobs.add(rfq1);
             
             if(summTBL.get("X_RFQ_TL_ITEM") instanceof JSONArray) {
                // System.out.println("Inside JSON ===============================" + response);                             
@@ -515,8 +518,11 @@ public class RequesitionRest {
                     String rfqId=data.getString("RFQ_ID");
                     String rfgNo=data.getString("RFQ_NUM");
                     String itemDescription=data.getString("ITEM_DESCRIPTION");
-                    itemDescription=itemDescription+"-"+rfgNo;
+                    //itemDescription=itemDescription+"-"+rfgNo;
                     String rfqCloseDate=data.getString("RFQ_CLOSE_DATE");
+                    if (rfqCloseDate.contains("{")) {
+                        rfqCloseDate = "";
+                    }
                     String rfqNeedByDate=data.getString("NEED_BY_DATE");
                     if (rfqNeedByDate.contains("{")) {
                         rfqNeedByDate = "";
@@ -538,8 +544,11 @@ public class RequesitionRest {
                 String rfqId=data.getString("RFQ_ID");
                 String rfgNo=data.getString("RFQ_NUM");
                 String itemDescription=data.getString("ITEM_DESCRIPTION");
-                itemDescription=itemDescription+"-"+rfgNo;
+                //itemDescription=itemDescription+"-"+rfgNo;
                 String rfqCloseDate=data.getString("RFQ_CLOSE_DATE");
+                if (rfqCloseDate.contains("{")) {
+                                        rfqCloseDate = "";
+                                    }
                 String rfqNeedByDate=data.getString("NEED_BY_DATE");
                 if (rfqNeedByDate.contains("{")) {
                                         rfqNeedByDate = "";
@@ -552,6 +561,8 @@ public class RequesitionRest {
             
         //            AdfmfContainerUtilities.gotoFeature("mp.Requisition");
           
+        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.RFQ.iterator}");   
+        vex.refresh();
           
 //        BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.RFQ.items}");   
 //        vex.refresh();
@@ -686,7 +697,8 @@ public class RequesitionRest {
          "\n" + 
          "   \"InputParameters\": {\n" + 
          "\n" + 
-         "        \"P_USER_ID\":"+userId+"\n" + 
+          "        \"P_USER_ID\":\""+userId+"\",\n" +
+          "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
          "\n" + 
          "     }\n" + 
          "\n" + 
@@ -746,10 +758,10 @@ public class RequesitionRest {
             
             
             
-             AmxAttributeBinding customerList = (AmxAttributeBinding) AdfmfJavaUtilities
+      /*       AmxAttributeBinding customerList = (AmxAttributeBinding) AdfmfJavaUtilities
                                .evaluateELExpression("#{bindings.RFQ}");
             AmxIteratorBinding amxListIterator =  customerList.getIteratorBinding();
-            amxListIterator.refresh();
+            amxListIterator.refresh();*/
             
             
             AmxAttributeBinding deliverToList = (AmxAttributeBinding) AdfmfJavaUtilities
@@ -1524,25 +1536,29 @@ public class RequesitionRest {
         try{
         ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quotationRFQCloseDate}", String.class);
         String closeDate = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
-        
-        
-                SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-                          Date sel_date=sdf.parse(closeDate);
-                          Date today_date=sdf.parse(sdf.format(new Date()));
-        
-                          long diff = today_date.getTime() - sel_date.getTime();
-        
-                          System.out.println("today_date "+sdf.format(today_date));
-                          System.out.println("Comparing Dates "+TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
-        
-                             if(sel_date.after(today_date)){
+
+                    System.out.println("Close Date-->"+closeDate);
+
+                    //yyyy-MM-dd
+                    DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                    Date today_date = new Date();
+                    System.out.println("Today Date New--->"+df.format(today_date));
+                    Date today = df.parse(df.format(today_date));
+                    
+            
+                    Date close_date = df.parse(closeDate);
+                    System.out.println("Close Date New--->"+df.format(close_date));
+                    Date closeday = df.parse(df.format(close_date));
+                    System.out.println("Close Date New--->"+today+closeday);
+
+                           if(closeday.after(today)){
                                  
                                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
                                                                                               "confirm_quote",
                                                                                               new Object[] { });
                                  
                                }
-                               else if(sel_date.equals(today_date)){
+                               else if(closeday.equals(today)){
                                   
                                    proceedPlaceOrder("");
                                   
@@ -2924,7 +2940,8 @@ public class RequesitionRest {
          ValueExpression ve49 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to}", String.class);
          default_deliver_to_location_id = (String)ve49.getValue(AdfmfJavaUtilities.getAdfELContext());    
             
-            
+            ValueExpression ve_orgId = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+            String multiOrgId = (String)ve_orgId.getValue(AdfmfJavaUtilities.getAdfELContext());   
             
             
          //Deliver to Location   
@@ -2953,7 +2970,9 @@ public class RequesitionRest {
          "\n" + 
          "   \"InputParameters\": {\n" + 
          "\n" + 
-         "        \"P_USER_ID\":"+userId+"\n" + 
+         "        \"P_USER_ID\":\""+userId+"\",\n" +
+         "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
+ 
          "\n" + 
          "     }\n" + 
          "\n" + 
@@ -4456,7 +4475,8 @@ public class RequesitionRest {
                 AdfmfJavaUtilities.flushDataChangeEvent();
              
             }
-            return "RFQ_details";
+//            return "RFQ_details";
+            return "";
         }
         catch(Exception e){
             e.printStackTrace();
@@ -4566,6 +4586,10 @@ public class RequesitionRest {
             ValueExpression ve15 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
             String multiOrgId = (String)ve15.getValue(AdfmfJavaUtilities.getAdfELContext());
 
+            ValueExpression ve16 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.reqType}", String.class);
+            String reqTypes = (String)ve16.getValue(AdfmfJavaUtilities.getAdfELContext());
+            ValueExpression veSearch = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchRequisitionValue}", String.class);
+            String veSearchText = (String)veSearch.getValue(AdfmfJavaUtilities.getAdfELContext());
         
         RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
         // Clear any previously set request properties, if any
@@ -4584,7 +4608,9 @@ public class RequesitionRest {
         "    },\n" + 
         "   \"InputParameters\": {\n" + 
         "          \"P_USER_ID\" : \""+userId+"\",\n" +
-        "          \"P_ORG_ID\" : \""+multiOrgId+"\"\n" +
+        "          \"P_ORG_ID\" : \""+multiOrgId+"\",\n" +
+        "          \"P_ITEM_DESCRIPTION\" : \"\",\n" +
+        "          \"P_DOCUMENT_TYPE\" : \""+reqTypes+"\"\n" +
         "         \n" + 
         "       }    \n" + 
         "   }\n" + 
@@ -5570,6 +5596,9 @@ public class RequesitionRest {
         ValueExpression showOthers = AdfmfJavaUtilities.getValueExpression("#{applicationScope.showOthers}", String.class);
         String showOthers_value = (String)showOthers.getValue(AdfmfJavaUtilities.getAdfELContext());
          System.out.println("--------------Hello ItemType"+showOthers_value);
+        
+         ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.showOthers}", String.class);
+         ve23.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
          
         ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showSearch}", String.class);
         ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
@@ -6452,4 +6481,116 @@ public class RequesitionRest {
         ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RejectionComments}", String.class);
         ve23.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
     }
+
+    public void reqTypeChange(ValueChangeEvent valueChangeEvent) {
+        // Add event code here...
+        String oldstr = "";
+        String newstr = "";
+        Object value = null;
+
+        value = valueChangeEvent.getOldValue();
+        if (value != null)
+        {
+          oldstr = value.toString();
+        }
+
+        value = valueChangeEvent.getNewValue();
+        if (value != null)
+        {
+          newstr = value.toString();
+        }
+
+        String oldval = "Old Value: " + oldstr;
+        String newval = "New Value: " + newstr;
+
+        System.out.println("===========> New Value "+newval+" Old Value"+oldval);
+        
+        
+        ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.reqType}", String.class);
+        ve4.setValue(AdfmfJavaUtilities.getAdfELContext(), newstr);
+        try{
+            MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.reqTypeRequisition.execute}", Object.class, new Class[] {});
+            me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getQuotationDetail(ActionEvent actionEvent) {
+        // Add event code here...
+        try{
+            
+            AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
+                                                                                      "adf.mf.api.amx.doNavigation", new Object[] { "Quotation_Details" });       
+            
+        }
+        catch(Exception e) {
+            
+            e.printStackTrace();
+            
+         
+        }
+        
+        
+    }
+    
+    
+    public void getQuotationValues(String rr) {
+        try{
+            
+            BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.quotations.iterator}");   
+            vex.setDataProvider(QuotationList.s_jobs);
+            
+            
+            MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.refresh.execute}", Object.class, new Class[] {});
+            me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+            
+           // System.out.println("Size is "+ mobile.QuotationList.s_jobs.size()+" "+vex.getTotalRowCount());
+            
+            AdfmfJavaUtilities.flushDataChangeEvent();
+            
+            
+        }
+        catch(Exception e) {
+            
+            e.printStackTrace();
+            
+            AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                         AdfmfJavaUtilities.getFeatureName(),
+                                         "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                         "Cannot connect to Services on Oracle Server.",
+                                         null,
+                                         null }); 
+        }
+        
+    }
+
+public void backViewSupplierBids(String rr) {
+try{    
+  System.out.println("enter into Supplier back Supplier");
+    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(), "adf.mf.api.amx.doNavigation", new Object[] { "back_Quote" });    
 }
+    catch(Exception e) {
+        
+        e.printStackTrace();
+    }
+}
+
+    public void searchRFQs(ActionEvent actionEvent) {
+        // Add event code here...
+        MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.searchRFQs.execute}", Object.class, new Class[] {});
+        me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+
+    }
+    
+    public void searchRFQ(String ss){
+        ValueExpression veSearch = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchRFQValue}", String.class);
+        veSearch.setValue(AdfmfJavaUtilities.getAdfELContext(),ss);
+        
+        MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.searchRFQs.execute}", Object.class, new Class[] {});
+        me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+    }
+}
+
+

@@ -87,6 +87,10 @@
         <from-outcome>checkout</from-outcome>
         <to-activity-id>checkout</to-activity-id>
       </control-flow-case>
+      <control-flow-case id="__20">
+        <from-outcome>refined_Services</from-outcome>
+        <to-activity-id>refined_search_services</to-activity-id>
+      </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__19">
       <from-activity-id>*</from-activity-id>

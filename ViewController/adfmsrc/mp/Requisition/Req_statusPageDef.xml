@@ -49,5 +49,7 @@
     <methodAction id="clearRequisitionSearch" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="clearRequisitionSearch" IsViewObjectMethod="false" DataControl="OrderList"
                   InstanceName="data.OrderList.dataProvider"/>
+<methodAction id="reqTypeRequisition" RequiresUpdateModel="true" Action="invokeMethod" MethodName="reqTypeRequisition"
+                  IsViewObjectMethod="false" DataControl="OrderList" InstanceName="data.OrderList.dataProvider"/>                  
   </bindings>
 </pageDefinition>

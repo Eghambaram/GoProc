@@ -62,12 +62,15 @@ public class QuotationList {
           }
     
     public void refresh(){
-               try{
+           /*    try{
                ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.user_name}", String.class);
                String userName = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
                
                ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.password}", String.class);
                String password = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
+               
+               ValueExpression ve15 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+               String multiOrgId = (String)ve15.getValue(AdfmfJavaUtilities.getAdfELContext());
                    
                    ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
                    String userId = (String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -97,7 +100,8 @@ public class QuotationList {
                "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
                "    },\n" + 
                "   \"InputParameters\": {\n" + 
-               "        \"P_USER_ID\": \""+userId+"\"\n" + 
+                   "          \"P_USER_ID\" : \""+userId+"\",\n" +
+                   "          \"P_ORG_ID\" : \""+multiOrgId+"\"\n" +
                "     }\n" + 
                "  }\n" + 
                "}  \n";
@@ -112,8 +116,6 @@ public class QuotationList {
                    JSONObject summTBL=output.getJSONObject("X_RFQ_TL");
                    
                    RFQList.s_jobs.clear();
-                   RFQ rfq1=new RFQ("", "", "Please Select", "","","");
-                   RFQList.s_jobs.add(rfq1);
                    
                    if(summTBL.get("X_RFQ_TL_ITEM") instanceof JSONArray) {
                       // System.out.println("Inside JSON ===============================" + response);                             
@@ -164,12 +166,12 @@ public class QuotationList {
                    e.printStackTrace();
                }
                
+               */
                
                
                
                
-               
-               ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{bindings.RFQ.inputValue}", String.class);
+              /* ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{bindings.RFQ.inputValue}", String.class);
                String rfqItemDescription = (String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
                if(!rfqItemDescription.equalsIgnoreCase("") && !rfqItemDescription.equalsIgnoreCase("Please Select")){
                String arr[]=rfqItemDescription.split("-");
@@ -189,11 +191,13 @@ public class QuotationList {
                        rfqNeedByDate=r.getRfqNeedByDate();
                        rfqDeliverToLocation=r.getRfqDeliverToLocation();
                    }
-               }
+               }*/
                
                try{
                    
-                   
+                   QuotationList.s_jobs.clear();
+                   BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.quotations.iterator}");   
+                   vex.refresh();              
                ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.user_name}", String.class);
                String userName = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
                
@@ -202,7 +206,9 @@ public class QuotationList {
                
                 ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.QuotationSortValue}", String.class);
                 String sortOption = (String)ve4.getValue(AdfmfJavaUtilities.getAdfELContext());
-               
+                
+                ValueExpression ve5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.rfqQuotId}", String.class);
+                String rfqId = (String)ve5.getValue(AdfmfJavaUtilities.getAdfELContext());
               
                    
                ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedRFQId}", String.class);
@@ -361,15 +367,15 @@ public class QuotationList {
                    }
                    
                    
-                   String arr_s[]=rfqCloseDate.split("T");
+                 /*  String arr_s[]=rfqCloseDate.split("T");
                    ValueExpression ve36 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quotationRFQCloseDate}", String.class);
                    ve36.setValue(AdfmfJavaUtilities.getAdfELContext(),arr_s[0]);
                    
                    
-                   String arr1[]=rfqItemDescription.split("-"+rfqNo);
+                   String arr1[]=rfqItemDescription.split("-"+rfqNo);*/
                    
                    
-                   ValueExpression ve37 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.itemDescription}", String.class);
+                   /* ValueExpression ve37 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.itemDescription}", String.class);
                    ve37.setValue(AdfmfJavaUtilities.getAdfELContext(),arr1[0]);
                    
                    
@@ -380,10 +386,16 @@ public class QuotationList {
                    ve39.setValue(AdfmfJavaUtilities.getAdfELContext(),rfqNeedByDate);
                    
                    ValueExpression ve40 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quotationDeliverToLocation}", String.class);
-                   ve40.setValue(AdfmfJavaUtilities.getAdfELContext(),rfqDeliverToLocation);
+                   ve40.setValue(AdfmfJavaUtilities.getAdfELContext(),rfqDeliverToLocation);*/
                    
+                   // ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.rfqQuotId}", String.class);
+                   // ve41.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                    
                    AdfmfJavaUtilities.flushDataChangeEvent();
+                   vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.quotations.iterator}");   
+                   System.out.println("data "+vex.getTotalRowCount());
+                   vex.refresh();
+
                }
               
                catch(Exception e){
@@ -393,7 +405,7 @@ public class QuotationList {
               ////////////////////
                System.out.println("Elements size "+  QuotationList.s_jobs.size());
                providerChangeSupport.fireProviderRefresh("quotations");
-           }
+           
     }
     
     
@@ -456,7 +468,7 @@ public class QuotationList {
             String arr[];
             String need="";
             SimpleDateFormat fdf=new SimpleDateFormat("MM/dd/yyyy");
-            SimpleDateFormat tdf=new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat tdf=new SimpleDateFormat("MM/dd/yyyy");
             if(!needByDate.equalsIgnoreCase("")){
                 arr=needByDate.split("T");
                 if(arr[0].contains("/")){
@@ -469,9 +481,12 @@ public class QuotationList {
             }
             
             //please change the variable name
-            ValueExpression ve21 = AdfmfJavaUtilities.getValueExpression("#{bindings.deliverToLocations.inputValue}", String.class);
+            
+            //#{bindings.deliverToLocations.inputValue}      
+            ValueExpression ve21 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quotationDeliverToLocation}", String.class);
             String deliverToLocation = (String)ve21.getValue(AdfmfJavaUtilities.getAdfELContext()); 
             String locationId="";
+            System.out.println("Deliver To Location-->"+deliverToLocation); 
             
             for(int k=0;k<DeliverToLocationList.s_jobs.size();k++) {
                 DeliverToLocation loc=(DeliverToLocation)DeliverToLocationList.s_jobs.get(k);
@@ -509,10 +524,10 @@ public class QuotationList {
         "\n" + 
         "          \"NEED_BY_DATE\" : \""+need+"\",\n" + 
         "\n" + 
-        "          \"DELIVER_TO_LOCATION_ID\" :"+ locationId+",\n" + 
+        "          \"DELIVER_TO_LOCATION_ID\" :\""+ locationId+"\",\n" + 
         "\n" + 
-        "          \"USER_ID\" : "+userId+",\n" + 
-        "          \"RFQ_ID\" : "+selected_item.getRfqId()+"\n" + 
+        "          \"USER_ID\" : \""+userId+"\",\n" + 
+        "          \"RFQ_ID\" : \""+selected_item.getRfqId()+"\"\n" + 
         "\n" + 
         "        }\n" + 
         "\n" + 
@@ -555,8 +570,8 @@ public class QuotationList {
             RFQList.s_jobs.clear();
             getQuotations();
             
-            ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{bindings.RFQ.inputValue}", String.class);
-            ve41.setValue(AdfmfJavaUtilities.getAdfELContext(),"0");
+            /* ValueExpression ve41 = AdfmfJavaUtilities.getValueExpression("#{bindings.RFQ.inputValue}", String.class);
+            ve41.setValue(AdfmfJavaUtilities.getAdfELContext(),"0");*/
             
             
             BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.quotations.iterator}");  

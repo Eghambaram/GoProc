@@ -243,4 +243,14 @@
       <property
          name="sdm:polyPoints">R55,220.0,5.2470703,384.5,94.92401,T56</property>
    </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase28"
+      from="View22"
+      to="View16">
+      <property
+         name="fromOutcome">refined_Services</property>
+      <property
+         name="sdm:polyPoints">T50,434.0,-109.20703,987.0,-77.80469,T50</property>
+   </ControlFlowCase>
 </SDM>

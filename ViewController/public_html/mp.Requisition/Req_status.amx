@@ -61,7 +61,7 @@
             </amx:facet>
             <amx:facet name="primary">
                 <amx:commandLink actionListener="#{bindings.toggleSpringboard.execute}" id="cl1">
-                    <amx:image source="/images/logo.png" id="i3"/>
+                    <amx:image source="/images/menu.png" id="i3"/>
                 </amx:commandLink>
             </amx:facet>
             
@@ -71,7 +71,7 @@
                  <amx:tableLayout id="ztl6" width="100%" halign="start">
                   <amx:rowLayout id="zrl6">
                     <amx:cellFormat id="zcf7" width="85%" halign="start">
-                 <amx:inputText simple="true" value="#{pageFlowScope.searchRequisitionValue}" hintText="search by item or order no"  keyboardDismiss="search" id="inputText2"></amx:inputText>
+                 <amx:inputText simple="true" value="#{pageFlowScope.searchRequisitionValue}" hintText="Search by Order Number or Description"  keyboardDismiss="search" id="inputText2"></amx:inputText>
              
                     </amx:cellFormat>
                     <amx:cellFormat id="zcf3" width="15%" halign="start">
@@ -79,6 +79,17 @@
                     </amx:cellFormat>
                   </amx:rowLayout>
                   </amx:tableLayout>
+          <amx:tableLayout id="tl4" width="100%" halign="center">
+            <amx:rowLayout id="rl111">
+                <amx:cellFormat id="cf522" valign="top" width="100%">
+                    <amx:selectOneButton value="#{applicationScope.reqType}"
+                                         valueChangeListener="#{RequesitionRest.reqTypeChange}" id="sob1">
+                        <amx:selectItem id="si1" value="REQ" label="REQUISITION"/>
+                        <amx:selectItem id="si2" value="RFQ" label="RFQ"/>
+                    </amx:selectOneButton>
+                    </amx:cellFormat>
+            </amx:rowLayout>
+            </amx:tableLayout>
         </amx:panelGroupLayout>
         <amx:panelGroupLayout id="pgl2" inlineStyle="background-color: #0E4876;">
           <amx:tableLayout id="tl1" inlineStyle="background-color: #0E4876;padding:5px;" width="100%">
@@ -141,14 +152,14 @@
                  
                   </amx:cellFormat>
                 </amx:rowLayout>
-                <amx:rowLayout id="rl2">
+                <!-- <amx:rowLayout id="rl2">
                   <amx:cellFormat id="cf5" columnSpan="4" halign="start" valign="middle">
                   <amx:panelGroupLayout id="pgl5" layout="horizontal"  inlineStyle="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                   <amx:outputText value="Order Type: " id="Dwaotq3" inlineStyle="font-size: 14px;color: #353535;"/>
                   <amx:outputText value="#{row.reqType}" id="g2w1" inlineStyle="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size: 14px;color:#707173;"/>
                   </amx:panelGroupLayout>
                   </amx:cellFormat>
-                </amx:rowLayout>
+                </amx:rowLayout> -->
               </amx:tableLayout>
           
                               <amx:setPropertyListener from="#{row.searchGroupId}"

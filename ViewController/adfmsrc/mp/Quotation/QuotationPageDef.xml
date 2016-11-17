@@ -4,9 +4,7 @@
   <parameters/>
   <executables>
     <variableIterator id="variables"/>
-    <iterator Binds="root" RangeSize="25" DataControl="RFQList" id="RFQListIterator"/>
-    <accessorIterator MasterBinding="RFQListIterator" Binds="RFQ" RangeSize="25" DataControl="RFQList"
-                      BeanClass="mobile.RFQ" id="RFQIterator"/>
+   
     <iterator Binds="root" RangeSize="25" DataControl="QuotationList" id="QuotationListIterator"/>
     <accessorIterator MasterBinding="QuotationListIterator" Binds="quotations" RangeSize="25"
                       DataControl="QuotationList" BeanClass="mobile.Quotation" id="quotationsIterator"/>
@@ -17,17 +15,15 @@
     <iterator Binds="root" RangeSize="25" DataControl="QuotationSortList" id="QuotationSortListIterator"/>
     <accessorIterator MasterBinding="QuotationSortListIterator" Binds="quotationSort" RangeSize="25"
                       DataControl="QuotationSortList" BeanClass="mobile.QuotationSort" id="quotationSortIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="RFQList" id="RFQListIterator"/>
+    <accessorIterator MasterBinding="RFQListIterator" Binds="RFQ" RangeSize="25" DataControl="RFQList"
+                      BeanClass="mobile.RFQ" id="RFQIterator"/>
   </executables>
   <bindings>
     <methodAction id="toggleSpringboard" RequiresUpdateModel="true" Action="invokeMethod" MethodName="toggleSpringboard"
                   IsViewObjectMethod="false" DataControl="ApplicationFeatures"
                   InstanceName="data.ApplicationFeatures.dataProvider"/>
-    <list IterBinding="RFQIterator" ListOperMode="navigation" ListIter="RFQIterator" id="RFQ" DTSupportsMRU="true"
-          SelectItemValueMode="ListObject">
-      <AttrNames>
-        <Item Value="itemDescription"/>
-      </AttrNames>
-    </list>
+   
     <tree IterBinding="quotationsIterator" id="quotations">
       <nodeDefinition DefName="mobile.Quotation" Name="quotations0">
         <AttrNames>
@@ -69,11 +65,28 @@
     <methodAction id="proceedPlaceOrder" RequiresUpdateModel="true" Action="invokeMethod" MethodName="proceedPlaceOrder"
                   IsViewObjectMethod="false" DataControl="QuotationList"
                   InstanceName="data.QuotationList.dataProvider"/>
+                  
+      <methodAction id="searchRFQs" RequiresUpdateModel="true" Action="invokeMethod" MethodName="searchRFQs"
+                  IsViewObjectMethod="false" DataControl="RFQList"
+                  InstanceName="data.RFQList.dataProvider"/>            
+                  
     <list IterBinding="quotationSortIterator" ListOperMode="navigation" ListIter="quotationSortIterator"
           id="quotationSort" DTSupportsMRU="false" SelectItemValueMode="ListObject">
       <AttrNames>
         <Item Value="meaning"/>
       </AttrNames>
     </list>
+    <tree IterBinding="RFQIterator" id="RFQ">
+      <nodeDefinition DefName="mobile.RFQ" Name="RFQ0">
+        <AttrNames>
+          <Item Value="rfqNo"/>
+          <Item Value="itemDescription"/>
+          <Item Value="rfqId"/>
+          <Item Value="rfqCloseDate"/>
+          <Item Value="rfqNeedByDate"/>
+          <Item Value="rfqDeliverToLocation"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
   </bindings>
 </pageDefinition>
