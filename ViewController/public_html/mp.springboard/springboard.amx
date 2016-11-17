@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
-    <amx:panelPage id="pp1" inlineStyle="background-color:  #0E4876;">
-            <amx:verbatim id="v3">
+  <amx:panelPage id="pp1">
+              <amx:verbatim id="v3">
 
         <![CDATA[
 
@@ -74,78 +74,148 @@
          ]]>
 
         </amx:verbatim>
-    <amx:facet name="header">
-            <amx:outputText value="Hello #{applicationScope.user_firstName}"  id="ot1" inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
-            
-        </amx:facet>
-       <!-- <amx:selectOneChoice label="Business Unit" id="soc2" valueChangeListener="#{RequesitionRest.getMuliOrgValues}">
-            <amx:selectItem label="Select one" id="yt"/>
-            </amx:selectOneChoice>disabled="#{applicationScope.unreadCount > 0}" -->
-        <amx:tableLayout id="tl1" inlineStyle="background-color:#ffffff">
-            <amx:rowLayout id="rl1" rendered="#{applicationScope.displayMultiOrgDrop}">
+
+      <amx:panelStretchLayout id="psl1" scrollPolicy="scroll">
+            <amx:facet name="top">
+                <amx:tableLayout id="tl1" width="100%" shortDesc="table" inlineStyle="background-color: #0E4876;">
+                    <amx:rowLayout id="rl1">
+                        <amx:cellFormat id="cf8" width="100%" halign="center" height="60" shortDesc="cell"
+                                        columnSpan="2">
+                            <amx:image id="i1" source="/images/logo.png"
+                                       styleClass="#{deviceScope.hardware.screen.diagonalSize gt 7 ? 'springboard-avatar' : 'springboard-avatar-phone'}" shortDesc="Avatar Image"/>
+                        </amx:cellFormat>
+                    </amx:rowLayout>
+                    <amx:rowLayout id="rl2">
+                        <amx:cellFormat id="cf2" width="100%" halign="center" shortDesc="cell" columnSpan="2">
+                            <amx:outputText value="Hello #{applicationScope.user_firstName}" id="ot2"
+                                            inlineStyle="font-size: 20px;color:#ffffff"/>
+                        </amx:cellFormat>
+                    </amx:rowLayout>
+                </amx:tableLayout>
+        
+            </amx:facet>
+              <amx:facet name="center">
+              
+                <amx:tableLayout id="tl3">
+            <amx:rowLayout id="rl4" rendered="#{applicationScope.displayMultiOrgDrop}">
                 <amx:cellFormat id="cfq1">
                 <amx:selectOneChoice value="#{pageFlowScope.selectedMultiOrg}" label="Business Unit" id="soc1" 
-                            valueChangeListener="#{RequesitionRest.getSpringboardMultiOrg}">
+                            valueChangeListener="#{RequesitionRest.getSpringboardMultiOrg}" inlineStyle="color:#FFFFFF;">
                 <amx:selectItems value="#{bindings.multiOrgs.items}" id="si1"/>
             </amx:selectOneChoice>
             </amx:cellFormat>
             </amx:rowLayout>
             </amx:tableLayout>
-            <!--background-color:  #0E4876;-->
-        <amx:panelGroupLayout id="pgl1" inlineStyle="background-color:  #0E4876;">
-        <!-- #{bindings.gotoFeature.execute}-->
-        <amx:listView var="row" showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv1"  styleClass="adfmf-panelPage-springboard">
-            <amx:listItem id="li1" inlineStyle="border: 1px solid #ffffff;"
-                          actionListener="#{RequesitionRest.createRequition}">
-                <amx:outputText value="Create Requisition" id="ot11" inlineStyle="color: #C89C31;font-weight: bold;"/>
-                <!--<amx:setPropertyListener id="spl3" from="feature1" to="#{viewScope.featureid}"/>-->
-            </amx:listItem>
-             <amx:listItem id="l3i1" inlineStyle="border: 1px solid #ffffff;"
-                          actionListener="#{RequesitionRest.buyerAssisted}">
-                <amx:outputText value="Buyer Assisted" id="ot311" inlineStyle="color: #C89C31;font-weight: bold;margin-left:20px"/>
-                <!--<amx:setPropertyListener id="spl3" from="feature1" to="#{viewScope.featureid}"/>-->
-            </amx:listItem>
-            <!--
-            #{bindings.gotoFeature.execute}-->
-            <amx:listItem id="li3" inlineStyle="border: 1px solid #ffffff;"
-                          actionListener="#{RequesitionRest.viewacceptSupplier}">
-                <amx:outputText value="View / Accept Supplier Bids" id="ot13" inlineStyle="color: #C89C31;font-weight: bold;"/>
-               <!--<amx:setPropertyListener id="spl1" from="mp.Quotation" to="#{viewScope.featureid}"/>-->
-            </amx:listItem>
-            <amx:listItem id="li2" inlineStyle="border: 1px solid #ffffff;"
-                          actionListener="#{RequesitionRest.checkRequisition}">
-                <amx:outputText value="Check Order Status" id="ot12" inlineStyle="color: #C89C31;font-weight: bold;"/>
-                <!--<amx:setPropertyListener id="spl4" from="mp.Requisition" to="#{viewScope.featureid}"/>-->
-            </amx:listItem><!--
-            #{bindings.gotoFeature.execute}-->
-            <amx:listItem id="li4" inlineStyle="border: 1px solid #ffffff;"
-                          actionListener="#{RequesitionRest.showNotificationScreen}">
-                            <amx:outputText value="Check Notifications"  id="ot14"  inlineStyle="color: #C89C31;font-weight: bold;"/>
-             <!--<amx:setPropertyListener id="spl5" from="mp.Notification" to="#{viewScope.featureid}"/>-->   
-            </amx:listItem>
-            <amx:listItem id="li6" inlineStyle="border: 1px solid #ffffff;"
-                          actionListener="#{RequesitionRest.manageProfile}">
-                    <amx:outputText value="Manage User Profile" id="ot16" inlineStyle="color: #C89C31;font-weight: bold;"/>
-                <!--<amx:setPropertyListener id="spl7" from="mp.Userprofile" to="#{viewScope.featureid}"/>-->
-            </amx:listItem>
-            <!--#{bindings.gotoFeature.execute}-->
-            <amx:listItem id="li5" inlineStyle="border: 1px solid #ffffff;"
-                          actionListener="#{RequesitionRest.buyerHelp}">
-                <amx:outputText value="Contact" id="ot15" inlineStyle="color: #C89C31;font-weight: bold;"/>
-            </amx:listItem>
-            <amx:listItem id="li7" inlineStyle="border: 1px solid #ffffff;"
-                          actionListener="#{RequesitionRest.doSignOut}">
-                <amx:outputText value="Sign-out" id="ot17" inlineStyle="color: #C89C31;font-weight: bold;"/>
-                 <!--<amx:setPropertyListener id="spl8" from="mp.login" to="#{viewScope.featureid}"/>-->
-            </amx:listItem>
-                       
-        </amx:listView>
-            
-        </amx:panelGroupLayout>
-        <amx:facet name="footer">
-            <amx:outputText value="GoProcure v 1.01" id="fdr" inlineStyle="text-align: center; font-style: italic; font-size:small; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
-            <amx:spacer id="s1"/>
-            <amx:outputText value="Drop:59" id="fdr1" inlineStyle="text-align: center; font-style: italic; font-size:small; color:#ffffff; background-color:transparent;" styleClass="adfmf-commandButton-highlight"/>
-        </amx:facet>
-    </amx:panelPage>
+             <amx:listView var="row" showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv1" inlineStyle="background-color:#FFFFFF;border:none">
+
+            <amx:listItem id="li1" actionListener="#{RequesitionRest.createRequition}" inlineStyle="background-color:#FFFFFF;border: 2px solid #FFFFFF;margin-right: -10px;" showLinkIcon="false">
+                       <amx:tableLayout width="100%" id="tl11" shortDesc="table">
+                            <amx:rowLayout id="rl11">
+                                <amx:cellFormat width="40px" halign="center" id="cf11" shortDesc="cell" inlineStyle="border-bottom: 1px solid #FFFFFF;">
+                                    <amx:image source="/images/createreq.png" id="i11"/>
+                                </amx:cellFormat>
+                                <amx:cellFormat width="100%" height="43px" id="cf12" shortDesc="cell" inlineStyle="border-bottom: 1px solid #C8C8C8;">
+                                    <amx:outputText value="Create Requisition" id="ot11"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            </amx:tableLayout>
+                            </amx:listItem>
+                            <amx:listItem id="zli1" actionListener="#{RequesitionRest.buyerAssisted}" inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #FFFFFF;margin-right: -10px;" showLinkIcon="false">
+                       <amx:tableLayout width="100%" id="ztl11" shortDesc="table">
+                            <amx:rowLayout id="zrl11">
+                            <amx:cellFormat width="40px" halign="center" id="zcf11" shortDesc="cell" inlineStyle="border-bottom: 1px solid #FFFFFF;">
+                                    
+                                </amx:cellFormat>
+                                <amx:cellFormat width="40px" halign="center" id="cf4" shortDesc="cell" inlineStyle="border-bottom: 1px solid #C8C8C8;">
+                                    <amx:image source="/images/freeform1.png" id="i3"/>
+                                </amx:cellFormat>
+                                <amx:cellFormat width="100%" height="43px" id="zcf12" shortDesc="cell" inlineStyle="border-bottom: 1px solid #C8C8C8;">
+                                    <amx:outputText value="Buyer Assisted" id="zot11" />
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            </amx:tableLayout>
+                            </amx:listItem>
+                            
+                             <amx:listItem id="li2" actionListener="#{RequesitionRest.viewacceptSupplier}" inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #FFFFFF;margin-right: -10px;" showLinkIcon="false">
+                       <amx:tableLayout width="100%" id="tl2" shortDesc="table">
+                            <amx:rowLayout id="rl3">
+                                <amx:cellFormat width="40px" halign="center" id="cf1" shortDesc="cell" inlineStyle="border-bottom: 1px solid #FFFFFF;">
+                                    <amx:image source="/images/viewbids.png" id="i2"/>
+                                </amx:cellFormat>
+                                <amx:cellFormat width="100%" height="43px" id="cf3" shortDesc="cell" inlineStyle="border-bottom: 1px solid #C8C8C8;">
+                                    <amx:outputText value="View / Accept Supplier Bids" id="ot1"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            </amx:tableLayout>
+                            </amx:listItem>
+                              <amx:listItem id="ali2" actionListener="#{RequesitionRest.checkRequisition}" inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #FFFFFF;margin-right: -10px;" showLinkIcon="false">
+                       <amx:tableLayout width="100%" id="atl2" shortDesc="table">
+                            <amx:rowLayout id="arl3">
+                                <amx:cellFormat width="40px" halign="center" id="acf1" shortDesc="cell" inlineStyle="border-bottom: 1px solid #FFFFFF;">
+                                    <amx:image source="/images/orderstatus1.png" id="ai2"/>
+                                </amx:cellFormat>
+                                <amx:cellFormat width="100%" height="43px" id="acf3" shortDesc="cell" inlineStyle="border-bottom: 1px solid #C8C8C8;">
+                                    <amx:outputText value="Check Order Status" id="aot1"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            </amx:tableLayout>
+                            </amx:listItem>
+                              <amx:listItem id="bli2" actionListener="#{RequesitionRest.showNotificationScreen}" inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #FFFFFF;margin-right: -10px;" showLinkIcon="false">
+                       <amx:tableLayout width="100%" id="btl2" shortDesc="table">
+                            <amx:rowLayout id="brl3">
+                                <amx:cellFormat width="40px" halign="center" id="bcf1" shortDesc="cell" inlineStyle="border-bottom: 1px solid #FFFFFF;">
+                                    <amx:image source="/images/notifications.png" id="bi2"/>
+                                </amx:cellFormat>
+                                <amx:cellFormat width="100%" height="43px" id="bcf3" shortDesc="cell" inlineStyle="border-bottom: 1px solid #C8C8C8;">
+                                    <amx:outputText value="Check Notifications" id="bot1"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            </amx:tableLayout>
+                            </amx:listItem>
+                              <amx:listItem id="cli2" actionListener="#{RequesitionRest.manageProfile}" inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #FFFFFF;margin-right: -10px;" showLinkIcon="false">
+                       <amx:tableLayout width="100%" id="ctl2" shortDesc="table">
+                            <amx:rowLayout id="crl3">
+                                <amx:cellFormat width="40px" halign="center" id="ccf1" shortDesc="cell" inlineStyle="border-bottom: 1px solid #FFFFFF;">
+                                    <amx:image source="/images/usersetting.png" id="ci2"/>
+                                </amx:cellFormat>
+                                <amx:cellFormat width="100%" height="43px" id="ccf3" shortDesc="cell" inlineStyle="border-bottom: 1px solid #C8C8C8;">
+                                    <amx:outputText value="Manage User Profile" id="cot1"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            </amx:tableLayout>
+                            </amx:listItem>
+                              <amx:listItem id="dli2" actionListener="#{RequesitionRest.buyerHelp}" inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #FFFFFF;margin-right: -10px;" showLinkIcon="false">
+                       <amx:tableLayout width="100%" id="dtl2" shortDesc="table">
+                            <amx:rowLayout id="drl3">
+                                <amx:cellFormat width="40px" halign="center" id="dcf1" shortDesc="cell" inlineStyle="border-bottom: 1px solid #FFFFFF;">
+                                    <amx:image source="/images/contact.png" id="di2"/>
+                                </amx:cellFormat>
+                                <amx:cellFormat width="100%" height="43px" id="dcf3" shortDesc="cell" inlineStyle="border-bottom: 1px solid #C8C8C8;">
+                                    <amx:outputText value="Contact" id="dot1"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            </amx:tableLayout>
+                            </amx:listItem>
+                              <amx:listItem id="eli2" actionListener="#{RequesitionRest.doSignOut}" inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #FFFFFF;margin-right: -10px;" showLinkIcon="false">
+                       <amx:tableLayout width="100%" id="etl2" shortDesc="table">
+                            <amx:rowLayout id="erl3">
+                                <amx:cellFormat width="40px" halign="center" id="ecf1" shortDesc="cell" inlineStyle="border-bottom: 1px solid #FFFFFF;">
+                                    <amx:image source="/images/logout1.png" id="ei2"/>
+                                </amx:cellFormat>
+                                <amx:cellFormat width="100%" height="43px" id="ecf3" shortDesc="cell" inlineStyle="border-bottom: 1px solid #C8C8C8;">
+                                    <amx:outputText value="Sign-out" id="eot1"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            </amx:tableLayout>
+                            </amx:listItem>
+                            
+                    </amx:listView>
+            </amx:facet>
+            <amx:facet name="bottom">
+                <amx:panelGroupLayout id="pgl1" halign="center" valign="middle">
+                <amx:outputText value="GoProcure v 1.01 (Drop:60)" id="fdr" inlineStyle="text-align: center; font-style: italic; font-size:small; color:#0E4876; background-color:transparent;"/>
+           </amx:panelGroupLayout>
+            </amx:facet>
+      </amx:panelStretchLayout>
+  </amx:panelPage>
 </amx:view>

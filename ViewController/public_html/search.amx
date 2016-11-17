@@ -176,7 +176,7 @@
         <amx:facet name="primary">
             <amx:commandLink actionListener="#{bindings.toggleSpringboard.execute}" id="cl2"
                              styleClass="springboard-icon">
-                <amx:image source="/images/logo.png" id="i3"/>
+                <amx:image source="/images/menu.png" id="i3"/>
             </amx:commandLink>
         </amx:facet>
         
