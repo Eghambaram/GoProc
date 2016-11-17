@@ -462,6 +462,11 @@ word-break: break-word;
     width: 250px;
     border-radius: 10px;
 }
+.amx-ios .sortpopup2 {
+    height: 280px;
+    width: 280px;
+    border-radius: 10px;
+}
 
 .amx-inputText.adfmf-inputText-newStyle .field-value input,
 .amx-inputText.adfmf-inputText-newStyle .field-value textarea {

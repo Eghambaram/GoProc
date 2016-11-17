@@ -781,6 +781,8 @@ public class Login {
                  
                  ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
                  ve91.setValue(AdfmfJavaUtilities.getAdfELContext(), "goods");
+                 ValueExpression ve92 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.reqType}", String.class);
+                 ve92.setValue(AdfmfJavaUtilities.getAdfELContext(), "REQ");
                  
                  ValueExpression ve33 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
                  String DefaultMultiOrgOrg=(String)ve33.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -1617,6 +1619,8 @@ public class Login {
                  
                  ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
                  ve91.setValue(AdfmfJavaUtilities.getAdfELContext(), "goods");
+                 ValueExpression ve92 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.reqType}", String.class);
+                 ve92.setValue(AdfmfJavaUtilities.getAdfELContext(), "REQ");
                  
                  ValueExpression ve33 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
                  String DefaultMultiOrgOrg=(String)ve33.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -2504,6 +2508,9 @@ public class Login {
              
                            ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
                            ve91.setValue(AdfmfJavaUtilities.getAdfELContext(), "goods");
+                            ValueExpression ve92 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.reqType}", String.class);
+                            ve92.setValue(AdfmfJavaUtilities.getAdfELContext(), "REQ");
+            
                            
                            ValueExpression ve33 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
                            String DefaultMultiOrgOrg=(String)ve33.getValue(AdfmfJavaUtilities.getAdfELContext());

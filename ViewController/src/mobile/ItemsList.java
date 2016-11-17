@@ -1462,7 +1462,8 @@ public class ItemsList {
                       System.out.println("Oracle item Values--->"+ItemsList.items_list.size());
                       size=ItemsList.items_list.size();
                       System.out.println("Oracle item Values size--->"+size);
-                      
+                       int oracleCount=0;
+                      oracleCount=ItemsList.items_list.size();
                       int indixcount=0;
                       
                        
@@ -1531,6 +1532,7 @@ public class ItemsList {
                                                   }*/
                                                   
                                                   indixcount=Integer.parseInt(result_size);
+                                               System.out.println("Indix Count--->"+indixcount);
                           // System.out.println("resArr.length() "+resArr.length());
                                                   for(int i=0;i<resArr.length();i++) {
                                                       rowCount=1;
@@ -1780,7 +1782,7 @@ public class ItemsList {
                        }
                        */
                        else {
-                           size=indixcount;
+                           size=indixcount+oracleCount;
                        }
                        
                        
@@ -3090,6 +3092,21 @@ public class ItemsList {
                                       String meaning=ci.getString("MEANING");
                                       String tag=ci.getString("TAG");
                                       
+                                      if(type_code.equalsIgnoreCase("CONTRACTED")) {
+                                          
+                                          System.out.println("div supplier===============================");
+                                          Comparator<Item> comparatorDiversedSupplier = new Comparator<Item>() {
+                                              
+                                                       @Override
+                                                       
+                                                       
+                                                       public int compare(Item o1, Item o2) {  
+                                                            return Double.compare(Double.parseDouble(o2.getDiverseSupplier()), Double.parseDouble(o1.getDiverseSupplier()));  
+                                                       }  
+                                                  };  
+                                          chain.addComparator(comparatorDiversedSupplier); 
+                                      }
+
                                      
                                       if(type_code.equalsIgnoreCase("DIV_SUPPLIER")) {
                                           
