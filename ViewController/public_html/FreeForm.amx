@@ -95,6 +95,19 @@
       <amx:facet name="center">
         <amx:panelGroupLayout id="pgl2" inlineStyle="margin:4px;padding:8px;background-color: #FFFFFF;">
         <amx:tableLayout id="tl1" width="100%">
+          <amx:rowLayout id="r4rl1">
+            <amx:cellFormat id="r4cf1" width="100%" halign="start">
+              <amx:panelGroupLayout id="r4pgl1">
+              <amx:outputText value="Request Type *" id="r4ot1" styleClass="adfmf-outputText-style"/>
+                <amx:selectOneChoice simple="true" value="#{pageFlowScope.RequestTypeForm}" label="#{bindings.requestType.label}"
+                                     id="soc8" valueChangeListener="#{Rest.showSearchButton}">
+                                     
+                  <amx:selectItems value="#{bindings.requestType.items}" id="si8"/>
+                </amx:selectOneChoice>
+              </amx:panelGroupLayout>
+            </amx:cellFormat>
+           </amx:rowLayout>
+     
            <amx:rowLayout id="r2arl1">
             <amx:cellFormat id="r2acf1" width="100%" halign="start">
               <amx:panelGroupLayout id="r2pagl1" inlineStyle="margin-top:12px;">
@@ -143,15 +156,6 @@
               </amx:panelGroupLayout>
             </amx:cellFormat>
            </amx:rowLayout>
-          <amx:rowLayout id="r4rl1">
-            <amx:cellFormat id="r4cf1" width="100%" halign="start">
-              <amx:panelGroupLayout id="r4pgl1">
-              <amx:outputText value="Request Type *" id="r4ot1" styleClass="adfmf-outputText-style"/>
-                <amx:selectOneChoice simple="true" value="#{pageFlowScope.RequestTypeForm}" label="#{bindings.requestType.label}"
-                                     id="soc8" valueChangeListener="#{Rest.showSearchButton}">
-                                     
-                  <amx:selectItems value="#{bindings.requestType.items}" id="si8"/>
-                </amx:selectOneChoice>
                 
           <!--
                 <amx:tableLayout id="tl4" width="100%">
@@ -172,9 +176,6 @@
                     </amx:cellFormat>
                   </amx:rowLayout>
                 </amx:tableLayout>-->
-              </amx:panelGroupLayout>
-            </amx:cellFormat>
-           </amx:rowLayout>
            
            </amx:tableLayout>
            <amx:tableLayout id="tlr1" width="100%" inlineStyle="background-color: #FFFFFF;" rendered="#{applicationScope.showOthers}">
