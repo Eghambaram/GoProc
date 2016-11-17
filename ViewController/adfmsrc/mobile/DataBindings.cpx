@@ -19,6 +19,7 @@
     <page path="/checkout_new.amx" usageId="mobile_checkout_newPageDef"/>
     <page path="/Noti_detail.amx" usageId="mobile_Noti_detailPageDef"/>
     <page path="/FreeForm.amx" usageId="mobile_FreeFormPageDef"/>
+    <page path="/mp.Quotation/Quotaion_Details.amx" usageId="mobile_Quotaion_DetailsPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="mobile_searchPageDef" path="mobile.pageDefs.searchPageDef"/>
@@ -38,6 +39,7 @@
     <page id="mobile_checkout_newPageDef" path="mobile.pageDefs.checkout_newPageDef"/>
     <page id="mobile_Noti_detailPageDef" path="mobile.pageDefs.Noti_detailPageDef"/>
     <page id="mobile_FreeFormPageDef" path="mobile.pageDefs.FreeFormPageDef"/>
+    <page id="mobile_Quotaion_DetailsPageDef" path="mp.Quotation.Quotaion_DetailsPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <dc id="SupplierSiteList" path="mobile.SupplierSiteList"/>
