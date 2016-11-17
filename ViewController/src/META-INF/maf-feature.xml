@@ -34,11 +34,7 @@
   </adfmf:feature>
   <adfmf:feature id="mp.Quotation" name="mp.Quotation">
     <adfmf:content id="mp.Quotation.1">
-      <adfmf:amx file="mp.Quotation/Quotation.amx">
-        <adfmf:includes>
-          <adfmf:include type="JavaScript" file="resources/js/PopupUtils.js" id="i2"/>
-        </adfmf:includes>
-      </adfmf:amx>
+      <adfmf:amx file="mp.Quotation/Quotation-task-flow.xml#Quotation-task-flow"/>
     </adfmf:content>
   </adfmf:feature>
   <adfmf:feature id="mp.login" name="mp.login">
