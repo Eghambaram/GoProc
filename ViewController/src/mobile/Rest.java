@@ -6068,6 +6068,16 @@ public class Rest {
     public void goBack(String rr) {
           AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
                                                                                                         "adf.mf.api.amx.doNavigation", new Object[] { "__back" });
+          
+          
+          ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
+          ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+          ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
+          ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+          ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
+          ve8.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+          ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
+          vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
       }
     public static void clearRefinedSearch(ActionEvent actionEvent) {
         ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
@@ -6986,6 +6996,9 @@ public class Rest {
             ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
             String itemType=(String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
             System.out.println("Item Type List"+ItemTypeList.itemType_List.size());
+            ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemCategoryForm}", String.class);
+            String itemCategory=(String)ve4.getValue(AdfmfJavaUtilities.getAdfELContext());
+            
 
             ValueExpression ve3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemDescriptionFrom}", String.class);
             String itemDescription=(String)ve3.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -6995,13 +7008,64 @@ public class Rest {
             System.out.println("Item Type-->"+it.getLineTypeCode());
             
             if(it.getLineTypeCode().equalsIgnoreCase("Services - Fixed Price") || it.getLineTypeCode().equalsIgnoreCase("Services - T & M") ) {
+            
+                if(itemCategory!=null || !itemCategory.equalsIgnoreCase("")){
+                
+                    Alias al=(Alias)AliasList.s_jobs.get((Integer.parseInt(itemCategory)));
+                    System.out.println("Alias-->"+al.getOracleId()+al.getIndixId()+" "+al.getOracleCategotySeg());
+                    
+                    String sample= al.getIndixId();
+                    String sample1 ="&categoryId="+sample;
+                    System.out.println("*******"+ sample1);
+                    String aliasIndixValues = "";
+                    
+                    if(!sample1.equals("")) {
+                    
+                    if(sample1.contains("[")) {
+                      String spec1 = al.getIndixId().substring(0,al.getIndixId().length()-2);
+                      String value1= spec1.replaceAll("\\[\"", "&categoryId=");
+                      aliasIndixValues = value1.replaceAll("\",\"", "&categoryId=");
+                      //System.out.println("<<Hello>>"+aliasIndixValues);
+                    }
+                    else if(sample1.contains("null")) {
+                      aliasIndixValues = sample1;
+                      //System.out.println("<<null>>"+aliasIndixValues);
+                    }
+                    else {
+                      String spec1 = al.getIndixId();
+                      aliasIndixValues ="&categoryId="+spec1;
+                     // System.out.println("<<Hello>>"+aliasIndixValues);
+                    }
+                    ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
+                    ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),aliasIndixValues);
+                    ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
+                    ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),al.getOracleCategotySeg());
+                    ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
+                    ve8.setValue(AdfmfJavaUtilities.getAdfELContext(),itemCategory);
+                    
+                    }
+                    else {
+                        ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
+                        ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                        ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
+                        ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                        ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
+                        ve8.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                    }
+                    
+                    
+                }
                 
                 ValueExpression vec4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
                 vec4.setValue(AdfmfJavaUtilities.getAdfELContext(),itemDescription);
                 ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
                 ve91.setValue(AdfmfJavaUtilities.getAdfELContext(), "services");
-                AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
-                                                                                                    "adf.mf.api.amx.doNavigation", new Object[] { "refined_Services" });
+                
+                MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.populateUOM.execute}", Object.class, new Class[] {});
+                me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+                
+            /*    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
+                                                                                                    "adf.mf.api.amx.doNavigation", new Object[] { "refined_Services" });*/
                 
             }
             else {
@@ -7009,8 +7073,6 @@ public class Rest {
                 boolean isError=false;
                 String error="";
                 String query="";                
-                ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemCategoryForm}", String.class);
-                String itemCategory=(String)ve4.getValue(AdfmfJavaUtilities.getAdfELContext());
                 ValueExpression ve5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.webURL}", String.class);
                 String webURL=(String)ve5.getValue(AdfmfJavaUtilities.getAdfELContext());
                 
@@ -7106,10 +7168,12 @@ public class Rest {
 
     public void submitSupplierDetails(ActionEvent actionEvent) {
         // Add event code here...
-        MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.submitSupplierDetails.execute}", Object.class, new Class[] {});
-        me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
         ValueExpression vec11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
         vec11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+        
+        MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.submitSupplierDetails.execute}", Object.class, new Class[] {});
+        me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+        
 
     }
     

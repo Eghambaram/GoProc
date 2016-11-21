@@ -704,9 +704,20 @@ public class UOMList {
                          e.printStackTrace();
                      }
                  
-               
+              ///From Free Form
+                ValueExpression ve_free = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
+                String itemType_free=(String)ve_free.getValue(AdfmfJavaUtilities.getAdfELContext());       
                   
-                 
+                if(itemType.equalsIgnoreCase("services") && !itemType_free.equalsIgnoreCase(""))
+                {
+                    clearAttachments();
+                    ImageList.imageList.clear();
+                    selectedImages.clear();
+                    Rest.selectedImages.clear();
+                AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
+                                                                                                       "adf.mf.api.amx.doNavigation", new Object[] { "refined_Services" });
+                }
+                    
                 
             }
             
@@ -750,10 +761,16 @@ public class UOMList {
         ValueExpression ve123 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedImagesCount}", String.class);
         ve123.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         
+        
+  
+  
+        
+        
         ImageList.imageList.clear();
         selectedImages.clear();
         Rest.selectedImages.clear();
         
+         
             
     }
     
@@ -1807,8 +1824,13 @@ public class UOMList {
     //        }
             int categoryId=0;
             
-            JSONObject indix_category_tl=output.getJSONObject("X_INDIX_CATEGORY_TL");   
+            
             String categoryRef="&";
+            
+            if(output.get("X_INDIX_CATEGORY_TL") instanceof JSONObject) {
+                JSONObject indix_category_tl=output.getJSONObject("X_INDIX_CATEGORY_TL");    
+            
+            
          if(indix_category_tl.get("X_INDIX_CATEGORY_TL_ITEM") instanceof JSONArray){
                
             JSONArray items=(JSONArray)indix_category_tl.get("X_INDIX_CATEGORY_TL_ITEM");
@@ -1823,6 +1845,10 @@ public class UOMList {
               categoryId=2;
                 
           }
+            }
+            else {
+                System.out.println("Indix is NUll");
+            }
             System.out.println("indix_category===============================" + indix_category+" categoryId "+categoryId);
             ArrayList<String> suppliers=new ArrayList<String>(); 
             int resultSize=0;
@@ -1853,11 +1879,15 @@ public class UOMList {
             System.out.println(response1.toString());
         resp=new JSONObject(response1.toString());
         output=resp.getJSONObject("result");
+                String result_size=output.getString("count");
+                if(Integer.parseInt(result_size)>0) {
+                
         JSONObject jsobj=output.getJSONObject("facets");
+        
          JSONArray supplierArr=jsobj.getJSONArray("storeId");
          JSONArray resArr=output.getJSONArray("products");
         // System.out.println("resArr.length() "+resArr.length());
-       
+                
          for(int i=0;i<resArr.length();i++) {
               int rowCount=1;
                //    System.out.println("***********");
@@ -1998,10 +2028,22 @@ public class UOMList {
                 suppliers=new ArrayList<String>(); 
                 resultSize=0;
             }
-        
+            }
         //make RFQ with suppliers 
             System.out.println("Supplier Size is ========>"+suppliers.size());
         
+            // Deliver To Location
+            ValueExpression ve_deliverLocation = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.deliverToLocationCode}", String.class);
+            String deliver_Location=(String)ve_deliverLocation.getValue(AdfmfJavaUtilities.getAdfELContext());
+            System.out.println("Deliver To Location Refined Search--->"+deliver_Location);
+            String loc="";
+            if(!deliver_Location.equalsIgnoreCase("")){
+               DeliverToLocation loc_code=(DeliverToLocation)DeliverToLocationList.s_jobs.get((Integer.parseInt(deliver_Location)));
+               loc=loc_code.getCode();
+               
+            }
+            System.out.println("Deliver To Location Refined Search Value--->"+loc);
+            
         if(suppliers.size()>0) {
             
             Random randomGenerator = new Random();
@@ -2044,17 +2086,7 @@ public class UOMList {
                 u=uo.getName();
             }
             
-            // Deliver To Location
-            ValueExpression ve_deliverLocation = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.deliverToLocationCode}", String.class);
-            String deliver_Location=(String)ve_deliverLocation.getValue(AdfmfJavaUtilities.getAdfELContext());
-            System.out.println("Deliver To Location Refined Search--->"+deliver_Location);
-            String loc="";
-            if(!deliver_Location.equalsIgnoreCase("")){
-               DeliverToLocation loc_code=(DeliverToLocation)DeliverToLocationList.s_jobs.get((Integer.parseInt(deliver_Location)));
-               loc=loc_code.getCode();
-               
-            }
-            System.out.println("Deliver To Location Refined Search Value--->"+loc);
+          
             
 
             sb = new StringBuffer("[\n");
@@ -2373,7 +2405,11 @@ public class UOMList {
             ValueExpression ve121 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
             String productTitle = (String)ve121.getValue(AdfmfJavaUtilities.getAdfELContext());
             
+            ValueExpression ve_count = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.OracleResultsCount}", String.class);
+            String oracle_count = (String)ve_count.getValue(AdfmfJavaUtilities.getAdfELContext());
             
+            System.out.println("Oracle Results Count-->"+oracle_count);
+                
             StringBuffer sb = new StringBuffer("[\n");
             sb.append("{\n");
             sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
@@ -2382,7 +2418,25 @@ public class UOMList {
             sb.append("    \"SEARCH_TYPE\":\"R\",\n");
             sb.append("    \"SEARCH_TEXT\":\""+productTitle+"\",\n");
             sb.append("    \"RESULT_COUNT\":\""+resultSize+"\",\n");
+            try{
+                if(!oracle_count.contains("{")){
+            if(Integer.parseInt(oracle_count)>0) {
+            sb.append("    \"REQUEST_TYPE\":\"RFQ\"\n");
+            }
+            else{
             sb.append("    \"REQUEST_TYPE\":\"MANUAL_TRIAGE\"\n");
+            }
+            }
+            }
+            catch(Exception e){
+                    e.printStackTrace();
+                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                 AdfmfJavaUtilities.getFeatureName(),
+                                                 "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                 "Cannot connect to Services on Oracle Server.",
+                                                 null,
+                                                 null }); 
+            }
             sb.append("},");
             
             String header_value = sb.substring(0, sb.length() - 1).concat("]");
@@ -2417,7 +2471,7 @@ public class UOMList {
             sb.append("    \"UOM_CODE\":\""+u+"\",\n");
             sb.append("    \"UNIT_PRICE\":\"\",\n");
             sb.append("    \"CURRENCY_CODE\":\"USD\",\n");
-            sb.append("    \"DELIVER_TO_LOCATION\":\"Metlife\",\n");
+                sb.append("    \"DELIVER_TO_LOCATION\":\""+loc+"\",\n");
             String arr[]=needByDate.split("T");
             sb.append("    \"NEED_BY_DATE\":\""+arr[0]+"\",\n");
             sb.append("    \"SELECTED_FLAG\":\"Y\",\n");
@@ -2635,8 +2689,8 @@ public class UOMList {
             ve17.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
             ValueExpression ve18 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.uom1}", String.class);
             ve18.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-            
-            
+            ValueExpression ve_oracle = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.OracleResultsCount}", String.class);
+            ve_oracle.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
             
             ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayAddToCart}", String.class);
             ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
@@ -2718,7 +2772,7 @@ public class UOMList {
                 sb.append("    \"UOM_CODE\":\""+u+"\",\n");
                 sb.append("    \"UNIT_PRICE\":\"\",\n");
                 sb.append("    \"CURRENCY_CODE\":\"USD\",\n");
-                sb.append("    \"DELIVER_TO_LOCATION\":\"Metlife\",\n");
+                sb.append("    \"DELIVER_TO_LOCATION\":\""+loc+"\",\n");
                 String arr[]=needByDate.split("T");
                 sb.append("    \"NEED_BY_DATE\":\""+arr[0]+"\",\n");
                 sb.append("    \"SELECTED_FLAG\":\"Y\",\n");
@@ -3353,6 +3407,9 @@ public class UOMList {
                                         resp=new JSONObject(response);
                                         output=resp.getJSONObject("OutputParameters");
                                         String result_count=output.getString("X_RESULT_COUNT");
+                                        
+                                        ValueExpression ve_results = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.OracleResultsCount}", String.class);
+                                        ve_results.setValue(AdfmfJavaUtilities.getAdfELContext(),result_count);
                                         
                                         if(supplierNames==null || supplierNames.equalsIgnoreCase("")){
                                             System.out.println("Inside found false");
@@ -4494,6 +4551,9 @@ public class UOMList {
         ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierForm}", String.class);
         String supplier=(String)ve11.getValue(AdfmfJavaUtilities.getAdfELContext());
         
+        
+        System.out.println("Supplier Value"+supplier);
+        
         ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierNotForm}", String.class);
         String supplierNot=(String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
         ValueExpression ve13 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.supplierSiteForm}", String.class);
@@ -4778,7 +4838,7 @@ public class UOMList {
                        sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
                        sb.append("    \"DEVICE_SERIAL_ID\":\"ABCD\",\n");
                        sb.append("    \"USER_ID\":\""+userName+"\",\n");
-                       sb.append("    \"SEARCH_TYPE\":\"R\",\n");
+                       sb.append("    \"SEARCH_TYPE\":\"F\",\n");
                        sb.append("    \"SEARCH_TEXT\":\""+itemDescription+"\",\n");
                        sb.append("    \"RESULT_COUNT\":\""+dummyResultCount+"\",\n");
                        sb.append("    \"REQUEST_TYPE\":\"RFQ\",\n");
@@ -5265,7 +5325,7 @@ public class UOMList {
                                               sb.append("    \"SEARCH_ID\":\""+randomInt+"\",\n");
                                               sb.append("    \"DEVICE_SERIAL_ID\":\"ABCD\",\n");
                                               sb.append("    \"USER_ID\":\""+userName+"\",\n");
-                                              sb.append("    \"SEARCH_TYPE\":\"R\",\n");
+                                              sb.append("    \"SEARCH_TYPE\":\"F\",\n");
                                               sb.append("    \"SEARCH_TEXT\":\""+itemDescription+"\",\n");
                                               sb.append("    \"RESULT_COUNT\":\""+dummyResultCount+"\",\n");
                                               sb.append("    \"REQUEST_TYPE\":\"RFQ\",\n");

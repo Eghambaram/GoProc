@@ -3946,6 +3946,9 @@ public class RequesitionRest {
 
     public void createRequition(ActionEvent actionEvent) {
         // Add event code here...
+        ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
+        ve91.setValue(AdfmfJavaUtilities.getAdfELContext(), "goods");
+        
         ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
         String DefaultMultiOrgOrg=(String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
         if(DefaultMultiOrgOrg.contains(("{\"@xsi:nil\":\"true\"}"))) {

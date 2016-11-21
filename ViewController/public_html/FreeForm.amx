@@ -737,7 +737,7 @@
           <amx:tableLayout width="100%" id="tl11" inlineStyle="background-color: #0E4876;">
             <amx:rowLayout id="rl13">
                 <amx:cellFormat id="cf17" halign="center" width="80%">
-                    <amx:outputText value="Enter Supplier Contact Details" id="ot11"
+                    <amx:outputText value="Supplier Contact Details" id="ot11"
                                     inlineStyle="font-weight:bold;color: #FFFFFF; text-align:center;"></amx:outputText>
                 </amx:cellFormat>
                 <amx:cellFormat id="cf18" halign="end" width="20%">
@@ -752,8 +752,9 @@
      <amx:panelFormLayout id="pfl1">
      <amx:inputText label="First Name" id="it1" value="#{pageFlowScope.SupplierFirstName}"/>
             <amx:inputText label="Last Name" id="it2" value="#{pageFlowScope.SupplierLastName}"/>
-            <amx:inputText label="Email" id="it3" value="#{pageFlowScope.SupplierEmail}" inputType="email"/>
-            <amx:inputText label="Phone Number" id="it4" value="#{pageFlowScope.SupplierPhoneNo}" inputType="tel"/>
+            <amx:inputText label="Contact Number" id="it4" value="#{pageFlowScope.SupplierPhoneNo}" inputType="tel"/>
+            <amx:inputText label="Email Id" id="it3" value="#{pageFlowScope.SupplierEmail}" inputType="email"/>
+
            </amx:panelFormLayout>
            <amx:tableLayout id="sle1" width="100%" inlineStyle="margin:4px;padding:8px;background-color: #FFFFFF;">
               <amx:rowLayout id="s2erl1">

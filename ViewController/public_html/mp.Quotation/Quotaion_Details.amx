@@ -124,7 +124,7 @@
             </amx:rowLayout>
             <amx:rowLayout id="rl7">
                   <amx:cellFormat width="100%" halign="start" id="acf3">
-                   <amx:outputText value="Delivery Location: #{pageFlowScope.quotationDeliverToLocation}"
+                   <amx:outputText value="Deliver To Location: #{pageFlowScope.quotationDeliverToLocation}"
                                                     inlineStyle="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;color: #FFFFFF;font-size: 14px; clear: both;"
                                                     id="aot4"/>
                                 </amx:cellFormat>

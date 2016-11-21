@@ -52,6 +52,8 @@
 <methodAction id="clearSelectedImage" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="clearSelectedImage" IsViewObjectMethod="false" DataControl="UOMList"
                   InstanceName="data.UOMList.dataProvider"/>
+<methodAction id="populateUOM" RequiresUpdateModel="true" Action="invokeMethod" MethodName="populateUOM"
+                  IsViewObjectMethod="false" DataControl="UOMList" InstanceName="data.UOMList.dataProvider"/>
 <methodAction id="clearImage" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="clearImage" IsViewObjectMethod="false" DataControl="ImageList"
                   InstanceName="data.ImageList.dataProvider"/>
