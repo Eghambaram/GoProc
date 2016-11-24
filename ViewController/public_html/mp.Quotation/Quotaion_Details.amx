@@ -14,7 +14,19 @@
           }
         
         }
-
+        function alertClosed(buttonIndex) {
+          
+          }
+     
+     function noQuotationSelected(){
+              navigator.notification.confirm(
+                 'Please select any one quotaion to place the order', // message
+                  alertClosed,            // callback to invoke with index of button pressed
+                  '',           // title
+                  ['Ok']     // buttonLabels
+             );
+         }
+     
          function displayAlert(){
               navigator.notification.confirm(
                  'Order Placed Successfully', // message

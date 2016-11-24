@@ -37,6 +37,9 @@ public class Item {
     private String showAttrib="";
     private String spec="";
     private String showSpec="";
+    private String contractSupplier="";
+
+    
     private List specList = new ArrayList();
 
     public void setSpecLlist(List specList) {
@@ -131,6 +134,16 @@ public class Item {
     public String getDiverseSupplier() {
         return diverseSupplier;
     }
+    
+    
+    public void setContractSupplier(String contractSupplier) {
+        this.contractSupplier = contractSupplier;
+        propertyChangeSupport.firePropertyChange("contractSupplier", this.contractSupplier,contractSupplier);
+    }
+
+    public String getContractSupplier() {
+        return contractSupplier;
+    }
 
     public void setRowId(String rowId) {
         this.rowId = rowId;
@@ -184,7 +197,7 @@ public class Item {
         super();
     }
     
-    public Item(String poNo,String vendorName,String vendorSiteCode,String productCategory,String productTitle,String unitPrice,String imageUrl,String checked,String source,String uom,String rowId,String diverseSupplier,String showDiverseImage,String diverseImageURL,int pageNo,String indixCategoryId,String sellerName,String showSeller,String attrib,String showAttrib,String spec,String showSpec) {
+    public Item(String poNo,String vendorName,String vendorSiteCode,String productCategory,String productTitle,String unitPrice,String imageUrl,String checked,String source,String uom,String rowId,String contractSupplier, String diverseSupplier,String showDiverseImage,String diverseImageURL,int pageNo,String indixCategoryId,String sellerName,String showSeller,String attrib,String showAttrib,String spec,String showSpec) {
         super();
         
         this.poNo = poNo;
@@ -199,6 +212,7 @@ public class Item {
         this.uom=uom;
         this.rowId=rowId;
         this.diverseSupplier=diverseSupplier;
+        this.contractSupplier=contractSupplier;
         this.showDiverseImage=showDiverseImage;
         this.diverseImageURL=diverseImageURL;
         this.pageNo=pageNo;

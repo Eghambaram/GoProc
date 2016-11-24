@@ -117,8 +117,8 @@
         <amx:tableLayout halign="start"  id="tl01" borderWidth="0"  cellSpacing="0" width="100%">
 <amx:rowLayout  id="rywql21">
 <amx:cellFormat id="cyqwf1211" halign="start" columnSpan="3">
-<amx:selectOneChoice value="#{pageFlowScope.aliasCategorieEmpty}" label="Item Categories" id="soc7"
-                             valueChangeListener="#{Rest.getAliasCategories}">
+<!-- valueChangeListener="#{Rest.getAliasCategories}"-->
+<amx:selectOneChoice value="#{pageFlowScope.aliasCategorieEmptyRefineSearch}" label="Item Categories" id="soc7">
             <amx:selectItems value="#{bindings.aliass.items}" id="si10"/>
         </amx:selectOneChoice>
 </amx:cellFormat>

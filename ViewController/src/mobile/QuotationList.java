@@ -196,8 +196,19 @@ public class QuotationList {
                try{
                    
                    QuotationList.s_jobs.clear();
-                   BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.quotations.iterator}");   
-                   vex.refresh();              
+                   BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.quotations.iterator}"); 
+                   for(int i=0;i<vex.getTotalRowCount();i++)
+                   {
+                       vex.setCurrentIndex(i);
+                       Quotation item=(Quotation)vex.getDataProvider();
+                       item.setSelected("/images/no.png");
+                       
+                   }
+                   vex.refresh();
+                   
+                   AdfmfJavaUtilities.flushDataChangeEvent();
+                   //BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.quotations.iterator}");   
+                   //vex.refresh();              
                ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.user_name}", String.class);
                String userName = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
                
@@ -394,8 +405,9 @@ public class QuotationList {
                    AdfmfJavaUtilities.flushDataChangeEvent();
                    vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.quotations.iterator}");   
                    System.out.println("data "+vex.getTotalRowCount());
+                   
                    vex.refresh();
-
+                   
                }
               
                catch(Exception e){
@@ -485,6 +497,7 @@ public class QuotationList {
             //#{bindings.deliverToLocations.inputValue}      
             ValueExpression ve21 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quotationDeliverToLocation}", String.class);
             String deliverToLocation = (String)ve21.getValue(AdfmfJavaUtilities.getAdfELContext()); 
+            
             String locationId="";
             System.out.println("Deliver To Location-->"+deliverToLocation); 
             
@@ -495,10 +508,12 @@ public class QuotationList {
                 }
             }
             
+            System.out.println("Location ID"+locationId);
             
             
           
-            
+            if(selected_item.getSelected().equalsIgnoreCase("/images/yes.png"))
+            {
             
         String postData= "{\n" + 
         "  \"CONVERT_QUOTE_TO_REQ_Input\" : {\n" + 
@@ -514,17 +529,17 @@ public class QuotationList {
         "\n" + 
         "        \"P_QUOTE_RESPONSE_REC\": {\n" + 
         "\n" + 
-        "          \"QUOTATION_ID\" : "+selected_item.getQuotationId()+",\n" + 
+        "          \"QUOTATION_ID\" : \""+selected_item.getQuotationId()+"\",\n" + 
         "\n" + 
-        "          \"QUOTATION_LINE_ID\" :"+selected_item.getQuotationLineId()+",\n" + 
+        "          \"QUOTATION_LINE_ID\" :\""+selected_item.getQuotationLineId()+"\",\n" + 
         "\n" + 
-        "          \"VENDOR_ID\" :"+ selected_item.getVendorId()+",\n" + 
+        "          \"VENDOR_ID\" :\""+ selected_item.getVendorId()+"\",\n" + 
         "\n" + 
         "          \"VENDOR_SITE_ID\" : \"\",\n" + 
         "\n" + 
         "          \"NEED_BY_DATE\" : \""+need+"\",\n" + 
         "\n" + 
-        "          \"DELIVER_TO_LOCATION_ID\" :\""+ locationId+"\",\n" + 
+        "          \"DELIVER_TO_LOCATION_ID\" :\""+locationId+"\",\n" + 
         "\n" + 
         "          \"USER_ID\" : \""+userId+"\",\n" + 
         "          \"RFQ_ID\" : \""+selected_item.getRfqId()+"\"\n" + 
@@ -589,6 +604,12 @@ public class QuotationList {
     //             }
     //
     //            AdfmfJavaUtilities.flushDataChangeEvent();
+            }
+            else {
+                AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
+                                                                           "noQuotationSelected",
+                                                                           new Object[] { });
+            }
             
             
         }

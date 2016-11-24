@@ -5135,7 +5135,10 @@ public class RequesitionRest {
                         AdfmfContainerUtilities.resetFeature("mp.Notification",false);    
                         ValueExpression ov13 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
                         ov13.setValue(AdfmfJavaUtilities.getAdfELContext(),updateMultiOrg);
-
+                        ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
+                        vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                        ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
+                        ve91.setValue(AdfmfJavaUtilities.getAdfELContext(), "goods");
             
                     }
                     
@@ -5178,7 +5181,9 @@ public class RequesitionRest {
         ove113.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
         vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
-                    
+        
+        ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
+        ve91.setValue(AdfmfJavaUtilities.getAdfELContext(), "goods");            
 
         System.out.println("update_multiOrg Via popup"+update_multiOrg+"Cart Value"+cartvalue);    
 

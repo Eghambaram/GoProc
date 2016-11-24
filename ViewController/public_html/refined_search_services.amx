@@ -113,8 +113,9 @@
         <amx:tableLayout halign="start" id="tl01" borderWidth="0" cellSpacing="0" width="100%">
             <amx:rowLayout id="rl9">
             <amx:cellFormat id="cf7" halign="start" columnSpan="3">
-            <amx:selectOneChoice  value="#{pageFlowScope.aliasCategorieEmpty}" label="Item Categories" id="soqc7"
-                             valueChangeListener="#{Rest.getAliasCategories}" required="true">
+            <!-- valueChangeListener="#{Rest.getAliasCategories}"-->
+            <amx:selectOneChoice  value="#{pageFlowScope.aliasCategorieEmptyRefineServices}" label="Item Categories" id="soqc7"
+                              required="true">
             <amx:selectItems value="#{bindings.aliass.items}" id="siq10"/>
         </amx:selectOneChoice>
                 </amx:cellFormat>
@@ -247,12 +248,21 @@
                     </amx:selectOneChoice>
                 </amx:cellFormat>
             </amx:rowLayout>
-            <amx:rowLayout rendered="#{pageFlowScope.showMultipleServiceLocations}">
-                <amx:cellFormat id="cfz21" halign="start" valign="top" columnSpan="3">
-                    <amx:inputText label="Multiple Service Location" id="it21" readOnly="true"
+            </amx:tableLayout>
+            <amx:tableLayout id="tl4" width="100%" halign="center" rendered="#{pageFlowScope.showMultipleServiceLocations}">
+            <amx:rowLayout id="rl7" rendered="#{pageFlowScope.showMultipleServiceLocations}">
+                <amx:cellFormat id="cf6" halign="start" valign="top" columnSpan="2">
+                    <amx:inputText id="it3" label="Multiple Service Location" readOnly="true"
                                    value="#{pageFlowScope.multipleServiceLocations}" showRequired="true"/>
                 </amx:cellFormat>
+                <amx:cellFormat id="cf8" halign="end" width="40px" valign="top">
+                    <amx:commandButton icon="/images/Search-24.png" id="cb8">
+                        <amx:showPopupBehavior popupId="popup1122" type="action" align="overlapMiddleCenter" alignId="pp1"/>
+                    </amx:commandButton>
+                </amx:cellFormat>
             </amx:rowLayout>
+            </amx:tableLayout>
+            <amx:tableLayout id="tl5" width="100%" halign="center">
             <amx:rowLayout rendered="#{pageFlowScope.showCurrentLocations}">
                 <amx:cellFormat id="cfz22" halign="start" valign="top" columnSpan="3">
                     <amx:inputText label="Current Service Location" id="it22" 
@@ -277,8 +287,8 @@
                 </amx:commandLink>
                 </amx:cellFormat>                
     <amx:cellFormat halign="end" height="45px">
-    <amx:commandLink id="cl1" actionListener="#{Rest.showGallery}">
-    <amx:image id="i4" source="/images/Search-24.png"  />
+    <amx:commandLink id="cl2" actionListener="#{Rest.showGallery}">
+    <amx:image id="i3" source="/images/Search-24.png"  />
     </amx:commandLink>
     </amx:cellFormat>
 </amx:rowLayout>

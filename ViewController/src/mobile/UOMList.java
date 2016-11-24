@@ -95,6 +95,15 @@ public class UOMList {
         ValueExpression showPotentialSupplier = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.potentialSuppliers}", String.class);
         showPotentialSupplier.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
         
+        ValueExpression ve31 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
+        String  select_Category = (String)ve31.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        ValueExpression ve32 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmptyRefineSearch}", String.class);
+        ve32.setValue(AdfmfJavaUtilities.getAdfELContext(),select_Category);
+        
+        ValueExpression ve33 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmptyRefineServices}", String.class);
+        ve33.setValue(AdfmfJavaUtilities.getAdfELContext(),select_Category);
+        
         /* ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
         ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         ValueExpression ve111 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
@@ -1548,7 +1557,10 @@ public class UOMList {
         ValueExpression ve18 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.uom1}", String.class);
         ve18.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         
-        
+            ValueExpression ve72 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayNext}", String.class);
+            ve72.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+            ValueExpression ve73 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayPrev}", String.class);
+            ve73.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
         
         ValueExpression ve19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayAddToCart}", String.class);
         ve19.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
@@ -2004,7 +2016,7 @@ public class UOMList {
                               
                             
                                
-                    Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageUrl,"/images/uncheck.png","","Each",String.valueOf(randomInt),"-1",showDiverSeImage,diverseImageURL,pageNo,indixCategoryId,"","","","","","");
+                    Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageUrl,"/images/uncheck.png","","Each",String.valueOf(randomInt),"-1","-1",showDiverSeImage,diverseImageURL,pageNo,indixCategoryId,"","","","","","");
                     ItemsList.items_ref.add(j); 
                   //   System.out.println("***********");
                                }
@@ -2366,6 +2378,11 @@ public class UOMList {
             ValueExpression ve119 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySortOption}", String.class);
             ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
             
+            ValueExpression ve72 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayNext}", String.class);
+            ve72.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+            ValueExpression ve73 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayPrev}", String.class);
+            ve73.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+            
             ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySearchCount}", String.class);
             ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
              
@@ -2402,6 +2419,8 @@ public class UOMList {
             ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_name}", String.class);
             String userName = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
             
+            ValueExpression ve132 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+            String multiOrgId = (String)ve132.getValue(AdfmfJavaUtilities.getAdfELContext());
             ValueExpression ve121 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
             String productTitle = (String)ve121.getValue(AdfmfJavaUtilities.getAdfELContext());
             
@@ -2421,10 +2440,10 @@ public class UOMList {
             try{
                 if(!oracle_count.contains("{")){
             if(Integer.parseInt(oracle_count)>0) {
-            sb.append("    \"REQUEST_TYPE\":\"RFQ\"\n");
+            sb.append("    \"REQUEST_TYPE\":\"RFQ\",\n");
             }
             else{
-            sb.append("    \"REQUEST_TYPE\":\"MANUAL_TRIAGE\"\n");
+            sb.append("    \"REQUEST_TYPE\":\"MANUAL_TRIAGE\",\n");
             }
             }
             }
@@ -2437,6 +2456,7 @@ public class UOMList {
                                                  null,
                                                  null }); 
             }
+            sb.append("    \"ORG_ID\":\""+multiOrgId+"\"\n");   
             sb.append("},");
             
             String header_value = sb.substring(0, sb.length() - 1).concat("]");
@@ -2697,6 +2717,11 @@ public class UOMList {
                 ValueExpression ve119 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySortOption}", String.class);
                 ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
             
+                ValueExpression ve72 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayNext}", String.class);
+                ve72.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                ValueExpression ve73 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayPrev}", String.class);
+                ve73.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                
             ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySearchCount}", String.class);
             ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
             
@@ -3026,6 +3051,11 @@ public class UOMList {
                 ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySearchCount}", String.class);
                 ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
                 
+                ValueExpression ve72 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayNext}", String.class);
+                ve72.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                ValueExpression ve73 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayPrev}", String.class);
+                ve73.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                
                 veComments = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.rfqComments}", String.class);
                 veComments.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                             
@@ -3082,8 +3112,72 @@ public class UOMList {
         itemCategories = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
         */
         
-      ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
+      ValueExpression ve_aliasCategory1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmptyRefineSearch}", String.class);
+     String select_itemCategory = (String)ve_aliasCategory1.getValue(AdfmfJavaUtilities.getAdfELContext());
+      
+     if(select_itemCategory!=null && !select_itemCategory.equalsIgnoreCase("")){
+                    try{
+       // Set Alias Category
+       Alias c=(Alias)AliasList.s_jobs.get(Integer.parseInt(select_itemCategory.toString()));
+       System.out.println(c.getName()+" "+c.getOracleCategotySeg()+" "+c.getIndixId());
+       String aliasText="";
+       if(!c.getName().equalsIgnoreCase("Please Select")){
+       aliasText=c.getName();
+       ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
+       ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),c.getOracleCategotySeg());
+       
+       
+       
+          String sample= c.getIndixId();
+          String sample1 ="&categoryId="+sample;
+          System.out.println("*******"+ sample1);
+          String aliasIndixValues = "";
+        
+        if(!sample1.equals("")) {
+            
+            if(sample1.contains("[")) {
+                String spec1 = c.getIndixId().substring(0,c.getIndixId().length()-2);
+                String value1= spec1.replaceAll("\\[\"", "&categoryId=");
+                aliasIndixValues = value1.replaceAll("\",\"", "&categoryId=");
+                //System.out.println("<<Hello>>"+aliasIndixValues);
+            }
+            else if(sample1.contains("null")) {
+                aliasIndixValues = sample1;
+                //System.out.println("<<null>>"+aliasIndixValues);
+            }
+            else {
+                String spec1 = c.getIndixId();
+                aliasIndixValues ="&categoryId="+spec1;
+               // System.out.println("<<Hello>>"+aliasIndixValues);
+            }
+        }
+        
+       
+       ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
+       ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),aliasIndixValues);
+       ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
+       vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
+       ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
        itemCategories = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
+       AdfmfJavaUtilities.flushDataChangeEvent();
+       }
+       else {
+          ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
+          ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+          ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
+          ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+          ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
+          vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+          ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
+          itemCategories = (String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
+          AdfmfJavaUtilities.flushDataChangeEvent();
+       }
+     }
+     catch(Exception e) {
+     e.printStackTrace();
+     }
+     }
+      
         ValueExpression ve2 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.part_no}", String.class);
         String partNo = (String)ve2.getValue(AdfmfJavaUtilities.getAdfELContext());
         
@@ -3513,7 +3607,7 @@ public class UOMList {
                                                 JSONArray items=(JSONArray)indix_category_tl.get("X_INDIX_CATEGORY_TL_ITEM");
                                                 for(int i=0;i<items.length();i++){
                                                  // categoryRef=categoryRef+"categoryId="+items.getString(i)+"&";
-                                                    categoryRef=categoryRef+"categoryId="+items.getString(i);
+                                                    categoryRef=categoryRef+"categoryId="+items.getString(i)+"&";
                                                     categoryId=1;
                                                 }
                                                     
@@ -3714,7 +3808,7 @@ public class UOMList {
                                                         
                                                       
                                                              int randomInt = randomGenerator.nextInt(1000000000); 
-                                                       Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageUrl,"/images/uncheck.png","","Each",String.valueOf(randomInt),"-1",showDiverSeImage,diverseImageURL,pageNo,indixCategoryId,seller,showSeller,resultVal,showAttrib,spec,showSpec);
+                                                       Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageUrl,"/images/uncheck.png","","Each",String.valueOf(randomInt),"-1","-1",showDiverSeImage,diverseImageURL,pageNo,indixCategoryId,seller,showSeller,resultVal,showAttrib,spec,showSpec);
                                                        ItemsList.s_jobs.add(j); 
                                                  //   System.out.println("***********");
                                                 
@@ -3745,7 +3839,15 @@ public class UOMList {
                                         ValueExpression ve119 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displaySortOption}", String.class);
                                         ve119.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
                                      
-                                    
+                                
+                                        ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
+                                        ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                                        ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
+                                        vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                                        
+                                        ValueExpression ve31 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
+                                        ve31.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                                        
                                         /*AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
                                                                                                    "displayAlert",
                                                                                                    new Object[] { });*/
@@ -3943,7 +4045,7 @@ public class UOMList {
                                                
                                              
                                                     int randomInt = randomGenerator.nextInt(1000000000); 
-                                              Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageUrl,"/images/uncheck.png","","Each",String.valueOf(randomInt),"-1",showDiverSeImage,diverseImageURL,pageNo,indixCategoryId,seller,showSeller,resultVal,showAttrib,spec,showSpec);
+                                              Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageUrl,"/images/uncheck.png","","Each",String.valueOf(randomInt),"-1","-1",showDiverSeImage,diverseImageURL,pageNo,indixCategoryId,seller,showSeller,resultVal,showAttrib,spec,showSpec);
                                               ItemsList.s_jobs.add(j); 
                                             //   System.out.println("***********");
                                            
@@ -3993,6 +4095,13 @@ public class UOMList {
                                 ValueExpression ve18 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.uom1}", String.class);
                                 ve18.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                                     
+                                ValueExpression vf7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
+                                vf7.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
+                                ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
+                                vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                                
+                                ValueExpression ve31 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
+                                ve31.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
                             /*-*-*/
                              /*ValueExpression vf19 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
                                     vf19.setValue(AdfmfJavaUtilities.getAdfELContext(),"");*/

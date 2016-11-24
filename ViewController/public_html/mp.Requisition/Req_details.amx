@@ -110,28 +110,6 @@
                                                     id="bot4"/>
                                 </amx:cellFormat>
                             </amx:rowLayout>
-                              <amx:rowLayout id="crl3" rendered="#{row.showReqSection}">
-                                <amx:cellFormat width="100%" halign="start" id="ccf3">
-                                    <amx:outputText value="Req No: #{row.reqNum}"
-                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="cot4"/>
-                                </amx:cellFormat>
-                            </amx:rowLayout>
-                              <amx:rowLayout id="drl3" rendered="#{row.showReqSection}">
-                                <amx:cellFormat width="100%" halign="start" id="dcf3">
-                                    <amx:outputText value="PO No: #{row.poNo}"
-                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="dot4"/>
-                                </amx:cellFormat>
-                            </amx:rowLayout>
-                        
-                              <amx:rowLayout id="frl3" rendered="#{row.showRfqSection}">
-                                <amx:cellFormat width="100%" halign="start" id="fcf3">
-                                    <amx:outputText value="RFQ Status: #{row.rfqStatus}"
-                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
-                                                    id="fot4"/>
-                                </amx:cellFormat>
-                            </amx:rowLayout>
                             </amx:tableLayout>
                             <amx:panelGroupLayout id="pgl4" layout="horizontal" rendered="#{row.showRfqSection}">
                                 <amx:outputText value="RFQ No:"
@@ -148,8 +126,29 @@
                                                     </amx:commandLink>
                                                     
                                 </amx:panelGroupLayout>
-                                <amx:panelGroupLayout id="pgl6" layout="horizontal" rendered="#{row.showReqSection}">
-                                <amx:outputText value="Status:"
+                      
+            
+                      <amx:tableLayout width="100%" id="tl3">
+                              <amx:rowLayout id="frl3" rendered="#{row.showRfqSection}">
+                                <amx:cellFormat width="100%" halign="start" id="fcf3">
+                                    <amx:outputText value="RFQ Status: #{row.rfqStatus}"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="fot4"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            </amx:tableLayout>
+                      
+                            <amx:tableLayout width="100%" id="tl4">
+                              <amx:rowLayout id="crl3" rendered="#{row.showReqSection}">
+                                <amx:cellFormat width="100%" halign="start" id="ccf3">
+                                    <amx:outputText value="Req No: #{row.reqNum}"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="cot4"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                            </amx:tableLayout>
+                                  <amx:panelGroupLayout id="pgl6" layout="horizontal" rendered="#{row.showReqSection}">
+                                <amx:outputText value="Req Status:"
                                                     inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
                                                     id="ot12"/>
                                       <amx:outputText value="#{row.reqStatus}"
@@ -157,6 +156,15 @@
                                                     id="ot13"/>              
                                                     
                                 </amx:panelGroupLayout>
+                                          <amx:tableLayout width="100%" id="tl2">
+                              <amx:rowLayout id="drl3" rendered="#{row.showReqSection}">
+                                <amx:cellFormat width="100%" halign="start" id="dcf3">
+                                    <amx:outputText value="PO No: #{row.poNo}"
+                                                    inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    id="dot4"/>
+                                </amx:cellFormat>
+                            </amx:rowLayout>
+                      </amx:tableLayout>
                                  <amx:panelGroupLayout id="pgl5" layout="horizontal">
                                 <amx:outputText value="Total Amount:"
                                                     inlineStyle="color:#707173;font-size: 14px; clear: both;font-family: Arial, sans-serif;"

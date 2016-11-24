@@ -573,12 +573,13 @@ public class ItemsList {
             BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");  
             Item item=(Item)vex.getDataProvider();
             GenericType row= (GenericType)vex.getCurrentRow();
-            
+                                
             
             String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             
             Random randomGenerator = new Random();
             int randomInt = randomGenerator.nextInt(1000000000);
+            
             
            ValueExpression ve48 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_cost_centerId}", String.class);
             String default_cost_center = (String)ve48.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -591,6 +592,14 @@ public class ItemsList {
             
             ValueExpression ve151 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_costNaturalAccountId}", String.class);
             String default_cost_natural_account = (String)ve151.getValue(AdfmfJavaUtilities.getAdfELContext()); 
+
+// New One--
+            ValueExpression ve_row = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.itemRowId}", String.class);
+            String itemRowId=(String)ve_row.getValue(AdfmfJavaUtilities.getAdfELContext());
+            
+            
+            System.out.println("Selected Row ID-->"+itemRowId);
+            
 
        //     String natural=default_natural_account;
         //    System.out.println("Natural-->"+default_natural_account+"---->"+default_cost_natural_account);
@@ -644,47 +653,44 @@ public class ItemsList {
             
             SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,default_cost_natural_account,"goods","","","","","","","","","","","","","","");
         
-        
+            
+            System.out.println("((Select Item Values)))-->"+selectItem.getRowid());
             
             
-            
-            for(int i=0;i<row.getAttributeCount();i++) {
-                
-                
-              
-                System.out.println("***"+row.getAttribute(i));
-            }
-            
-            
-            if(ItemsList.items_selected==null) {
-                ItemsList.items_selected=new ArrayList();
-            }
-            if(item.getChecked().equalsIgnoreCase("/images/uncheck.png")){
-             row.setAttribute("checked", new String("/images/check.png"));
-                
-               // propertyChangeSupport.firePropertyChange("checked", "images/uncheck.png", "/images/check.png");
-               System.out.println("select");
-               SelectedItemsList.items_selected.add(selectItem) ;   
-            }
-             else{
-                 row.setAttribute("checked", new String("/images/uncheck.png"));
-                 System.out.println("un select");
-                for(int k=0;k<SelectedItemsList.items_selected.size();k++) {
-                    SelectedItem it=(SelectedItem)SelectedItemsList.items_selected.get(k);
-                    System.out.println(it.getItemRef() +"="+ selectItem.getItemRef());
-                    System.out.println("Row ID--->"+it.getRowid());
-                    //if(it.getRowid().equalsIgnoreCase(selectItem.getItemRef()))
-                    if(it.getItemRef().equalsIgnoreCase(selectItem.getItemRef())) {
-                        SelectedItemsList.items_selected.remove(it) ; 
-                        System.out.println("Removed Item"+SelectedItemsList.items_selected.remove(it));
-                    }
-                }
+       for(int i=0;i<row.getAttributeCount();i++) {
+                   
+                   
                  
-             }
-             
-            
+                   System.out.println("***"+row.getAttribute(i));
+               }
+               
+               
+               if(ItemsList.items_selected==null) {
+                   ItemsList.items_selected=new ArrayList();
+               }
+               if(item.getChecked().equalsIgnoreCase("/images/uncheck.png")){
+                row.setAttribute("checked", new String("/images/check.png"));
+                   
+                  // propertyChangeSupport.firePropertyChange("checked", "images/uncheck.png", "/images/check.png");
+                  System.out.println("select");
+                  SelectedItemsList.items_selected.add(selectItem) ;   
+               }
+                else{
+                    row.setAttribute("checked", new String("/images/uncheck.png"));
+                    System.out.println("un select");
+                   for(int k=0;k<SelectedItemsList.items_selected.size();k++) {
+                       SelectedItem it=(SelectedItem)SelectedItemsList.items_selected.get(k);
+                       System.out.println(it.getItemRef() +"="+ selectItem.getItemRef());
+                       System.out.println("Row ID--->"+it.getRowid());
+                       //if(it.getRowid().equalsIgnoreCase(selectItem.getItemRef()))
+                       if(it.getItemRef().equalsIgnoreCase(selectItem.getItemRef())) {
+                           SelectedItemsList.items_selected.remove(it) ; 
+                           System.out.println("Removed Item"+SelectedItemsList.items_selected.remove(it));
+                       }
+                   }
+                    
+                }
             System.out.print("After =========>"+SelectedItemsList.items_selected.size());
-            
             vex.refresh();
         }
         
@@ -1377,8 +1383,12 @@ public class ItemsList {
                           //diverseSupplier
                            String diverseSupplier=item.getString("DIVERSE_SUPPLIER");
                           //for test
-                          if(diverseSupplier.equalsIgnoreCase("0")) {
-                              diverseSupplier="-1";
+                          String contractSupplier="";
+                          if(source.equalsIgnoreCase("Y")) {
+                              contractSupplier="1";
+                          }
+                          else {
+                              contractSupplier="";
                           }
                           
                            String imageURL=item.getString("IMAGE_URL");
@@ -1400,7 +1410,8 @@ public class ItemsList {
                            isContractedItemPresent = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.isContractedItemPresent}", String.class);
                            isContractedItemPresent.setValue(AdfmfJavaUtilities.getAdfELContext(), "true");
                           
-                           Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageURL,"/images/uncheck.png","Contracted",uom,String.valueOf(randomInt),"1",showDiverSeImage,diverseImageURL,pageNo,"","","","","","","");
+                           //Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice, imageUrl, checked, source, uom, rowId, contractSupplier, diverseSupplier, showDiverseImage, diverseImageURL, pageNo, indixCategoryId, sellerName, showSeller, attrib, showAttrib, spec, showSpec)
+                           Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageURL,"/images/uncheck.png","Contracted",uom,String.valueOf(randomInt),contractSupplier,diverseSupplier,showDiverSeImage,diverseImageURL,pageNo,"","","","","","","");
                           // ItemsList.s_jobs.add(j); 
                            ItemsList.items_list.add(j); 
                           
@@ -1419,9 +1430,14 @@ public class ItemsList {
                           String source=item.getString("CONTRACTED");
                           String diverseSupplier=item.getString("DIVERSE_SUPPLIER");
                           //for test
-                          if(diverseSupplier.equalsIgnoreCase("0")) {
-                              diverseSupplier="-1";
+                          String contractSupplier="";
+                          if(source.equalsIgnoreCase("Y")) {
+                              contractSupplier="1";
                           }
+                          else {
+                              contractSupplier="";
+                          }
+
                           String imageURL=item.getString("IMAGE_URL");
                           Random randomGenerator = new Random();
                           int randomInt = randomGenerator.nextInt(1000000000);
@@ -1435,7 +1451,8 @@ public class ItemsList {
                           }
                           isContractedItemPresent = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.isContractedItemPresent}", String.class);
                           isContractedItemPresent.setValue(AdfmfJavaUtilities.getAdfELContext(), "true");
-                          Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageURL,"/images/uncheck.png","Contracted",uom,String.valueOf(randomInt),diverseSupplier,showDiverSeImage,diverseImageURL,pageNo,"","","","","","","");
+                          //Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice, imageUrl, checked, source, uom, rowId, diverseSupplier, showDiverseImage, diverseImageURL, pageNo, indixCategoryId, sellerName, showSeller, attrib, showAttrib, spec, showSpec);
+                          Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageURL,"/images/uncheck.png","Contracted",uom,String.valueOf(randomInt),contractSupplier,diverseSupplier,showDiverSeImage,diverseImageURL,pageNo,"","","","","","","");
                           //ItemsList.s_jobs.add(j);
                           System.out.println("diverseSupplier----"+diverseSupplier);
                           ItemsList.items_list.add(j); 
@@ -1718,7 +1735,7 @@ public class ItemsList {
                                                                      int randomInt = randomGenerator.nextInt(1000000000);
                                                                    //since for the indix suppliers they will not be diversed so update as -1
                                                                    System.out.println("UP spec before insert ===> "+spec);
-                                                                     Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageUrl,"/images/uncheck.png","","Each",String.valueOf(randomInt),"-1",showDiverSeImage,diverseImageURL,pageNo,indixCategoryId,seller,showSeller,resultVal,showAttrib,spec,showSpec);
+                                                                     Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageUrl,"/images/uncheck.png","","Each",String.valueOf(randomInt),"-1","-1",showDiverSeImage,diverseImageURL,pageNo,indixCategoryId,seller,showSeller,resultVal,showAttrib,spec,showSpec);
                                                                      //ItemsList.s_jobs.add(j); 
                                                                    
                                                                    System.out.println("=================================");
@@ -1956,7 +1973,7 @@ public class ItemsList {
                             checked="/images/check.png";
                         }
                     }
-                    Item item=new Item(it.getPoNo(), it.getVendorName(), it.getVendorSiteCode(), it.getProductCategory(), it.getProductTitle(), it.getUnitPrice(), it.getImageUrl(), checked, it.getSource(), it.getUom(), it.getRowId(), it.getDiverseSupplier(), it.getShowDiverseImage(), it.getDiverseImageURL(), pageNo,it.getIndixCategoryId(),it.getSellerName(),it.getShowSeller(),it.getAttrib(),it.getShowAttrib(),it.getSpec(),it.getShowSpec());
+                    Item item=new Item(it.getPoNo(), it.getVendorName(), it.getVendorSiteCode(), it.getProductCategory(), it.getProductTitle(), it.getUnitPrice(), it.getImageUrl(), checked, it.getSource(), it.getUom(), it.getRowId(),it.getContractSupplier(),it.getDiverseSupplier(), it.getShowDiverseImage(), it.getDiverseImageURL(), pageNo,it.getIndixCategoryId(),it.getSellerName(),it.getShowSeller(),it.getAttrib(),it.getShowAttrib(),it.getSpec(),it.getShowSpec());
                     ItemsList.s_jobs.add(item);
                 }
             }
@@ -2328,7 +2345,7 @@ public class ItemsList {
   
                                                      //since for the indix suppliers they will not be diversed so update as -1
                                                      System.out.println("Spec befor add===> "+spec);
-                                                    Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageUrl,"/images/uncheck.png","","Each",String.valueOf(randomInt),"-1",showDiverSeImage,diverseImageURL,pageNo,indixCategoryId,seller,showSeller,resultVal,showAttrib,spec,showSpec);
+                                                    Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageUrl,"/images/uncheck.png","","Each",String.valueOf(randomInt),"-1","-1",showDiverSeImage,diverseImageURL,pageNo,indixCategoryId,seller,showSeller,resultVal,showAttrib,spec,showSpec);
                                                      providerChangeSupport.fireProviderCreate("assets", String.valueOf(randomInt), j);
                                                   ItemsList.items_list.add(j); 
                                                 
@@ -3101,7 +3118,7 @@ public class ItemsList {
                                                        
                                                        
                                                        public int compare(Item o1, Item o2) {  
-                                                            return Double.compare(Double.parseDouble(o2.getDiverseSupplier()), Double.parseDouble(o1.getDiverseSupplier()));  
+                                                            return Double.compare(Double.parseDouble(o2.getContractSupplier()), Double.parseDouble(o1.getContractSupplier()));  
                                                        }  
                                                   };  
                                           chain.addComparator(comparatorDiversedSupplier); 

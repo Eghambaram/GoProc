@@ -200,7 +200,7 @@
                     <amx:commandButton text="Go" id="cb1" actionListener="#{Rest.performSearch}" styleClass="adfmf-commandButton-style"/>
                     </amx:cellFormat>
                     <amx:cellFormat id="zcf124"  width="10%" halign="center">
-                         <amx:commandLink rendered="true" id="zcommandLink1" >
+                         <amx:commandLink rendered="true" id="zcommandLink1"  actionListener="#{Rest.setFilterValue}">
                          
                         <amx:image id="zimage2" source="/images/filter.png"/>
                                  <amx:showPopupBehavior popupId="popup-filter" type="action" align="cornerTopEnd" alignId="pp1"/>
@@ -253,8 +253,8 @@
                       rangeChangeListener="#{Rest.itemsRangeChange}"
                       showMoreStrategy="autoScroll" bufferStrategy="viewport" 
                       id="lv1">
-<!--inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #D1D1D3;"-->
-            <amx:listItem id="li1" actionListener="#{Rest.selectItems}"  showLinkIcon="false" inlineStyle="padding:2px">
+<!--inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #D1D1D3;" actionListener="#{Rest.selectItems}"-->
+            <amx:listItem id="li1"  actionListener="#{Rest.selectItems}"  showLinkIcon="false" inlineStyle="padding:2px">
           <amx:tableLayout id="tl1" width="100%">
             <amx:rowLayout id="rl1">
               <amx:cellFormat id="cf1"  width="60px" halign="center" valign="top">
@@ -263,7 +263,7 @@
                     <amx:cellFormat id="cf3" width="60px" halign="center" valign="top">
                     <amx:commandLink id="cl5">
                 <amx:image source="#{row.checked}" id="i5"/>
-                <!--<amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}" type="action"/>
+               <!-- <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}" type="action"/>
                 <amx:setPropertyListener from="#{row.vendorName}" to="#{pageFlowScope.vendorName}" type="action"/>
                 <amx:setPropertyListener from="#{row.rowId}" to="#{pageFlowScope.itemRowId}" type="action"/>-->
             </amx:commandLink>
@@ -407,12 +407,25 @@
         </amx:facet>
         <amx:facet name="center">
         <amx:spacer id="s13" height="5"/>
-        <amx:selectOneRadio label="Sort By" value="#{pageFlowScope.selectedSortBy}" simple="true" valueChangeListener="#{Rest.sortItems}" id="sorre1">
+        <!--valueChangeListener="#{Rest.sortItems}"-->
+        <amx:selectOneRadio label="Sort By" value="#{pageFlowScope.selectedSortBy}" simple="true" id="sorre1">
                 <amx:selectItem id="ite1" value="relevance" label="Relevance"/>
                 <amx:selectItem id="ite2" value="low_to_high" label="Price Low to High"/>
                 <amx:selectItem id="ite3" value="high_to_low" label="Price High to Low"/>
             </amx:selectOneRadio>
         </amx:facet>
+        <amx:facet name="bottom">
+                <amx:tableLayout width="100%" id="tel11">
+                <amx:rowLayout id="rwel121">
+                    <amx:cellFormat id="cfe1121" halign="center">
+                                  <amx:commandButton text="Ok" actionListener="#{Rest.sortItems}" id="cb3"
+                    styleClass="adfmf-commandButton-style" inlineStyle="width:80%">
+                        <amx:closePopupBehavior popupId="popup-sort" type="action"/>
+                    </amx:commandButton>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout>
+</amx:facet>
         </amx:panelStretchLayout>
         </amx:popup>
         
@@ -469,12 +482,24 @@
         </amx:facet>
         <amx:facet name="center">
         <amx:spacer id="Fs13" height="5"/>
-      <amx:selectOneChoice value="#{pageFlowScope.aliasCategorieEmpty}" label="Item Categories" id="Fsoc7"
-                             valueChangeListener="#{Rest.getAliasCategories}">
+        <!-- valueChangeListener="#{Rest.getAliasCategories}"-->
+      <amx:selectOneChoice value="#{pageFlowScope.aliasCategorieEmptySearch}" label="Item Categories" id="Fsoc7">
             <amx:selectItems value="#{bindings.aliass.items}" id="Fsi10"/>
         </amx:selectOneChoice>
 
         </amx:facet>
+         <amx:facet name="bottom">
+                <amx:tableLayout width="100%" id="tl9">
+                <amx:rowLayout id="rl15">
+                    <amx:cellFormat id="cf24" halign="center">
+                                  <amx:commandButton text="Ok" actionListener="#{Rest.setCategoryFilter}" id="cb4"
+                    styleClass="adfmf-commandButton-style" inlineStyle="width:80%">
+                        <amx:closePopupBehavior popupId="popup-filter" type="action"/>
+                    </amx:commandButton>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout>
+</amx:facet>
         </amx:panelStretchLayout>
         </amx:popup>
 
