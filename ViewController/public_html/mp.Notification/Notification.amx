@@ -47,13 +47,12 @@
 
   </amx:verbatim>
         <amx:facet name="header">
-            <amx:outputText value="Check Notifications" id="ot1"
-                            inlineStyle="text-align: center; font-size:large; color:#ffffff; background-color:transparent;"
-                            styleClass="adfmf-commandButton-highlight"/>
+        
+            <amx:outputText value="Check Notifications" id="ot1" inlineStyle="color:#ffffff;"/>
         </amx:facet>
         <amx:facet name="primary">
             <amx:commandLink actionListener="#{bindings.toggleSpringboard.execute}" id="cl1">
-                <amx:image source="/images/logo.png" id="i3"/>
+                <amx:image source="/images/menu.png" id="i3"/>
             </amx:commandLink>
         </amx:facet>
          <amx:facet name="secondary">

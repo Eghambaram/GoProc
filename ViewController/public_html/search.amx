@@ -312,7 +312,7 @@
                   </amx:rowLayout>
                   <amx:rowLayout id="rl11" rendered="#{row.showSpec}">
                     <amx:cellFormat id="cf13">
-                                      <amx:commandLink inlineStyle="font-size: 14px; clear: both;color: #0572CE;font-family: Arial, sans-serif;" id="cl9" text="Specs: ClickHere" action="#{Rest.getAttributeDetails}">
+                                      <amx:commandLink inlineStyle="color:#0E4876;font-size: 14px; clear: both;font-family: Arial, sans-serif;" id="cl9" text="Additional Product Specs" styleClass="adfmf-commandLink-noUnderline" action="#{Rest.getAttributeDetails}">
                                         <amx:showPopupBehavior popupId="popup-spec" type="action" align="overlapMiddleCenter" alignId="pp1"/>
                      <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}"
                                                          type="action" id="spl2"/>

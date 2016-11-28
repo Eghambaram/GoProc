@@ -373,7 +373,10 @@ public class Rest {
     }
 
 */
-    public void doSearch() {
+    //public void doSearch()
+    
+    
+    public static void doSearch() {
         AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
                                                                   "adf.mf.api.amx.showLoadingIndicator", new Object[] {});
         // Add event code here...
@@ -3115,7 +3118,8 @@ public class Rest {
 //            return "";
 //        }
 //            
-        
+        ValueExpression ve_from = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmptyRefineServicesform}", String.class);
+        ve_from.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         
         MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.populateUOM.execute}", Object.class, new Class[] {});
         me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
@@ -6234,6 +6238,8 @@ public class Rest {
         ValueExpression ve117 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
         ve117.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         
+        ValueExpression ve118 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmptyRefineServices}", String.class);
+        ve118.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
             
         ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.suppliers}", String.class);
         ve12.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
@@ -6380,9 +6386,16 @@ public class Rest {
     public void getAliasCategoiresValues(String rr) {
      /*       ValueExpression ve11 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
             ve11.setValue(AdfmfJavaUtilities.getAdfELContext(),"");*/
-        
+        System.out.println("Alias List Size-->"+AliasList.s_jobs.size());
+            System.out.println("CostCenter List Size-->"+CostCenterList.s_jobs.size());
+            ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
+            String userId = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
+            
+            ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
+            String multiOrgId = (String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
         try{
             System.out.println("--------------ALIASSSS-----");
+            System.out.println("Alias List Size-->"+AliasList.s_jobs.size());
             RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
             restServiceAdapter = Model.createRestServiceAdapter();
             // Clear any previously set request properties, if any
@@ -6469,6 +6482,7 @@ public class Rest {
                     AliasList.s_jobs.add(als);
                     aliasList.add(als);
                 }
+                 
                 }
                 catch(Exception e) {
                     e.printStackTrace();
@@ -6476,10 +6490,258 @@ public class Rest {
             
             
             // =====Alias End
+            
         }
         catch(Exception e) {
             e.printStackTrace();
         }
+        try{
+            RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
+            // Clear any previously set request properties, if any
+            restServiceAdapter.clearRequestProperties();
+            // Set the connection name
+            restServiceAdapter.setConnectionName("enrich");
+            
+            restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+            restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+            restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+            restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+            restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_deliver_to/");
+            String postData= "{\n" + 
+            "\n" + 
+            "  \"GET_DELIVER_TO_Input\" : {\n" + 
+            "\n" + 
+            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_deliver_to/\",\n" + 
+            "\n" + 
+            "   \"RESTHeader\": {\n" + 
+            "\n" + 
+            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+            "    },\n" + 
+            "\n" + 
+            "   \"InputParameters\": {\n" + 
+            "\n" + 
+               "        \"P_USER_ID\":\""+userId+"\",\n" + 
+                              "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
+            "\n" + 
+            "     }\n" + 
+            "\n" + 
+            "  }\n" + 
+            "\n" + 
+            "}  ";
+                                        restServiceAdapter.setRetryLimit(0);
+               System.out.println("postData===============================" + postData);
+                
+               String response = restServiceAdapter.send(postData);
+                
+                System.out.println("response===============================" + response); 
+                JSONObject resp=new JSONObject(response);
+                JSONObject output=resp.getJSONObject("OutputParameters");
+               JSONObject data=new JSONObject();
+             try{
+                 data=output.getJSONObject("X_DELIVER_TO_TL");
+                DeliverToLocationList.s_jobs.clear();
+               
+
+                    DeliverToLocation l2=new DeliverToLocation("Please Select","Please Select","Please Select"); 
+                    DeliverToLocationList.s_jobs.add(l2);
+               
+                
+                if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONArray){
+                  JSONArray segments=data.getJSONArray("X_DELIVER_TO_TL_ITEM");
+                  for(int i=0;i<segments.length();i++) {
+                    JSONObject location=segments.getJSONObject(i);
+                    String locationId=location.getString("LOCATION_ID");
+                    String locationCode=location.getString("LOCATION_CODE");
+                    String locationDescription=location.getString("DESCRIPTION");
+                     
+                    DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
+                    DeliverToLocationList.s_jobs.add(loc);
+               
+                  }
+                
+                }
+                
+                else if(data.get("X_DELIVER_TO_TL_ITEM") instanceof  JSONObject){
+                   
+                   JSONObject location=data.getJSONObject("X_DELIVER_TO_TL_ITEM");
+                    String locationId=location.getString("LOCATION_ID");
+                    String locationCode=location.getString("LOCATION_CODE");
+                    String locationDescription=location.getString("DESCRIPTION");
+                    
+                    DeliverToLocation loc=new DeliverToLocation(locationId, locationCode, locationDescription);
+                    DeliverToLocationList.s_jobs.add(loc);
+               
+                   
+                }
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+            //Cost center     
+            
+            restServiceAdapter = Model.createRestServiceAdapter();
+            // Clear any previously set request properties, if any
+            restServiceAdapter.clearRequestProperties();
+            // Set the connection name
+            restServiceAdapter.setConnectionName("enrich");
+            
+            restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+            restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+            restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+            restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+            restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_cost_center/");
+            postData= "{\n" +
+            "\n" +
+            "  \"GET_COST_CENTER_Input\" : {\n" +
+            "\n" +
+            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_cost_center/\",\n" +
+            "\n" +
+            "   \"RESTHeader\": {\n" +
+            "\n" +
+            "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" +
+            "    },\n" +
+            "\n" +
+            "   \"InputParameters\": {\n" +
+            "\n" +
+            "        \"P_USER_ID\":\""+userId+"\",\n" +
+            "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" +
+                     
+            "\n" +
+            "     }\n" +
+            "\n" +
+            "  }\n" +
+            "\n" +
+            "}  ";
+                                       restServiceAdapter.setRetryLimit(0);
+              System.out.println("postData===============================" + postData);
+               
+               response = restServiceAdapter.send(postData);
+               
+               System.out.println("response===============================" + response); 
+                resp=new JSONObject(response);
+                output=resp.getJSONObject("OutputParameters");
+            try{
+                data=output.getJSONObject("X_COST_CENTER_TL");
+               CostCenterList.s_jobs.clear();
+               costCenterList.clear();
+               
+               if(data.get("X_COST_CENTER_TL_ITEM") instanceof  JSONArray){
+                 JSONArray segments=data.getJSONArray("X_COST_CENTER_TL_ITEM");
+                 for(int i=0;i<segments.length();i++) {
+                     //String name=(String)segments.get(i);
+                     JSONObject ci=(JSONObject)segments.get(i);
+                     String name=ci.getString("SEGMENT_VALUE");
+                     String description=ci.getString("DESCRIPTION");
+                     CostCenter c=new CostCenter(name,description);
+                     CostCenterList.s_jobs.add(c);
+                     
+                 }
+               
+               }
+               
+               else if(data.get("X_COST_CENTER_TL_ITEM") instanceof  JSONObject){
+                  
+                  JSONObject ci=data.getJSONObject("X_COST_CENTER_TL_ITEM");
+                   String name=ci.getString("SEGMENT_VALUE");
+                   String description=ci.getString("DESCRIPTION");
+                   CostCenter c=new CostCenter(name,description);
+                   CostCenterList.s_jobs.add(c);
+                  
+               }
+               }
+               catch(Exception e) {
+                   e.printStackTrace();
+               }
+            
+
+
+            // Natural Accounts
+            
+            restServiceAdapter = Model.createRestServiceAdapter();
+            // Clear any previously set request properties, if any
+            restServiceAdapter.clearRequestProperties();
+            // Set the connection name
+            restServiceAdapter.setConnectionName("enrich");
+            
+            restServiceAdapter.setRequestType(RestServiceAdapter.REQUEST_TYPE_POST);
+            restServiceAdapter.addRequestProperty("Accept", "application/json; charset=UTF-8");
+            restServiceAdapter.addRequestProperty("Authorization", "Basic " + "WFhFX1JFU1RfU0VSVklDRVNfQURNSU46b3JhY2xlMTIz");
+            restServiceAdapter.addRequestProperty("Content-Type", "application/json");
+            restServiceAdapter.setRequestURI("/webservices/rest/XXETailSpendAPI/get_natural_acct/");
+               postData= "{\n" + 
+               "\n" + 
+               "  \"GET_NATURAL_ACCT_Input\" : {\n" + 
+               "\n" + 
+               "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/get_natural_acct/\",\n" + 
+               "\n" + 
+               "   \"RESTHeader\": {\n" + 
+               "\n" + 
+               "   \"@xmlns\" : \"http://xmlns.oracle.com/apps/po/rest/XXETailSpendAPI/header\"\n" + 
+               "    },\n" + 
+               "\n" + 
+               "   \"InputParameters\": {\n" + 
+               "\n" + 
+               "          \"P_USER_ID\" : \""+userId+"\",\n" +
+               "          \"P_ORG_ID\" : \""+multiOrgId+"\"\n" + 
+               "\n" + 
+               "     }\n" + 
+               "\n" + 
+               "  }\n" + 
+               "\n" + 
+               "}  ";
+               
+                   restServiceAdapter.setRetryLimit(0);
+              System.out.println("postData===============================" + postData);
+               
+               response = restServiceAdapter.send(postData);
+               
+               System.out.println("response===============================" + response); 
+                resp=new JSONObject(response);
+                output=resp.getJSONObject("OutputParameters");
+            try{
+                data=output.getJSONObject("X_NATURAL_ACC_TL");
+               NaturalAcccountList.acc_List.clear();
+               
+               if(data.get("X_NATURAL_ACC_TL_ITEM") instanceof  JSONArray){
+                 JSONArray segments=data.getJSONArray("X_NATURAL_ACC_TL_ITEM");
+                 for(int i=0;i<segments.length();i++) {
+                     //String name=(String)segments.get(i);
+                     JSONObject na=(JSONObject)segments.get(i);
+                     String name=na.getString("SEGMENT_VALUE");
+                     String description=na.getString("DESCRIPTION");
+                     NaturalAccounts c=new NaturalAccounts(name,description);
+                     NaturalAcccountList.acc_List.add(c);
+                     
+                 }
+               
+               }
+               
+               else if(data.get("X_NATURAL_ACC_TL_ITEM") instanceof  JSONObject){
+                  
+                  JSONObject na=data.getJSONObject("X_NATURAL_ACC_TL_ITEM");
+                   String name=na.getString("SEGMENT_VALUE");
+                   String description=na.getString("DESCRIPTION");
+                   NaturalAccounts c=new NaturalAccounts(name,description);
+                   NaturalAcccountList.acc_List.add(c);
+                  
+               }
+                /*   AmxAttributeBinding accountList = (AmxAttributeBinding) AdfmfJavaUtilities
+                                     .evaluateELExpression("#{bindings.naturalAccounts}");
+                   AmxIteratorBinding accountListIterator =  accountList.getIteratorBinding();
+                   accountListIterator.refresh();*/
+               
+               }
+               catch(Exception e) {
+                   e.printStackTrace();
+               }
+
+            
+          }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+
+               
         AmxAttributeBinding AliasToList = (AmxAttributeBinding) AdfmfJavaUtilities
                           .evaluateELExpression("#{bindings.aliass}");
         AmxIteratorBinding amxListIterator1 =  AliasToList.getIteratorBinding();
@@ -7089,192 +7351,9 @@ public class Rest {
 
     public void searchFromFreeForm(ActionEvent actionEvent) {
         // Add event code here...
-        try{
-            ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
-            String itemType=(String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
-            System.out.println("Item Type List"+ItemTypeList.itemType_List.size());
-            ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemCategoryForm}", String.class);
-            String itemCategory=(String)ve4.getValue(AdfmfJavaUtilities.getAdfELContext());
-            
-
-            ValueExpression ve3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemDescriptionFrom}", String.class);
-            String itemDescription=(String)ve3.getValue(AdfmfJavaUtilities.getAdfELContext());
-            
-            String itemTypePresent="";
-         if(itemType!=null && !itemType.equalsIgnoreCase(""))
-         {
-            ItemType it=(ItemType)ItemTypeList.itemType_List.get((Integer.parseInt(itemType)));
-            System.out.println("Item Type-->"+it.getLineTypeCode());
-            itemTypePresent=it.getLineTypeCode();
-            
-         }
-            
-                if(!itemTypePresent.equalsIgnoreCase("Please Select") && !itemTypePresent.equalsIgnoreCase("") && itemTypePresent!=null){
-            
-            if(itemTypePresent.equalsIgnoreCase("Services - Fixed Price") || itemTypePresent.equalsIgnoreCase("Services - T & M") ) {
-            
-                if(itemCategory!=null || !itemCategory.equalsIgnoreCase("")){
-                
-                    Alias al=(Alias)AliasList.s_jobs.get((Integer.parseInt(itemCategory)));
-                    System.out.println("Alias-->"+al.getOracleId()+al.getIndixId()+" "+al.getOracleCategotySeg());
-                    
-                    String sample= al.getIndixId();
-                    String sample1 ="&categoryId="+sample;
-                    System.out.println("*******"+ sample1);
-                    String aliasIndixValues = "";
-                    
-                    if(!sample1.equals("")) {
-                    
-                    if(sample1.contains("[")) {
-                      String spec1 = al.getIndixId().substring(0,al.getIndixId().length()-2);
-                      String value1= spec1.replaceAll("\\[\"", "&categoryId=");
-                      aliasIndixValues = value1.replaceAll("\",\"", "&categoryId=");
-                      //System.out.println("<<Hello>>"+aliasIndixValues);
-                    }
-                    else if(sample1.contains("null")) {
-                      aliasIndixValues = sample1;
-                      //System.out.println("<<null>>"+aliasIndixValues);
-                    }
-                    else {
-                      String spec1 = al.getIndixId();
-                      aliasIndixValues ="&categoryId="+spec1;
-                     // System.out.println("<<Hello>>"+aliasIndixValues);
-                    }
-                    ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
-                    ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),aliasIndixValues);
-                    ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
-                    ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),al.getOracleCategotySeg());
-                    ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmptyRefineServices}", String.class);
-                    ve8.setValue(AdfmfJavaUtilities.getAdfELContext(),itemCategory);
-                    
-                   /* ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
-                    vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");*/
-                    
-                    }
-                    else {
-                        ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
-                        ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
-                        ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                        ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmptyRefineServices}", String.class);
-                        ve8.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                    }
-                    
-                    
-                }
-                
-                ValueExpression vec4 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
-                vec4.setValue(AdfmfJavaUtilities.getAdfELContext(),itemDescription);
-                ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
-                ve91.setValue(AdfmfJavaUtilities.getAdfELContext(), "services");
-                
-                MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.populateUOM.execute}", Object.class, new Class[] {});
-                me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
-                
-            /*    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
-                                                                                                    "adf.mf.api.amx.doNavigation", new Object[] { "refined_Services" });*/
-                
-            }
-            else {
-                
-                boolean isError=false;
-                String error="";
-                String query="";                
-                ValueExpression ve5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.webURL}", String.class);
-                String webURL=(String)ve5.getValue(AdfmfJavaUtilities.getAdfELContext());
-                
-                if(webURL!=null && !webURL.equalsIgnoreCase(""))
-                {
-                    query=query+"&url="+URLEncoder.encode(webURL);
-                    ValueExpression veb1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.formWebURL}", String.class);
-                    veb1.setValue(AdfmfJavaUtilities.getAdfELContext(),query);
-                }
-                else
-                {
-                if(itemCategory==null || itemCategory.equalsIgnoreCase("")){
-                isError=true;
-                }
-
-                
-                
-                if(!isError)
-                {
-                        Alias al=(Alias)AliasList.s_jobs.get((Integer.parseInt(itemCategory)));
-                        System.out.println("Alias-->"+al.getOracleId()+al.getIndixId()+" "+al.getOracleCategotySeg());
-                        
-                    String sample= al.getIndixId();
-                    String sample1 ="&categoryId="+sample;
-                    System.out.println("*******"+ sample1);
-                    String aliasIndixValues = "";
-                    
-                    if(!sample1.equals("")) {
-                      
-                      if(sample1.contains("[")) {
-                          String spec1 = al.getIndixId().substring(0,al.getIndixId().length()-2);
-                          String value1= spec1.replaceAll("\\[\"", "&categoryId=");
-                          aliasIndixValues = value1.replaceAll("\",\"", "&categoryId=");
-                          //System.out.println("<<Hello>>"+aliasIndixValues);
-                      }
-                      else if(sample1.contains("null")) {
-                          aliasIndixValues = sample1;
-                          //System.out.println("<<null>>"+aliasIndixValues);
-                      }
-                      else {
-                          String spec1 = al.getIndixId();
-                          aliasIndixValues ="&categoryId="+spec1;
-                         // System.out.println("<<Hello>>"+aliasIndixValues);
-                      }
-                        ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
-                        ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),aliasIndixValues);
-                        ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
-                        ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),al.getOracleCategotySeg());
-                        ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
-                        ve8.setValue(AdfmfJavaUtilities.getAdfELContext(),itemCategory);
-                        ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
-                        vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
-                        
-                    }
-                        
-                }
-                else {
-                    ValueExpression ve7 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasIndixItemcategories}", String.class);
-                    ve7.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                    ValueExpression ve6 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.aliasOracleItemcategories}", String.class);
-                    ve6.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                    ValueExpression ve8 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.aliasCategorieEmpty}", String.class);
-                    ve8.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
-                     ValueExpression vf1 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.displayFilterCount}", String.class);
-                     vf1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
-                }
-
-                }
-                
-                ValueExpression vec3 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.searchValue}", String.class);
-                vec3.setValue(AdfmfJavaUtilities.getAdfELContext(),itemDescription);
-                ValueExpression ve91 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.rdItemType}", String.class);
-                ve91.setValue(AdfmfJavaUtilities.getAdfELContext(), "goods");
-
-                AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
-                                                                                                    "adf.mf.api.amx.doNavigation", new Object[] { "quickSearch_default" });
-                doSearch();
-                
-            }
-            
-                }
-            else {
-                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
-                                                                                      AdfmfJavaUtilities.getFeatureName(),
-                                                                                      "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
-                                                                                      "Item Type is mandatory",
-                                                                                      null,
-                                                                                      null }); 
-
-                }
-            
-        }
-        catch(Exception e){
-                    e.printStackTrace();    
-        }
+        
+        MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.searchFromFreeForm.execute}", Object.class, new Class[] {});
+        me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
        
     }
 

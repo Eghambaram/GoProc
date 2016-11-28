@@ -213,7 +213,7 @@
             </amx:facet>
             <amx:facet name="bottom">
                 <amx:panelGroupLayout id="pgl1" halign="center" valign="middle">
-                <amx:outputText value="GoProcure v 1.01 (Drop:62)" id="fdr" inlineStyle="text-align: center; font-style: italic; font-size:small; color:#0E4876; background-color:transparent;"/>
+                <amx:outputText value="GoProcure v 1.01 (Drop:63)" id="fdr" inlineStyle="text-align: center; font-style: italic; font-size:small; color:#0E4876; background-color:transparent;"/>
            </amx:panelGroupLayout>
             </amx:facet>
       </amx:panelStretchLayout>

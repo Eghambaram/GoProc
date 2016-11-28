@@ -117,7 +117,7 @@
                                                     id="ot7"/>
                                     <amx:commandLink id="commandLink112" action="#{RequesitionRest.showRFQDetails}" styleClass="adfmf-commandLink-noUnderline">
                                       <amx:outputText value="#{row.rfqNum}"
-                                                    inlineStyle="color:#0E4876;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
+                                                    inlineStyle="font-weight:bold;color:#0E4876;font-size: 14px; clear: both;font-family: Arial, sans-serif;"
                                                     id="ot8"/>
                                                     <amx:setPropertyListener from="#{row.rfqHeaderId}"
                                                              to="#{pageFlowScope.requisitionRfqHeaderId}" type="action"

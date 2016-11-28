@@ -35,9 +35,30 @@ public class ItemTypeList {
             ValueExpression ve1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.ItemType}", String.class);
             String itemType=(String)ve1.getValue(AdfmfJavaUtilities.getAdfELContext());
             System.out.println("Item Type List"+ItemTypeList.itemType_List.size());
+            
+            ValueExpression ve5 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.RequestTypeForm}", String.class);
+            String reqType=(String)ve5.getValue(AdfmfJavaUtilities.getAdfELContext());
+
 
             ItemType it=(ItemType)ItemTypeList.itemType_List.get((Integer.parseInt(itemType)));
             System.out.println("Item Type-->"+it.getLineTypeCode());
+            if(reqType!=null && !reqType.equalsIgnoreCase(""))
+            {
+            RequestType rt=(RequestType)RequestTypeList.req_List.get((Integer.parseInt(reqType)));
+            System.out.println("Req Type-->"+rt.getLookupCode()+rt.getMeaning());
+                
+                if(rt.getMeaning().equalsIgnoreCase("Others") && it.getLineTypeCode().equalsIgnoreCase("Goods")){
+
+                    ValueExpression veb1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showWeb}", String.class);
+                    veb1.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
+                }
+                else{
+                    ValueExpression veb1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showWeb}", String.class);
+                    veb1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
+                    
+                }
+            
+            }
             
             if(it.getLineTypeCode().equalsIgnoreCase("Services - Fixed Price")) {
                 ValueExpression vee1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.quantity}", String.class);
@@ -78,7 +99,7 @@ public class ItemTypeList {
                        ValueExpression ve24 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.showOthers}", String.class);
                        ve24.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
                        ValueExpression veb1 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.showWeb}", String.class);
-                       veb1.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
+                       veb1.setValue(AdfmfJavaUtilities.getAdfELContext(),"false");
 
                    }
                    else if(rt.getMeaning().equalsIgnoreCase("Sole Source"))

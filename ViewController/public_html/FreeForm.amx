@@ -65,7 +65,7 @@
     </amx:facet>
     <amx:facet name="primary">
             <amx:commandLink id="cl2" actionListener="#{bindings.toggleSpringboard.execute}" >
-                <amx:image source="/images/logo.png" id="i3"/>
+                <amx:image source="/images/menu.png" id="i3"/>
             </amx:commandLink>
         </amx:facet>
       <amx:facet name="secondary">

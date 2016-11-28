@@ -2187,6 +2187,10 @@ public class RequesitionRest {
                 if(loc.getCode().trim().equalsIgnoreCase(locDeliver.trim()))     {
                     locationId=loc.getId();
                     System.out.println("Match occurs location id is "+locationId);
+                    
+                    ValueExpression loc_code = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to_locationCode}", String.class);
+                    loc_code.setValue(AdfmfJavaUtilities.getAdfELContext(),loc.getCode());
+                    
                     ValueExpression ve49 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_deliver_to}", String.class);
                     ve49.setValue(AdfmfJavaUtilities.getAdfELContext(),String.valueOf(k)); 
                 }
@@ -2368,7 +2372,8 @@ public class RequesitionRest {
             AdfmfContainerUtilities.resetFeature("mp.Requisition",false);
             AdfmfContainerUtilities.resetFeature("mp.Quotation",false);
             AdfmfContainerUtilities.resetFeature("mp.Notification",false);    
-            
+            ValueExpression ove113 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.unreadCount}", String.class);
+            ove113.setValue(AdfmfJavaUtilities.getAdfELContext(),"");
         }
             else {
                 AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),

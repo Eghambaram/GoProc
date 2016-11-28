@@ -145,8 +145,11 @@
                   InstanceName="data.UOMList.dataProvider"/>
     <methodAction id="submitFreeForm" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="submitFreeForm" IsViewObjectMethod="false" DataControl="UOMList"
-                  InstanceName="data.UOMList.dataProvider"/>                  
-
+                  InstanceName="data.UOMList.dataProvider"/>
+                  
+    <methodAction id="searchFromFreeForm" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="searchFromFreeForm" IsViewObjectMethod="false" DataControl="UOMList"
+                  InstanceName="data.UOMList.dataProvider"/>
      <methodAction id="showSearchButton" RequiresUpdateModel="true" Action="invokeMethod" MethodName="showSearchButton"
                   IsViewObjectMethod="false" DataControl="ItemTypeList" InstanceName="data.ItemTypeList.dataProvider"/>
      <methodAction id="itemTypeValues" RequiresUpdateModel="true" Action="invokeMethod" MethodName="itemTypeValues"

@@ -157,7 +157,7 @@
             <amx:tableLayout id="tl451" width="100%" halign="center">
             <amx:rowLayout>
                 <amx:cellFormat id="cfz16a" halign="start" valign="top" columnSpan="3">
-                    <amx:outputText value="Type of Contract" id="ot6" styleClass="adfmf-listItem-output"/>
+                    <amx:outputText value="Contract Type" id="ot6" styleClass="adfmf-listItem-output"/>
                 </amx:cellFormat>
                 </amx:rowLayout>
 
