@@ -470,10 +470,24 @@ word-break: break-word;
 
 .amx-inputText.adfmf-inputText-newStyle .field-value input,
 .amx-inputText.adfmf-inputText-newStyle .field-value textarea {
-word-break: break-word;
+/*word-break: break-word;*/
+box-sizing: border-box;
+ -webkit-appearance: none;
+  outline: none;
+  border: none;
   overflow: hidden;
   width: 100%;
+   width: 100%;
+  padding: 12px 10px 12px 10px;
+  font-size: 17px;
   background-color: #F7F3F3;
   text-align: left;
   font-weight: normal;
+}
+.amx-goLink:active,
+.amx-commandLink:active {
+  color: #0572CE;
+   background-color: transparent;
+  /*background-color: #000;*/
+  border-radius: 2px;
 }

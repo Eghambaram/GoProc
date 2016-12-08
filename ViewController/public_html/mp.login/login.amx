@@ -67,7 +67,7 @@
                         <amx:image id="zimage2" source="/images/user.png"/>
                     </amx:cellFormat> -->
                     <amx:cellFormat id="zcf7" width="100%" halign="start">
-                    <amx:inputText  id="zrez8i2t1" simple="true" value="#{applicationScope.user_name}" hintText="User Name" styleClass="adfmf-inputText-newStyle"/>
+                    <amx:inputText  id="zrez8i2t1"  simple="true" value="#{applicationScope.user_name}" hintText="User Name" styleClass="adfmf-inputText-newStyle"/>
                     </amx:cellFormat>
                   </amx:rowLayout>
                   <amx:rowLayout id="yrl6">

@@ -1921,8 +1921,8 @@ public class UOMList {
             if(categoryId!=0){
         
       
-      //String  url = "https://api.indix.com/v2/offersPremium/products?countryCode=US"+categoryRef+"facetBy=storeId&availability=IN_STOCK&lastRecordedIn=30&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
-       String  url = "https://api.indix.com/v2/universal/products?countryCode=US"+categoryRef+"facetBy=storeId&availability=IN_STOCK&lastRecordedIn=30&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+      String  url = "https://api.indix.com/v2/offersPremium/products?countryCode=US"+categoryRef+"facetBy=storeId&availability=IN_STOCK&lastRecordedIn=30&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+      //String  url = "https://api.indix.com/v2/universal/products?countryCode=US"+categoryRef+"facetBy=storeId&availability=IN_STOCK&lastRecordedIn=30&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
         //quey indix for the category and facet by suppliers                                        
        URL obj = new URL(url);
      HttpURLConnection   con = (HttpURLConnection) obj.openConnection();
@@ -1941,7 +1941,7 @@ public class UOMList {
              }
          in.close();
          //print result
-            System.out.println(response1.toString());
+            //System.out.println(response1.toString());
         resp=new JSONObject(response1.toString());
         output=resp.getJSONObject("result");
                 String result_size=output.getString("count");
@@ -1950,6 +1950,14 @@ public class UOMList {
         JSONObject jsobj=output.getJSONObject("facets");
         
          JSONArray supplierArr=jsobj.getJSONArray("storeId");
+           for(int i=0;i<supplierArr.length();i++) {
+                      JSONObject jsObj=(JSONObject)supplierArr.get(i);
+                      suppliers.add(jsObj.getString("name"));
+                     System.out.println("Supplier"+suppliers.get(i)); 
+                  }
+                  
+                  
+                      
          JSONArray resArr=output.getJSONArray("products");
         // System.out.println("resArr.length() "+resArr.length());
                 
@@ -1988,90 +1996,20 @@ public class UOMList {
                                    String imageUrl=offer.getString("imageUrl");
                                    String seller=offer.getString("seller");
                                String unitPrice=offer.getString("salePrice");
-                               System.out.println("*-*-*-Image Url is "+imageUrl+"*-*-*-Seller Is"+seller+"*-*-*-*-Seller Price"+unitPrice);
+                               //System.out.println("*-*-*-Image Url is "+imageUrl+"*-*-*-Seller Is"+seller+"*-*-*-*-Seller Price"+unitPrice);
                                String showSeller="true";
                                if (seller.equalsIgnoreCase("")) {
                                                        showSeller="false";
                                                    }
                                    
-                               JSONObject attValues=offer.getJSONObject("attributes");
-                               ItemsList.Specification.clear();
-                               String showAttrib="true";
-                               String showSpec="true";
-                               String resultVal = "";
-                               String spec = "";
-                                  System.out.println(offer+"======>num===>"+attValues.length());
-                               if (attValues.length() == 0) {
-                                  System.out.println("Length 0");
-                                  showAttrib = "false";
-                                  showSpec="false";
-                                  Specification.clear();
-                                  /*BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");
-                                  vex.refresh();*/
-                               }else{
-                                 
-                                 Iterator<?> att = attValues.keys(); 
-                                 if(attValues.length() == 1){
-                                     StringBuffer sb2 = new StringBuffer();
-                                     System.out.println("Length 1");
-                                     showAttrib = "true";
-                                     showSpec="false";
-                                     while(att.hasNext()) {
-                                         String attributeKey = (String)att.next();
-                               //                                                                          System.out.println("JSON Key Single---------------->"+attributeKey);
-                                         JSONArray attributeValues = attValues.getJSONArray(attributeKey);
-                               //                                                                          System.out.println("JSON Value Single ---------------->"+attributeValues);
-                                         resultVal =attributeKey+" : "+attributeValues.getString(0);
-                                         
-                                         System.out.println("");
-                                         ItemsList.Specification.add(resultVal+"#");
-                               //                                                                          System.out.println("KEY&Value---------------->"+resultVal);
-                               //                                                                          System.out.println("Single Attributes---------------->"+Specification);
-                                         sb2.append(resultVal+"#,");
-                                     }
-                                     /*BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");
-                                     vex.refresh();*/
-                               spec = sb2.toString();
-                               System.out.println("Value at 1===> "+spec);
-                               Specification.clear();
-                               }else{
-                               System.out.println("Length >1");
-                               StringBuffer sb2 = new StringBuffer();
-                               showAttrib = "false";
-                               showSpec="true";
-                               while(att.hasNext()) {
-                                   String attributeKey = (String)att.next();
-                                   JSONArray attributeValues = attValues.getJSONArray(attributeKey);
-                                   resultVal =attributeKey+" : "+attributeValues.getString(0);
-                                   ItemsList.Specification.add(resultVal+"#");
-                                   /*
-                                   for(int a=0; a < attributeValues.length(); a++) {
-                                       resultVal =attributeKey+" : "+attributeValues.getString(a);
-                                       ItemsList.Specification.add(resultVal);    
-                               //                                                                              System.out.println("MultiAttribute Json<------------->"+attributeKey+"  :  "+resultVal);
-                                   }
-                                   */
-                                 sb2.append(resultVal+"#,");
-                                   
-                               //                                                                          System.out.println("Multi-Attribute LIST <------------->"+spec);
-                              /* BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");
-                               vex.refresh();*/
-                               }
-                               //spec = Specification.toString();
-                               spec = sb2.toString();
-                               System.out.println("Value at >1===> "+spec);
-                               Specification.clear();
-                               }  
-                                
-                                
-                                
-                               }
-                              
+                            // new Change in End URL
+                            
                             
                                
                     Item j = new Item(poNo, vendorName, vendorSiteCode, productCategory, productTitle, unitPrice,imageUrl,"/images/uncheck.png","","Each",String.valueOf(randomInt),"-1","-1",showDiverSeImage,diverseImageURL,pageNo,indixCategoryId,"","","","","","");
                     ItemsList.items_ref.add(j); 
                   //   System.out.println("***********");
+                                   
                                }
                 }
              
@@ -2079,20 +2017,22 @@ public class UOMList {
                   }
         
         
-          resultSize=output.getJSONArray("products").length();
         
-        for(int i=0;i<supplierArr.length();i++) {
+          //resultSize=output.getJSONArray("products").length();
+        
+       /* for(int i=0;i<supplierArr.length();i++) {
             JSONObject jsObj=(JSONObject)supplierArr.get(i);
             suppliers.add(jsObj.getString("name"));
         }
         
         
         
-            }
+         
             else{
                 suppliers=new ArrayList<String>(); 
                 resultSize=0;
-            }
+            }*/
+       }
             }
         //make RFQ with suppliers 
             System.out.println("Supplier Size is ========>"+suppliers.size());
@@ -2135,7 +2075,7 @@ public class UOMList {
             sb.append("},");
             
             String header_value = sb.substring(0, sb.length() - 1).concat("]");
-            System.out.println("header_value===============================" + header_value);
+            //System.out.println("header_value===============================" + header_value);
             
             
             ValueExpression ve191 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.uom1}", String.class);
@@ -2236,7 +2176,7 @@ public class UOMList {
             }
                
             String vendor_value = sb.substring(0, sb.length() - 1).concat("]");
-            
+            System.out.println("Vendor_value===============================" + vendor_value);
         
            restServiceAdapter = Model.createRestServiceAdapter();
             // Clear any previously set request properties, if any
@@ -2490,15 +2430,24 @@ public class UOMList {
             sb.append("    \"SEARCH_TYPE\":\"R\",\n");
             sb.append("    \"SEARCH_TEXT\":\""+productTitle+"\",\n");
             sb.append("    \"RESULT_COUNT\":\""+resultSize+"\",\n");
+         
             try{
                 if(!oracle_count.contains("{")){
-            if(Integer.parseInt(oracle_count)>0) {
-            sb.append("    \"REQUEST_TYPE\":\"RFQ\",\n");
-            }
-            else{
-            sb.append("    \"REQUEST_TYPE\":\"MANUAL_TRIAGE\",\n");
-            }
-            }
+                    System.out.println("Else if Oracle Results Count-->"+oracle_count);
+                if(Integer.parseInt(oracle_count)>0) {
+                  System.out.println("Else if Oracle Results Count-->"+oracle_count);
+               sb.append("    \"REQUEST_TYPE\":\"RFQ\",\n");
+               }
+                else{
+                    System.out.println("Oracle Results Count-->"+oracle_count);
+                    sb.append("    \"REQUEST_TYPE\":\"MANUAL_TRIAGE\",\n");
+                }
+                }
+                else{
+                    System.out.println("Oracle Results Count-->"+oracle_count);
+                    sb.append("    \"REQUEST_TYPE\":\"MANUAL_TRIAGE\",\n");
+                }
+            
             }
             catch(Exception e){
                     e.printStackTrace();

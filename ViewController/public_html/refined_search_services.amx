@@ -2,6 +2,7 @@
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt" xmlns:notification="http://xmlns.ateam.com/notification">
     <amx:loadingIndicatorBehavior id="lib1" failSafeDuration="100000000000000"/>
+    <amx:navigationDragBehavior id="ndb1" direction="back" action="__back"/>
     <amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
     <amx:verbatim id="v3">
 
@@ -81,7 +82,7 @@
         <amx:facet name="secondary">
             <amx:commandLink id="cb2"   actionListener="#{Rest.showCartItems}">
                 <notification:badge id="badge" class="notification-icon" unread="#{applicationScope.unreadCount}"/>
-                <amx:image id="i2" source="/images/Cart-24.png" shortDesc="Springboard Image"
+                <amx:image id="i2" source="/images/cartButton.png" shortDesc="Springboard Image"
                            styleClass="admf-cart-design"/>
             </amx:commandLink>
         </amx:facet>

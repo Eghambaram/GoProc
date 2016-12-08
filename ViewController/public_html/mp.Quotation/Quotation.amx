@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+          <amx:navigationDragBehavior id="ndb1" direction="back" action="#{bindings.toggleSpringboard.execute}"/>
   <amx:panelPage id="pp1" inlineStyle="background-color: #F7F3F3;">
 <amx:verbatim id="v3">
         <![CDATA[
@@ -116,7 +117,7 @@
                   </amx:tableLayout>
         
         </amx:panelGroupLayout>
-        <amx:panelGroupLayout id="pgl2" inlineStyle="background-color: #0E4876;">
+        <amx:panelGroupLayout id="pgl2" inlineStyle="background-color: #0E4876; margin:10px">
           <amx:tableLayout id="tl1" inlineStyle="background-color: #0E4876;padding:5px;" width="100%">
             <amx:rowLayout id="rl1">
               <amx:cellFormat id="cf1" halign="start" valign="middle" width="30%">
@@ -133,7 +134,7 @@
       
       <amx:facet name="center">
 <!--     <amx:refreshContainer id="rc2" pullText="Pull To Refresh" actionListener="#{RequesitionRest.getRFQ}"/>-->
-  <amx:panelGroupLayout id="pgl4" inlineStyle="background-color: #FFFFFF;">
+  <amx:panelGroupLayout id="pgl4" inlineStyle="background-color: #FFFFFF; margin-left:10px;margin-right:10px">
           <amx:listView var="row" value="#{bindings.RFQ.collectionModel}" fetchSize="#{bindings.RFQ.rangeSize}"
                         selectedRowKeys="#{bindings.RFQ.collectionModel.selectedRow}"
                         initialScrollRowKeys="#{bindings.RFQ.collectionModel.selectedRow}"

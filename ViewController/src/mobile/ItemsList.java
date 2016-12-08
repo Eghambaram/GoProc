@@ -139,31 +139,44 @@ public class ItemsList {
         
         public void selectItem(){
             System.out.println("Enter into selected List");
+            ValueExpression ve_row = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.itemRowId}", String.class);
+            String itemRowId=(String)ve_row.getValue(AdfmfJavaUtilities.getAdfELContext());
             BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");  
+            System.out.println("getTotal Row Count"+vex.getTotalRowCount());
+            for(int i=0;i<vex.getTotalRowCount();i++)
+            {
+            vex.setCurrentIndex(i);
             Item item=(Item)vex.getDataProvider();
-            if(item.getSource().equalsIgnoreCase("Contracted")){
-              System.out.println("Source of the item ------>"+item.getSource());
-                doSelectItem();
+                System.out.println("Row ID"+itemRowId+"==="+item.getRowId()+"==index"+i);
+                if(itemRowId.equalsIgnoreCase(item.getRowId())) {
+                    if(item.getSource().equalsIgnoreCase("Contracted")){
+                      System.out.println("Source of the item ------>"+item.getSource());
+                        doSelectItem();
+                    }
+                    else{
+                    System.out.println("Enter into else part selected List");
+                        System.out.println("Source of the item ------>"+item.getSource());   
+                    ValueExpression isContractedItemPresent = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.isContractedItemPresent}", String.class);
+                    System.out.println("Contract items present------>"+isContractedItemPresent);
+                    String isContractedAvailable=(String)isContractedItemPresent.getValue(AdfmfJavaUtilities.getAdfELContext());
+                    if(isContractedAvailable.equalsIgnoreCase("true") && item.getChecked().equalsIgnoreCase("/images/uncheck.png")){
+                    System.out.println("ALERT----->"+isContractedAvailable);
+                        System.out.println("Contract items present------>"+isContractedItemPresent);
+                        AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
+                                                                                   "contracted_alert",
+                                                                                   new Object[] { });
+                    }
+                    else{
+                        System.out.println("Enter into inside else part selected List");
+                        System.out.println("Source of the item ------>"+item.getSource());
+                        doSelectItem();
+                    }
+                    }
+                    
+                }
             }
-            else{
-            System.out.println("Enter into else part selected List");
-                System.out.println("Source of the item ------>"+item.getSource());   
-            ValueExpression isContractedItemPresent = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.isContractedItemPresent}", String.class);
-            System.out.println("Contract items present------>"+isContractedItemPresent);
-            String isContractedAvailable=(String)isContractedItemPresent.getValue(AdfmfJavaUtilities.getAdfELContext());
-            if(isContractedAvailable.equalsIgnoreCase("true") && item.getChecked().equalsIgnoreCase("/images/uncheck.png")){
-            System.out.println("ALERT----->"+isContractedAvailable);
-                System.out.println("Contract items present------>"+isContractedItemPresent);
-                AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
-                                                                           "contracted_alert",
-                                                                           new Object[] { });
-            }
-            else{
-                System.out.println("Enter into inside else part selected List");
-                System.out.println("Source of the item ------>"+item.getSource());
-                doSelectItem();
-            }
-            }
+            
+           
         }
         
         
@@ -227,54 +240,109 @@ public class ItemsList {
             
             System.out.println("Outside Try Block -- Default Cost Center Value-->"+default_cost_center+"Natural Account-->"+default_natural_account+"Default Deliver To Location"+default_deliver_to_location);
             
+        ValueExpression ve_row = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.itemRowId}", String.class);
+        String itemRowId=(String)ve_row.getValue(AdfmfJavaUtilities.getAdfELContext());
+        
+        try{
+            if(itemType!=null && !itemType.equalsIgnoreCase("")) {
             BasicIterator vex = (BasicIterator) AdfmfJavaUtilities.getELValue("#{bindings.assets5.iterator}");  
-            Item item=(Item)vex.getDataProvider();
+            
+                for(int i=0;i<vex.getTotalRowCount();i++)
+                {
+                vex.setCurrentIndex(i);
+                Item item=(Item)vex.getDataProvider();
+                    System.out.println("Row ID"+itemRowId+"==="+item.getRowId()+"==index"+i);
+                    if(itemRowId.equalsIgnoreCase(item.getRowId())) {
+                        if(item.getRowId().equalsIgnoreCase(itemRowId)){
+                            System.out.println("Selected Row ID-->"+itemRowId);
+                            System.out.println("Attribute Values"+item.getAttrib());
+                            System.out.println("Specification Values "+item.getSpec());         
+                            Random randomGenerator = new Random();
+                            int randomInt = randomGenerator.nextInt(1000000000);    
+                            String specList="";
+                            if(item.getSpec()!=""){
+                                System.out.println("Specification Values=====> "+item.getSpec()); 
+                                String spec0 =item.getSpec().substring(0,item.getSpec().length()-2);
+                                String spec1 = spec0.replaceAll("\"", "\\\\\"");                
+                                String spec2 = spec1.replaceAll(":", "\",\"ATTRIBUTE_VALUE\" : \"");
+                                String spec3 = spec2.replaceAll("#,", "\"},{\"ATTRIBUTE_NAME\" : \"");
+                                String spec ="{\"ATTRIBUTE_NAME\" : \""+spec3+"\"}";
+                            /*
+                                {"ATTRIBUTE_NAME" : "soapui_24jun16_name1","ATTRIBUTE_VALUE" : "soapui_24jun16_value2"}
+                            */
+                                /*:--","ATTRIBUTE_VALUE" : "
+                                * | "},{"ATTRIBUTE_NAME" : "*/
+                                //String spec = item.getSpec().replaceAll("#,", " | ").replaceAll("\"", "\\\\\"");
+                                
+                                //specList = spec.substring(0,spec.length()-2);
+                                specList = spec;
+                                System.out.println("After replace Spec Values=====> "+specList); 
+                                
+                                System.out.println("After Attrib Replace=====> "+specList); 
+                            }
+                            else if(item.getAttrib()!="") {
+                                String spec = item.getAttrib();
+                                specList = spec.substring(0,spec.length()-2);
+                                System.out.println("After Attrib=====> "+specList); 
+                            }
+                            SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,default_cost_natural_account,"goods","","","","","","","","","","","","","","");
+                            SelectedItemsList.s_jobs.add(selectItem);
+                        }
+                    }
+                }
+          
+            int count=SelectedItemsList.s_jobs.size();
+                                ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.unreadCount}", String.class);
+                                ve4.setValue(AdfmfJavaUtilities.getAdfELContext(), String.valueOf(count));
+                                AdfmfJavaUtilities.flushDataChangeEvent();
+                                   AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
+                                                                                              "displayAlert",
+                                                                                              new Object[] {}); 
+            
+            vex.refresh();
+            }
+            else {
+                
+                    AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
+                                                             AdfmfJavaUtilities.getFeatureName(),
+                                                             "adf.mf.api.amx.addMessage", new Object[] {AdfException.ERROR,
+                                                             "Item Type is mandatory and cannot be empty.",
+                                                             null,
+                                                             null });  
+                
+
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+            /*
             GenericType row= (GenericType)vex.getCurrentRow();
                                 
             
             String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             
-            Random randomGenerator = new Random();
-            int randomInt = randomGenerator.nextInt(1000000000);
+            
             
             
 // New One--
-            ValueExpression ve_row = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.itemRowId}", String.class);
-            String itemRowId=(String)ve_row.getValue(AdfmfJavaUtilities.getAdfELContext());
-            System.out.println("Selected Row ID-->"+itemRowId);
-            System.out.println("Attribute Values"+item.getAttrib());
-            System.out.println("Specification Values "+item.getSpec());         
             
-            String specList="";
-            if(item.getSpec()!=""){
-                System.out.println("Specification Values=====> "+item.getSpec()); 
-                String spec0 =item.getSpec().substring(0,item.getSpec().length()-2);
-                String spec1 = spec0.replaceAll("\"", "\\\\\"");                
-                String spec2 = spec1.replaceAll(":", "\",\"ATTRIBUTE_VALUE\" : \"");
-                String spec3 = spec2.replaceAll("#,", "\"},{\"ATTRIBUTE_NAME\" : \"");
-                String spec ="{\"ATTRIBUTE_NAME\" : \""+spec3+"\"}";
-/*         
-                {"ATTRIBUTE_NAME" : "soapui_24jun16_name1","ATTRIBUTE_VALUE" : "soapui_24jun16_value2"}
-*/
-                /*:--","ATTRIBUTE_VALUE" : "
-                * | "},{"ATTRIBUTE_NAME" : "*/
-                //String spec = item.getSpec().replaceAll("#,", " | ").replaceAll("\"", "\\\\\"");
-                
-                //specList = spec.substring(0,spec.length()-2);
-                specList = spec;
-                System.out.println("After replace Spec Values=====> "+specList); 
-                
-                System.out.println("After Attrib Replace=====> "+specList); 
+            
+            
+            
+            
+            
+            SelectedItemsList.s_jobs.add(selectItem);
+            int count=SelectedItemsList.s_jobs.size();
+            if (count>0){
+                              ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.unreadCount}", String.class);
+                              ve4.setValue(AdfmfJavaUtilities.getAdfELContext(), String.valueOf(count));
+                              AdfmfJavaUtilities.flushDataChangeEvent();
+                              AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureId(),
+                                                                                            "displayAlert",
+                                                                                            new Object[] {});
             }
-            else if(item.getAttrib()!="") {
-                String spec = item.getAttrib();
-                specList = spec.substring(0,spec.length()-2);
-                System.out.println("After Attrib=====> "+specList); 
-            }
-            
-            
-            SelectedItem selectItem=new SelectedItem(item.getPoNo(), item.getVendorName(), item.getVendorSiteCode(), item.getProductCategory(), item.getProductTitle(), item.getUnitPrice(), item.getImageUrl(), "true", item.getSource(), item.getUom(), "1", default_deliver_to_location, "",item.getUnitPrice(),String.valueOf(randomInt),default_cost_center,item.getRowId(),item.getIndixCategoryId(),specList,default_natural_account,default_cost_natural_account,"goods","","","","","","","","","","","","","","");
-        
             
             System.out.println("((Select Item Values)))-->"+selectItem.getRowid());
             
@@ -313,7 +381,7 @@ public class ItemsList {
                     
                 }
             System.out.print("After =========>"+SelectedItemsList.items_selected.size());
-            vex.refresh();
+            vex.refresh();*/
         }
         
         

@@ -152,7 +152,7 @@
                        <amx:tableLayout width="100%" id="atl2" shortDesc="table">
                             <amx:rowLayout id="arl3">
                                 <amx:cellFormat width="40px" halign="center" id="acf1" shortDesc="cell" inlineStyle="border-bottom: 1px solid #FFFFFF;">
-                                    <amx:image source="/images/orderstatus1.png" id="ai2"/>
+                                    <amx:image source="/images/orderstatus.png" id="ai2"/>
                                 </amx:cellFormat>
                                 <amx:cellFormat width="100%" height="43px" id="acf3" shortDesc="cell" inlineStyle="border-bottom: 1px solid #C8C8C8;">
                                     <amx:outputText value="Check Order Status" id="aot1"/>
@@ -213,7 +213,7 @@
             </amx:facet>
             <amx:facet name="bottom">
                 <amx:panelGroupLayout id="pgl1" halign="center" valign="middle">
-                <amx:outputText value="GoProcure v 1.01 (Drop:63)" id="fdr" inlineStyle="text-align: center; font-style: italic; font-size:small; color:#0E4876; background-color:transparent;"/>
+                <amx:outputText value="GoProcure v 1.01 (Drop:64)" id="fdr" inlineStyle="text-align: center; font-style: italic; font-size:small; color:#0E4876; background-color:transparent;"/>
            </amx:panelGroupLayout>
             </amx:facet>
       </amx:panelStretchLayout>

@@ -2,6 +2,7 @@
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt" xmlns:notification="http://xmlns.ateam.com/notification">
   <amx:loadingIndicatorBehavior id="lib1" failSafeDuration="20000"/>
+  <amx:navigationDragBehavior id="ndb1" direction="back" action="#{bindings.toggleSpringboard.execute}"/>
      <amx:panelPage id="pp1" inlineStyle="background-color: #F7F3F3;">
         <amx:verbatim id="v3">
 
@@ -183,7 +184,7 @@
         <amx:facet name="secondary">
             <amx:commandLink id="cl1"  actionListener="#{Rest.showCartItems}">
                 <notification:badge id="badge" class="notification-icon" unread="#{applicationScope.unreadCount}"/>
-                <amx:image id="i2" source="/images/Cart-24.png" shortDesc="Springboard Image"
+                <amx:image id="i2" source="/images/cartButton.png" shortDesc="Springboard Image"
                            styleClass="admf-cart-design"/>
             </amx:commandLink>
            
@@ -193,23 +194,34 @@
         <amx:panelGroupLayout id="pgl1">
                  <amx:tableLayout id="ztl6" width="100%" halign="start">
                   <amx:rowLayout id="zrl6">
-                    <amx:cellFormat id="zcf7" width="75%" halign="start">
+                    <amx:cellFormat id="zcf7" width="50%" halign="start">
                     <amx:inputText  value="#{pageFlowScope.searchValue}" simple="true"  hintText="Search for Products, Brands and More " keyboardDismiss="search" id="inputText2"/>
                     </amx:cellFormat>
-                    <amx:cellFormat id="zcf3" width="15%" halign="start">
-                    <amx:commandButton text="Go" id="cb1" actionListener="#{Rest.performSearch}" styleClass="adfmf-commandButton-style"/>
+                    <amx:cellFormat id="zcf3" width="15%" halign="center">
+                    <amx:commandButton text="Go" id="cb1" actionListener="#{Rest.performSearch}" styleClass="adfmf-commandButton-style" inlineStyle="width:100%"/>
                     </amx:cellFormat>
-                    <amx:cellFormat id="zcf124"  width="10%" halign="center">
+                    <amx:cellFormat id="cf25" width="2px" halign="start"/>
+                    <amx:cellFormat id="cf23" width="35%" halign="center">
+                    <amx:panelGroupLayout id="pgl5" layout="horizontal">
+                    <amx:commandButton text="Categories" id="cb5"  actionListener="#{Rest.setFilterValue}" styleClass="adfmf-commandButton-style" inlineStyle="width:100%">
+                                 <amx:showPopupBehavior popupId="popup-filter" type="action" align="cornerTopEnd" alignId="pp1"/>
+                                 </amx:commandButton>
+                                
+                                <amx:outputText value=" •" id="ot8" inlineStyle="color: #0E4876; font-size:14px;" rendered="#{applicationScope.displayFilterCount}"/>
+                                </amx:panelGroupLayout>
+                            </amx:cellFormat>
+                    <!-- <amx:cellFormat id="zcf124"  width="10%" halign="center">
                          <amx:commandLink rendered="true" id="zcommandLink1"  actionListener="#{Rest.setFilterValue}">
                          
                         <amx:image id="zimage2" source="/images/filter.png"/>
-                                 <amx:showPopupBehavior popupId="popup-filter" type="action" align="cornerTopEnd" alignId="pp1"/>
+                
                     </amx:commandLink>
                                 
-                            </amx:cellFormat>
+                            </amx:cellFormat> 
                             <amx:cellFormat id="zqcf124"  width="5%" halign="start" rendered="#{applicationScope.displayFilterCount}">
-                    <amx:outputText value="(1)" id="ot8" inlineStyle="color: #0E4876;"/>
+                    
                     </amx:cellFormat>
+                    -->
                   </amx:rowLayout>
                   </amx:tableLayout>
         </amx:panelGroupLayout>
@@ -254,23 +266,23 @@
                       showMoreStrategy="autoScroll" bufferStrategy="viewport" 
                       id="lv1">
 <!--inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #D1D1D3;" actionListener="#{Rest.selectItems}"-->
-            <amx:listItem id="li1"  actionListener="#{Rest.selectItems}"  showLinkIcon="false" inlineStyle="padding:2px">
+            <amx:listItem id="li1"  showLinkIcon="false" inlineStyle="padding:2px">
           <amx:tableLayout id="tl1" width="100%">
             <amx:rowLayout id="rl1">
-              <amx:cellFormat id="cf1"  width="60px" halign="center" valign="top">
+              <amx:cellFormat id="cf1"  width="60px" halign="center" valign="middle">
                 <amx:tableLayout id="tl7">
-                  <amx:rowLayout id="rl13">
+         <!--         <amx:rowLayout id="rl13">
                     <amx:cellFormat id="cf3" width="60px" halign="center" valign="top">
                     <amx:commandLink id="cl5">
                 <amx:image source="#{row.checked}" id="i5"/>
-               <!-- <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}" type="action"/>
+               <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}" type="action"/>
                 <amx:setPropertyListener from="#{row.vendorName}" to="#{pageFlowScope.vendorName}" type="action"/>
-                <amx:setPropertyListener from="#{row.rowId}" to="#{pageFlowScope.itemRowId}" type="action"/>-->
+                <amx:setPropertyListener from="#{row.rowId}" to="#{pageFlowScope.itemRowId}" type="action"/>
             </amx:commandLink>
             </amx:cellFormat>
-            </amx:rowLayout>
+            </amx:rowLayout> -->
             <amx:rowLayout id="rl14">
-                    <amx:cellFormat id="cf4" width="60px" halign="center" valign="top" >
+                    <amx:cellFormat id="cf4" width="40px" halign="center" valign="middle">
                     <amx:image source="#{row.imageUrl}" inlineStyle="height:50px;width:40px"
                                        styleClass="login-avatar" id="ni5"/>
                     </amx:cellFormat>
@@ -325,38 +337,51 @@
                   </amx:rowLayout>
                 </amx:tableLayout>
               </amx:cellFormat>
-                <amx:cellFormat id="cf14" width="40px" halign="end" valign="top" height="#{deviceScope.device.os=='Android'?'22':'19'}px">
-                <amx:tableLayout id="tl5" >
+              <amx:cellFormat id="cf3"  width="24px" halign="center" valign="top" rendered="#{row.showDiverseImage}">
+    <amx:tableLayout id="tl5" >
                 <amx:rowLayout id="rl7" rendered="#{row.showDiverseImage}">
                   <amx:cellFormat id="cf9">
                   <amx:image rendered="#{row.showDiverseImage}" source="#{row.diverseImageURL}" id="i6"/>
                   </amx:cellFormat>
                 </amx:rowLayout>
                 </amx:tableLayout>
-                <amx:tableLayout id="tl8" inlineStyle="margin-top:10px;">
+              </amx:cellFormat>
+                <amx:cellFormat id="cf14" width="55px" halign="center" valign="middle" height="#{deviceScope.device.os=='Android'?'22':'19'}px">
+                <amx:tableLayout id="tl10" inlineStyle="width:100%">
+                <amx:rowLayout id="rl13">
+                  <amx:cellFormat id="cf26" halign="center">
+                  <amx:commandLink id="cl5" actionListener="#{Rest.selectItems}">
+                  <amx:image source="/images/QuickCart.png" id="i5"/>
+                  <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}" type="action"/>
+                <amx:setPropertyListener from="#{row.vendorName}" to="#{pageFlowScope.vendorName}" type="action"/>
+                <amx:setPropertyListener from="#{row.rowId}" to="#{pageFlowScope.itemRowId}" type="action"/>
+                  </amx:commandLink>
+                  </amx:cellFormat>
+                </amx:rowLayout>
                   <amx:rowLayout id="rl8">
-                    <amx:cellFormat id="cf10" valign="bottom">
-                      <amx:commandLink  id="cl7" action="#{Rest.getItemDetails}">
-                      <amx:image source="/images/rightArrowcircle1.png" id="i1" />
+                    <amx:cellFormat id="cf10">
+                    <amx:commandButton text="Details" id="cb3" styleClass="adfmf-commandButton-style1" action="#{Rest.getItemDetails}">
                                 <amx:setPropertyListener from="#{row.productTitle}" to="#{pageFlowScope.productTitle}"
                                                          type="action" id="spl1"/>
                                 <amx:setPropertyListener from="#{row.rowId}" to="#{pageFlowScope.itemRowId}"
                                                          type="action" id="spl12"/>
 
-                      </amx:commandLink>
+                      </amx:commandButton>
                     </amx:cellFormat>
                   </amx:rowLayout>
                 </amx:tableLayout>
+                
                     </amx:cellFormat>
             </amx:rowLayout>
           </amx:tableLayout>
+           
         </amx:listItem>
       </amx:listView>
         
                  
    </amx:panelGroupLayout>
       </amx:facet>
-       <amx:facet name="bottom">
+       <!-- <amx:facet name="bottom">
         <amx:tableLayout id="tl6" width="100%" inlineStyle="background-color: #F7F3F3;">
           <amx:rowLayout id="rl12">
             <amx:cellFormat id="cf15" halign="center" width="15%">
@@ -381,8 +406,31 @@
             </amx:cellFormat>
           </amx:rowLayout>
         </amx:tableLayout>
-      </amx:facet>
-      
+      </amx:facet> -->
+          <amx:facet name="bottom">
+        <amx:tableLayout id="tl6" width="100%" inlineStyle="background-color: #F7F3F3;">
+          <amx:rowLayout id="rl12">
+          <amx:cellFormat id="cf19" width="2px" halign="start"/>
+                        <amx:cellFormat id="cf15" width="30%" halign="start" valign="middle">
+                    <amx:commandButton rendered="#{pageFlowScope.displaySortOption}" text="Sort" id="cb2" styleClass="adfmf-commandButton-style1" inlineStyle="width:100%">
+                        <amx:showPopupBehavior popupId="popup-sort" type="action" align="cornerBottomStart" alignId="pp1"/>
+                        </amx:commandButton>
+                        </amx:cellFormat>
+                        <amx:cellFormat id="cf27" width="2px" halign="start"/>
+                         <amx:cellFormat id="cf17" width="30%" halign="center" valign="middle">
+                            <amx:commandButton text="Prev" id="cb7" rendered="#{pageFlowScope.displayPrev}" styleClass="adfmf-commandButton-style" actionListener="#{Rest.showPrevPageItems}" inlineStyle="width:100%"/>
+                            
+                        </amx:cellFormat>
+                        <amx:cellFormat id="cf28" width="2px" halign="start"/>
+                         <amx:cellFormat id="cf18" width="30%" halign="end" valign="middle">
+                         <amx:commandButton text="Next" id="cb8" rendered="#{pageFlowScope.displayNext}" actionListener="#{Rest.getNextPageItems}" styleClass="adfmf-commandButton-style"  inlineStyle="width:100%"/>
+                         
+                        </amx:cellFormat>
+                        <amx:cellFormat id="cf29" width="2px" halign="start"/>
+                    </amx:rowLayout>
+          
+          </amx:tableLayout>
+          </amx:facet>
       </amx:panelStretchLayout>
 
 </amx:panelPage>
@@ -418,7 +466,7 @@
                 <amx:tableLayout width="100%" id="tel11">
                 <amx:rowLayout id="rwel121">
                     <amx:cellFormat id="cfe1121" halign="center">
-                                  <amx:commandButton text="Ok" actionListener="#{Rest.sortItems}" id="cb3"
+                                  <amx:commandButton text="Ok" actionListener="#{Rest.sortItems}" id="cb6"
                     styleClass="adfmf-commandButton-style" inlineStyle="width:80%">
                         <amx:closePopupBehavior popupId="popup-sort" type="action"/>
                     </amx:commandButton>

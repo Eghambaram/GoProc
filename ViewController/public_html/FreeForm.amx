@@ -3,7 +3,7 @@
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt" xmlns:notification="http://xmlns.ateam.com/notification"
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core">
-
+<amx:navigationDragBehavior id="ndb1" direction="back" action="#{bindings.toggleSpringboard.execute}"/>
     <amx:panelPage id="pp1" inlineStyle="background-color: #F7F3F3;">
     <amx:verbatim id="v3">
 
@@ -69,9 +69,10 @@
             </amx:commandLink>
         </amx:facet>
       <amx:facet name="secondary">
+      <!--Cart-24.png-->
             <amx:commandLink id="cl1"  actionListener="#{Rest.showCartFreeForm}">
                 <notification:badge id="badge" class="notification-icon" unread="#{applicationScope.unreadCount}"/>
-                <amx:image id="i2" source="/images/Cart-24.png" shortDesc="Springboard Image"
+                <amx:image id="i2" source="/images/cartButton.png" shortDesc="Springboard Image"
                            styleClass="admf-cart-design"/>
             </amx:commandLink>
            

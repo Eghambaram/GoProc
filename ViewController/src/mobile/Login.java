@@ -255,7 +255,8 @@ public class Login {
                  "\n" + 
                  "   \"InputParameters\": {\n" + 
                  "\n" + 
-                 "        \"P_USER_ID\":"+user_id+"\n" +  
+                 "        \"P_USER_ID\":\""+user_id+"\",\n" +
+                 "         \"P_ORG_ID\":\""+multi_orgID+"\"\n" +
                  "\n" + 
                  "     }\n" + 
                  "\n" + 
@@ -333,7 +334,8 @@ public class Login {
                  "\n" +
                  "   \"InputParameters\": {\n" +
                  "\n" +
-                 "          \"P_USER_ID\" : "+user_id+"\n" +
+                 "        \"P_USER_ID\":\""+user_id+"\",\n" +
+                 "         \"P_ORG_ID\":\""+multi_orgID+"\"\n" +
                  "\n" +
                  "     }\n" +
                  "\n" +
@@ -783,6 +785,9 @@ public class Login {
                  ve91.setValue(AdfmfJavaUtilities.getAdfELContext(), "goods");
                  ValueExpression ve92 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.reqType}", String.class);
                  ve92.setValue(AdfmfJavaUtilities.getAdfELContext(), "REQ");
+                 ValueExpression ve93 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.notificationType}", String.class);
+                 ve93.setValue(AdfmfJavaUtilities.getAdfELContext(), "FYI");
+                  
                  
                  ValueExpression ve33 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
                  String DefaultMultiOrgOrg=(String)ve33.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -1094,7 +1099,8 @@ public class Login {
                  "\n" + 
                  "   \"InputParameters\": {\n" + 
                  "\n" + 
-                 "        \"P_USER_ID\":"+user_id+"\n" +  
+                 "        \"P_USER_ID\":\""+user_id+"\",\n" +
+                 "         \"P_ORG_ID\":\""+multi_orgID+"\"\n" +
                  "\n" + 
                  "     }\n" + 
                  "\n" + 
@@ -1171,7 +1177,8 @@ public class Login {
                  "\n" +
                  "   \"InputParameters\": {\n" +
                  "\n" +
-                 "          \"P_USER_ID\" : "+user_id+"\n" +
+                 "        \"P_USER_ID\":\""+user_id+"\",\n" +
+                 "         \"P_ORG_ID\":\""+multi_orgID+"\"\n" +
                  "\n" +
                  "     }\n" +
                  "\n" +
@@ -1621,6 +1628,8 @@ public class Login {
                  ve91.setValue(AdfmfJavaUtilities.getAdfELContext(), "goods");
                  ValueExpression ve92 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.reqType}", String.class);
                  ve92.setValue(AdfmfJavaUtilities.getAdfELContext(), "REQ");
+                 ValueExpression ve93 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.notificationType}", String.class);
+                 ve93.setValue(AdfmfJavaUtilities.getAdfELContext(), "FYI");
                  
                  ValueExpression ve33 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
                  String DefaultMultiOrgOrg=(String)ve33.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -2051,7 +2060,8 @@ public class Login {
             "\n" + 
             "   \"InputParameters\": {\n" + 
             "\n" + 
-            "        \"P_USER_ID\":"+user_id+"\n" +  
+            "        \"P_USER_ID\":\""+user_id+"\",\n" +
+            "         \"P_ORG_ID\":\""+multi_orgID+"\"\n" +
             "\n" + 
             "     }\n" + 
             "\n" + 
@@ -2128,8 +2138,9 @@ public class Login {
                            "\n" +
                            "   \"InputParameters\": {\n" +
                            "\n" +
-                           "          \"P_USER_ID\" : "+user_id+"\n" +
-                           "\n" +
+                            "        \"P_USER_ID\":\""+user_id+"\",\n" +
+                            "         \"P_ORG_ID\":\""+multi_orgID+"\"\n" +
+                            "\n" +
                            "     }\n" +
                            "\n" +
                            "  }\n" +
@@ -2510,7 +2521,9 @@ public class Login {
                            ve91.setValue(AdfmfJavaUtilities.getAdfELContext(), "goods");
                             ValueExpression ve92 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.reqType}", String.class);
                             ve92.setValue(AdfmfJavaUtilities.getAdfELContext(), "REQ");
-            
+                            ValueExpression ve93 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.notificationType}", String.class);
+                            ve93.setValue(AdfmfJavaUtilities.getAdfELContext(), "FYI");
+                            
                            
                            ValueExpression ve33 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.default_multi_org_id}", String.class);
                            String DefaultMultiOrgOrg=(String)ve33.getValue(AdfmfJavaUtilities.getAdfELContext());

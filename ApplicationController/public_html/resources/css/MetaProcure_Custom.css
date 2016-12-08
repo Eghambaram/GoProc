@@ -653,3 +653,10 @@ word-break: break-word;
     width: 250px;
     border-radius: 10px;
 }
+.amx-goLink:active,
+.amx-commandLink:active {
+  color: #0572CE;
+   background-color: transparent;
+  /*background-color: #000;*/
+  border-radius: 2px;
+}

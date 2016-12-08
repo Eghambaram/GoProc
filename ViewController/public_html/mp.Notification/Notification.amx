@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
-<amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
+<amx:navigationDragBehavior id="ndb1" direction="back" action="#{bindings.toggleSpringboard.execute}"/>
+<amx:panelPage id="pp1" inlineStyle="background-color: #F7F3F3;">
      <amx:verbatim id="v3">
         <![CDATA[
 
@@ -63,30 +64,62 @@
                                id="cb1"/>
         </amx:facet>
         
-         <amx:refreshContainer id="rc2" pullText="Pull To Refresh">
+       <amx:panelStretchLayout id="psl1" scrollPolicy="scroll">
+      <amx:facet name="top">
         <amx:panelGroupLayout id="pgl1">
-            <amx:listView var="row" value="#{bindings.alerts.collectionModel}" fetchSize="#{bindings.alerts.rangeSize}"
+          <amx:tableLayout id="tl4" width="100%" halign="center">
+            <amx:rowLayout id="rl111">
+                <amx:cellFormat id="cf522" valign="top" width="100%" halign="start">
+                    <amx:selectOneButton value="#{applicationScope.notificationType}"
+                                         valueChangeListener="#{RequesitionRest.notifyTypeChange}" id="sob1" inlineStyle="width:100%">
+                        <amx:selectItem id="si1" value="FYI" label="FYI"/>
+                        <amx:selectItem id="si2" value="ACTION" label="ACTION"/>
+                    </amx:selectOneButton>
+                    </amx:cellFormat>
+            </amx:rowLayout>
+            </amx:tableLayout>
+        </amx:panelGroupLayout>
+       <!-- <amx:panelGroupLayout id="pgl2" inlineStyle="background-color: #0E4876; margin:10px">
+          <amx:tableLayout id="tl1" inlineStyle="background-color: #0E4876;padding:5px;" width="100%">
+            <amx:rowLayout id="rl1">
+              <amx:cellFormat id="cf1" halign="start" valign="middle" width="30%">
+                <amx:outputText value="REQUISITION NO." id="ot2" inlineStyle="color: #FFFFFF;font-size: 14px;"/>
+              </amx:cellFormat>
+              <amx:cellFormat id="cf2" halign="center" valign="middle" width="30%">
+                <amx:outputText value="TYPE" id="ot3" inlineStyle="color: #FFFFFF;font-size: 14px;">
+                </amx:outputText>
+                </amx:cellFormat>
+                <amx:cellFormat id="cf3" halign="center" valign="middle" width="30%">
+                  <amx:outputText value="STATUS" id="ot4" inlineStyle="color: #FFFFFF;font-size: 14px;"/>
+                </amx:cellFormat>
+            </amx:rowLayout>
+          </amx:tableLayout>
+        </amx:panelGroupLayout> -->
+      </amx:facet>
+      
+      <amx:facet name="center">
+      <amx:refreshContainer id="rc2" pullText="Pull To Refresh">
+  <amx:panelGroupLayout id="pgl4" inlineStyle="background-color: #FFFFFF; margin-left:10px;margin-right:10px">
+           <amx:listView var="row" value="#{bindings.alerts.collectionModel}" fetchSize="#{bindings.alerts.rangeSize}"
                           selectedRowKeys="#{bindings.alerts.collectionModel.selectedRow}"
                           initialScrollRowKeys="#{bindings.alerts.collectionModel.selectedRow}"
                           selectionListener="#{bindings.alerts.collectionModel.makeCurrent}"
-                          styleClass="adfmf-listView-insetList" showMoreStrategy="autoScroll" bufferStrategy="viewport"
-                          id="lv2">
-                          <amx:listItem id="li1" actionListener="#{RequesitionRest.showNotificationDetailScreen}">
-                           <amx:tableLayout width="100%" id="tl1">
-                        <amx:rowLayout id="rl1">
+                          showMoreStrategy="autoScroll" bufferStrategy="viewport"
+                          id="lv2" inlineStyle="border:none;">
+                   
+                   <!--inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #D1D1D3;"-->
+           <amx:listItem id="li1" inlineStyle="background-color:#FFFFFF;border-bottom: 1px solid #0E4876;" actionListener="#{RequesitionRest.showNotificationDetailScreen}">
+                           <amx:tableLayout width="100%" id="tl1" inlineStyle="padding:2px">
+                        <amx:rowLayout id="rl1">  
                             <amx:cellFormat width="100%" height="43px" id="cf2">
                                 <amx:outputText value="#{row.title}"
                                                 inlineStyle="font-size: 14px; clear: both;color: #000000;font-family: Arial, sans-serif;  position: relative;word-break: break-word;  white-space: pre-wrap;"
                                                 id="ot2"/>
                             </amx:cellFormat>
-                            <amx:cellFormat width="40px" halign="end" id="cf1">
-                                <amx:commandLink  id="cz2">
-                                    <!--<amx:image source="../images/submit.png" id="i1"/>-->
-                                </amx:commandLink>
-                            </amx:cellFormat>
-                        </amx:rowLayout>
-                    </amx:tableLayout>
-                      <amx:setPropertyListener from="#{row.id}"
+                            <amx:cellFormat width="18px" halign="end" id="cf1">
+                                <amx:commandLink  id="cz2" actionListener="#{RequesitionRest.showNotificationDetailScreen}">
+                                    <amx:image source="/images/rightArrowcircle1.png" id="i1"/>
+               <amx:setPropertyListener from="#{row.id}"
                                                              to="#{pageFlowScope.notificationId}" type="action"
                                                              id="spl12"/>
                        <amx:setPropertyListener from="#{row.title}"
@@ -100,13 +133,42 @@
                                                              id="spl15"/>      
                          <amx:setPropertyListener from="#{row.name}"
                                                              to="#{pageFlowScope.notificationMessageName}" type="action"
-                                                             id="spl16"/>                                     
+                                                             id="spl16"/>
+                          <amx:setPropertyListener from="#{row.source}"
+                                                             to="#{pageFlowScope.notificationSource}" type="action"
+                                                             id="spl6"/>                                    
+          
+                                </amx:commandLink>
+                            </amx:cellFormat> 
+                        </amx:rowLayout>
+                    </amx:tableLayout>
+                      <amx:setPropertyListener from="#{row.id}"
+                                                             to="#{pageFlowScope.notificationId}" type="action"
+                                                             id="spl1"/>
+                       <amx:setPropertyListener from="#{row.title}"
+                                                             to="#{pageFlowScope.notificationTitle}" type="action"
+                                                             id="spl2"/>
+                       <amx:setPropertyListener from="#{row.reason}"
+                                                             to="#{pageFlowScope.notificationReason}" type="action"
+                                                             id="spl3"/>
+                       <amx:setPropertyListener from="#{row.type}"
+                                                             to="#{pageFlowScope.notificationMessageType}" type="action"
+                                                             id="spl4"/>      
+                         <amx:setPropertyListener from="#{row.name}"
+                                                             to="#{pageFlowScope.notificationMessageName}" type="action"
+                                                             id="spl5"/>
+                        <amx:setPropertyListener from="#{row.source}"
+                                                             to="#{pageFlowScope.notificationSource}" type="action"
+                                                             id="spl7"/>                                                                         
                    
                 </amx:listItem>
-            </amx:listView>
-           
-        </amx:panelGroupLayout>
-        </amx:refreshContainer>
+          
+          </amx:listView>
+          </amx:panelGroupLayout>
+          </amx:refreshContainer>
+      </amx:facet>
+      
+      </amx:panelStretchLayout>
        <!--<amx:selectOneChoice value="#{bindings.rejection.inputValue}" label="#{bindings.rejection.label}" id="soc1">
             <amx:selectItems value="#{bindings.rejection.items}" id="si1"/>
         </amx:selectOneChoice>-->

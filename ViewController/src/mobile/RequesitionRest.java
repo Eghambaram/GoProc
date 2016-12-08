@@ -1673,7 +1673,9 @@ public class RequesitionRest {
             
         ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
         String userId = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
-            
+            ValueExpression ve14 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.profileselectedMultiOrg}", String.class);
+            String multiOrgId=(String)ve14.getValue(AdfmfJavaUtilities.getAdfELContext());
+    
          //Deliver to Location   
             
          RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
@@ -1700,7 +1702,8 @@ public class RequesitionRest {
          "\n" + 
          "   \"InputParameters\": {\n" + 
          "\n" + 
-         "        \"P_USER_ID\":"+userId+"\n" + 
+            "        \"P_USER_ID\":\""+userId+"\",\n" +
+            "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
          "\n" + 
          "     }\n" + 
          "\n" + 
@@ -2108,7 +2111,8 @@ public class RequesitionRest {
             "\n" + 
             "   \"InputParameters\": {\n" + 
             "\n" + 
-            "        \"P_USER_ID\":"+userId+"\n" + 
+            "        \"P_USER_ID\":\""+userId+"\",\n" +
+            "         \"P_ORG_ID\":\""+multiOrgId+"\"\n" + 
             "\n" + 
             "     }\n" + 
             "\n" + 
@@ -2424,6 +2428,9 @@ public class RequesitionRest {
          ValueExpression ve12 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_id}", String.class);
          String userId = (String)ve12.getValue(AdfmfJavaUtilities.getAdfELContext());
         
+            ValueExpression ve16 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.notificationType}", String.class);
+            String notifyType = (String)ve16.getValue(AdfmfJavaUtilities.getAdfELContext());
+            
         RestServiceAdapter restServiceAdapter = Model.createRestServiceAdapter();
         // Clear any previously set request properties, if any
         restServiceAdapter.clearRequestProperties();
@@ -2440,7 +2447,8 @@ public class RequesitionRest {
         "   \"RESTHeader\": {\n" + 
         "    },\n" + 
         "   \"InputParameters\": {\n" + 
-        "        	   \"P_USER_ID\":"+ userId+"\n" + 
+            "          \"P_USER_ID\" : \""+userId+"\",\n" +
+            "          \"P_NOTIFICATION_TYPE\" : \""+notifyType+"\"\n" +
         "       }	   \n" + 
         "   }\n" + 
         "}";
@@ -2465,9 +2473,11 @@ public class RequesitionRest {
                
                 String messageType=notification.getString("MESSAGE_TYPE");
                 String messageName =notification.getString("MESSAGE_NAME");
-                
+                String source =notification.getString("SOURCE");
+                  System.out.println("Source Value--->"+source);
                 //System.out.println(notificationId+"="+notificationTitle+"="+notificationReason);  
-                Alert a=new Alert(notificationId,notificationTitle, "", "", "",messageType,messageName);
+                //Alert a=new Alert(id, title, reason, source, read, type, name)
+                Alert a=new Alert(notificationId,notificationTitle, "", source, "",messageType,messageName);
                 AlertsList.alertList.add(a);  
               }
             
@@ -2481,8 +2491,8 @@ public class RequesitionRest {
                 
                 String messageType=notification.getString("MESSAGE_TYPE");
                 String messageName =notification.getString("MESSAGE_NAME");
-                
-                Alert a=new Alert(notificationId,notificationTitle, "", "", "",messageType,messageName);
+                String source =notification.getString("SOURCE");
+                Alert a=new Alert(notificationId,notificationTitle, "", source, "",messageType,messageName);
                 AlertsList.alertList.add(a);  
                
             }
@@ -2679,7 +2689,10 @@ public class RequesitionRest {
         String s=(String)ve18.getValue(AdfmfJavaUtilities.getAdfELContext());
         
         
-        
+        ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationSource}", String.class);
+        String msgSource=(String)ve23.getValue(AdfmfJavaUtilities.getAdfELContext());
+        System.out.println("msgSoource-->"+msgSource);
+               
         ValueExpression ve21 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationMessageType}", String.class);
         String type=(String)ve21.getValue(AdfmfJavaUtilities.getAdfELContext());
         
@@ -2795,6 +2808,10 @@ public class RequesitionRest {
        
           ValueExpression ve22 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationReason}", String.class);
             ve22.setValue(AdfmfJavaUtilities.getAdfELContext(),data);
+            
+            ValueExpression ve20 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationSource}", String.class);
+            ve20.setValue(AdfmfJavaUtilities.getAdfELContext(),msgSource);
+            System.out.println("msgSoource-->"+msgSource);
             
             AdfmfJavaUtilities.flushDataChangeEvent();
             
@@ -3782,7 +3799,12 @@ public class RequesitionRest {
         ValueExpression ve21 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationMessageType}", String.class);
         String type=(String)ve21.getValue(AdfmfJavaUtilities.getAdfELContext());
         
-        
+        ValueExpression ve24 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationMessageName}", String.class);
+        String msgName=(String)ve24.getValue(AdfmfJavaUtilities.getAdfELContext());
+
+        ValueExpression ve25 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationSource}", String.class);
+        String msgSource=(String)ve25.getValue(AdfmfJavaUtilities.getAdfELContext());
+
         
         ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_name}", String.class);
         String userName = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
@@ -3827,6 +3849,10 @@ public class RequesitionRest {
              "\n" + 
              "                     \"P_MESSAGE_TYPE\" : \""+type+"\",\n" + 
              "\n" + 
+             "                     \"P_MESSAGE_NAME\" : \""+msgName+"\",\n" +
+             "\n" + 
+             "                     \"P_SOURCE\" : \""+msgSource+"\",\n" +                         
+             "\n" +
              "                     \"P_NOTIFICATION_ID\" : \""+s+"\",\n" + 
              "\n" + 
              "          \"P_RESPONSE_VALUE\" : \"REJECT\",\n" + 
@@ -3886,7 +3912,15 @@ public class RequesitionRest {
         
         ValueExpression ve21 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationMessageType}", String.class);
         String type=(String)ve21.getValue(AdfmfJavaUtilities.getAdfELContext());
+
+        ValueExpression ve22 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationMessageName}", String.class);
+        String msgName=(String)ve22.getValue(AdfmfJavaUtilities.getAdfELContext());
+
+        ValueExpression ve23 = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.notificationSource}", String.class);
+        String msgSource=(String)ve23.getValue(AdfmfJavaUtilities.getAdfELContext());
         
+        System.out.println("msg Name & Source"+msgName+" "+msgSource);
+            
         ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{applicationScope.user_name}", String.class);
         String userName = (String)ve.getValue(AdfmfJavaUtilities.getAdfELContext());
         
@@ -3916,7 +3950,11 @@ public class RequesitionRest {
         "\n" + 
         "   \"InputParameters\": {\n" + 
         "\n" + 
-        "                     \"P_MESSAGE_TYPE\" : \""+type+"\",\n" + 
+        "                     \"P_MESSAGE_TYPE\" : \""+type+"\",\n" +
+        "\n" + 
+        "                     \"P_MESSAGE_NAME\" : \""+msgName+"\",\n" +
+        "\n" + 
+        "                     \"P_SOURCE\" : \""+msgSource+"\",\n" +                         
         "\n" + 
         "                     \"P_NOTIFICATION_ID\" : \""+s+"\",\n" + 
         "\n" + 
@@ -6604,6 +6642,42 @@ try{
         MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.searchRFQs.execute}", Object.class, new Class[] {});
         me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
     }
+    
+    public void notifyTypeChange(ValueChangeEvent valueChangeEvent) {
+        // Add event code here...
+        String oldstr = "";
+        String newstr = "";
+        Object value = null;
+
+        value = valueChangeEvent.getOldValue();
+        if (value != null)
+        {
+          oldstr = value.toString();
+        }
+
+        value = valueChangeEvent.getNewValue();
+        if (value != null)
+        {
+          newstr = value.toString();
+        }
+
+        String oldval = "Old Value: " + oldstr;
+        String newval = "New Value: " + newstr;
+
+        System.out.println("===========> New Value "+newval+" Old Value"+oldval);
+        
+        
+        ValueExpression ve4 = AdfmfJavaUtilities.getValueExpression("#{applicationScope.notificationType}", String.class);
+        ve4.setValue(AdfmfJavaUtilities.getAdfELContext(), newstr);
+        try{
+            MethodExpression me = AdfmfJavaUtilities.getMethodExpression("#{bindings.notifyTypeRequisition.execute}", Object.class, new Class[] {});
+            me.invoke(AdfmfJavaUtilities.getAdfELContext(), new Object[]{});
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 

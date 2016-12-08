@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
-  <amx:panelPage id="pp1" inlineStyle="background-color:#ededed">
+  <amx:panelPage id="pp1" inlineStyle="background-color:#F7F3F3;">
               <amx:verbatim id="v3">
         <![CDATA[
 
@@ -23,10 +23,10 @@
         </amx:facet>
         <amx:facet name="primary">
             <amx:commandLink actionListener="#{bindings.toggleSpringboard.execute}" id="cl1">
-                <amx:image source="/images/logo.png" id="i3"/>
+                <amx:image source="/images/menu.png" id="i3"/>
             </amx:commandLink>
         </amx:facet>
-        <amx:panelStretchLayout id="psl1">
+        <amx:panelStretchLayout id="psl1" inlineStyle="margin:10px">
             <amx:facet name="top">
                 <amx:outputHtml id="oh1" value="#{pageFlowScope.helpertext}"/>
        </amx:facet>

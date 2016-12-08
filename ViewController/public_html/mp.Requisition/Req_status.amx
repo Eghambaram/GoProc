@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+           <amx:navigationDragBehavior id="ndb1" direction="back" action="#{bindings.toggleSpringboard.execute}"/>
   <amx:panelPage id="pp1" inlineStyle="background-color: #F7F3F3;">
  <amx:verbatim id="v3">
         <![CDATA[
@@ -81,9 +82,9 @@
                   </amx:tableLayout>
           <amx:tableLayout id="tl4" width="100%" halign="center">
             <amx:rowLayout id="rl111">
-                <amx:cellFormat id="cf522" valign="top" width="100%">
+                <amx:cellFormat id="cf522" valign="top" width="100%" halign="start">
                     <amx:selectOneButton value="#{applicationScope.reqType}"
-                                         valueChangeListener="#{RequesitionRest.reqTypeChange}" id="sob1">
+                                         valueChangeListener="#{RequesitionRest.reqTypeChange}" id="sob1" inlineStyle="width:100%">
                         <amx:selectItem id="si1" value="REQ" label="REQUISITION"/>
                         <amx:selectItem id="si2" value="RFQ" label="RFQ"/>
                     </amx:selectOneButton>

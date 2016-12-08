@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt" xmlns:notification="http://xmlns.ateam.com/notification">
+    <amx:navigationDragBehavior id="ndb1" direction="back" action="__back"/>
     <amx:panelPage id="pp1" inlineStyle="background-color: #F7F3F3;">
      <amx:verbatim id="v3">
 
@@ -61,7 +62,7 @@
                                inlineStyle="background-color:transparent;"/>-->
             <amx:commandLink id="cl1" actionListener="#{Rest.showCartDetailsScreen}">
                 <notification:badge id="badge" class="notification-icon" unread="#{applicationScope.unreadCount}"/>
-                <amx:image id="i2" source="/images/Cart-24.png" shortDesc="Springboard Image"
+                <amx:image id="i2" source="/images/cartButton.png" shortDesc="Springboard Image"
                            styleClass="admf-cart-design"/>
             </amx:commandLink>
         </amx:facet>
