@@ -388,7 +388,7 @@ background-color:  #0E4876;
   
   .amx-inputText.adfmf-inputText-Description .field-value input,
 .amx-inputText.adfmf-inputText-Description .field-value textarea {
-word-break: break-word;
+
   overflow: hidden;
   width: 100%;
   text-align: left;
@@ -397,7 +397,7 @@ word-break: break-word;
 
 .amx-inputText.adfmf-inputText-Description1 .field-value input,
 .amx-inputText.adfmf-inputText-Description1 .field-value textarea {
-word-break: break-word;
+
   overflow: hidden;
   width: 100%;
   text-align: left;
@@ -491,3 +491,12 @@ box-sizing: border-box;
   /*background-color: #000;*/
   border-radius: 2px;
 }
+
+.amx-selectOneButton .selectItemsContainer {
+  overflow: visible;
+  display: table;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #0572CE;
+}
+
