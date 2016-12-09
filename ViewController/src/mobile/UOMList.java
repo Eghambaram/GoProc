@@ -1920,9 +1920,9 @@ public class UOMList {
             
             if(categoryId!=0){
         
-      
-      String  url = "https://api.indix.com/v2/offersPremium/products?countryCode=US"+categoryRef+"facetBy=storeId&availability=IN_STOCK&lastRecordedIn=30&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
-      //String  url = "https://api.indix.com/v2/universal/products?countryCode=US"+categoryRef+"facetBy=storeId&availability=IN_STOCK&lastRecordedIn=30&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+      //*******app_id=9867e55c
+      String  url = "https://api.indix.com/v2/offersPremium/products?countryCode=US"+categoryRef+"facetBy=storeId&availability=IN_STOCK&lastRecordedIn=30&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+      //String  url = "https://api.indix.com/v2/universal/products?countryCode=US"+categoryRef+"facetBy=storeId&availability=IN_STOCK&lastRecordedIn=30&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
         //quey indix for the category and facet by suppliers                                        
        URL obj = new URL(url);
      HttpURLConnection   con = (HttpURLConnection) obj.openConnection();
@@ -3655,9 +3655,9 @@ public class UOMList {
     //                                     }
     //
                                         
-                                        //String url = "https://api.indix.com/v2/offersPremium/products?countryCode=US&brandId="+brandId+categoryRef+"&availability=IN_STOCK&lastRecordedIn=30&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+                                        //String url = "https://api.indix.com/v2/offersPremium/products?countryCode=US&brandId="+brandId+categoryRef+"&availability=IN_STOCK&lastRecordedIn=30&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                                          
-                                        String url = "https://api.indix.com/v2/universal/products?countryCode=US&brandId="+brandId+categoryRef+"availability=IN_STOCK&lastRecordedIn=30&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+                                        String url = "https://api.indix.com/v2/universal/products?countryCode=US&brandId="+brandId+categoryRef+"availability=IN_STOCK&lastRecordedIn=30&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                                          
                                         ValueExpression ve_is_brand_category_selected = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.brandCategorySelected}", String.class);
                                         ve_is_brand_category_selected.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
@@ -3875,14 +3875,14 @@ public class UOMList {
                         try{
                             
                               
-                               //String url = "https://api.indix.com/v2/offersPremium/products"+"?"+"countryCode=US&"+query+"&availability=IN_STOCK&lastRecordedIn=30&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+                               //String url = "https://api.indix.com/v2/offersPremium/products"+"?"+"countryCode=US&"+query+"&availability=IN_STOCK&lastRecordedIn=30&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                            String url="";
                             /*  if(itemCategories.equalsIgnoreCase("") && upc.equalsIgnoreCase("") && !brand.equalsIgnoreCase("") && partNo.equalsIgnoreCase("") && product_url.equalsIgnoreCase("")&& !quantity.equalsIgnoreCase("") && !uom.equalsIgnoreCase("") && !needByDate.equalsIgnoreCase("")){
                                           
-                                  url = "https://api.indix.com/v2/universal/products?countryCode=US&q="+search+query+"&availability=IN_STOCK&lastRecordedIn=30&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+                                  url = "https://api.indix.com/v2/universal/products?countryCode=US&q="+search+query+"&availability=IN_STOCK&lastRecordedIn=30&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                                 }
                               else{
-                                 url = "https://api.indix.com/v2/universal/products?countryCode=US"+query+"&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+                                 url = "https://api.indix.com/v2/universal/products?countryCode=US"+query+"&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                               }
                             */
                             
@@ -3890,15 +3890,15 @@ public class UOMList {
                                 
                                 if(itemCategories.equalsIgnoreCase("") && upc.equalsIgnoreCase("") && !brand.equalsIgnoreCase("") && partNo.equalsIgnoreCase("") && product_url.equalsIgnoreCase("")&& !quantity.equalsIgnoreCase("") && !uom.equalsIgnoreCase("") && !needByDate.equalsIgnoreCase("")){
                                             
-                                    url = "https://api.indix.com/v2/universal/products?countryCode=US&q="+search+query+"&availability=IN_STOCK&lastRecordedIn=30&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+                                    url = "https://api.indix.com/v2/universal/products?countryCode=US&q="+search+query+"&availability=IN_STOCK&lastRecordedIn=30&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                                   }
                                 else{
-                                   url = "https://api.indix.com/v2/universal/products?countryCode=US"+query+"&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+                                   url = "https://api.indix.com/v2/universal/products?countryCode=US"+query+"&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                                 }
                                    
                                 }
                             else{
-                               url = "https://api.indix.com/v2/universal/products?countryCode=US"+query+"&app_id=9867e55c&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
+                               url = "https://api.indix.com/v2/universal/products?countryCode=US"+query+"&app_key=8d79be1be9b9d8ce50af3a978b4d5ccc";
                             }
                                ValueExpression ve_is_query_ref = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.isQueryRefSet}", String.class);
                                ve_is_query_ref.setValue(AdfmfJavaUtilities.getAdfELContext(),"true");
